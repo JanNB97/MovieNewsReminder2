@@ -2,6 +2,8 @@ package com.yellowbite.movienewsreminder2.webscraping;
 
 import android.content.Context;
 
+import com.yellowbite.movienewsreminder2.webscraping.medienzentrum.MedZenHandler;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +21,7 @@ public abstract class WebscrapingHandler
     private static void registerHandlers()
     {
         //Register your handlers here
-        registerHandler(new MedienzentrumScraper());
+        registerHandler(new MedZenHandler());
     }
 
     public static ArrayList<WebscrapingHandler> getUpdatedWebscrapers(Context context)

@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity
         ComponentName name = new ComponentName(this, NewsService.class);
         JobInfo job = (new JobInfo.Builder(0, name))
                 .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
-                .setPeriodic(1000 * 60 * 60 * 3)
+                .setPeriodic(1000 * 60 * 60 * 2)
                 .build();
 
         JobScheduler jobScheduler = (JobScheduler)getSystemService(Context.JOB_SCHEDULER_SERVICE);
