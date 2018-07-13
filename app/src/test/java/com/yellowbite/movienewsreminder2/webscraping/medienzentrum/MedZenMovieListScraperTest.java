@@ -20,22 +20,22 @@ public class MedZenMovieListScraperTest
     @Test
     public void testGetEssentialMovie()
     {
-        Document doc;
+        MedZenMovieListScraper listScraper = null;
         try
         {
-            doc = WebscrapingHelper.getDoc(MED_ZEN_STAR_TREK_LIST);
+            listScraper = new MedZenMovieListScraper(MED_ZEN_STAR_TREK_LIST);
         } catch (IOException e)
         {
             e.printStackTrace();
             return;
         }
-        MedZenMovieListScraper listScraper = new MedZenMovieListScraper(doc);
 
         Movie starTrekBeyond = listScraper.getEssentialMovie(0);
         Movie starTrekIntoDarkness = listScraper.getEssentialMovie(1);
         Movie starTrek = listScraper.getEssentialMovie(2);
         Assert.assertEquals(3, listScraper.getListEntrySize());
-        assertIndexOutOfBoundException(() -> listScraper.getEssentialMovie(3));
+        MedZenMovieListScraper finalListScraper = listScraper;
+        assertIndexOutOfBoundException(() -> finalListScraper.getEssentialMovie(3));
 
         Assert.assertNotNull(starTrekBeyond);
         Assert.assertNotNull(starTrekIntoDarkness);
@@ -52,49 +52,49 @@ public class MedZenMovieListScraperTest
     @Test
     public void testWrongIndex()
     {
-        Document doc;
+        MedZenMovieListScraper listScraper = null;
         try
         {
-            doc = WebscrapingHelper.getDoc("https://opac.winbiap.net/mzhr/acquisitions.aspx?data=Y21kPTUmYW1wO3NDPWNfMD0xJSVtXzA9MSUlZl8wPTYzJSVvXzA9NiUldl8wPTI1LjA4LjIwMTYgMDA6MDA6MDArK2NfMT0xJSVtXzE9MSUlZl8xPTQyJSVvXzE9MSUldl8xPTQ2Uy1EVkQgKFNwaWVsZmlsbSkrK2NfMj0xJSVtXzI9MSUlZl8yPTQ4JSVvXzI9MSUldl8yPU1lZGllbnplbnRydW0gSGVyc2ZlbGQtUm90ZW5idXJnJmFtcDtTb3J0PVp1Z2FuZ3NkYXR1bSAoQmlibGlvdGhlayk=-B/ZW6RDg8Xg=");
+            listScraper = new MedZenMovieListScraper("https://opac.winbiap.net/mzhr/acquisitions.aspx?data=Y21kPTUmYW1wO3NDPWNfMD0xJSVtXzA9MSUlZl8wPTYzJSVvXzA9NiUldl8wPTI1LjA4LjIwMTYgMDA6MDA6MDArK2NfMT0xJSVtXzE9MSUlZl8xPTQyJSVvXzE9MSUldl8xPTQ2Uy1EVkQgKFNwaWVsZmlsbSkrK2NfMj0xJSVtXzI9MSUlZl8yPTQ4JSVvXzI9MSUldl8yPU1lZGllbnplbnRydW0gSGVyc2ZlbGQtUm90ZW5idXJnJmFtcDtTb3J0PVp1Z2FuZ3NkYXR1bSAoQmlibGlvdGhlayk=-B/ZW6RDg8Xg=");
         } catch (IOException e)
         {
             e.printStackTrace();
             return;
         }
-        MedZenMovieListScraper listScraper = new MedZenMovieListScraper(doc);
+        MedZenMovieListScraper finalListScraper = listScraper;
 
-        this.assertIndexOutOfBoundException(() -> listScraper.getEssentialMovie(1000));
-        this.assertIndexOutOfBoundException(() -> listScraper.getEssentialMovie(-1));
-        this.assertIndexOutOfBoundException(() -> listScraper.getMovie(1000));
-        this.assertIndexOutOfBoundException(() -> listScraper.getMovie(-1));
+        this.assertIndexOutOfBoundException(() -> finalListScraper.getEssentialMovie(1000));
+        this.assertIndexOutOfBoundException(() -> finalListScraper.getEssentialMovie(-1));
+        this.assertIndexOutOfBoundException(() -> finalListScraper.getMovie(1000));
+        this.assertIndexOutOfBoundException(() -> finalListScraper.getMovie(-1));
 
         // Essentials
-        this.assertIndexOutOfBoundException(() -> listScraper.getMediaBarcode(1000));
-        this.assertIndexOutOfBoundException(() -> listScraper.getMediaBarcode(-1));
-        this.assertIndexOutOfBoundException(() -> listScraper.getLink(1000));
-        this.assertIndexOutOfBoundException(() -> listScraper.getLink(-1));
+        this.assertIndexOutOfBoundException(() -> finalListScraper.getMediaBarcode(1000));
+        this.assertIndexOutOfBoundException(() -> finalListScraper.getMediaBarcode(-1));
+        this.assertIndexOutOfBoundException(() -> finalListScraper.getLink(1000));
+        this.assertIndexOutOfBoundException(() -> finalListScraper.getLink(-1));
 
         // status informations
-        this.assertIndexOutOfBoundException(() -> listScraper.getStatus(1000));
-        this.assertIndexOutOfBoundException(() -> listScraper.getStatus(-1));
-        this.assertIndexOutOfBoundException(() -> listScraper.getEntliehenBis(1000));
-        this.assertIndexOutOfBoundException(() -> listScraper.getEntliehenBis(-1));
-        this.assertIndexOutOfBoundException(() -> listScraper.getVorbestellungen(1000));
-        this.assertIndexOutOfBoundException(() -> listScraper.getVorbestellungen(-1));
+        this.assertIndexOutOfBoundException(() -> finalListScraper.getStatus(1000));
+        this.assertIndexOutOfBoundException(() -> finalListScraper.getStatus(-1));
+        this.assertIndexOutOfBoundException(() -> finalListScraper.getEntliehenBis(1000));
+        this.assertIndexOutOfBoundException(() -> finalListScraper.getEntliehenBis(-1));
+        this.assertIndexOutOfBoundException(() -> finalListScraper.getVorbestellungen(1000));
+        this.assertIndexOutOfBoundException(() -> finalListScraper.getVorbestellungen(-1));
 
         // standort informations
-        this.assertIndexOutOfBoundException(() -> listScraper.getStandort(1000));
-        this.assertIndexOutOfBoundException(() -> listScraper.getStandort(-1));
-        this.assertIndexOutOfBoundException(() -> listScraper.getInteressenkreis(1000));
-        this.assertIndexOutOfBoundException(() -> listScraper.getInteressenkreis(-1));
-        this.assertIndexOutOfBoundException(() -> listScraper.getSignatur(1000));
-        this.assertIndexOutOfBoundException(() -> listScraper.getSignatur(-1));
+        this.assertIndexOutOfBoundException(() -> finalListScraper.getStandort(1000));
+        this.assertIndexOutOfBoundException(() -> finalListScraper.getStandort(-1));
+        this.assertIndexOutOfBoundException(() -> finalListScraper.getInteressenkreis(1000));
+        this.assertIndexOutOfBoundException(() -> finalListScraper.getInteressenkreis(-1));
+        this.assertIndexOutOfBoundException(() -> finalListScraper.getSignatur(1000));
+        this.assertIndexOutOfBoundException(() -> finalListScraper.getSignatur(-1));
 
         // useful informations
-        this.assertIndexOutOfBoundException(() -> listScraper.getTitel(1000));
-        this.assertIndexOutOfBoundException(() -> listScraper.getTitel(-1));
-        this.assertIndexOutOfBoundException(() -> listScraper.getKurzbeschreibung(1000));
-        this.assertIndexOutOfBoundException(() -> listScraper.getKurzbeschreibung(-1));
+        this.assertIndexOutOfBoundException(() -> finalListScraper.getTitel(1000));
+        this.assertIndexOutOfBoundException(() -> finalListScraper.getTitel(-1));
+        this.assertIndexOutOfBoundException(() -> finalListScraper.getKurzbeschreibung(1000));
+        this.assertIndexOutOfBoundException(() -> finalListScraper.getKurzbeschreibung(-1));
     }
 
     private void assertIndexOutOfBoundException(Runnable runnable)
