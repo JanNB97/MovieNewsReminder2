@@ -42,9 +42,9 @@ public class FileManager
                     e.printStackTrace();
                 }
             }
-
-            return readLines;
         }
+
+        return readLines;
     }
 
     public static void writeLine(Context context, String filename, String line, int mode)

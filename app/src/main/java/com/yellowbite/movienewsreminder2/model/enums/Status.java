@@ -1,4 +1,4 @@
-package com.yellowbite.movienewsreminder2.webscraping.medienzentrum.enums;
+package com.yellowbite.movienewsreminder2.model.enums;
 
 public enum Status {
     VERFUEGBAR("verfügbar"),

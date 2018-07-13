@@ -1,101 +1,118 @@
 package com.yellowbite.movienewsreminder2.webscraping.medienzentrum;
 
-import com.yellowbite.movienewsreminder2.webscraping.medienzentrum.enums.Status;
-import com.yellowbite.movienewsreminder2.webscraping.medienzentrum.model.Movie;
+import com.yellowbite.movienewsreminder2.model.enums.Status;
+import com.yellowbite.movienewsreminder2.model.Movie;
+import com.yellowbite.movienewsreminder2.webscraping.WebscrapingHelper;
 
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Logger;
 
-public class MedZenMovieScraper
+public class MedZenMovieListScraper
 {
+    private Elements listEntries;
     private static final String movieCssQuery = "tr.ResultItem";
 
-    public static int getMediaBarcode(Document websiteDoc, int index)
+    public MedZenMovieListScraper(String url) throws IOException
     {
-        Elements tableEntries = websiteDoc.select(movieCssQuery);
-
-        if(index >= tableEntries.size())
-        {
-            Logger.getGlobal().severe("No mediabarcode found at index " + index);
-            return -1;
-        }
-
-        return getMediaBarcode(tableEntries.get(index));
+        this.listEntries = WebscrapingHelper.getDoc(url).select(movieCssQuery);
     }
 
-    public static Movie getMovie(Document websiteDoc, int index)
+    public Movie getEssentialMovie(int index)
     {
-        Elements tableEntries = websiteDoc.select(movieCssQuery);
-
-        if(index >= tableEntries.size())
+        int mediaBarcode = getMediaBarcode(index);
+        if(mediaBarcode == -1)
         {
-            Logger.getGlobal().severe("No movie found at index " + index);
             return null;
         }
 
-        Element tableEntry = tableEntries.get(index);
+        String link = getLink(index);
+        if(link == null)
+        {
+            return null;
+        }
 
+        return new Movie(mediaBarcode, link);
+    }
+
+    public Movie getMovie(int index)
+    {
         //essentials
-        int mediaBarcode = getMediaBarcode(tableEntry);
-        String link = getLink(tableEntry);
-        Movie movie = new Movie(mediaBarcode, link);
+        Movie movie = getEssentialMovie(index);
+        if(movie == null)
+        {
+            return null;
+        }
 
         //status infos
-        Status status = getStatus(tableEntry);
+        Status status = getStatus(index);
         movie.setStatus(status);
-        int vorbestellungen = getVorbestellungen(tableEntry);
+        int vorbestellungen = getVorbestellungen(index);
         movie.setVorbestellungen(vorbestellungen);
-        Date entliehenBis = getEntliehenBis(tableEntry);
+        Date entliehenBis = getEntliehenBis(index);
         movie.setEntliehenBis(entliehenBis);
 
         //standort infos
-        String standort = getStandort(tableEntry);
+        String standort = getStandort(index);
         movie.setStandort(standort);
-        String interessenkreis = getInteressenkreis(tableEntry);
+        String interessenkreis = getInteressenkreis(index);
         movie.setInteressenkreis(interessenkreis);
-        String signatur = getSignatur(tableEntry);
+        String signatur = getSignatur(index);
         movie.setSignatur(signatur);
 
         //useful infos
-        String titel = getTitel(tableEntry);
+        String titel = getTitel(index);
         movie.setTitel(titel);
-        String erscheinungsjar = getErscheinungsjahr(tableEntry);
-        movie.setErscheinungsjahr(erscheinungsjar);
-        String kurzbeschreibung = getKurzbeschreibung(tableEntry);
+        String kurzbeschreibung = getKurzbeschreibung(index);
         movie.setKurzbeschreibung(kurzbeschreibung);
 
         return movie;
     }
 
-    // --- get essentials ---
-
-    private static int getMediaBarcode(Element tableEntry)
+    private Element getListEntry(int index)
     {
-        return getInt(tableEntry, "span.mediaBarcode");
+        if(index < 0 || index >= listEntries.size())
+        {
+            throw new IndexOutOfBoundsException();
+        }
+
+        return listEntries.get(index);
     }
 
-    private static String getLink(Element tableEntry)
+    public int getListEntrySize()
     {
-        return getText(tableEntry, "a [href]");
+        return listEntries.size();
+    }
+
+    // --- get essentials ---
+
+    public int getMediaBarcode(int index)
+    {
+        return getInt(getListEntry(index), "span.mediaBarcode");
+    }
+
+    public String getLink(int index)
+    {
+        return getLink(getListEntry(index), "a[href]");
     }
 
     // --- get status informations ---
 
-    private static Status getStatus(Element tableEntry)
+    public Status getStatus(int index)
     {
-        return getStatus(tableEntry, "[title='entliehen']");
+        return getStatus(getListEntry(index), "[title='entliehen']");
     }
 
-    private static int getVorbestellungen(Element tableEntry)
+    public int getVorbestellungen(int index)
     {
-        String vorbestellungen = getText(tableEntry, "span.reservationCount");
+        String vorbestellungen = getText(getListEntry(index), "span.reservationCount");
 
         if(vorbestellungen == null)
         {
@@ -107,43 +124,38 @@ public class MedZenMovieScraper
         return Integer.parseInt(split[0]);
     }
 
-    private static Date getEntliehenBis(Element tableEntry)
+    public Date getEntliehenBis(int index)
     {
-        return getDate(tableEntry, "span.borrowUntil");
+        return getDate(getListEntry(index), "span.borrowUntil");
     }
 
     // --- get standort informations ---
 
-    private static String getStandort(Element tableEntry)
+    public String getStandort(int index)
     {
-        return getText(tableEntry, "span.location");
+        return getText(getListEntry(index), "span.location");
     }
 
-    private static String getInteressenkreis(Element tableEntry)
+    public String getInteressenkreis(int index)
     {
-        return getText(tableEntry, "span.topics");
+        return getText(getListEntry(index), "span.topics");
     }
 
-    private static String getSignatur(Element tableEntry)
+    public String getSignatur(int index)
     {
-        return getText(tableEntry, "span.systematik");
+        return getText(getListEntry(index), "span.systematik");
     }
 
     // --- get other useful informations ---
 
-    private static String getTitel(Element tableEntry)
+    public String getTitel(int index)
     {
-        return getText(tableEntry,"[title='Titel']");
+        return getText(getListEntry(index),"[title='Titel']");
     }
 
-    private static String getErscheinungsjahr(Element tableEntry)
+    public String getKurzbeschreibung(int index)
     {
-        return getText(tableEntry, "[title='Erscheinungsjahr']");
-    }
-
-    private static String getKurzbeschreibung(Element tableEntry)
-    {
-        return getText(tableEntry, "[title='Kurzbeschreibung']");
+        return getText(getListEntry(index), "[title='Kurzbeschreibung']");
     }
 
     // =================================
@@ -154,6 +166,11 @@ public class MedZenMovieScraper
 
     private static Status getStatus(Element tableEntry, String cssQuery)
     {
+        if(tableEntry == null)
+        {
+            return null;
+        }
+
         String text = getText(tableEntry, cssQuery);
 
         if(text == null)
@@ -177,6 +194,11 @@ public class MedZenMovieScraper
 
     private static String getText(Element tableEntry, String cssQuery)
     {
+        if(tableEntry == null)
+        {
+            return null;
+        }
+
         Elements elements = tableEntry.select(cssQuery);
 
         if(elements.size() == 0)
@@ -189,6 +211,11 @@ public class MedZenMovieScraper
 
     private static int getInt(Element tableEntry, String cssQuery)
     {
+        if(tableEntry == null)
+        {
+            return -1;
+        }
+
         String text = getText(tableEntry, cssQuery);
 
         if(text == null)
@@ -203,6 +230,11 @@ public class MedZenMovieScraper
 
     private static Date getDate(Element tableEntry, String cssQuery)
     {
+        if(tableEntry == null)
+        {
+            return null;
+        }
+
         DateFormat df = new SimpleDateFormat("dd.mm.yyyy");
 
         String string = getText(tableEntry, cssQuery);
@@ -226,6 +258,11 @@ public class MedZenMovieScraper
 
     private static String getLink(Element tableEntry, String cssQuery)
     {
+        if(tableEntry == null)
+        {
+            return null;
+        }
+
         Elements elements = tableEntry.select(cssQuery);
 
         if(elements.size() == 0)

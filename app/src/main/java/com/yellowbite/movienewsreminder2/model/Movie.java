@@ -1,6 +1,6 @@
-package com.yellowbite.movienewsreminder2.webscraping.medienzentrum.model;
+package com.yellowbite.movienewsreminder2.model;
 
-import com.yellowbite.movienewsreminder2.webscraping.medienzentrum.enums.Status;
+import com.yellowbite.movienewsreminder2.model.enums.Status;
 
 import java.util.Date;
 
@@ -12,7 +12,7 @@ public class Movie
 
     //status informations
     private Status status;
-    private int vorbestellungen;
+    private int vorbestellungen = -1;
     private Date entliehenBis;
 
     //standort informations
@@ -22,7 +22,6 @@ public class Movie
 
     //useful informations
     private String titel;
-    private String erscheinungsjahr;
     private String kurzbeschreibung;
 
     public Movie(int mediaBarcode, String link)
@@ -93,14 +92,6 @@ public class Movie
 
     public void setTitel(String titel) {
         this.titel = titel;
-    }
-
-    public String getErscheinungsjahr() {
-        return erscheinungsjahr;
-    }
-
-    public void setErscheinungsjahr(String erscheinungsjahr) {
-        this.erscheinungsjahr = erscheinungsjahr;
     }
 
     public String getKurzbeschreibung() {
