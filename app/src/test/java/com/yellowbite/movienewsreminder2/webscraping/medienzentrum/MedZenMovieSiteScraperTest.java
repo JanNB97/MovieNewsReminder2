@@ -1,6 +1,7 @@
 package com.yellowbite.movienewsreminder2.webscraping.medienzentrum;
 
 import com.yellowbite.movienewsreminder2.model.Movie;
+import com.yellowbite.movienewsreminder2.model.enums.Status;
 import com.yellowbite.movienewsreminder2.webscraping.WebscrapingTestHelper;
 
 import junit.framework.Assert;
@@ -11,7 +12,7 @@ import java.io.IOException;
 
 public class MedZenMovieSiteScraperTest
 {
-    public static final String MED_ZEN_THREE_BILLBOARDS_SITE = "https://opac.winbiap.net/mzhr/detail.aspx?data=U29ydD1adWdhbmdzZGF0dW0gKEJpYmxpb3RoZWspJmFtcDtzQz1jXzA9MSUlbV8wPTElJWZfMD02MyUlb18wPTYlJXZfMD0yNS4wOC4yMDE2IDAwOjAwOjAwKytjXzE9MSUlbV8xPTElJWZfMT00MiUlb18xPTElJXZfMT00NlMtRFZEIChTcGllbGZpbG0pKytjXzI9MSUlbV8yPTElJWZfMj00OCUlb18yPTElJXZfMj1NZWRpZW56ZW50cnVtIEhlcnNmZWxkLVJvdGVuYnVyZyZhbXA7Y21kPTEmYW1wO0NhdGFsb2d1ZUlkPTE4ODQyNyZhbXA7cGFnZUlkPTMmYW1wO1NyYz0zJmFtcDtwUz0xMA==-0GF/mWXQzOo=";
+    public static final String SEVEN_WORKOUTS = "https://opac.winbiap.net/mzhr/detail.aspx?data=U29ydD1FcnNjaGVpbnVuZ3NqYWhyJmFtcDtzQz1jXzA9MSUlbV8wPTElJWZfMD0yJSVvXzA9OCUldl8wPXdvcmtvdXQrK2NfMT0xJSVtXzE9MSUlZl8xPTQyJSVvXzE9MSUldl8xPTQ2Uy1EVkQgKFNwaWVsZmlsbSkmYW1wO2NtZD0xJmFtcDtDYXRhbG9ndWVJZD05NzA3NyZhbXA7cGFnZUlkPTImYW1wO1NyYz0yJmFtcDtwUz0xMA==-YVfW/qVrUvQ=";
     public static final String WRONG_URL = "https://lsdkjf.net//dsf.dsfjl//ldskjf.de";
 
     @Test
@@ -30,16 +31,17 @@ public class MedZenMovieSiteScraperTest
         MedZenMovieSiteScraper siteScraper = null;
         try
         {
-            siteScraper = new MedZenMovieSiteScraper(MED_ZEN_THREE_BILLBOARDS_SITE);
+            siteScraper = new MedZenMovieSiteScraper(SEVEN_WORKOUTS);
         } catch (IOException e)
         {
             e.printStackTrace();
             return;
         }
 
-        Movie threeBillboards = siteScraper.getEssentialMovie();
-        Assert.assertNotNull(threeBillboards);
+        Movie sevenWorkouts = siteScraper.getEssentialMovie();
+        Assert.assertNotNull(sevenWorkouts);
 
-        WebscrapingTestHelper.assertEssentialMovie(threeBillboards, 81018134, MED_ZEN_THREE_BILLBOARDS_SITE);
+        WebscrapingTestHelper.assertEssentialMovie(80802980, SEVEN_WORKOUTS, sevenWorkouts);
+    }
     }
 }
