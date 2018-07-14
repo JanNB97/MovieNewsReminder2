@@ -11,11 +11,23 @@ import org.jsoup.nodes.Document;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.net.UnknownHostException;
 import java.util.Date;
 
 public class MedZenMovieListScraperTest
 {
     public static final String MED_ZEN_STAR_TREK_LIST = "https://opac.winbiap.net/mzhr/search.aspx?data=Y21kPTUmYW1wO3NDPWNfMD0xJSVtXzA9MSUlZl8wPTEyJSVvXzA9OCUldl8wPXN0YXIgdHJlaysrY18xPTElJW1fMT0xJSVmXzE9NDIlJW9fMT0xJSV2XzE9NDZTLURWRCAoU3BpZWxmaWxtKSZhbXA7U29ydD1FcnNjaGVpbnVuZ3NqYWhy-%2frgfFQ0Onp8%3d";
+    public static final String WRONG_URL = "https://lsdkjf.net//dsf.dsfjl//ldskjf.de";
+
+    @Test
+    public void testWrongLink()
+    {
+        try
+        {
+            new MedZenMovieListScraper(WRONG_URL);
+            Assert.fail();
+        } catch (IOException ignored) {}
+    }
 
     @Test
     public void testGetEssentialMovie()
@@ -55,7 +67,7 @@ public class MedZenMovieListScraperTest
         MedZenMovieListScraper listScraper = null;
         try
         {
-            listScraper = new MedZenMovieListScraper("https://opac.winbiap.net/mzhr/acquisitions.aspx?data=Y21kPTUmYW1wO3NDPWNfMD0xJSVtXzA9MSUlZl8wPTYzJSVvXzA9NiUldl8wPTI1LjA4LjIwMTYgMDA6MDA6MDArK2NfMT0xJSVtXzE9MSUlZl8xPTQyJSVvXzE9MSUldl8xPTQ2Uy1EVkQgKFNwaWVsZmlsbSkrK2NfMj0xJSVtXzI9MSUlZl8yPTQ4JSVvXzI9MSUldl8yPU1lZGllbnplbnRydW0gSGVyc2ZlbGQtUm90ZW5idXJnJmFtcDtTb3J0PVp1Z2FuZ3NkYXR1bSAoQmlibGlvdGhlayk=-B/ZW6RDg8Xg=");
+            listScraper = new MedZenMovieListScraper(MED_ZEN_STAR_TREK_LIST);
         } catch (IOException e)
         {
             e.printStackTrace();
