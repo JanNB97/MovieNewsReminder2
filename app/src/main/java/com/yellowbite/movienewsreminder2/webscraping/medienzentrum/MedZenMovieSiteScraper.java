@@ -8,6 +8,7 @@ import org.jsoup.nodes.Document;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.logging.Logger;
 
 public class MedZenMovieSiteScraper
 {
@@ -82,56 +83,64 @@ public class MedZenMovieSiteScraper
             return mediaBarcode;
         }
 
-        //TODO
-        return -1;
+        return WebscrapingHelper.getInt(doc, "span.mediabarcode");
     }
 
     // --- get status informations ---
 
     public Status getStatus()
     {
-        // TODO
-        return null;
+        return WebscrapingHelper.getStatus(doc, "span.StatusAvailable");
     }
 
     public int getVorbestellungen()
     {
-        // TODO
-        return -1;
+        String vorbestellungen = WebscrapingHelper.getText(doc, "span.DetailLeftContent");
+
+        if(vorbestellungen == null)
+        {
+            return 0;
+        }
+
+        String[] split = vorbestellungen.split(" ");
+
+        try
+        {
+            return Integer.parseInt(split[0]);
+        } catch (NumberFormatException e)
+        {
+            Logger.getGlobal().severe("\"Vorbestellung\" don't have the right format");
+            return -1;
+        }
     }
 
     public Date getEntliehenBis()
     {
-        // TODO
-        return null;
+        return WebscrapingHelper.getDate(doc, "span.borrowUntil");
     }
 
     // --- get standort informations ---
 
     public String getStandort()
     {
-        // TODO
-        return null;
+        return WebscrapingHelper.getText(doc, "span#ContentPlaceHolderMain_LabellocationContent");
     }
 
     public String getInteressenkreis()
     {
-        // TODO
-        return null;
+        return WebscrapingHelper.getText(doc, "a[title='Alle Medien mit diesem Interessenkreis suchen']");
     }
 
     public String getSignatur()
     {
-        // TODO
-        return null;
+        return WebscrapingHelper.getText(doc, "span.signatur");
     }
 
     // --- get other useful informations ---
 
     public String getTitel()
     {
-        // TODO
-        return null;
+        return WebscrapingHelper.getText(doc,"table.ContentPlaceHolderMain_DataGridInformation > tr > td.DetailInformationEntryContent");
     }
 
     public String getKurzbeschreibung()

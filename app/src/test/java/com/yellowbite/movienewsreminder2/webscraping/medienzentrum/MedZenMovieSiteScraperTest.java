@@ -43,5 +43,21 @@ public class MedZenMovieSiteScraperTest
 
         WebscrapingTestHelper.assertEssentialMovie(80802980, SEVEN_WORKOUTS, sevenWorkouts);
     }
+
+    @Test
+    public void testGetMovie()
+    {
+        MedZenMovieSiteScraper siteScraper = null;
+        try
+        {
+            siteScraper = new MedZenMovieSiteScraper(SEVEN_WORKOUTS);
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+            return;
+        }
+
+        Movie sevenWorkouts = siteScraper.getMovie();
+        // TODO
     }
 }
