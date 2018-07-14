@@ -1,7 +1,6 @@
 package com.yellowbite.movienewsreminder2.model;
 
 import com.yellowbite.movienewsreminder2.model.enums.Status;
-
 import java.util.Date;
 
 public class Movie
@@ -28,6 +27,20 @@ public class Movie
     {
         this.mediaBarcode = mediaBarcode;
         this.link = link;
+    }
+
+    public Movie(int mediaBarcode, String link, Status status, int vorbestellungen, Date entliehenBis, String standort, String interessenkreis, String signatur, String titel, String kurzbeschreibung)
+    {
+        this.mediaBarcode = mediaBarcode;
+        this.link = link;
+        this.status = status;
+        this.vorbestellungen = vorbestellungen;
+        this.entliehenBis = entliehenBis;
+        this.standort = standort;
+        this.interessenkreis = interessenkreis;
+        this.signatur = signatur;
+        this.titel = titel;
+        this.kurzbeschreibung = kurzbeschreibung;
     }
 
     public int getMediaBarcode() {
@@ -100,5 +113,51 @@ public class Movie
 
     public void setKurzbeschreibung(String kurzbeschreibung) {
         this.kurzbeschreibung = kurzbeschreibung;
+    }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if(obj instanceof Movie)
+        {
+            Movie o = (Movie)obj;
+
+            return this.mediaBarcode == o.getMediaBarcode()
+                    && this.link.equals(o.getLink())
+
+                    && equalsAndNotNull(this.status, o.getStatus())
+                    && equalsAndNotNull(this.vorbestellungen, o.getVorbestellungen())
+                    && equalsAndNotNull(this.entliehenBis, o.getEntliehenBis())
+
+                    && equalsAndNotNull(this.standort, o.getStandort())
+                    && equalsAndNotNull(this.interessenkreis, o.getInteressenkreis())
+                    && equalsAndNotNull(this.signatur, o.getSignatur())
+
+                    && equalsAndNotNull(this.titel, o.getTitel())
+                    && equalsAndNotNull(this.kurzbeschreibung, o.getKurzbeschreibung());
+        }
+
+        return false;
+    }
+
+    private boolean equalsAndNotNull(Object a, Object b)
+    {
+        if(a == null && b == null)
+        {
+            return true;
+        }
+
+        if(a == null)
+        {
+            return false;
+        }
+
+        return a.equals(b);
+    }
+
+    @Override
+    public String toString()
+    {
+        return mediaBarcode + ": " + this.titel + " - " + status + ", entliehen bis " + entliehenBis + " (" + vorbestellungen + " Vorbest.)";
     }
 }
