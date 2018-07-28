@@ -1,9 +1,7 @@
 package com.yellowbite.movienewsreminder2.webscraping.medienzentrum;
 
 import android.content.Context;
-
 import com.yellowbite.movienewsreminder2.webscraping.WebscrapingHandler;
-
 import java.io.IOException;
 
 public class MedZenHandler extends WebscrapingHandler
@@ -17,7 +15,7 @@ public class MedZenHandler extends WebscrapingHandler
     @Override
     public boolean hasUpdated(Context context)
     {
-        MedZenMovieListScraper listScraper = null;
+        MedZenMovieListScraper listScraper;
         try
         {
             listScraper = new MedZenMovieListScraper(MED_ZEN_NEW_MOVIES_URL);
