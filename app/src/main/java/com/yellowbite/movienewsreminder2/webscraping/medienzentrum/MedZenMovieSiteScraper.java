@@ -95,12 +95,19 @@ public class MedZenMovieSiteScraper
         {
             movie.setVorbestellungen(0);
             movie.setEntliehenBis(null);
+            return;
         }
-        else
+
+        if(status == Status.VORBESTELLT)
         {
-            movie.setVorbestellungen(this.getVorbestellungen());
+            movie.setEntliehenBis(null);
+        }
+        else if(status == Status.ENTLIEHEN)
+        {
             movie.setEntliehenBis(this.getEntliehenBis());
         }
+
+        movie.setVorbestellungen(this.getVorbestellungen());
     }
 
     // --- get essentials ---
