@@ -158,7 +158,8 @@ public class Movie
     @Override
     public String toString()
     {
-        StringBuilder builder = new StringBuilder(this.mediaBarcode);
+        StringBuilder builder = new StringBuilder();
+        builder.append(mediaBarcode);
 
         if(this.titel != null)
         {
@@ -189,25 +190,25 @@ public class Movie
 
         if(this.standort != null)
         {
-            builder.append("\nStandort: " + this.standort);
+            builder.append("\n\tStandort: " + this.standort);
         }
 
         if(this.interessenkreis != null)
         {
-            builder.append("\nInteressenkreis: " + this.interessenkreis);
+            builder.append("\n\tInteressenkreis: " + this.interessenkreis);
         }
 
         if(this.signatur != null)
         {
-            builder.append("\nSignatur: " + this.signatur);
+            builder.append("\n\tSignatur: " + this.signatur);
         }
 
         if(this.kurzbeschreibung != null)
         {
-            builder.append("\nKurzbeschreibung: " + this.kurzbeschreibung);
+            builder.append("\n\tKurzbeschreibung: " + this.kurzbeschreibung);
         }
 
-        builder.append("\nURL: " + this.url);
+        builder.append("\n\tURL: " + this.url);
 
         return builder.toString();
     }
