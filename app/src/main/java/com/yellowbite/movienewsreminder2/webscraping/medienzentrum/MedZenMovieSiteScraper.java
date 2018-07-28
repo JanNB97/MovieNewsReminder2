@@ -144,20 +144,7 @@ public class MedZenMovieSiteScraper
 
     public String getTitel()
     {
-        String titel = WebscrapingHelper.getText(doc,"table.DetailInformation td.DetailInformationEntryName:containsOwn(Titel):not(:containsOwn(zusatz)) + td");
-
-        if(titel == null)
-        {
-            titel = this.getTitelUnsave();
-        }
-
-        return titel;
-    }
-
-    private String getTitelUnsave()
-    {
-        // TODO
-        return WebscrapingHelper.getText(doc, null);
+        return WebscrapingHelper.getText(doc,"table.DetailInformation td.DetailInformationEntryName:containsOwn(Titel):not(:containsOwn(zusatz)) + td");
     }
 
     public String getKurzbeschreibung()
