@@ -53,6 +53,11 @@ public class WebscrapingHelper
 
     public static String getText(Element element, String cssQuery)
     {
+        return getText(element, cssQuery, 0);
+    }
+
+    public static String getText(Element element, String cssQuery, int index)
+    {
         if(element == null)
         {
             return null;
@@ -65,7 +70,7 @@ public class WebscrapingHelper
             return null;
         }
 
-        return elements.first().text();
+        return elements.get(index).text();
     }
 
     public static int getInt(Element element, String cssQuery)

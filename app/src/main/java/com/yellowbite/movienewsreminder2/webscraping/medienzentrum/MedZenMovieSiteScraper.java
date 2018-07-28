@@ -144,12 +144,11 @@ public class MedZenMovieSiteScraper
 
     public String getTitel()
     {
-        return WebscrapingHelper.getText(doc,"table.ContentPlaceHolderMain_DataGridInformation > tr > td.DetailInformationEntryContent");
+        return WebscrapingHelper.getText(doc,"table.DetailInformation td.DetailInformationEntryContent", 1);
     }
 
     public String getKurzbeschreibung()
     {
-        // TODO
-        return null;
+        return WebscrapingHelper.getText(doc,"table.DetailInformation td.DetailInformationEntryContent", 9);
     }
 }
