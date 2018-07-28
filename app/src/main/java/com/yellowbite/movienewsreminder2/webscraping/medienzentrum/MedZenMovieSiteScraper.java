@@ -144,11 +144,24 @@ public class MedZenMovieSiteScraper
 
     public String getTitel()
     {
-        return WebscrapingHelper.getText(doc,"table.DetailInformation td.DetailInformationEntryContent", 1);
+        String titel = WebscrapingHelper.getText(doc,"table.DetailInformation td.DetailInformationEntryName:contains(Titel):not(:contains(zusatz)) + td");
+
+        if(titel == null)
+        {
+            titel = this.getTitelUnsave();
+        }
+
+        return titel;
+    }
+
+    private String getTitelUnsave()
+    {
+        // TODO
+        return WebscrapingHelper.getText(doc, null);
     }
 
     public String getKurzbeschreibung()
     {
-        return WebscrapingHelper.getText(doc,"table.DetailInformation td.DetailInformationEntryContent", 9);
+        return WebscrapingHelper.getText(doc,"table.DetailInformation td.DetailInformationEntryName:contains(Annotation) + td");
     }
 }
