@@ -10,13 +10,18 @@ public final class WebscrapingTestHelper
 
     public static void assertMovie(Movie expected, Movie actual)
     {
-        Assert.assertEquals(expected, actual);
+        Assert.assertEquals("Expected: " + expected.toLongString() + "\nActual: " + actual.toLongString(),
+                expected, actual);
     }
 
     public static void assertEssentialMovie(Movie expected, Movie actual)
     {
-        Assert.assertEquals(new Movie(expected.getMediaBarcode(), expected.getURL(),
-                null, -1, null, null, null, null, null, null),
+        Assert.assertEquals(
+                "Expected: " + expected.toLongString() + "\nActual: " + actual.toLongString(),
+                new Movie(
+                    expected.getMediaBarcode(), expected.getURL(),
+                    null, -1, null, null, null, null, null, null
+                ),
                 actual);
     }
 

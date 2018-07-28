@@ -158,6 +158,57 @@ public class Movie
     @Override
     public String toString()
     {
-        return mediaBarcode + ": " + this.titel + " - " + status + ", entliehen bis " + entliehenBis + " (" + vorbestellungen + " Vorbest.)";
+        StringBuilder builder = new StringBuilder(this.mediaBarcode);
+
+        if(this.titel != null)
+        {
+            builder.append(": " + this.titel);
+        }
+
+        if(this.status != null)
+        {
+            builder.append(" - " + this.status.getValue());
+        }
+
+        if(this.entliehenBis != null)
+        {
+            builder.append(", entliehen bis " + this.entliehenBis);
+        }
+
+        if(this.vorbestellungen != -1)
+        {
+            builder.append(" (" + this.vorbestellungen + " Vorbest.)");
+        }
+
+        return builder.toString();
+    }
+
+    public String toLongString()
+    {
+        StringBuilder builder = new StringBuilder(this.toString());
+
+        if(this.standort != null)
+        {
+            builder.append("\nStandort: " + this.standort);
+        }
+
+        if(this.interessenkreis != null)
+        {
+            builder.append("\nInteressenkreis: " + this.interessenkreis);
+        }
+
+        if(this.signatur != null)
+        {
+            builder.append("\nSignatur: " + this.signatur);
+        }
+
+        if(this.kurzbeschreibung != null)
+        {
+            builder.append("\nKurzbeschreibung: " + this.kurzbeschreibung);
+        }
+
+        builder.append("\nURL: " + this.url);
+
+        return builder.toString();
     }
 }
