@@ -120,7 +120,7 @@ public class WebscrapingHelper
 
     // --- Returns attributes ---
 
-    public static String getLink(Element element, String cssQuery)
+    public static String getURL(Element element, String cssQuery)
     {
         if(element == null)
         {

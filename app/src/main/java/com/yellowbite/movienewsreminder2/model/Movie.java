@@ -23,16 +23,16 @@ public class Movie
     private String titel;
     private String kurzbeschreibung;
 
-    public Movie(int mediaBarcode, String link)
+    public Movie(int mediaBarcode, String url)
     {
         this.mediaBarcode = mediaBarcode;
-        this.url = link;
+        this.url = url;
     }
 
-    public Movie(int mediaBarcode, String link, Status status, int vorbestellungen, Date entliehenBis, String standort, String interessenkreis, String signatur, String titel, String kurzbeschreibung)
+    public Movie(int mediaBarcode, String url, Status status, int vorbestellungen, Date entliehenBis, String standort, String interessenkreis, String signatur, String titel, String kurzbeschreibung)
     {
         this.mediaBarcode = mediaBarcode;
-        this.url = link;
+        this.url = url;
         this.status = status;
         this.vorbestellungen = vorbestellungen;
         this.entliehenBis = entliehenBis;

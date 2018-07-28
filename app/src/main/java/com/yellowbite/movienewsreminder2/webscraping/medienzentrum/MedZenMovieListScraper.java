@@ -1,19 +1,12 @@
 package com.yellowbite.movienewsreminder2.webscraping.medienzentrum;
 
-import com.yellowbite.movienewsreminder2.model.enums.Status;
 import com.yellowbite.movienewsreminder2.model.Movie;
 import com.yellowbite.movienewsreminder2.webscraping.WebscrapingHelper;
 
-import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.logging.Logger;
 
 public class MedZenMovieListScraper
 {
@@ -33,13 +26,13 @@ public class MedZenMovieListScraper
             return null;
         }
 
-        String link = getLink(index);
-        if(link == null)
+        String url = getURL(index);
+        if(url == null)
         {
             return null;
         }
 
-        return new Movie(mediaBarcode, link);
+        return new Movie(mediaBarcode, url);
     }
 
     private Element getListEntry(int index)
@@ -64,8 +57,8 @@ public class MedZenMovieListScraper
         return WebscrapingHelper.getInt(getListEntry(index), "span.mediaBarcode");
     }
 
-    public String getLink(int index)
+    public String getURL(int index)
     {
-        return WebscrapingHelper.getLink(getListEntry(index), "a[href]");
+        return WebscrapingHelper.getURL(getListEntry(index), "a[href]");
     }
 }
