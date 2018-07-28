@@ -53,14 +53,7 @@ public class MedZenMovieSiteScraper
             return null;
         }
 
-        Status status = this.getStatus();
-        if(status == null)
-        {
-            return null;
-        }
-        movie.setStatus(status);
-        movie.setVorbestellungen(this.getVorbestellungen());
-        movie.setEntliehenBis(this.getEntliehenBis());
+        this.addStatusToMovie(movie);
 
         return movie;
     }
@@ -75,28 +68,39 @@ public class MedZenMovieSiteScraper
         }
 
         //status infos
-        Status status = getStatus();
-        movie.setStatus(status);
-        int vorbestellungen = getVorbestellungen();
-        movie.setVorbestellungen(vorbestellungen);
-        Date entliehenBis = getEntliehenBis();
-        movie.setEntliehenBis(entliehenBis);
+        this.addStatusToMovie(movie);
 
         //standort infos
-        String standort = getStandort();
-        movie.setStandort(standort);
-        String interessenkreis = getInteressenkreis();
-        movie.setInteressenkreis(interessenkreis);
-        String signatur = getSignatur();
-        movie.setSignatur(signatur);
+        movie.setStandort(this.getStandort());
+        movie.setInteressenkreis(this.getInteressenkreis());
+        movie.setSignatur(this.getSignatur());
 
         //useful infos
-        String titel = getTitel();
-        movie.setTitel(titel);
-        String kurzbeschreibung = getKurzbeschreibung();
-        movie.setKurzbeschreibung(kurzbeschreibung);
+        movie.setTitel(getTitel());
+        movie.setKurzbeschreibung(getKurzbeschreibung());
 
         return movie;
+    }
+
+    private void addStatusToMovie(Movie movie)
+    {
+        Status status = this.getStatus();
+        if(status == null)
+        {
+            return;
+        }
+        movie.setStatus(status);
+
+        if(status == Status.VERFUEGBAR)
+        {
+            movie.setVorbestellungen(0);
+            movie.setEntliehenBis(null);
+        }
+        else
+        {
+            movie.setVorbestellungen(this.getVorbestellungen());
+            movie.setEntliehenBis(this.getEntliehenBis());
+        }
     }
 
     // --- get essentials ---
