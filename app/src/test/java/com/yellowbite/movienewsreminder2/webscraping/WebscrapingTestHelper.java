@@ -1,12 +1,8 @@
 package com.yellowbite.movienewsreminder2.webscraping;
 
 import com.yellowbite.movienewsreminder2.model.Movie;
-import com.yellowbite.movienewsreminder2.model.enums.Status;
 
 import junit.framework.Assert;
-
-import java.io.IOException;
-import java.util.Date;
 
 public final class WebscrapingTestHelper
 {
@@ -19,7 +15,7 @@ public final class WebscrapingTestHelper
 
     public static void assertEssentialMovie(Movie expected, Movie actual)
     {
-        Assert.assertEquals(new Movie(expected.getMediaBarcode(), expected.getLink(),
+        Assert.assertEquals(new Movie(expected.getMediaBarcode(), expected.getURL(),
                 null, -1, null, null, null, null, null, null),
                 actual);
     }

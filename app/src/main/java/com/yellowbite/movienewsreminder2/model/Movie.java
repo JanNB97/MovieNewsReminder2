@@ -7,7 +7,7 @@ public class Movie
 {
     // essential
     private final int mediaBarcode;
-    private final String link;
+    private final String url;
 
     //status informations
     private Status status;
@@ -26,13 +26,13 @@ public class Movie
     public Movie(int mediaBarcode, String link)
     {
         this.mediaBarcode = mediaBarcode;
-        this.link = link;
+        this.url = link;
     }
 
     public Movie(int mediaBarcode, String link, Status status, int vorbestellungen, Date entliehenBis, String standort, String interessenkreis, String signatur, String titel, String kurzbeschreibung)
     {
         this.mediaBarcode = mediaBarcode;
-        this.link = link;
+        this.url = link;
         this.status = status;
         this.vorbestellungen = vorbestellungen;
         this.entliehenBis = entliehenBis;
@@ -47,8 +47,8 @@ public class Movie
         return mediaBarcode;
     }
 
-    public String getLink() {
-        return link;
+    public String getURL() {
+        return url;
     }
 
     public Status getStatus() {
@@ -123,7 +123,7 @@ public class Movie
             Movie o = (Movie)obj;
 
             return this.mediaBarcode == o.getMediaBarcode()
-                    && this.link.equals(o.getLink())
+                    && this.url.equals(o.getURL())
 
                     && equalsAndNotNull(this.status, o.getStatus())
                     && equalsAndNotNull(this.vorbestellungen, o.getVorbestellungen())
