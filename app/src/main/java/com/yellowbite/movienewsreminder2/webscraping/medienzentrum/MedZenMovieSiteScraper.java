@@ -12,8 +12,8 @@ import java.util.logging.Logger;
 
 public class MedZenMovieSiteScraper
 {
-    private Document doc;
-    private String url;
+    private final Document doc;
+    private final String url;
     private int mediaBarcode = -1;
 
     public MedZenMovieSiteScraper(String url) throws IOException
@@ -42,6 +42,27 @@ public class MedZenMovieSiteScraper
         }
 
         return new Movie(this.mediaBarcode, url);
+    }
+
+    public Movie getMovieStatus()
+    {
+        Movie movie = this.getEssentialMovie();
+
+        if(movie == null)
+        {
+            return null;
+        }
+
+        Status status = this.getStatus();
+        if(status == null)
+        {
+            return null;
+        }
+        movie.setStatus(status);
+        movie.setVorbestellungen(this.getVorbestellungen());
+        movie.setEntliehenBis(this.getEntliehenBis());
+
+        return movie;
     }
 
     public Movie getMovie()
