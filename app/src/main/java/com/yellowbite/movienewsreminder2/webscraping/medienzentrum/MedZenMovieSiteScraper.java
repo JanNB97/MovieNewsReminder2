@@ -31,13 +31,17 @@ public class MedZenMovieSiteScraper
 
     public Movie getEssentialMovie()
     {
-        int mediaBarcode = getMediaBarcode();
-        if(mediaBarcode == -1)
+        if(this.mediaBarcode == -1)
         {
-            return null;
+            this.mediaBarcode = getMediaBarcode();
+
+            if(this.mediaBarcode == -1)
+            {
+                return null;
+            }
         }
 
-        return new Movie(mediaBarcode, url);
+        return new Movie(this.mediaBarcode, url);
     }
 
     public Movie getMovie()
