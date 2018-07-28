@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 
+import com.yellowbite.movienewsreminder2.ui.NotificationMan;
 import com.yellowbite.movienewsreminder2.webscraping.WebscrapingHandler;
 
 import java.util.ArrayList;
@@ -36,7 +37,7 @@ public class NewsService extends JobService
 
         if(updatedWebscrapers.size() == 1)
         {
-            showNotification(updatedWebscrapers.get(0).getName() + " has been updated", "", R.drawable.ic_launcher_background);
+            NotificationMan.showNotification(getApplicationContext(), updatedWebscrapers.get(0).getName() + " has been updated", "", R.drawable.ic_launcher_background);
         }
         else if(updatedWebscrapers.size() > 1)
         {
@@ -47,25 +48,7 @@ public class NewsService extends JobService
                 builder.append(webscrapingHandler.getName() + "\n");
             }
 
-            showNotification("The following websites have been updated:", builder.toString(), R.drawable.ic_launcher_background);
+            NotificationMan.showNotification(getApplicationContext(),"The following websites have been updated:", builder.toString(), R.drawable.ic_launcher_background);
         }
-    }
-
-    private void showNotification(String title, String text, int icon)
-    {
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(icon)
-                .setContentTitle(title)
-                .setContentText(text)
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setAutoCancel(true);
-
-        PendingIntent contentIntent = PendingIntent.getActivity(getApplicationContext(), 0,
-                new Intent(getApplicationContext(), MainActivity.class), PendingIntent.FLAG_UPDATE_CURRENT);
-
-        mBuilder.setContentIntent(contentIntent);
-
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-        notificationManager.notify(0, mBuilder.build());
     }
 }
