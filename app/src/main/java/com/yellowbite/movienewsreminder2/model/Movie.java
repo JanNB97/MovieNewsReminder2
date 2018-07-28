@@ -1,9 +1,13 @@
 package com.yellowbite.movienewsreminder2.model;
 
+import android.support.annotation.NonNull;
+
 import com.yellowbite.movienewsreminder2.model.enums.Status;
 import java.util.Date;
+import java.util.concurrent.Callable;
+import java.util.logging.Logger;
 
-public class Movie
+public class Movie implements Comparable<Movie>
 {
     // essential
     private final int mediaBarcode;
@@ -115,6 +119,8 @@ public class Movie
         this.kurzbeschreibung = kurzbeschreibung;
     }
 
+    // --- --- --- Overritten methods --- --- ---
+
     @Override
     public boolean equals(Object obj)
     {
@@ -211,5 +217,98 @@ public class Movie
         builder.append("\n\tURL: " + this.url);
 
         return builder.toString();
+    }
+
+    @Override
+    public int compareTo(@NonNull Movie movie)
+    {
+        final int THIS_EARLIER = 1;     // >
+        final int THIS_LATER = -1;    // <
+        final int EQUAL = 0;
+
+        if(this.status == null && movie.getStatus() == null)
+        {
+            Logger.getGlobal().severe(movie.getTitel() + " and " + this.titel + ": status is null");
+            return EQUAL;
+        }
+
+        if(this.status == null)
+        {
+            Logger.getGlobal().severe(this.getTitel() + ": status is null");
+            return THIS_LATER;
+        }
+
+        if(movie.getStatus() == null)
+        {
+            Logger.getGlobal().severe(movie.getTitel() + ": status is null");
+            return THIS_EARLIER;
+        }
+
+        switch (this.status)
+        {
+            case VERFUEGBAR:
+                if(movie.getStatus() == Status.VERFUEGBAR)
+                {
+                    return this.titel.compareTo(movie.getTitel());
+                }
+                return THIS_EARLIER;
+
+            case ENTLIEHEN:
+                switch (movie.getStatus())
+                {
+                    case VERFUEGBAR:
+                        return THIS_LATER;
+                    case ENTLIEHEN:
+                        return this.compareTo(() -> this.titel.compareTo(movie.getTitel()),
+                                () -> this.vorbestellungen - movie.getVorbestellungen(),
+                                () -> this.entliehenBis.compareTo(movie.getEntliehenBis()));
+                    case VORBESTELLT:
+                        return this.compareTo(() -> THIS_EARLIER,
+                                () -> this.vorbestellungen - movie.getVorbestellungen());
+                }
+
+            case VORBESTELLT:
+                switch (movie.getStatus())
+                {
+                    case VERFUEGBAR:
+                        return THIS_LATER;
+                    case ENTLIEHEN:
+                        return this.compareTo(() -> THIS_LATER,
+                                () -> this.vorbestellungen - movie.getVorbestellungen());
+                    case VORBESTELLT:
+                        return this.compareTo(() -> this.titel.compareTo(movie.getTitel()),
+                                () -> this.vorbestellungen - movie.getVorbestellungen());
+                }
+        }
+
+        Logger.getGlobal().severe("Something went wrong: Reached unreachable statement");
+        return EQUAL;
+    }
+
+    private int compareTo(Callable<Integer> lastCompare, Callable<Integer> ... compares)
+    {
+        for(Callable<Integer> callable : compares)
+        {
+            try
+            {
+                int i = callable.call();
+
+                if(i != 0)
+                {
+                    return i;
+                }
+            } catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
+
+        try
+        {
+            return lastCompare.call();
+        } catch (Exception e)
+        {
+            return 0;
+        }
     }
 }
