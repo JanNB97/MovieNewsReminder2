@@ -28,14 +28,12 @@ public class MedZenMovieSiteScraperTest
             "Dance with me!", "Billy Blanks jr. macht seinem Namen alle Ehre: Der Sohn des legendären Tae-Bo-Erfinders Billy Blanks hat mit \"Dance With Me!\" ein Workout vorgelegt, bei dem die Pfunde nur so purzeln. Spielerisch kombiniert er lässige Dance-Moves aus den Bereichen Hip-Hop, Country und Bollywood zu einer schweißtreibenden Choreographie, die sich leicht erlernen lässt. \"Dance With Me\" ist daher für Einsteiger ebenso geeignet wie für Profis. Inklusive Cardio-Bursts zur Maximierung des Kalorienverbrauchs."
     );
 
-    private static final String WRONG_URL = "https://lsdkjf.net//dsf.dsfjl//ldskjf.de";
-
     @Test
-    public void testWrongLink()
+    public void testWrongURL()
     {
         try
         {
-            new MedZenMovieSiteScraper(WRONG_URL);
+            new MedZenMovieSiteScraper(WebscrapingTestHelper.WRONG_URL);
             Assert.fail();
         } catch (IOException ignored){}
     }

@@ -10,6 +10,8 @@ import java.util.Date;
 
 public final class WebscrapingTestHelper
 {
+    public static final String WRONG_URL = "https://lsdkjf.net//dsf.dsfjl//ldskjf.de";
+
     public static void assertMovie(Movie expected, Movie actual)
     {
         Assert.assertEquals(expected, actual);
