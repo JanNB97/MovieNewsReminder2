@@ -14,7 +14,7 @@ public class MedZenMovieSiteScraperTest
 {
     public static final String SEVEN_WORKOUTS_LINK = "https://opac.winbiap.net/mzhr/detail.aspx?data=U29ydD1FcnNjaGVpbnVuZ3NqYWhyJmFtcDtzQz1jXzA9MSUlbV8wPTElJWZfMD0yJSVvXzA9OCUldl8wPXdvcmtvdXQrK2NfMT0xJSVtXzE9MSUlZl8xPTQyJSVvXzE9MSUldl8xPTQ2Uy1EVkQgKFNwaWVsZmlsbSkmYW1wO2NtZD0xJmFtcDtDYXRhbG9ndWVJZD05NzA3NyZhbXA7cGFnZUlkPTImYW1wO1NyYz0yJmFtcDtwUz0xMA==-YVfW/qVrUvQ=";
 
-    public static final Movie sevenWorkoutsExpected = new Movie(
+    public static final Movie SEVEN_WORKOUTS_EXPECTED = new Movie(
             80802980, SEVEN_WORKOUTS_LINK,
             Status.VERFUEGBAR, 0, null,
             "Sport", "Sport", "Sachthema",
@@ -38,7 +38,7 @@ public class MedZenMovieSiteScraperTest
         MedZenMovieSiteScraper siteScraper = null;
         try
         {
-            siteScraper = new MedZenMovieSiteScraper(sevenWorkoutsExpected.getLink());
+            siteScraper = new MedZenMovieSiteScraper(SEVEN_WORKOUTS_EXPECTED.getLink());
         } catch (IOException e)
         {
             e.printStackTrace();
@@ -48,7 +48,7 @@ public class MedZenMovieSiteScraperTest
         Movie sevenWorkouts = siteScraper.getEssentialMovie();
         Assert.assertNotNull(sevenWorkouts);
 
-        WebscrapingTestHelper.assertEssentialMovie(sevenWorkouts.getMediaBarcode(), sevenWorkouts.getLink(), sevenWorkouts);
+        WebscrapingTestHelper.assertEssentialMovie(SEVEN_WORKOUTS_EXPECTED, sevenWorkouts);
     }
 
     @Test
@@ -57,13 +57,13 @@ public class MedZenMovieSiteScraperTest
         MedZenMovieSiteScraper siteScraper = null;
         try
         {
-            siteScraper = new MedZenMovieSiteScraper(sevenWorkoutsExpected.getLink());
+            siteScraper = new MedZenMovieSiteScraper(SEVEN_WORKOUTS_EXPECTED.getLink());
         } catch (IOException e)
         {
             e.printStackTrace();
             return;
         }
 
-        WebscrapingTestHelper.assertMovie(sevenWorkoutsExpected, siteScraper.getMovie());
+        WebscrapingTestHelper.assertMovie(SEVEN_WORKOUTS_EXPECTED, siteScraper.getMovie());
     }
 }

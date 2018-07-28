@@ -5,6 +5,7 @@ import com.yellowbite.movienewsreminder2.model.enums.Status;
 
 import junit.framework.Assert;
 
+import java.io.IOException;
 import java.util.Date;
 
 public final class WebscrapingTestHelper
@@ -14,10 +15,20 @@ public final class WebscrapingTestHelper
         Assert.assertEquals(expected, actual);
     }
 
-    public static void assertEssentialMovie(int expectedMediaBarcode, String expectedLink, Movie actual)
+    public static void assertEssentialMovie(Movie expected, Movie actual)
     {
-        Assert.assertEquals(new Movie(expectedMediaBarcode, expectedLink,
+        Assert.assertEquals(new Movie(expected.getMediaBarcode(), expected.getLink(),
                 null, -1, null, null, null, null, null, null),
                 actual);
+    }
+
+    public static void assertIndexOutOfBoundException(Runnable runnable)
+    {
+        try
+        {
+            runnable.run();
+            Assert.fail();
+        }
+        catch (IndexOutOfBoundsException ignored) {}
     }
 }
