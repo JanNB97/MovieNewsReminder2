@@ -11,6 +11,7 @@ import android.support.v7.util.SortedList;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -41,6 +42,7 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        this.removeTitleBar();
         setContentView(R.layout.activity_main);
 
         Button addMovieButton = findViewById(R.id.addMovieButton);
@@ -59,6 +61,12 @@ public class MainActivity extends AppCompatActivity
         movieRecyclerView.setAdapter(movieAdapter);
 
         NewsService.start(this);
+    }
+
+    private void removeTitleBar()
+    {
+        requestWindowFeature(Window.FEATURE_NO_TITLE);//will hide the title
+        getSupportActionBar().hide(); //hide the title bar
     }
 
     private void handleOnAddMovieClicked(View view)
