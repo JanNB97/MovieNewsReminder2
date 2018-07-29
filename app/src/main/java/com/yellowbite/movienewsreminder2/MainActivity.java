@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.yellowbite.movienewsreminder2.model.Movie;
 import com.yellowbite.movienewsreminder2.ui.MovieAdapter;
+import com.yellowbite.movienewsreminder2.webscraping.medienzentrum.MedZenFileMan;
 import com.yellowbite.movienewsreminder2.webscraping.medienzentrum.MedZenMovieSiteScraper;
 
 import java.io.IOException;
@@ -57,7 +58,7 @@ public class MainActivity extends AppCompatActivity
         movieRecyclerView.setLayoutManager(layoutManager);
 
         // specify adapter
-        movieAdapter = new MovieAdapter(getMovies());
+        movieAdapter = new MovieAdapter(this.loadMyMovies());
         movieRecyclerView.setAdapter(movieAdapter);
 
         NewsService.start(this);
@@ -71,36 +72,30 @@ public class MainActivity extends AppCompatActivity
 
     private void handleOnAddMovieClicked(View view)
     {
-        // TODO
+        String url = urlTextView.getText().toString();
+        Movie movie;
+        try
+        {
+            movie = MedZenMovieSiteScraper.getMovie(url);
+        } catch (IOException ignored)
+        {
+            return;
+        }
+        finally
+        {
+            urlTextView.setText("");
+        }
+
+        myMovies.add(movie);
+        Collections.sort(myMovies);
+        this.movieAdapter.notifyDataSetChanged();
+        MedZenFileMan.setMyMovies(this, myMovies);
     }
 
-    private List<Movie> getMovies()
+    private List<Movie> loadMyMovies()
     {
-        List<Movie> movies = new ArrayList<>();
-
-        try
-        {
-            movies.add(new MedZenMovieSiteScraper("https://opac.winbiap.net/mzhr/detail.aspx?data=U29ydD1FcnNjaGVpbnVuZ3NqYWhyJmFtcDtzQz1jXzA9MSUlbV8wPTElJWZfMD0xMiUlb18wPTglJXZfMD1zdGFyIHRyZWsrK2NfMT0xJSVtXzE9MSUlZl8xPTQyJSVvXzE9MSUldl8xPTQ2Uy1EVkQgKFNwaWVsZmlsbSkmYW1wO2NtZD0xJmFtcDtDYXRhbG9ndWVJZD04ODk2MCZhbXA7cGFnZUlkPTImYW1wO1NyYz0yJmFtcDtwUz0xMA==-vUBCHfQlATY=").getMovie());
-        } catch (IOException e)
-        {
-            e.printStackTrace();
-        }
-        try
-        {
-            movies.add(new MedZenMovieSiteScraper("https://opac.winbiap.net/mzhr/detail.aspx?data=U29ydD1FcnNjaGVpbnVuZ3NqYWhyJmFtcDtzQz1jXzA9MSUlbV8wPTElJWZfMD0xMiUlb18wPTglJXZfMD1zdGFyIHRyZWsrK2NfMT0xJSVtXzE9MSUlZl8xPTQyJSVvXzE9MSUldl8xPTQ2Uy1EVkQgKFNwaWVsZmlsbSkmYW1wO2NtZD0xJmFtcDtDYXRhbG9ndWVJZD05ODg3MyZhbXA7cGFnZUlkPTImYW1wO1NyYz0yJmFtcDtwUz0xMA==-oN6/Zdmw3kA=").getMovie());
-        } catch (IOException e)
-        {
-            e.printStackTrace();
-        }
-        try
-        {
-            movies.add(new MedZenMovieSiteScraper("https://opac.winbiap.net/mzhr/detail.aspx?data=U29ydD1FcnNjaGVpbnVuZ3NqYWhyJmFtcDtzQz1jXzA9MSUlbV8wPTElJWZfMD0xMiUlb18wPTglJXZfMD1zdGFyIHRyZWsrK2NfMT0xJSVtXzE9MSUlZl8xPTQyJSVvXzE9MSUldl8xPTQ2Uy1EVkQgKFNwaWVsZmlsbSkmYW1wO2NtZD0xJmFtcDtDYXRhbG9ndWVJZD04ODk2MCZhbXA7cGFnZUlkPTImYW1wO1NyYz0yJmFtcDtwUz0xMA==-vUBCHfQlATY=").getMovie());
-        } catch (IOException e)
-        {
-            e.printStackTrace();
-        }
-
-        Collections.sort(movies);
-        return movies;
+        myMovies = MedZenFileMan.getMyMovies(this);
+        MedZenMovieSiteScraper.getMovies(myMovies);
+        return myMovies;
     }
 }
