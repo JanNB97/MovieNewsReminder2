@@ -222,8 +222,8 @@ public class Movie implements Comparable<Movie>
     @Override
     public int compareTo(@NonNull Movie movie)
     {
-        final int THIS_EARLIER = 1;     // >
-        final int THIS_LATER = -1;    // <
+        final int THIS_EARLIER = -1;     // >
+        final int THIS_LATER = 1;    // <
         final int EQUAL = 0;
 
         if(this.status == null && movie.getStatus() == null)
