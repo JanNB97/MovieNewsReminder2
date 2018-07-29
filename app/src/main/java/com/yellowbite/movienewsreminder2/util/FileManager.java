@@ -138,6 +138,43 @@ public class FileManager
         }
     }
 
+    // --- --- --- Delete --- --- ---
+    public static void delete(Context context, String filename, int index)
+    {
+        delete(context, filename, index, index + 1);
+    }
+
+    public static void deleteLast(Context context, String filename)
+    {
+        deleteLast(context, filename, 1);
+    }
+
+    public static void deleteLast(Context context, String filename, int numOfDelOperations)
+    {
+        List<String> lines = readAll(context, filename);
+
+        for(int i = 0; i < numOfDelOperations; i++)
+        {
+            lines.remove(lines.size() - 1);
+        }
+
+        write(context, filename, lines);
+    }
+
+    public static void delete(Context context, String filename, int startInclusive, int endExclusive)
+    {
+        List<String> lines = readAll(context, filename);
+
+        int removeOperations = endExclusive - startInclusive;
+
+        for(int i = 0; i < removeOperations; i++)
+        {
+            lines.remove(startInclusive);
+        }
+
+        write(context, filename, lines);
+    }
+
     // --- --- --- Check for file existence --- --- ---
     private static void createFileIfNotExists(Context context, String filename)
     {
