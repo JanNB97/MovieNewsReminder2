@@ -7,7 +7,10 @@ import com.yellowbite.movienewsreminder2.webscraping.WebscrapingHelper;
 import org.jsoup.nodes.Document;
 
 import java.io.IOException;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.logging.Logger;
@@ -97,6 +100,24 @@ public class MedZenMovieSiteScraper
         Movie movie = getEssentialMovie();
         this.getMovie(movie);
         return movie;
+    }
+
+    public static Movie getMovie(String url) throws IOException
+    {
+        return new MedZenMovieSiteScraper(url).getMovie();
+    }
+
+    public static void getMovies(List<Movie> essentialMovies)
+    {
+        for(Movie movie : essentialMovies)
+        {
+            try
+            {
+                new MedZenMovieSiteScraper(movie).getMovie(movie);
+            } catch (IOException ignored) {}
+        }
+
+        Collections.sort(essentialMovies);
     }
 
     private void addStatusToMovie(Movie movie) throws IOException
