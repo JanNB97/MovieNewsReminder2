@@ -164,7 +164,7 @@ public class MedZenMovieSiteScraper
 
     private Status getStatus() throws IOException
     {
-        return WebscrapingHelper.getStatus(this.getDoc(), "span.StatusAvailable");
+        return WebscrapingHelper.getStatus(this.getDoc(), "#ContentPlaceHolderMain_LabelStatus");
     }
 
     private int getVorbestellungen() throws IOException
