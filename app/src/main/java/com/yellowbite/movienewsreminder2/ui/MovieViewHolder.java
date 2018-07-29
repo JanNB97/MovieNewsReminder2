@@ -10,7 +10,7 @@ public class MovieViewHolder extends RecyclerView.ViewHolder
     public MovieViewHolder(TextView v)
     {
         super(v);
-        textView = v;
+        this.textView = v;
     }
 
     public TextView getTextView()
