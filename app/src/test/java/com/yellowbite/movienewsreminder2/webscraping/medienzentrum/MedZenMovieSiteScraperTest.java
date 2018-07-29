@@ -33,7 +33,7 @@ public class MedZenMovieSiteScraperTest
     {
         try
         {
-            new MedZenMovieSiteScraper(WebscrapingTestHelper.WRONG_URL);
+            new MedZenMovieSiteScraper(WebscrapingTestHelper.WRONG_URL).getEntliehenBis();
             Assert.fail();
         } catch (IOException ignored){}
     }
@@ -41,17 +41,16 @@ public class MedZenMovieSiteScraperTest
     @Test
     public void testGetEssentialMovie()
     {
-        MedZenMovieSiteScraper siteScraper = null;
+        MedZenMovieSiteScraper siteScraper = new MedZenMovieSiteScraper(SEVEN_WORKOUTS_EXPECTED.getURL());
+
+        Movie sevenWorkouts = null;
         try
         {
-            siteScraper = new MedZenMovieSiteScraper(SEVEN_WORKOUTS_EXPECTED.getURL());
+            sevenWorkouts = siteScraper.getEssentialMovie();
         } catch (IOException e)
         {
             e.printStackTrace();
-            return;
         }
-
-        Movie sevenWorkouts = siteScraper.getEssentialMovie();
         Assert.assertNotNull(sevenWorkouts);
 
         WebscrapingTestHelper.assertEssentialMovie(SEVEN_WORKOUTS_EXPECTED, sevenWorkouts);
@@ -60,33 +59,28 @@ public class MedZenMovieSiteScraperTest
     @Test
     public void testGetMovie()
     {
-        MedZenMovieSiteScraper siteScraper;
+        MedZenMovieSiteScraper siteScraper = new MedZenMovieSiteScraper(DANCE_WITH_ME_EXPECTED.getURL());
 
         try
         {
-            siteScraper = new MedZenMovieSiteScraper(DANCE_WITH_ME_EXPECTED.getURL());
+            WebscrapingTestHelper.assertMovie(DANCE_WITH_ME_EXPECTED, siteScraper.getMovie());
         } catch (IOException e)
         {
             e.printStackTrace();
-            return;
         }
-
-        WebscrapingTestHelper.assertMovie(DANCE_WITH_ME_EXPECTED, siteScraper.getMovie());
     }
 
     @Test
     public void testGetMovieWithHiddenTitle()
     {
-        MedZenMovieSiteScraper siteScraper;
+        MedZenMovieSiteScraper siteScraper = new MedZenMovieSiteScraper(SEVEN_WORKOUTS_EXPECTED.getURL());
+
         try
         {
-            siteScraper = new MedZenMovieSiteScraper(SEVEN_WORKOUTS_EXPECTED.getURL());
+            WebscrapingTestHelper.assertMovie(SEVEN_WORKOUTS_EXPECTED, siteScraper.getMovie());
         } catch (IOException e)
         {
             e.printStackTrace();
-            return;
         }
-
-        WebscrapingTestHelper.assertMovie(SEVEN_WORKOUTS_EXPECTED, siteScraper.getMovie());
     }
 }

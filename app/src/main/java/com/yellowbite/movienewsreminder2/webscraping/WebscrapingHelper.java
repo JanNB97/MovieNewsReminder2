@@ -12,10 +12,20 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.logging.Logger;
 
 public class WebscrapingHelper
 {
+    public static Future<Document> getFutureDoc(String url)
+    {
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        return executor.submit(() -> Jsoup.connect(url).maxBodySize(0).get());
+    }
+
     public static Document getDoc(String url) throws IOException
     {
         return Jsoup.connect(url).maxBodySize(0).get();

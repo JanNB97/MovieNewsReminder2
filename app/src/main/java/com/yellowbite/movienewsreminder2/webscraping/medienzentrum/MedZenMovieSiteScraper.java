@@ -8,28 +8,45 @@ import org.jsoup.nodes.Document;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 import java.util.logging.Logger;
 
 public class MedZenMovieSiteScraper
 {
-    private final Document doc;
+    private final Future<Document> futureDoc;
     private final String url;
     private int mediaBarcode = -1;
 
-    public MedZenMovieSiteScraper(String url) throws IOException
+    public MedZenMovieSiteScraper(String url)
     {
         this.url = url;
-        this.doc = WebscrapingHelper.getDoc(url);
+        this.futureDoc = WebscrapingHelper.getFutureDoc(url);
     }
 
-    public MedZenMovieSiteScraper(int mediaBarcode, String url) throws IOException
+    public MedZenMovieSiteScraper(int mediaBarcode, String url)
     {
         this.url = url;
-        this.doc = WebscrapingHelper.getDoc(url);
+        this.futureDoc = WebscrapingHelper.getFutureDoc(url);
         this.mediaBarcode = mediaBarcode;
     }
 
-    public Movie getEssentialMovie()
+    private Document getDoc() throws IOException
+    {
+        try
+        {
+            return futureDoc.get();
+        } catch (InterruptedException e)
+        {
+            e.printStackTrace();
+            return null;
+        } catch (ExecutionException e)
+        {
+            throw new IOException();
+        }
+    }
+
+    public Movie getEssentialMovie() throws IOException
     {
         if(this.mediaBarcode == -1)
         {
@@ -44,7 +61,7 @@ public class MedZenMovieSiteScraper
         return new Movie(this.mediaBarcode, url);
     }
 
-    public Movie getMovieStatus()
+    public Movie getMovieStatus() throws IOException
     {
         Movie movie = this.getEssentialMovie();
 
@@ -58,7 +75,7 @@ public class MedZenMovieSiteScraper
         return movie;
     }
 
-    public Movie getMovie()
+    public Movie getMovie() throws IOException
     {
         //essentials
         Movie movie = getEssentialMovie();
@@ -82,7 +99,7 @@ public class MedZenMovieSiteScraper
         return movie;
     }
 
-    private void addStatusToMovie(Movie movie)
+    private void addStatusToMovie(Movie movie) throws IOException
     {
         Status status = this.getStatus();
         if(status == null)
@@ -112,26 +129,26 @@ public class MedZenMovieSiteScraper
 
     // --- get essentials ---
 
-    public int getMediaBarcode()
+    public int getMediaBarcode() throws IOException
     {
         if(this.mediaBarcode != -1)
         {
             return mediaBarcode;
         }
 
-        return WebscrapingHelper.getInt(doc, "span.mediabarcode");
+        return WebscrapingHelper.getInt(this.getDoc(), "span.mediabarcode");
     }
 
     // --- get status informations ---
 
-    public Status getStatus()
+    public Status getStatus() throws IOException
     {
-        return WebscrapingHelper.getStatus(doc, "span.StatusAvailable");
+        return WebscrapingHelper.getStatus(this.getDoc(), "span.StatusAvailable");
     }
 
-    public int getVorbestellungen()
+    public int getVorbestellungen() throws IOException
     {
-        String vorbestellungen = WebscrapingHelper.getText(doc, "span.DetailLeftContent");
+        String vorbestellungen = WebscrapingHelper.getText(getDoc(), "span.DetailLeftContent");
 
         if(vorbestellungen == null)
         {
@@ -150,37 +167,37 @@ public class MedZenMovieSiteScraper
         }
     }
 
-    public Date getEntliehenBis()
+    public Date getEntliehenBis() throws IOException
     {
-        return WebscrapingHelper.getDate(doc, "span.borrowUntil");
+        return WebscrapingHelper.getDate(this.getDoc(), "span.borrowUntil");
     }
 
     // --- get standort informations ---
 
-    public String getStandort()
+    public String getStandort() throws IOException
     {
-        return WebscrapingHelper.getText(doc, "span#ContentPlaceHolderMain_LabellocationContent");
+        return WebscrapingHelper.getText(getDoc(), "span#ContentPlaceHolderMain_LabellocationContent");
     }
 
-    public String getInteressenkreis()
+    public String getInteressenkreis() throws IOException
     {
-        return WebscrapingHelper.getText(doc, "a[title='Alle Medien mit diesem Interessenkreis suchen']");
+        return WebscrapingHelper.getText(getDoc(), "a[title='Alle Medien mit diesem Interessenkreis suchen']");
     }
 
-    public String getSignatur()
+    public String getSignatur() throws IOException
     {
-        return WebscrapingHelper.getText(doc, "span.signatur");
+        return WebscrapingHelper.getText(this.getDoc(), "span.signatur");
     }
 
     // --- get other useful informations ---
 
-    public String getTitel()
+    public String getTitel() throws IOException
     {
-        return WebscrapingHelper.getText(doc,"table.DetailInformation td.DetailInformationEntryName:containsOwn(Titel):not(:containsOwn(zusatz)) + td");
+        return WebscrapingHelper.getText(this.getDoc(),"table.DetailInformation td.DetailInformationEntryName:containsOwn(Titel):not(:containsOwn(zusatz)) + td");
     }
 
-    public String getKurzbeschreibung()
+    public String getKurzbeschreibung() throws IOException
     {
-        return WebscrapingHelper.getText(doc,"table.DetailInformation td.DetailInformationEntryName:containsOwn(Annotation) + td");
+        return WebscrapingHelper.getText(this.getDoc(),"table.DetailInformation td.DetailInformationEntryName:containsOwn(Annotation) + td");
     }
 }
