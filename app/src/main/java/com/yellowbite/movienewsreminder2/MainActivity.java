@@ -11,6 +11,8 @@ import android.support.v7.util.SortedList;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.yellowbite.movienewsreminder2.model.Movie;
 import com.yellowbite.movienewsreminder2.ui.MovieAdapter;
@@ -31,6 +33,8 @@ public class MainActivity extends AppCompatActivity
     private RecyclerView.Adapter movieAdapter;
     private RecyclerView.LayoutManager layoutManager;
 
+    private TextView urlTextView;
+
     private List<Movie> myMovies;
 
     @Override
@@ -39,8 +43,10 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        FloatingActionButton addMovieButton = findViewById(R.id.floatingActionButton);
+        Button addMovieButton = findViewById(R.id.addMovieButton);
         addMovieButton.setOnClickListener(this::handleOnAddMovieClicked);
+
+        urlTextView = findViewById(R.id.urlTextView);
 
         movieRecyclerView = (RecyclerView) findViewById(R.id.movieRecyclerView);
 
