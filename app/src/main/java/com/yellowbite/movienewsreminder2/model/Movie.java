@@ -226,7 +226,7 @@ public class Movie implements Comparable<Movie>
         final int THIS_LATER = 1;    // <
         final int EQUAL = 0;
 
-        if(this.status == null && movie.getStatus() == null)
+        if(this.status == null && movie.status == null)
         {
             Logger.getGlobal().severe(movie.getTitel() + " and " + this.titel + ": status is null");
             return EQUAL;
@@ -238,7 +238,7 @@ public class Movie implements Comparable<Movie>
             return THIS_LATER;
         }
 
-        if(movie.getStatus() == null)
+        if(movie.status == null)
         {
             Logger.getGlobal().severe(movie.getTitel() + ": status is null");
             return THIS_EARLIER;
@@ -246,19 +246,43 @@ public class Movie implements Comparable<Movie>
 
         Callable<Integer> compareEntliehenBis = () -> this.entliehenBis.compareTo(movie.getEntliehenBis());
         Callable<Integer> compareVorbestellungen = () -> this.vorbestellungen - movie.getVorbestellungen();
-        Callable<Integer> compareTitel = () -> this.titel.compareTo(movie.getTitel());
+        Callable<Integer> compareTitel = () -> {
+            if(titel == null && movie.titel == null)
+            {
+                return EQUAL;
+            }
+
+            if(titel == null)
+            {
+                return THIS_LATER;
+            }
+
+            if(movie.titel == null)
+            {
+                return THIS_EARLIER;
+            }
+
+            return this.titel.compareTo(movie.getTitel());
+        };
 
         switch (this.status)
         {
             case VERFUEGBAR:
                 if(movie.getStatus() == Status.VERFUEGBAR)
                 {
-                    return this.titel.compareTo(movie.getTitel());
+                    try
+                    {
+                        return compareTitel.call();
+                    } catch (Exception e)
+                    {
+                        Logger.getGlobal().severe("Something went wrong");
+                        return EQUAL;
+                    }
                 }
                 return THIS_EARLIER;
 
             case ENTLIEHEN:
-                switch (movie.getStatus())
+                switch (movie.status)
                 {
                     case VERFUEGBAR:
                         return THIS_LATER;
@@ -271,7 +295,7 @@ public class Movie implements Comparable<Movie>
                 }
 
             case VORBESTELLT:
-                switch (movie.getStatus())
+                switch (movie.status)
                 {
                     case VERFUEGBAR:
                         return THIS_LATER;
@@ -311,6 +335,7 @@ public class Movie implements Comparable<Movie>
             return lastCompare.call();
         } catch (Exception e)
         {
+            Logger.getGlobal().severe("Something went wrong");
             return 0;
         }
     }

@@ -18,19 +18,23 @@ public class MovieTest
     {
         Movie verfuegbarA = getStatusMovie("verfuegbarA", Status.VERFUEGBAR, 0, null);
         Movie verfuegbarB = getStatusMovie("verfuegbarB", Status.VERFUEGBAR, 0, null);
+        Movie verfuegbarNull = getStatusMovie(null, Status.VERFUEGBAR, 0, null);
 
         Movie entliehen_1Vor_11_07_2018 = getStatusMovie("entliehen_1Vor_11_07_2018", Status.ENTLIEHEN, 1, "11.07.2018");
         Movie entliehen_1Vor_13_07_2018 = getStatusMovie("entliehen_1Vor_13_07_2018", Status.ENTLIEHEN, 1, "13.07.2018");
         Movie entliehen_2Vor_10_07_2018 = getStatusMovie("entliehen_2Vor_10_07_2018", Status.ENTLIEHEN, 2, "10.07.2018");
         Movie entliehen_3Vor_12_07_2018A = getStatusMovie("entliehen_3Vor_12_07_2018A", Status.ENTLIEHEN, 3, "12.07.2018");
         Movie entliehen_3Vor_12_07_2018B = getStatusMovie("entliehen_3Vor_12_07_2018B", Status.ENTLIEHEN, 3, "12.07.2018");
+        Movie entliehen_3Vor_12_07_2018Null = getStatusMovie(null, Status.ENTLIEHEN, 3, "12.07.2018");
 
         Movie vorbestellt_1 = getStatusMovie("vorbestellt_1", Status.VORBESTELLT, 1, null);
         Movie vorbestellt_2A = getStatusMovie("vorbestellt_2A", Status.VORBESTELLT, 2, null);
         Movie vorbestellt_2B = getStatusMovie("vorbestellt_2B", Status.VORBESTELLT, 2, null);
+        Movie vorbestellt_2Null = getStatusMovie(null, Status.VORBESTELLT, 2, null);
 
         // 'verfuegbar' and 'verfuegbar'
         this.assertEarlierThan(verfuegbarA, verfuegbarB);
+        this.assertEarlierThan(verfuegbarA, verfuegbarNull);
 
         // 'verfuegbar' and 'entliehen'
         this.assertEarlierThan(verfuegbarA, entliehen_1Vor_11_07_2018);
@@ -43,6 +47,7 @@ public class MovieTest
         this.assertEarlierThan(entliehen_1Vor_11_07_2018, entliehen_2Vor_10_07_2018);
         this.assertEarlierThan(entliehen_1Vor_13_07_2018, entliehen_3Vor_12_07_2018A);
         this.assertEarlierThan(entliehen_3Vor_12_07_2018A, entliehen_3Vor_12_07_2018B);
+        this.assertEarlierThan(entliehen_3Vor_12_07_2018A, entliehen_3Vor_12_07_2018Null);
 
         // 'entliehen' and 'vorbestellt'
         this.assertEarlierThan(entliehen_1Vor_11_07_2018, vorbestellt_1);
@@ -51,6 +56,7 @@ public class MovieTest
         // 'vorbestellt' and 'vorbestellt'
         this.assertEarlierThan(vorbestellt_1, vorbestellt_2A);
         this.assertEarlierThan(vorbestellt_2A, vorbestellt_2B);
+        this.assertEarlierThan(vorbestellt_2A, vorbestellt_2Null);
     }
 
     private void assertEarlierThan(Movie m1, Movie m2)      // <
