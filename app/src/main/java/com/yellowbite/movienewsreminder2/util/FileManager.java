@@ -15,7 +15,33 @@ import java.util.List;
 public class FileManager
 {
     // --- --- --- Read --- --- ---
-    public static List<String> read(Context context, String filename)
+    public static String read(Context context, String filename)
+    {
+        String line = null;
+        BufferedReader reader = null;
+
+        try {
+            reader = new BufferedReader(new InputStreamReader(context.openFileInput(filename)));
+            line = reader.readLine();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        finally {
+            if(reader != null)
+            {
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return line;
+    }
+
+    public static List<String> readAll(Context context, String filename)
     {
         ArrayList<String> readLines = new ArrayList<>();
 
@@ -56,7 +82,7 @@ public class FileManager
 
     public static void insert(Context context, String filename, String line, int index)
     {
-        List<String> lines = read(context, filename);
+        List<String> lines = readAll(context, filename);
         lines.add(index, line);
         write(context, filename, lines);
     }

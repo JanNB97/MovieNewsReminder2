@@ -30,14 +30,14 @@ public class MedZenHandler extends WebscrapingHandler
         }
 
 
-        Movie thisMovie = listScraper.getEssentialMovie(0);
-        int lastBarcode = MedZenFileMan.getLastBarcode(context);
+        int thisBarcode = listScraper.getEssentialMovie(0).getMediaBarcode();
+        int lastBarcode = MedZenFileMan.getNewestBarcode(context);
 
-        if(lastBarcode == -1 || thisMovie.getMediaBarcode() != lastBarcode)
+        if(lastBarcode == -1 || thisBarcode != lastBarcode)
         {
             // TODO - Write new movies in file
 
-            MedZenFileMan.setLastBarcode(context, thisMovie.getMediaBarcode(), thisMovie.getURL());
+            MedZenFileMan.setNewestBarcode(context, thisBarcode);
             return true;
         }
         else
