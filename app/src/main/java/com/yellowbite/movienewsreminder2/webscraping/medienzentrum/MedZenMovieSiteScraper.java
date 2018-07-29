@@ -55,27 +55,28 @@ public class MedZenMovieSiteScraper
         return new Movie(this.mediaBarcode, url);
     }
 
-    public Movie getMovieStatus() throws IOException
+    public void getMovieStatus(Movie movie) throws IOException
     {
-        Movie movie = this.getEssentialMovie();
-
         if(movie == null)
         {
-            return null;
+            return;
         }
 
         this.addStatusToMovie(movie);
+    }
 
+    public Movie getMovieStatus() throws IOException
+    {
+        Movie movie = this.getEssentialMovie();
+        this.getMovieStatus(movie);
         return movie;
     }
 
-    public Movie getMovie() throws IOException
+    public void getMovie(Movie movie) throws IOException
     {
-        //essentials
-        Movie movie = getEssentialMovie();
         if(movie == null)
         {
-            return null;
+            return;
         }
 
         //status infos
@@ -89,7 +90,12 @@ public class MedZenMovieSiteScraper
         //useful infos
         movie.setTitel(getTitel());
         movie.setKurzbeschreibung(getKurzbeschreibung());
+    }
 
+    public Movie getMovie() throws IOException
+    {
+        Movie movie = getEssentialMovie();
+        this.getMovie(movie);
         return movie;
     }
 
