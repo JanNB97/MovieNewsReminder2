@@ -6,41 +6,36 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.yellowbite.movienewsreminder2.R;
+import com.yellowbite.movienewsreminder2.model.Movie;
 
-public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder>
 {
-    private String[] myDataset;
+    private List<Movie> movies;
 
-    static class ViewHolder extends RecyclerView.ViewHolder
+    public MovieAdapter(List<Movie> movies)
     {
-        TextView mTextView;
-        ViewHolder(TextView v)
-        {
-            super(v);
-            mTextView = v;
-        }
-    }
-
-    public MovieAdapter(String[] myDataset)
-    {
-        this.myDataset = myDataset;
+        this.movies = movies;
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
+    public MovieViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
-        return new ViewHolder(new TextView(parent.getContext()));
+        return new MovieViewHolder(new TextView(parent.getContext()));
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position)
+    public void onBindViewHolder(MovieViewHolder holder, int position)
     {
-        holder.mTextView.setText(myDataset[position]);
+        holder.getTextView().setText(movies.get(position).toString());
     }
 
     @Override
     public int getItemCount()
     {
-        return myDataset.length;
+        return movies.size();
     }
 }
