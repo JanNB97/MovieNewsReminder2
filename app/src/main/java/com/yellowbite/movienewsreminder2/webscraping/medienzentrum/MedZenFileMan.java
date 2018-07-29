@@ -39,14 +39,7 @@ public class MedZenFileMan
     // --- --- --- New movies --- --- ---
     public static List<Movie> getNewMovies(Context context)
     {
-        List<Movie> newMovies = new ArrayList<>();
-
-        for(String s : FileManager.readAll(context, NEW_MOVIES))
-        {
-            newMovies.add(toMovie(s));
-        }
-
-        return newMovies;
+        return toMovies(FileManager.readAll(context, NEW_MOVIES));
     }
 
     public static void addNewMovies(Context context, Collection<Movie> newMovies)
@@ -60,6 +53,16 @@ public class MedZenFileMan
     }
 
     // --- --- --- my movies --- --- ---
+    public static List<Movie> getMyMovies(Context context)
+    {
+        List<String> lines = FileManager.readAll(context, MY_MOVIES);
+        return toMovies(lines);
+    }
+
+    public static void setMyMovies(Context context, Collection<Movie> myMovies)
+    {
+        FileManager.write(context, MY_MOVIES, toLines(myMovies));
+    }
 
     // --- --- --- hot movies --- --- ---
     // TODO
@@ -110,5 +113,17 @@ public class MedZenFileMan
     private static String toLine(Movie movie)
     {
         return movie.getMediaBarcode() + ";" + movie.getURL();
+    }
+
+    private static List<Movie> toMovies(Collection<String> strings)
+    {
+        List<Movie> movies = new ArrayList<>();
+
+        for(String s : strings)
+        {
+            movies.add(toMovie(s));
+        }
+
+        return movies;
     }
 }
