@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity
         movieAdapter = new MovieAdapter(getMovies());
         movieRecyclerView.setAdapter(movieAdapter);
 
-        this.startNewsJob();
+        NewsService.start(this);
     }
 
     private List<Movie> getMovies()
@@ -75,24 +75,5 @@ public class MainActivity extends AppCompatActivity
 
         Collections.sort(movies);
         return movies;
-    }
-
-    private void startNewsJob()
-    {
-        ComponentName name = new ComponentName(this, NewsService.class);
-        JobInfo job = (new JobInfo.Builder(0, name))
-                .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
-                .setPeriodic(1000 * 60 * 30)
-                .build();
-
-        JobScheduler jobScheduler = (JobScheduler)getSystemService(Context.JOB_SCHEDULER_SERVICE);
-        if(jobScheduler != null)
-        {
-            jobScheduler.schedule(job);
-        }
-        else
-        {
-            Logger.getGlobal().severe("jobScheduler is null");
-        }
     }
 }
