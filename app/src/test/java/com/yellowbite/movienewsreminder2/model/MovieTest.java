@@ -1,6 +1,7 @@
 package com.yellowbite.movienewsreminder2.model;
 
 import com.yellowbite.movienewsreminder2.model.enums.Status;
+import com.yellowbite.movienewsreminder2.util.DateHelper;
 
 import junit.framework.Assert;
 
@@ -71,11 +72,7 @@ public class MovieTest
 
         if(status == Status.ENTLIEHEN)
         {
-            DateFormat df = new SimpleDateFormat("dd.mm.yyyy");
-            try
-            {
-                entliehenBisDate = df.parse(entliehenBis);
-            } catch (ParseException ignored) {}
+            entliehenBisDate = DateHelper.toDate(entliehenBis);
         }
 
         return new Movie(100000, "url",
