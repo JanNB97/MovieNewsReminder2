@@ -244,6 +244,10 @@ public class Movie implements Comparable<Movie>
             return THIS_EARLIER;
         }
 
+        Callable<Integer> compareEntliehenBis = () -> this.entliehenBis.compareTo(movie.getEntliehenBis());
+        Callable<Integer> compareVorbestellungen = () -> this.vorbestellungen - movie.getVorbestellungen();
+        Callable<Integer> compareTitel = () -> this.titel.compareTo(movie.getTitel());
+
         switch (this.status)
         {
             case VERFUEGBAR:
@@ -259,12 +263,11 @@ public class Movie implements Comparable<Movie>
                     case VERFUEGBAR:
                         return THIS_LATER;
                     case ENTLIEHEN:
-                        return this.compareTo(() -> this.titel.compareTo(movie.getTitel()),
-                                () -> this.vorbestellungen - movie.getVorbestellungen(),
-                                () -> this.entliehenBis.compareTo(movie.getEntliehenBis()));
+                        return this.compareTo(/* Last */ compareTitel,
+                                /* First checked */ compareVorbestellungen, compareEntliehenBis);
                     case VORBESTELLT:
-                        return this.compareTo(() -> THIS_EARLIER,
-                                () -> this.vorbestellungen - movie.getVorbestellungen());
+                        return this.compareTo(/* Last */ () -> THIS_EARLIER,
+                                /* First checked */ compareVorbestellungen);
                 }
 
             case VORBESTELLT:
@@ -273,11 +276,11 @@ public class Movie implements Comparable<Movie>
                     case VERFUEGBAR:
                         return THIS_LATER;
                     case ENTLIEHEN:
-                        return this.compareTo(() -> THIS_LATER,
-                                () -> this.vorbestellungen - movie.getVorbestellungen());
+                        return this.compareTo(/* Last */ () -> THIS_LATER,
+                                /* First checked */ compareVorbestellungen);
                     case VORBESTELLT:
-                        return this.compareTo(() -> this.titel.compareTo(movie.getTitel()),
-                                () -> this.vorbestellungen - movie.getVorbestellungen());
+                        return this.compareTo(/* Last */ compareTitel,
+                                /* First checked */ compareVorbestellungen);
                 }
         }
 
