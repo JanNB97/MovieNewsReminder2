@@ -54,9 +54,15 @@ public class MedZenFileMan
         FileManager.insertFirst(context, NEW_MOVIES, toLines(newMovies));
     }
 
-    // --- --- --- hot movies --- --- ---
+    public static void deleteLastNewMovie(Context context)
+    {
+        FileManager.deleteLast(context, NEW_MOVIES);
+    }
 
     // --- --- --- my movies --- --- ---
+
+    // --- --- --- hot movies --- --- ---
+    // TODO
 
     // --- --- --- Movie file parsing --- --- ---
     //barcode;url
