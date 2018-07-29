@@ -23,11 +23,11 @@
         android:id="@+id/floatingActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_marginEnd="20dp"
         android:clickable="true"
         android:src="@android:drawable/ic_input_add"
-        android:tint="?attr/colorBackgroundFloating"
-        app:backgroundTint="?android:attr/colorSecondary"
         app:fabSize="normal"
-        tools:layout_editor_absoluteX="298dp"
-        tools:layout_editor_absoluteY="424dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 </android.support.constraint.ConstraintLayout>
