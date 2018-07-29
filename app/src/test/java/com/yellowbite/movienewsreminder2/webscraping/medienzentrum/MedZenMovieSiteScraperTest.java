@@ -66,7 +66,7 @@ public class MedZenMovieSiteScraperTest
     }
 
     @Test
-    public void testGetMovie()
+    public void testGetMovieVerfuegbar()
     {
         MedZenMovieSiteScraper siteScraper = new MedZenMovieSiteScraper(DANCE_WITH_ME_EXPECTED.getURL());
 
@@ -77,7 +77,11 @@ public class MedZenMovieSiteScraperTest
         {
             e.printStackTrace();
         }
+    }
 
+    @Test
+    public void testGetMovieEntliehen()
+    {
         try
         {
             WebscrapingTestHelper.assertMovie(DIE_EISKOENINGIN_EXPECTED, MedZenMovieSiteScraper.getMovie(DIE_EISKOENINGIN_URL));
