@@ -24,6 +24,13 @@ public class MedZenMovieSiteScraper
         this.futureDoc = WebscrapingHelper.getFutureDoc(url);
     }
 
+    public MedZenMovieSiteScraper(Movie movie)
+    {
+        this.url = movie.getURL();
+        this.futureDoc = WebscrapingHelper.getFutureDoc(url);
+        this.mediaBarcode = movie.getMediaBarcode();
+    }
+
     public MedZenMovieSiteScraper(int mediaBarcode, String url)
     {
         this.url = url;
