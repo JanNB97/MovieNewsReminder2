@@ -14,7 +14,8 @@ import java.util.List;
 
 public class FileManager
 {
-    public static List<String> readLines(Context context, String filename)
+    // --- --- --- Read --- --- ---
+    public static List<String> read(Context context, String filename)
     {
         ArrayList<String> readLines = new ArrayList<>();
 
@@ -47,24 +48,40 @@ public class FileManager
         return readLines;
     }
 
-    public static void writeLine(Context context, String filename, String line, int mode)
+    // --- --- --- Write --- --- ---
+    public static void insertFirst(Context context, String filename, String line)
     {
-        if(fileExists(context, filename) == false)
-        {
-            File file = new File(context.getFilesDir(), filename);
-            try {
-                file.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+        insert(context, filename, line, 0);
+    }
+
+    public static void insert(Context context, String filename, String line, int index)
+    {
+        List<String> lines = read(context, filename);
+        lines.add(index, line);
+        write(context, filename, lines);
+    }
+
+    public static void write(Context context, String filename, String line)
+    {
+        List<String> lines = new ArrayList<>();
+        lines.add(line);
+        write(context, filename, lines);
+    }
+
+    public static void write(Context context, String filename, List<String> lines)
+    {
+        createFileIfNotExists(context, filename);
 
         BufferedWriter writer = null;
 
         try {
             writer = new BufferedWriter(new OutputStreamWriter(context.openFileOutput(filename, Context.MODE_PRIVATE)));
-            writer.write(line);
-            writer.newLine();
+
+            for(String line : lines)
+            {
+                writer.write(line);
+                writer.newLine();
+            }
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -77,6 +94,20 @@ public class FileManager
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+            }
+        }
+    }
+
+    // --- --- --- Check for file existence --- --- ---
+    private static void createFileIfNotExists(Context context, String filename)
+    {
+        if(fileExists(context, filename) == false)
+        {
+            File file = new File(context.getFilesDir(), filename);
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
     }

@@ -8,14 +8,16 @@ import java.util.List;
 
 public class MedZenFileMan
 {
+    private static final String NEW_MOVIE_LIST_FILE_NAME = "newMovieList.txt";
+
     // --- Barcode of the last movie, which was added to the database ---
     public static int getLastBarcode(Context context)
     {
-        List<String> barcodes = FileManager.readLines(context, "medienzentrum.txt");
+        List<String> barcodes = FileManager.read(context, NEW_MOVIE_LIST_FILE_NAME);
 
         if(barcodes.size() > 0)
         {
-            return Integer.parseInt(barcodes.get(0));
+            return Integer.parseInt(barcodes.get(0).split(";")[0]);
         }
         else
         {
@@ -23,8 +25,8 @@ public class MedZenFileMan
         }
     }
 
-    public static void setLastBarcode(Context context, int barcode)
+    public static void setLastBarcode(Context context, int barcode, String url)
     {
-        FileManager.writeLine(context, "medienzentrum.txt", Integer.toString(barcode), Context.MODE_PRIVATE);
+        FileManager.write(context, NEW_MOVIE_LIST_FILE_NAME, barcode + ";" + url);
     }
 }

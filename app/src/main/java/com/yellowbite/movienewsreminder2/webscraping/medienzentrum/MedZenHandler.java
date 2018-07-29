@@ -1,6 +1,8 @@
 package com.yellowbite.movienewsreminder2.webscraping.medienzentrum;
 
 import android.content.Context;
+
+import com.yellowbite.movienewsreminder2.model.Movie;
 import com.yellowbite.movienewsreminder2.webscraping.WebscrapingHandler;
 import java.io.IOException;
 
@@ -28,14 +30,14 @@ public class MedZenHandler extends WebscrapingHandler
         }
 
 
-        int thisBarcode = listScraper.getMediaBarcode(0);
+        Movie thisMovie = listScraper.getEssentialMovie(0);
         int lastBarcode = MedZenFileMan.getLastBarcode(context);
 
-        if(lastBarcode == -1 || thisBarcode != lastBarcode)
+        if(lastBarcode == -1 || thisMovie.getMediaBarcode() != lastBarcode)
         {
             // TODO - Write new movies in file
 
-            MedZenFileMan.setLastBarcode(context, thisBarcode);
+            MedZenFileMan.setLastBarcode(context, thisMovie.getMediaBarcode(), thisMovie.getURL());
             return true;
         }
         else
