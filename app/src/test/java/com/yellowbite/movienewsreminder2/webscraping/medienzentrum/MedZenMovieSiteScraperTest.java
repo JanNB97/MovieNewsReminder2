@@ -33,7 +33,7 @@ public class MedZenMovieSiteScraperTest
     {
         try
         {
-            new MedZenMovieSiteScraper(WebscrapingTestHelper.WRONG_URL).getEntliehenBis();
+            new MedZenMovieSiteScraper(WebscrapingTestHelper.WRONG_URL).getMovie();
             Assert.fail();
         } catch (IOException ignored){}
     }
