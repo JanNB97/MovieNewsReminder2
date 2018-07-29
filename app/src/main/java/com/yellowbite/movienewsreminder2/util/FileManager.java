@@ -75,19 +75,32 @@ public class FileManager
         return readLines;
     }
 
-    // --- --- --- Write --- --- ---
+    // --- --- --- Insert --- --- ---
     public static void insertFirst(Context context, String filename, String line)
     {
         insert(context, filename, line, 0);
     }
 
-    public static void insert(Context context, String filename, String line, int index)
+    public static void insertFirst(Context context, String filename, Collection<String> lines)
     {
-        List<String> lines = readAll(context, filename);
-        lines.add(index, line);
-        write(context, filename, lines);
+        insert(context, filename, lines, 0);
     }
 
+    public static void insert(Context context, String filename, String line, int index)
+    {
+        Collection<String> lines = new ArrayList<>();
+        lines.add(line);
+        insert(context, filename, lines, index);
+    }
+
+    public static void insert(Context context, String filename, Collection<String> lines, int index)
+    {
+        List<String> s = readAll(context, filename);
+        s.addAll(index, lines);
+        write(context, filename, s);
+    }
+
+    // --- --- --- Write --- --- ---
     public static void write(Context context, String filename, String line)
     {
         List<String> lines = new ArrayList<>();
