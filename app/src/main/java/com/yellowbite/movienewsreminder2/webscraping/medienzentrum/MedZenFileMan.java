@@ -5,6 +5,8 @@ import android.content.Context;
 import com.yellowbite.movienewsreminder2.model.Movie;
 import com.yellowbite.movienewsreminder2.util.FileManager;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class MedZenFileMan
@@ -35,6 +37,22 @@ public class MedZenFileMan
     }
 
     // --- --- --- New movies --- --- ---
+    public static List<Movie> getNewMovies(Context context)
+    {
+        List<Movie> newMovies = new ArrayList<>();
+
+        for(String s : FileManager.readAll(context, NEW_MOVIES))
+        {
+            newMovies.add(toMovie(s));
+        }
+
+        return newMovies;
+    }
+
+    public static void addNewMovies(Context context, Collection<Movie> newMovies)
+    {
+        FileManager.insertFirst(context, NEW_MOVIES, toLines(newMovies));
+    }
 
     // --- --- --- hot movies --- --- ---
 
@@ -69,6 +87,18 @@ public class MedZenFileMan
         String url = split[1];
 
         return new Movie(barcode, url);
+    }
+
+    private static List<String> toLines(Collection<Movie> movies)
+    {
+        List<String> strings = new ArrayList<>();
+
+        for(Movie movie : movies)
+        {
+            strings.add(toLine(movie));
+        }
+
+        return strings;
     }
 
     private static String toLine(Movie movie)
