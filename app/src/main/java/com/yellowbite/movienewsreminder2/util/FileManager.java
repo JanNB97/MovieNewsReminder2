@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class FileManager
@@ -94,7 +95,7 @@ public class FileManager
         write(context, filename, lines);
     }
 
-    public static void write(Context context, String filename, List<String> lines)
+    public static void write(Context context, String filename, Collection<String> lines)
     {
         createFileIfNotExists(context, filename);
 
