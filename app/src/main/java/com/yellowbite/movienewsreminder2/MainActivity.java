@@ -4,11 +4,13 @@ import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
 import android.content.ComponentName;
 import android.content.Context;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.util.SortedList;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.yellowbite.movienewsreminder2.model.Movie;
 import com.yellowbite.movienewsreminder2.ui.MovieAdapter;
@@ -29,11 +31,17 @@ public class MainActivity extends AppCompatActivity
     private RecyclerView.Adapter movieAdapter;
     private RecyclerView.LayoutManager layoutManager;
 
+    private List<Movie> myMovies;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        FloatingActionButton addMovieButton = findViewById(R.id.floatingActionButton);
+        addMovieButton.setOnClickListener(this::handleOnAddMovieClicked);
+
         movieRecyclerView = (RecyclerView) findViewById(R.id.movieRecyclerView);
 
         // use linear layout manager
@@ -45,6 +53,11 @@ public class MainActivity extends AppCompatActivity
         movieRecyclerView.setAdapter(movieAdapter);
 
         NewsService.start(this);
+    }
+
+    private void handleOnAddMovieClicked(View view)
+    {
+        // TODO
     }
 
     private List<Movie> getMovies()
