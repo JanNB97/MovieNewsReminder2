@@ -180,6 +180,11 @@ public class Movie implements Comparable<Movie>
             builder.append("\n\tStandort: " + this.standort);
         }
 
+        if(this.zugang != null)
+        {
+            builder.append("\n\tZugang: " + DateHelper.toString(this.zugang));
+        }
+
         builder.append("\n\tURL: " + this.url);
 
         return builder.toString();
