@@ -3,6 +3,7 @@ package com.yellowbite.movienewsreminder2.ui;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.yellowbite.movienewsreminder2.R;
@@ -24,13 +25,13 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder>
     @Override
     public MovieViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
-        return new MovieViewHolder(new TextView(parent.getContext()));
+        return new MovieViewHolder(new LinearLayout(parent.getContext()));
     }
 
     @Override
     public void onBindViewHolder(MovieViewHolder holder, int position)
     {
-        holder.getTextView().setText(movies.get(position).toString());
+        holder.showMovie(movies.get(position));
     }
 
     @Override
