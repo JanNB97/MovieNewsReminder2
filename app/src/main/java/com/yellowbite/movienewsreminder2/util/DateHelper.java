@@ -29,4 +29,10 @@ public class DateHelper
     {
         return df.format(date);
     }
+
+    public static String getWeekday(Date date)
+    {
+        // TODO
+        return null;
+    }
 }

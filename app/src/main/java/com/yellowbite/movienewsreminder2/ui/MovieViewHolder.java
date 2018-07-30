@@ -12,6 +12,7 @@ import com.yellowbite.movienewsreminder2.util.DateHelper;
 public class MovieViewHolder extends RecyclerView.ViewHolder
 {
     private TextView titelTextView;
+    private TextView daysUntilVerfuegbar;
     private TextView statusTextView;
 
     public MovieViewHolder(View view)
@@ -19,6 +20,7 @@ public class MovieViewHolder extends RecyclerView.ViewHolder
         super(view);
 
         this.titelTextView = view.findViewById(R.id.title);
+        this.daysUntilVerfuegbar = view.findViewById(R.id.daysUntilVerfuegbar);
         this.statusTextView = view.findViewById(R.id.status);
     }
 
@@ -44,6 +46,7 @@ public class MovieViewHolder extends RecyclerView.ViewHolder
                 else
                 {
                     statusTextView.setText(DateHelper.toString(movie.getEntliehenBis()));
+                    daysUntilVerfuegbar.setText(DateHelper.getWeekday(movie.getEntliehenBis()));
                 }
 
                 break;
