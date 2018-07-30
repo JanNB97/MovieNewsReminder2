@@ -41,12 +41,12 @@ public class MovieViewHolder extends RecyclerView.ViewHolder
             case ENTLIEHEN:
                 if(movie.getVorbestellungen() > 0)
                 {
-                    statusTextView.setText(movie.getVorbestellungen() + " Vor.");
+                    daysUntilVerfuegbar.setText(DateHelper.getWeekdayAsMessage(movie.getEntliehenBis()));
                 }
                 else
                 {
                     statusTextView.setText(DateHelper.toString(movie.getEntliehenBis()));
-                    daysUntilVerfuegbar.setText(DateHelper.getWeekday(movie.getEntliehenBis()));
+                    daysUntilVerfuegbar.setText(DateHelper.getWeekdayAsMessage(movie.getEntliehenBis()));
                 }
 
                 break;

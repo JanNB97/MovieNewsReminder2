@@ -1,6 +1,7 @@
 package com.yellowbite.movienewsreminder2.webscraping;
 
 import com.yellowbite.movienewsreminder2.model.enums.Status;
+import com.yellowbite.movienewsreminder2.util.DateHelper;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -109,8 +110,6 @@ public class WebscrapingHelper
             return null;
         }
 
-        DateFormat df = new SimpleDateFormat("dd.mm.yyyy");
-
         String string = getText(element, cssQuery);
 
         if(string == null)
@@ -119,12 +118,7 @@ public class WebscrapingHelper
         }
         else
         {
-            try {
-                return df.parse(string);
-            } catch (ParseException e) {
-                e.printStackTrace();
-                return null;
-            }
+            return DateHelper.toDate(string);
         }
     }
 
