@@ -3,6 +3,8 @@ package com.yellowbite.movienewsreminder2.model;
 import android.support.annotation.NonNull;
 
 import com.yellowbite.movienewsreminder2.model.enums.Status;
+import com.yellowbite.movienewsreminder2.util.DateHelper;
+
 import java.util.Date;
 import java.util.concurrent.Callable;
 import java.util.logging.Logger;
@@ -146,7 +148,7 @@ public class Movie implements Comparable<Movie>
 
         if(this.entliehenBis != null)
         {
-            builder.append(", entliehen bis " + this.entliehenBis);
+            builder.append(", entliehen bis " + DateHelper.toString(this.entliehenBis));
         }
 
         if(this.vorbestellungen != -1)

@@ -7,9 +7,15 @@ import java.util.Date;
 
 public class DateHelper
 {
+    private static final DateFormat df;
+
+    static
+    {
+        df = new SimpleDateFormat("dd.mm.yyyy");
+    }
+
     public static Date toDate(String string)
     {
-        DateFormat df = new SimpleDateFormat("dd.mm.yyyy");
         try
         {
             return df.parse(string);
@@ -17,5 +23,10 @@ public class DateHelper
         {
             return null;
         }
+    }
+
+    public static String toString(Date date)
+    {
+        return df.format(date);
     }
 }
