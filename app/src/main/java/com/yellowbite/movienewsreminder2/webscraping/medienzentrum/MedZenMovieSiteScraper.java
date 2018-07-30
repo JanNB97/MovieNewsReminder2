@@ -87,12 +87,9 @@ public class MedZenMovieSiteScraper
 
         //standort infos
         movie.setStandort(this.getStandort());
-        movie.setInteressenkreis(this.getInteressenkreis());
-        movie.setSignatur(this.getSignatur());
 
         //useful infos
         movie.setTitel(getTitel());
-        movie.setKurzbeschreibung(getKurzbeschreibung());
     }
 
     public Movie getMovie() throws IOException
@@ -164,7 +161,7 @@ public class MedZenMovieSiteScraper
 
     private Status getStatus() throws IOException
     {
-        return WebscrapingHelper.getStatus(this.getDoc(), "#ContentPlaceHolderMain_LabelStatus");
+        return WebscrapingHelper.getStatus(this.getDoc(), "span#ContentPlaceHolderMain_LabelStatus");
     }
 
     private int getVorbestellungen() throws IOException
@@ -200,26 +197,11 @@ public class MedZenMovieSiteScraper
         return WebscrapingHelper.getText(getDoc(), "span#ContentPlaceHolderMain_LabellocationContent");
     }
 
-    private String getInteressenkreis() throws IOException
-    {
-        return WebscrapingHelper.getText(getDoc(), "a[title='Alle Medien mit diesem Interessenkreis suchen']");
-    }
-
-    private String getSignatur() throws IOException
-    {
-        return WebscrapingHelper.getText(this.getDoc(), "span.signatur");
-    }
-
     // --- get other useful informations ---
 
     private String getTitel() throws IOException
     {
         return WebscrapingHelper.getText(this.getDoc(),"table.DetailInformation td.DetailInformationEntryName:containsOwn(Titel):not(:containsOwn(zusatz)) + td");
-    }
-
-    private String getKurzbeschreibung() throws IOException
-    {
-        return WebscrapingHelper.getText(this.getDoc(),"table.DetailInformation td.DetailInformationEntryName:containsOwn(Annotation) + td");
     }
 
     // --- --- --- Others --- --- ---

@@ -20,21 +20,21 @@ public class MedZenMovieSiteScraperTest
     private static final Movie SEVEN_WORKOUTS_EXPECTED = new Movie(
             80802980, SEVEN_WORKOUTS_URL,
             Status.VERFUEGBAR, 0, null,
-            "Sport", "Sport", "Sachthema",
-            "7 Workouts", "7 Workouts - nur 15 Minuten am Tag Miniaufwand - Maxieffekt! Keine Zeit zum Beeilen? Es ist nicht zu wenig Zeit, die man hat, sondern zu viel Zeit, die man nicht nutzt! Diese DVD bietet 7 Quick-Workouts für alle, die flott fit werden oder bleiben wollen. Mit nur 15 Minuten Training lässt sich auch im stressigsten Alltag eine Menge für Körper und Gesundheit tun! Jedes Programm dieser DVD bietet einen anderen Schwerpunkt, um schnell in Bestform zu kommen: 1 Das Cardio-Programm bringt Herz und Kreislauf auf Touren - für mehr Ausdauer mit Fett-weg-Effekt. 2 Das BBP-Programm für die klassischen Problemzonen Bauch, Beine & Po macht schlank und sexy - denn straffe Muskeln sind Make-up von innen.");
+            "Sport",
+            "7 Workouts");
 
     private static final Movie DANCE_WITH_ME_EXPECTED = new Movie(
             80710247, DANCE_WITH_ME_URL,
             Status.VERFUEGBAR, 0, null,
-            "Sport", "Sport", "Sachthema / Sport",
-            "Dance with me!", "Billy Blanks jr. macht seinem Namen alle Ehre: Der Sohn des legendären Tae-Bo-Erfinders Billy Blanks hat mit \"Dance With Me!\" ein Workout vorgelegt, bei dem die Pfunde nur so purzeln. Spielerisch kombiniert er lässige Dance-Moves aus den Bereichen Hip-Hop, Country und Bollywood zu einer schweißtreibenden Choreographie, die sich leicht erlernen lässt. \"Dance With Me\" ist daher für Einsteiger ebenso geeignet wie für Profis. Inklusive Cardio-Bursts zur Maximierung des Kalorienverbrauchs."
+            "Sport",
+            "Dance with me!"
     );
 
     private static final Movie DIE_EISKOENINGIN_EXPECTED = new Movie(
             80891534, DIE_EISKOENINGIN_URL,
             Status.ENTLIEHEN, 0, DateHelper.toDate("02.08.2018"),
-            "Walt Disney", "Walt Disney", "Walt Disney",
-            "Die Eiskönigin - Völlig Unverfroren", "Von den Machern von Rapunzel kommt eine humorvolle und spannende Geschichte, die dein Herz zum Schmelzen bringen wird. Die furchtlose Königstochter Anna macht sich zusammen mit dem schroffen Naturburschen Kristoff und seinem treuen Rentier Sven auf eine abenteuerliche Reise, um ihre Schwester Elsa zu finden, deren eisige Kräfte das Königreich Arendelle in ewigem Winter gefangen halten. In einem spannenden Rennen um die Rettung des Königreichs ringen Anna und Kristoff nicht nur mit den Naturelementen, sie begegnen auch mystischen Trollen und dem urkomischen Schneemann Olaf (gesprochen von Hape Kerkeling), der zu einem unverzichtbaren Begleiter auf ihrer Reise wird."
+            "Walt Disney",
+            "Die Eiskönigin - Völlig Unverfroren"
     );
 
     @Test

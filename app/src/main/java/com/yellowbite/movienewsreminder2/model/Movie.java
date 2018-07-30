@@ -20,12 +20,9 @@ public class Movie implements Comparable<Movie>
 
     //standort informations
     private String standort;
-    private String interessenkreis;
-    private String signatur;
 
     //useful informations
     private String titel;
-    private String kurzbeschreibung;
 
     public Movie(int mediaBarcode, String url)
     {
@@ -33,7 +30,7 @@ public class Movie implements Comparable<Movie>
         this.url = url;
     }
 
-    public Movie(int mediaBarcode, String url, Status status, int vorbestellungen, Date entliehenBis, String standort, String interessenkreis, String signatur, String titel, String kurzbeschreibung)
+    public Movie(int mediaBarcode, String url, Status status, int vorbestellungen, Date entliehenBis, String standort, String titel)
     {
         this.mediaBarcode = mediaBarcode;
         this.url = url;
@@ -41,10 +38,7 @@ public class Movie implements Comparable<Movie>
         this.vorbestellungen = vorbestellungen;
         this.entliehenBis = entliehenBis;
         this.standort = standort;
-        this.interessenkreis = interessenkreis;
-        this.signatur = signatur;
         this.titel = titel;
-        this.kurzbeschreibung = kurzbeschreibung;
     }
 
     public int getMediaBarcode() {
@@ -87,36 +81,12 @@ public class Movie implements Comparable<Movie>
         this.standort = standort;
     }
 
-    public String getInteressenkreis() {
-        return interessenkreis;
-    }
-
-    public void setInteressenkreis(String interessenkreis) {
-        this.interessenkreis = interessenkreis;
-    }
-
-    public String getSignatur() {
-        return signatur;
-    }
-
-    public void setSignatur(String signatur) {
-        this.signatur = signatur;
-    }
-
     public String getTitel() {
         return titel;
     }
 
     public void setTitel(String titel) {
         this.titel = titel;
-    }
-
-    public String getKurzbeschreibung() {
-        return kurzbeschreibung;
-    }
-
-    public void setKurzbeschreibung(String kurzbeschreibung) {
-        this.kurzbeschreibung = kurzbeschreibung;
     }
 
     // --- --- --- Overritten methods --- --- ---
@@ -136,11 +106,8 @@ public class Movie implements Comparable<Movie>
                     && equalsAndNotNull(this.entliehenBis, o.getEntliehenBis())
 
                     && equalsAndNotNull(this.standort, o.getStandort())
-                    && equalsAndNotNull(this.interessenkreis, o.getInteressenkreis())
-                    && equalsAndNotNull(this.signatur, o.getSignatur())
 
-                    && equalsAndNotNull(this.titel, o.getTitel())
-                    && equalsAndNotNull(this.kurzbeschreibung, o.getKurzbeschreibung());
+                    && equalsAndNotNull(this.titel, o.getTitel());
         }
 
         return false;
@@ -197,21 +164,6 @@ public class Movie implements Comparable<Movie>
         if(this.standort != null)
         {
             builder.append("\n\tStandort: " + this.standort);
-        }
-
-        if(this.interessenkreis != null)
-        {
-            builder.append("\n\tInteressenkreis: " + this.interessenkreis);
-        }
-
-        if(this.signatur != null)
-        {
-            builder.append("\n\tSignatur: " + this.signatur);
-        }
-
-        if(this.kurzbeschreibung != null)
-        {
-            builder.append("\n\tKurzbeschreibung: " + this.kurzbeschreibung);
         }
 
         builder.append("\n\tURL: " + this.url);
