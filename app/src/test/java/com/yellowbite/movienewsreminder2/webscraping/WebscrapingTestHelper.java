@@ -20,7 +20,7 @@ public final class WebscrapingTestHelper
                 "\nExpected: " + expected.toLongString() + "\n\nActual: " + actual.toLongString() + "\n",
                 new Movie(
                     expected.getMediaBarcode(), expected.getURL(),
-                    null, -1, null, null, null
+                    null, -1, null, null, null, null
                 ),
                 actual);
     }

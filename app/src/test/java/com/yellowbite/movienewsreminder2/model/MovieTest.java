@@ -77,7 +77,7 @@ public class MovieTest
 
         return new Movie(100000, "url",
                 status, vorbestellungen, entliehenBisDate,
-                "standort",
+                "standort", null,
                 titel);
     }
 }

@@ -87,6 +87,7 @@ public class MedZenMovieSiteScraper
 
         //standort infos
         movie.setStandort(this.getStandort());
+        movie.setZugang(this.getZugang());
 
         //useful infos
         movie.setTitel(getTitel());
@@ -195,6 +196,11 @@ public class MedZenMovieSiteScraper
     private String getStandort() throws IOException
     {
         return WebscrapingHelper.getText(getDoc(), "span#ContentPlaceHolderMain_LabellocationContent");
+    }
+
+    private Date getZugang() throws IOException
+    {
+        return WebscrapingHelper.getDate(getDoc(), "span.accessDate");
     }
 
     // --- get other useful informations ---

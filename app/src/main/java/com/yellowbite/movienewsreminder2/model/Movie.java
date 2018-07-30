@@ -22,6 +22,7 @@ public class Movie implements Comparable<Movie>
 
     //standort informations
     private String standort;
+    private Date zugang;
 
     //useful informations
     private String titel;
@@ -32,7 +33,7 @@ public class Movie implements Comparable<Movie>
         this.url = url;
     }
 
-    public Movie(int mediaBarcode, String url, Status status, int vorbestellungen, Date entliehenBis, String standort, String titel)
+    public Movie(int mediaBarcode, String url, Status status, int vorbestellungen, Date entliehenBis, String standort, Date zugang, String titel)
     {
         this.mediaBarcode = mediaBarcode;
         this.url = url;
@@ -40,6 +41,7 @@ public class Movie implements Comparable<Movie>
         this.vorbestellungen = vorbestellungen;
         this.entliehenBis = entliehenBis;
         this.standort = standort;
+        this.zugang = zugang;
         this.titel = titel;
     }
 
@@ -81,6 +83,16 @@ public class Movie implements Comparable<Movie>
 
     public void setStandort(String standort) {
         this.standort = standort;
+    }
+
+    public Date getZugang()
+    {
+        return zugang;
+    }
+
+    public void setZugang(Date zugang)
+    {
+        this.zugang = zugang;
     }
 
     public String getTitel() {

@@ -20,20 +20,20 @@ public class MedZenMovieSiteScraperTest
     private static final Movie SEVEN_WORKOUTS_EXPECTED = new Movie(
             80802980, SEVEN_WORKOUTS_URL,
             Status.VERFUEGBAR, 0, null,
-            "Sport",
+            "Sport", DateHelper.toDate("18.07.2013"),
             "7 Workouts");
 
     private static final Movie DANCE_WITH_ME_EXPECTED = new Movie(
             80710247, DANCE_WITH_ME_URL,
             Status.VERFUEGBAR, 0, null,
-            "Sport",
+            "Sport", DateHelper.toDate("05.07.2011"),
             "Dance with me!"
     );
 
     private static final Movie DIE_EISKOENINGIN_EXPECTED = new Movie(
             80891534, DIE_EISKOENINGIN_URL,
             Status.ENTLIEHEN, 0, DateHelper.toDate("02.08.2018"),
-            "Walt Disney",
+            "Walt Disney", DateHelper.toDate("06.05.2014"),
             "Die Eiskönigin - Völlig Unverfroren"
     );
 
