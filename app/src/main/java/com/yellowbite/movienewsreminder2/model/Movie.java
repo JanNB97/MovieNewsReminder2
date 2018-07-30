@@ -120,6 +120,7 @@ public class Movie implements Comparable<Movie>
                     && equalsAndNotNull(this.entliehenBis, o.getEntliehenBis())
 
                     && equalsAndNotNull(this.standort, o.getStandort())
+                    && equalsAndNotNull(this.zugang, o.getZugang())
 
                     && equalsAndNotNull(this.titel, o.getTitel());
         }
