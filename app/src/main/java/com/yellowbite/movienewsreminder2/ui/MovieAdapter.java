@@ -2,6 +2,7 @@ package com.yellowbite.movienewsreminder2.ui;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -25,7 +26,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder>
     @Override
     public MovieViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
-        return new MovieViewHolder(new LinearLayout(parent.getContext()));
+        View itemView = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.movie_list_row, parent, false);
+        return new MovieViewHolder(itemView);
     }
 
     @Override
