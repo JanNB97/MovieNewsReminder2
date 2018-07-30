@@ -90,6 +90,6 @@ public final class DateHelper
         Calendar dateCal = Calendar.getInstance();
         dateCal.setTime(date);
         int weekday = dateCal.get(Calendar.DAY_OF_WEEK);
-        return WEEKDAYS[weekday - 1];
+        return WEEKDAYS[weekday - 2];
     }
 }
