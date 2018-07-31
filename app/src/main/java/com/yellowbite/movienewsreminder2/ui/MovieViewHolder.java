@@ -11,6 +11,8 @@ import com.yellowbite.movienewsreminder2.util.DateHelper;
 
 public class MovieViewHolder extends RecyclerView.ViewHolder
 {
+    private static final int MAX_TITEL_LENGTH = 25;
+
     private View view;
 
     private TextView titelTextView;
@@ -35,7 +37,7 @@ public class MovieViewHolder extends RecyclerView.ViewHolder
         {
             return;
         }
-        titelTextView.setText(movie.getTitel());
+        titelTextView.setText(this.cutTitel(movie.getTitel()));
 
         if(movie.getStandort() != null)
         {
@@ -74,6 +76,19 @@ public class MovieViewHolder extends RecyclerView.ViewHolder
         }
 
         this.showColor(movie);
+    }
+
+    private String cutTitel(String titel)
+    {
+        if(titel.length() > MAX_TITEL_LENGTH)
+        {
+            StringBuilder builder = new StringBuilder(titel);
+            builder.delete(MAX_TITEL_LENGTH, titel.length());
+            builder.append("...");
+            titel = builder.toString();
+        }
+
+        return titel;
     }
 
     private void showColor(Movie movie)
