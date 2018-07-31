@@ -12,16 +12,12 @@ import java.util.List;
 
 public class SwipeCallback extends ItemTouchHelper.SimpleCallback
 {
-    private Context context;
-    private List<Movie> myMovies;
-    private RecyclerView.Adapter<MovieViewHolder> adapter;
+    private MovieAdapter movieAdapter;
 
-    public SwipeCallback(Context context, List<Movie> movies, RecyclerView.Adapter<MovieViewHolder> adapter)
+    public SwipeCallback(MovieAdapter movieAdapter)
     {
         super(0, ItemTouchHelper.LEFT);
-        this.context = context;
-        this.myMovies = movies;
-        this.adapter = adapter;
+        this.movieAdapter = movieAdapter;
     }
 
     @Override
@@ -34,8 +30,6 @@ public class SwipeCallback extends ItemTouchHelper.SimpleCallback
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction)
     {
         int position = viewHolder.getAdapterPosition();
-        this.myMovies.remove(position);
-        this.adapter.notifyDataSetChanged();
-        MedZenFileMan.setMyMovies(context, myMovies);
+        movieAdapter.removeItem(position);
     }
 }

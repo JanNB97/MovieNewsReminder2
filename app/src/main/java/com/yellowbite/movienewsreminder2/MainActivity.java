@@ -37,7 +37,7 @@ import java.util.logging.Logger;
 public class MainActivity extends AppCompatActivity
 {
     private RecyclerView movieRecyclerView;
-    private RecyclerView.Adapter movieAdapter;
+    private MovieAdapter movieAdapter;
     private RecyclerView.LayoutManager layoutManager;
 
     private TextView urlTextView;
@@ -86,10 +86,10 @@ public class MainActivity extends AppCompatActivity
         this.movieRecyclerView.setLayoutManager(layoutManager);
 
         // specify adapter
-        this.movieAdapter = new MovieAdapter(this.loadMyMovies());
+        this.movieAdapter = new MovieAdapter(this, this.loadMyMovies());
         this.movieRecyclerView.setAdapter(movieAdapter);
 
-        new ItemTouchHelper(new SwipeCallback(this, this.myMovies, this.movieAdapter)).attachToRecyclerView(this.movieRecyclerView);
+        new ItemTouchHelper(new SwipeCallback(this.movieAdapter)).attachToRecyclerView(this.movieRecyclerView);
     }
 
     private void handleClickedOnMovieItem(View view, int position)
