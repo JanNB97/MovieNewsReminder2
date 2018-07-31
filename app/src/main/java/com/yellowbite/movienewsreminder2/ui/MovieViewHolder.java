@@ -45,8 +45,7 @@ public class MovieViewHolder extends RecyclerView.ViewHolder
                 }
                 else
                 {
-                    statusTextView.setText(DateHelper.toString(movie.getEntliehenBis()));
-                    daysUntilVerfuegbar.setText(DateHelper.getWeekdayAsMessage(movie.getEntliehenBis()));
+                    statusTextView.setText(DateHelper.getWeekdayAsMessage(movie.getEntliehenBis()));
                 }
 
                 break;

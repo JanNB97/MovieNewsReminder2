@@ -44,9 +44,24 @@ public final class DateHelper
 
         int weeksNowUntilDate = getWeeksNowUntilDate(date);
 
+        if(weeksNowUntilDate < -2)
+        {
+            return "Vor mehr als 2 Wochen";
+        }
+
+        if(weeksNowUntilDate == -2)
+        {
+            return "Vor letzte Woche " + getWeekday(date);
+        }
+
+        if(weeksNowUntilDate == -1)
+        {
+            return "Letzte Woche " + getWeekday(date);
+        }
+
         if(weeksNowUntilDate == 0)
         {
-            return "Diesen " + getWeekday(date);
+            return getWeekday(date);
         }
 
         if(weeksNowUntilDate == 1)
@@ -54,7 +69,12 @@ public final class DateHelper
             return "Nächste Woche " + getWeekday(date);
         }
 
-        return getWeekday(date) + " in " + weeksNowUntilDate + " Wochen";
+        if(weeksNowUntilDate == 2)
+        {
+            return "Übernächste Woche " + getWeekday(date);
+        }
+
+        return "mehr als 2 Wochen";
     }
 
     private static boolean isNow(Date date)
@@ -66,13 +86,19 @@ public final class DateHelper
     private static int getWeeksNowUntilDate(Date date)
     {
         Calendar now = Calendar.getInstance();
+        Date nowDate = now.getTime();
         int nowWeek = now.get(Calendar.WEEK_OF_YEAR);
 
         int dateWeek = getWeek(date);
 
-        if(dateWeek < nowWeek)
+        if(nowDate.compareTo(date) < 0 && nowWeek > dateWeek)
         {
             dateWeek += 52;
+        }
+
+        if(nowDate.compareTo(date) > 0 && nowWeek < dateWeek)
+        {
+            dateWeek -= 52;
         }
 
         return dateWeek - nowWeek;
