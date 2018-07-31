@@ -18,6 +18,8 @@ import java.util.logging.Logger;
 
 public class MedZenMovieSiteScraper
 {
+    private Movie movie;
+
     private final Future<Document> futureDoc;
     private final String url;
     private int mediaBarcode = -1;
@@ -34,6 +36,8 @@ public class MedZenMovieSiteScraper
         this.url = movie.getURL();
         this.futureDoc = WebscrapingHelper.getFutureDoc(url);
         this.mediaBarcode = movie.getMediaBarcode();
+
+        this.movie = movie;
     }
 
     public MedZenMovieSiteScraper(int mediaBarcode, String url)
@@ -41,66 +45,11 @@ public class MedZenMovieSiteScraper
         this.url = url;
         this.futureDoc = WebscrapingHelper.getFutureDoc(url);
         this.mediaBarcode = mediaBarcode;
+
+        this.movie = new Movie(mediaBarcode, url);
     }
 
-    // --- --- --- Public methods --- --- ---
-    public Movie getEssentialMovie() throws IOException
-    {
-        if(this.mediaBarcode == -1)
-        {
-            this.mediaBarcode = getMediaBarcode();
-
-            if(this.mediaBarcode == -1)
-            {
-                return null;
-            }
-        }
-
-        return new Movie(this.mediaBarcode, url);
-    }
-
-    public void getMovieStatus(Movie movie) throws IOException
-    {
-        if(movie == null)
-        {
-            return;
-        }
-
-        this.addStatusToMovie(movie);
-    }
-
-    public Movie getMovieStatus() throws IOException
-    {
-        Movie movie = this.getEssentialMovie();
-        this.getMovieStatus(movie);
-        return movie;
-    }
-
-    public void getMovie(Movie movie) throws IOException
-    {
-        if(movie == null)
-        {
-            return;
-        }
-
-        //status infos
-        this.addStatusToMovie(movie);
-
-        //standort infos
-        movie.setStandort(this.getStandort());
-        movie.setZugang(this.getZugang());
-
-        //useful infos
-        movie.setTitel(getTitel());
-    }
-
-    public Movie getMovie() throws IOException
-    {
-        Movie movie = getEssentialMovie();
-        this.getMovie(movie);
-        return movie;
-    }
-
+    // --- --- --- Static methods --- --- ---
     public static Movie getMovie(String url) throws IOException
     {
         return new MedZenMovieSiteScraper(url).getMovie();
@@ -114,46 +63,101 @@ public class MedZenMovieSiteScraper
             siteScrapers.add(new MedZenMovieSiteScraper(movie));
         }
 
-        int i = 0;
         for(MedZenMovieSiteScraper siteScraper : siteScrapers)
         {
             try
             {
-                siteScraper.getMovie(essentialMovies.get(i));
+                siteScraper.getMovie();
             } catch (IOException ignored) {}
-
-            i++;
         }
 
         Collections.sort(essentialMovies);
     }
 
-    private void addStatusToMovie(Movie movie) throws IOException
+    // --- --- --- Add information to local movie --- --- ---
+    public Movie getEssentialMovie() throws IOException
+    {
+        if(this.mediaBarcode == -1)
+        {
+            this.mediaBarcode = getMediaBarcode();
+
+            if(this.mediaBarcode == -1)
+            {
+                return null;
+            }
+
+            this.movie = new Movie(this.mediaBarcode, url);
+        }
+
+        return this.movie;
+    }
+
+    public Movie getMovieStatus() throws IOException
+    {
+        if(this.movie == null)
+        {
+            this.getEssentialMovie();
+
+            if(this.movie == null)
+            {
+                return null;
+            }
+        }
+
+        this.addStatusToMovie();
+        return this.movie;
+    }
+
+    public Movie getMovie() throws IOException
+    {
+        if(this.movie == null)
+        {
+            this.getEssentialMovie();
+            if(this.movie == null)
+            {
+                return null;
+            }
+        }
+
+        //status infos
+        this.addStatusToMovie();
+
+        //standort infos
+        this.movie.setStandort(this.getStandort());
+        this.movie.setZugang(this.getZugang());
+
+        //useful infos
+        this.movie.setTitel(getTitel());
+
+        return this.movie;
+    }
+
+    private void addStatusToMovie() throws IOException
     {
         Status status = this.getStatus();
         if(status == null)
         {
             return;
         }
-        movie.setStatus(status);
+        this.movie.setStatus(status);
 
         if(status == Status.VERFUEGBAR)
         {
-            movie.setVorbestellungen(0);
-            movie.setEntliehenBis(null);
+            this.movie.setVorbestellungen(0);
+            this.movie.setEntliehenBis(null);
             return;
         }
 
         if(status == Status.VORBESTELLT)
         {
-            movie.setEntliehenBis(null);
+            this.movie.setEntliehenBis(null);
         }
         else if(status == Status.ENTLIEHEN)
         {
-            movie.setEntliehenBis(this.getEntliehenBis());
+            this.movie.setEntliehenBis(this.getEntliehenBis());
         }
 
-        movie.setVorbestellungen(this.getVorbestellungen());
+        this.movie.setVorbestellungen(this.getVorbestellungen());
     }
 
     // --- get essentials ---
