@@ -11,6 +11,7 @@ import android.support.v7.util.SortedList;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 import com.yellowbite.movienewsreminder2.model.Movie;
 import com.yellowbite.movienewsreminder2.ui.MovieAdapter;
 import com.yellowbite.movienewsreminder2.ui.RecyclerTouchListener;
+import com.yellowbite.movienewsreminder2.ui.SwipeCallback;
 import com.yellowbite.movienewsreminder2.webscraping.medienzentrum.MedZenFileMan;
 import com.yellowbite.movienewsreminder2.webscraping.medienzentrum.MedZenMovieSiteScraper;
 
@@ -48,6 +50,8 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         this.removeTitleBar();
         setContentView(R.layout.activity_main);
+
+        this.myMovies = new ArrayList<>();
 
         Button addMovieButton = findViewById(R.id.addMovieButton);
         addMovieButton.setOnClickListener(this::handleOnAddMovieClicked);
@@ -84,17 +88,20 @@ public class MainActivity extends AppCompatActivity
         // specify adapter
         this.movieAdapter = new MovieAdapter(this.loadMyMovies());
         this.movieRecyclerView.setAdapter(movieAdapter);
+
+        new ItemTouchHelper(new SwipeCallback(this.myMovies, this.movieAdapter)).attachToRecyclerView(this.movieRecyclerView);
     }
 
     private void handleClickedOnMovieItem(View view, int position)
     {
-        Movie movie = myMovies.get(position);
-        Toast.makeText(getApplicationContext(), movie.getTitel() + " is selected!", Toast.LENGTH_SHORT).show();
+
     }
 
     private void handleClickedLongOnMovieItem(View view, int position)
     {
-
+        // TODO - Mark movie as hot
+        Movie movie = myMovies.get(position);
+        Toast.makeText(getApplicationContext(), movie.getTitel() + " is selected!", Toast.LENGTH_SHORT).show();
     }
 
     private void removeTitleBar()
@@ -127,7 +134,7 @@ public class MainActivity extends AppCompatActivity
 
     private List<Movie> loadMyMovies()
     {
-        myMovies = MedZenFileMan.getMyMovies(this);
+        MedZenFileMan.getMyMovies(this, myMovies);
         MedZenMovieSiteScraper.getMovies(myMovies);
         return myMovies;
     }
