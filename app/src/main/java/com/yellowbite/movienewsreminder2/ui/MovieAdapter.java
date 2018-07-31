@@ -12,6 +12,7 @@ import com.yellowbite.movienewsreminder2.R;
 import com.yellowbite.movienewsreminder2.model.Movie;
 import com.yellowbite.movienewsreminder2.webscraping.medienzentrum.MedZenFileMan;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -52,9 +53,19 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder>
         return movies.size();
     }
 
+    public void addItem(Movie movie)
+    {
+        this.movies.add(movie);
+        Collections.sort(movies);
+
+        this.notifyDataSetChanged();
+        MedZenFileMan.setMyMovies(this.context, movies);
+    }
+
     public void removeItem(int position)
     {
         this.movies.remove(position);
+
         this.notifyDataSetChanged();
         MedZenFileMan.setMyMovies(this.context, this.movies);
     }

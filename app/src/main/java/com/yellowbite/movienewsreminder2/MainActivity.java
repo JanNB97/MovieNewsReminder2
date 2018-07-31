@@ -126,10 +126,7 @@ public class MainActivity extends AppCompatActivity
             urlTextView.setText("");
         }
 
-        myMovies.add(movie);
-        Collections.sort(myMovies);
-        this.movieAdapter.notifyDataSetChanged();
-        MedZenFileMan.setMyMovies(this, myMovies);
+        this.movieAdapter.addItem(movie);
     }
 
     private List<Movie> loadMyMovies()
