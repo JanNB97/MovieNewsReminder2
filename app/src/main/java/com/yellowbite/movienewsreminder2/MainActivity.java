@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity
         this.movieAdapter = new MovieAdapter(this.loadMyMovies());
         this.movieRecyclerView.setAdapter(movieAdapter);
 
-        new ItemTouchHelper(new SwipeCallback(this.myMovies, this.movieAdapter)).attachToRecyclerView(this.movieRecyclerView);
+        new ItemTouchHelper(new SwipeCallback(this, this.myMovies, this.movieAdapter)).attachToRecyclerView(this.movieRecyclerView);
     }
 
     private void handleClickedOnMovieItem(View view, int position)
