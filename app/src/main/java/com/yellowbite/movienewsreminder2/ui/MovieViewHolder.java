@@ -11,6 +11,8 @@ import com.yellowbite.movienewsreminder2.util.DateHelper;
 
 public class MovieViewHolder extends RecyclerView.ViewHolder
 {
+    private View view;
+
     private TextView titelTextView;
     private TextView standortTextView;
     private TextView wocheTextView;
@@ -19,6 +21,7 @@ public class MovieViewHolder extends RecyclerView.ViewHolder
     public MovieViewHolder(View view)
     {
         super(view);
+        this.view = view;
 
         this.titelTextView = view.findViewById(R.id.title);
         this.standortTextView = view.findViewById(R.id.standort);
@@ -99,23 +102,16 @@ public class MovieViewHolder extends RecyclerView.ViewHolder
 
     private void paintVerfuegbar()
     {
-        this.wocheTextView.setBackgroundColor(Color.parseColor("green"));
+        this.view.setBackgroundColor(Color.parseColor("#90ff60"));
     }
 
     private void paintEntliehenNoVor()
     {
-        int color = Color.parseColor("yellow");
-
-        this.wocheTextView.setBackgroundColor(color);
-
-        if(!this.wochentagTextView.getText().toString().isEmpty())
-        {
-            this.wochentagTextView.setBackgroundColor(color);
-        }
+        this.view.setBackgroundColor(Color.parseColor("#ffff75"));
     }
 
     private void paintVorbestellt()
     {
-        this.wocheTextView.setBackgroundColor(Color.parseColor("red"));
+        this.view.setBackgroundColor(Color.parseColor("#ffb06b"));
     }
 }

@@ -66,7 +66,6 @@ public class MainActivity extends AppCompatActivity
     private void initRecyclerView()
     {
         this.movieRecyclerView = (RecyclerView) findViewById(R.id.movieRecyclerView);
-        this.movieRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         this.movieRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), this.movieRecyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position)
