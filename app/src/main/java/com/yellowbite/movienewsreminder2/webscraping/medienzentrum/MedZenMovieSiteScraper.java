@@ -7,6 +7,7 @@ import com.yellowbite.movienewsreminder2.webscraping.WebscrapingHelper;
 import org.jsoup.nodes.Document;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
@@ -107,12 +108,21 @@ public class MedZenMovieSiteScraper
 
     public static void getMovies(List<Movie> essentialMovies)
     {
+        List<MedZenMovieSiteScraper> siteScrapers = new ArrayList<>();
         for(Movie movie : essentialMovies)
+        {
+            siteScrapers.add(new MedZenMovieSiteScraper(movie));
+        }
+
+        int i = 0;
+        for(MedZenMovieSiteScraper siteScraper : siteScrapers)
         {
             try
             {
-                new MedZenMovieSiteScraper(movie).getMovie(movie);
+                siteScraper.getMovie(essentialMovies.get(i));
             } catch (IOException ignored) {}
+
+            i++;
         }
 
         Collections.sort(essentialMovies);
