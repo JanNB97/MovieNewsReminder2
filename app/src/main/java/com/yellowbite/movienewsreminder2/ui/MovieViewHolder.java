@@ -1,6 +1,6 @@
 package com.yellowbite.movienewsreminder2.ui;
 
-import android.support.annotation.NonNull;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
@@ -41,6 +41,7 @@ public class MovieViewHolder extends RecyclerView.ViewHolder
         {
             return;
         }
+        this.showColor(movie);
 
         switch (movie.getStatus())
         {
@@ -62,5 +63,44 @@ public class MovieViewHolder extends RecyclerView.ViewHolder
                 statusTextView.setText(movie.getVorbestellungen() + " Vor.");
                 break;
         }
+    }
+
+    private void showColor(Movie movie)
+    {
+        switch (movie.getStatus())
+        {
+
+            case VERFUEGBAR:
+                paintVerfuegbar();
+                break;
+            case ENTLIEHEN:
+                if(movie.getVorbestellungen() == 0)
+                {
+                    this.paintEntliehenNoVor();
+                }
+                else
+                {
+                    this.paintVorbestellt();
+                }
+                break;
+            case VORBESTELLT:
+                this.paintVorbestellt();
+                break;
+        }
+    }
+
+    private void paintVerfuegbar()
+    {
+        this.statusTextView.setBackgroundColor(Color.parseColor("green"));
+    }
+
+    private void paintEntliehenNoVor()
+    {
+        this.statusTextView.setBackgroundColor(Color.parseColor("yellow"));
+    }
+
+    private void paintVorbestellt()
+    {
+        this.statusTextView.setBackgroundColor(Color.parseColor("red"));
     }
 }
