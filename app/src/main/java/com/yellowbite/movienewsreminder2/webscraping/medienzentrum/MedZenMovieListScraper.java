@@ -52,12 +52,12 @@ public class MedZenMovieListScraper
 
     // --- get essentials ---
 
-    public int getMediaBarcode(int index)
+    private int getMediaBarcode(int index)
     {
         return WebscrapingHelper.getInt(getListEntry(index), "span.mediaBarcode");
     }
 
-    public String getURL(int index)
+    private String getURL(int index)
     {
         return WebscrapingHelper.getURL(getListEntry(index), "a[href]");
     }
