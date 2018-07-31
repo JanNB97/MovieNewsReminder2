@@ -35,46 +35,46 @@ public final class DateHelper
         return df.format(date);
     }
 
-    public static String getWeekdayAsMessage(Date date)
+    public static String[] getWeekdayAsMessage(Date date)
     {
         if(isNow(date))
         {
-            return "heute";
+            return new String[]{"heute"};
         }
 
         int weeksNowUntilDate = getWeeksNowUntilDate(date);
 
         if(weeksNowUntilDate < -2)
         {
-            return "Vor mehr als 2 Wochen";
+            return new String[]{"Vor mehr als 2 Wochen"};
         }
 
         if(weeksNowUntilDate == -2)
         {
-            return "Vor letzte Woche " + getWeekday(date);
+            return new String[]{"Vor letzte Woche", getWeekday(date)};
         }
 
         if(weeksNowUntilDate == -1)
         {
-            return "Letzte Woche " + getWeekday(date);
+            return new String[]{"Letzte Woche", getWeekday(date)};
         }
 
         if(weeksNowUntilDate == 0)
         {
-            return getWeekday(date);
+            return new String[]{getWeekday(date)};
         }
 
         if(weeksNowUntilDate == 1)
         {
-            return "Nächste Woche " + getWeekday(date);
+            return new String[]{"Nächste Woche", getWeekday(date)};
         }
 
         if(weeksNowUntilDate == 2)
         {
-            return "Übernächste Woche " + getWeekday(date);
+            return new String[]{"Übernächste Woche", getWeekday(date)};
         }
 
-        return "mehr als 2 Wochen";
+        return new String[]{"mehr als 2 Wochen"};
     }
 
     private static boolean isNow(Date date)

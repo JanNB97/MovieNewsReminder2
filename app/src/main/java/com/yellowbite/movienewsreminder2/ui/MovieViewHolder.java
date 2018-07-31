@@ -13,7 +13,8 @@ public class MovieViewHolder extends RecyclerView.ViewHolder
 {
     private TextView titelTextView;
     private TextView standortTextView;
-    private TextView statusTextView;
+    private TextView wocheTextView;
+    private TextView wochentagTextView;
 
     public MovieViewHolder(View view)
     {
@@ -21,7 +22,8 @@ public class MovieViewHolder extends RecyclerView.ViewHolder
 
         this.titelTextView = view.findViewById(R.id.title);
         this.standortTextView = view.findViewById(R.id.standort);
-        this.statusTextView = view.findViewById(R.id.status);
+        this.wocheTextView = view.findViewById(R.id.woche);
+        this.wochentagTextView = view.findViewById(R.id.wochentag);
     }
 
     public void showMovie(Movie movie)
@@ -41,28 +43,34 @@ public class MovieViewHolder extends RecyclerView.ViewHolder
         {
             return;
         }
-        this.showColor(movie);
 
         switch (movie.getStatus())
         {
             case VERFUEGBAR:
-                statusTextView.setText(movie.getStatus().getValue());
+                wocheTextView.setText(movie.getStatus().getValue());
                 break;
             case ENTLIEHEN:
                 if(movie.getVorbestellungen() > 0)
                 {
-                    statusTextView.setText(movie.getVorbestellungen() + " Vor.");
+                    wocheTextView.setText(movie.getVorbestellungen() + " Vor.");
                 }
                 else
                 {
-                    statusTextView.setText(DateHelper.getWeekdayAsMessage(movie.getEntliehenBis()));
+                    String[] message = DateHelper.getWeekdayAsMessage(movie.getEntliehenBis());
+                    wocheTextView.setText(message[0]);
+                    if(message.length > 1)
+                    {
+                        wochentagTextView.setText(message[1]);
+                    }
                 }
 
                 break;
             case VORBESTELLT:
-                statusTextView.setText(movie.getVorbestellungen() + " Vor.");
+                wocheTextView.setText(movie.getVorbestellungen() + " Vor.");
                 break;
         }
+
+        this.showColor(movie);
     }
 
     private void showColor(Movie movie)
@@ -91,16 +99,23 @@ public class MovieViewHolder extends RecyclerView.ViewHolder
 
     private void paintVerfuegbar()
     {
-        this.statusTextView.setBackgroundColor(Color.parseColor("green"));
+        this.wocheTextView.setBackgroundColor(Color.parseColor("green"));
     }
 
     private void paintEntliehenNoVor()
     {
-        this.statusTextView.setBackgroundColor(Color.parseColor("yellow"));
+        int color = Color.parseColor("yellow");
+
+        this.wocheTextView.setBackgroundColor(color);
+
+        if(!this.wochentagTextView.getText().toString().isEmpty())
+        {
+            this.wochentagTextView.setBackgroundColor(color);
+        }
     }
 
     private void paintVorbestellt()
     {
-        this.statusTextView.setBackgroundColor(Color.parseColor("red"));
+        this.wocheTextView.setBackgroundColor(Color.parseColor("red"));
     }
 }
