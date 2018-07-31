@@ -12,7 +12,7 @@ import com.yellowbite.movienewsreminder2.util.DateHelper;
 public class MovieViewHolder extends RecyclerView.ViewHolder
 {
     private TextView titelTextView;
-    private TextView daysUntilVerfuegbar;
+    private TextView standortTextView;
     private TextView statusTextView;
 
     public MovieViewHolder(View view)
@@ -20,13 +20,22 @@ public class MovieViewHolder extends RecyclerView.ViewHolder
         super(view);
 
         this.titelTextView = view.findViewById(R.id.title);
-        this.daysUntilVerfuegbar = view.findViewById(R.id.daysUntilVerfuegbar);
+        this.standortTextView = view.findViewById(R.id.standort);
         this.statusTextView = view.findViewById(R.id.status);
     }
 
     public void showMovie(Movie movie)
     {
+        if(movie == null || movie.getTitel() == null)
+        {
+            return;
+        }
         titelTextView.setText(movie.getTitel());
+
+        if(movie.getStandort() != null)
+        {
+            standortTextView.setText(movie.getStandort());
+        }
 
         if(movie.getStatus() == null)
         {
