@@ -15,9 +15,11 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.yellowbite.movienewsreminder2.model.Movie;
 import com.yellowbite.movienewsreminder2.ui.MovieAdapter;
+import com.yellowbite.movienewsreminder2.ui.RecyclerTouchListener;
 import com.yellowbite.movienewsreminder2.webscraping.medienzentrum.MedZenFileMan;
 import com.yellowbite.movienewsreminder2.webscraping.medienzentrum.MedZenMovieSiteScraper;
 
@@ -61,6 +63,19 @@ public class MainActivity extends AppCompatActivity
     {
         this.movieRecyclerView = (RecyclerView) findViewById(R.id.movieRecyclerView);
         this.movieRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+        this.movieRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), this.movieRecyclerView, new RecyclerTouchListener.ClickListener() {
+            @Override
+            public void onClick(View view, int position)
+            {
+                handleClickedOnMovieItem(view, position);
+            }
+
+            @Override
+            public void onLongClick(View view, int position)
+            {
+                handleClickedLongOnMovieItem(view, position);
+            }
+        }));
 
         // use linear layout manager
         this.layoutManager = new LinearLayoutManager(this);
@@ -69,6 +84,17 @@ public class MainActivity extends AppCompatActivity
         // specify adapter
         this.movieAdapter = new MovieAdapter(this.loadMyMovies());
         this.movieRecyclerView.setAdapter(movieAdapter);
+    }
+
+    private void handleClickedOnMovieItem(View view, int position)
+    {
+        Movie movie = myMovies.get(position);
+        Toast.makeText(getApplicationContext(), movie.getTitel() + " is selected!", Toast.LENGTH_SHORT).show();
+    }
+
+    private void handleClickedLongOnMovieItem(View view, int position)
+    {
+
     }
 
     private void removeTitleBar()
