@@ -8,6 +8,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.util.SortedList;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -49,19 +50,25 @@ public class MainActivity extends AppCompatActivity
         Button addMovieButton = findViewById(R.id.addMovieButton);
         addMovieButton.setOnClickListener(this::handleOnAddMovieClicked);
 
-        urlTextView = findViewById(R.id.urlTextView);
+        this.urlTextView = findViewById(R.id.urlTextView);
 
-        movieRecyclerView = (RecyclerView) findViewById(R.id.movieRecyclerView);
-
-        // use linear layout manager
-        layoutManager = new LinearLayoutManager(this);
-        movieRecyclerView.setLayoutManager(layoutManager);
-
-        // specify adapter
-        movieAdapter = new MovieAdapter(this.loadMyMovies());
-        movieRecyclerView.setAdapter(movieAdapter);
+        initRecyclerView();
 
         NewsService.start(this);
+    }
+
+    private void initRecyclerView()
+    {
+        this.movieRecyclerView = (RecyclerView) findViewById(R.id.movieRecyclerView);
+        this.movieRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+
+        // use linear layout manager
+        this.layoutManager = new LinearLayoutManager(this);
+        this.movieRecyclerView.setLayoutManager(layoutManager);
+
+        // specify adapter
+        this.movieAdapter = new MovieAdapter(this.loadMyMovies());
+        this.movieRecyclerView.setAdapter(movieAdapter);
     }
 
     private void removeTitleBar()
