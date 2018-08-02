@@ -1,9 +1,9 @@
 package com.yellowbite.movienewsreminder2.model.enums;
 
 public enum Status {
-    VERFUEGBAR("verfügbar"),
-    ENTLIEHEN("entliehen"),
-    VORBESTELLT("vorbestellt");
+    VERFUEGBAR("Verfügbar"),
+    ENTLIEHEN("Entliehen"),
+    VORBESTELLT("Vorbestellt");
 
     private String value;
 

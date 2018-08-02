@@ -19,6 +19,7 @@ public final class DateHelper
         df = new SimpleDateFormat("dd.MM.yyyy");
     }
 
+    // --- --- --- converting date to string --- --- ---
     public static Date toDate(String string)
     {
         try
@@ -35,14 +36,16 @@ public final class DateHelper
         return df.format(date);
     }
 
+    // --- --- --- getWeekday as message --- --- ---
     public static String[] getWeekdayAsMessage(Date date)
     {
-        if(isNow(date))
-        {
-            return new String[]{"heute"};
-        }
+        Calendar nowCalendar = Calendar.getInstance();
+        Date nowDate = nowCalendar.getTime();
 
-        int weeksNowUntilDate = getWeeksNowUntilDate(date);
+        Calendar dateCalendar = getCalendar(date);
+
+        int weeksNowUntilDate = getWeeksNowUntilDate(date, nowCalendar, nowDate);
+        String dateWeekday = getWeekday(dateCalendar);
 
         if(weeksNowUntilDate < -2)
         {
@@ -51,43 +54,52 @@ public final class DateHelper
 
         if(weeksNowUntilDate == -2)
         {
-            return new String[]{"Vor letzte Woche", getWeekday(date)};
+            return new String[]{"Vor letzte Woche", dateWeekday};
         }
 
         if(weeksNowUntilDate == -1)
         {
-            return new String[]{"Letzte Woche", getWeekday(date)};
+            return new String[]{"Letzte Woche", dateWeekday};
+        }
+
+        if(isNow(dateWeekday, weeksNowUntilDate, nowCalendar))
+        {
+            return new String[]{"Heute"};
         }
 
         if(weeksNowUntilDate == 0)
         {
-            return new String[]{getWeekday(date)};
+            return new String[]{dateWeekday};
         }
 
         if(weeksNowUntilDate == 1)
         {
-            return new String[]{"Nächste Woche", getWeekday(date)};
+            return new String[]{"Nächste Woche", dateWeekday};
         }
 
         if(weeksNowUntilDate == 2)
         {
-            return new String[]{"Übernächste Woche", getWeekday(date)};
+            return new String[]{"Übernächste Woche", dateWeekday};
         }
 
         return new String[]{"mehr als 2 Wochen"};
     }
 
-    private static boolean isNow(Date date)
+    private static boolean isNow(String dateWeekday, int weeksUntilDate, Calendar nowCalendar)
     {
-        Date now = Calendar.getInstance().getTime();
-        return date.equals(now);
+        if(weeksUntilDate != 0)
+        {
+            return false;
+        }
+
+        String weekdayNow = getWeekday(nowCalendar);
+
+        return weekdayNow.equals(dateWeekday);
     }
 
-    private static int getWeeksNowUntilDate(Date date)
+    private static int getWeeksNowUntilDate(Date date, Calendar nowCalendar, Date nowDate)
     {
-        Calendar now = Calendar.getInstance();
-        Date nowDate = now.getTime();
-        int nowWeek = now.get(Calendar.WEEK_OF_YEAR);
+        int nowWeek = nowCalendar.get(Calendar.WEEK_OF_YEAR);
 
         int dateWeek = getWeek(date);
 
@@ -111,11 +123,16 @@ public final class DateHelper
         return dateCal.get(Calendar.WEEK_OF_YEAR);
     }
 
-    private static String getWeekday(Date date)
+    private static String getWeekday(Calendar dateCalendar)
     {
-        Calendar dateCal = Calendar.getInstance();
-        dateCal.setTime(date);
-        int weekday = dateCal.get(Calendar.DAY_OF_WEEK);
+        int weekday = dateCalendar.get(Calendar.DAY_OF_WEEK);
         return WEEKDAYS[weekday - 2];
+    }
+
+    private static Calendar getCalendar(Date date)
+    {
+        Calendar calDate = Calendar.getInstance();
+        calDate.setTime(date);
+        return calDate;
     }
 }
