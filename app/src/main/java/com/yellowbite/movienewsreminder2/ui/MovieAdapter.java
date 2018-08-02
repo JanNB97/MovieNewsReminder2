@@ -58,15 +58,21 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder>
         this.movies.add(movie);
         Collections.sort(movies);
 
-        this.notifyDataSetChanged();
-        MedZenFileMan.setMyMovies(this.context, movies);
+        this.dataSetChanged();
     }
 
     public void removeItem(int position)
     {
         this.movies.remove(position);
 
+        this.dataSetChanged();
+    }
+
+    private void dataSetChanged()
+    {
         this.notifyDataSetChanged();
-        MedZenFileMan.setMyMovies(this.context, this.movies);
+
+        new Thread(() -> MedZenFileMan.setMyMovies(this.context, this.movies))
+                .start();
     }
 }
