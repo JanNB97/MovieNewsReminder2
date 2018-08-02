@@ -39,12 +39,14 @@ public final class DateHelper
     // --- --- --- getWeekday as message --- --- ---
     public static String[] getWeekdayAsMessage(Date date)
     {
-        Calendar nowCalendar = Calendar.getInstance();
-        Date nowDate = nowCalendar.getTime();
+        return getWeekdayAsMessage(date, Calendar.getInstance());
+    }
 
+    public static String[] getWeekdayAsMessage(Date date, Calendar nowCalendar)
+    {
         Calendar dateCalendar = getCalendar(date);
 
-        int weeksNowUntilDate = getWeeksNowUntilDate(date, nowCalendar, nowDate);
+        int weeksNowUntilDate = getWeeksNowUntilDate(date, nowCalendar);
         String dateWeekday = getWeekday(dateCalendar);
 
         if(weeksNowUntilDate < -2)
@@ -97,8 +99,10 @@ public final class DateHelper
         return weekdayNow.equals(dateWeekday);
     }
 
-    private static int getWeeksNowUntilDate(Date date, Calendar nowCalendar, Date nowDate)
+    private static int getWeeksNowUntilDate(Date date, Calendar nowCalendar)
     {
+        Date nowDate = nowCalendar.getTime();
+
         int nowWeek = nowCalendar.get(Calendar.WEEK_OF_YEAR);
 
         int dateWeek = getWeek(date);
