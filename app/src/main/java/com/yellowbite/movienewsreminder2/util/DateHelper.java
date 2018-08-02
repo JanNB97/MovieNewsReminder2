@@ -21,7 +21,7 @@ public final class DateHelper
     public static final String IN_MORE_THAN_TWO_WEEKS = "mehr als 2 Wochen";
 
 
-    private enum Weekday {
+    public enum Weekday {
         Montag, Dienstag, Mittwoch, Donnerstag, Freitag, Samstag, Sonntag
     };
 
@@ -163,6 +163,11 @@ public final class DateHelper
     private static Weekday getWeekday(Calendar dateCalendar)
     {
         int weekday = dateCalendar.get(Calendar.DAY_OF_WEEK);
+        if(weekday == 1)
+        {
+            return Weekday.Sonntag;
+        }
+
         return Weekday.values()[weekday - 2];
     }
 
