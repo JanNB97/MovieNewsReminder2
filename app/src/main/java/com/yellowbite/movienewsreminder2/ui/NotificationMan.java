@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
+import android.widget.Toast;
 
 import com.yellowbite.movienewsreminder2.MainActivity;
 
@@ -26,5 +27,10 @@ public final class NotificationMan
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
         notificationManager.notify(0, mBuilder.build());
+    }
+
+    public static void showShortToast(Context context, String text)
+    {
+        Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
     }
 }

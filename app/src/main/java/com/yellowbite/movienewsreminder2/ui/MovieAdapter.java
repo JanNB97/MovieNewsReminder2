@@ -55,6 +55,12 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder>
 
     public void addItem(Movie movie)
     {
+        if(!isNew(movie))
+        {
+            NotificationMan.showShortToast(this.context, movie.getTitel() + " is already in the database");
+            return;
+        }
+
         this.movies.add(movie);
         Collections.sort(movies);
 
@@ -74,5 +80,18 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder>
 
         new Thread(() -> MedZenFileMan.setMyMovies(this.context, this.movies))
                 .start();
+    }
+
+    private boolean isNew(Movie movie)
+    {
+        for(Movie movieInDatabase : this.movies)
+        {
+            if(movieInDatabase.getMediaBarcode() == movie.getMediaBarcode())
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.yellowbite.movienewsreminder2.model.Movie;
 import com.yellowbite.movienewsreminder2.ui.MovieAdapter;
+import com.yellowbite.movienewsreminder2.ui.NotificationMan;
 import com.yellowbite.movienewsreminder2.ui.RecyclerTouchListener;
 import com.yellowbite.movienewsreminder2.ui.SwipeCallback;
 import com.yellowbite.movienewsreminder2.webscraping.medienzentrum.MedZenFileMan;
@@ -100,7 +101,7 @@ public class MainActivity extends AppCompatActivity
     {
         // TODO - Mark movie as hot
         Movie movie = myMovies.get(position);
-        Toast.makeText(getApplicationContext(), movie.getTitel() + " is selected!", Toast.LENGTH_SHORT).show();
+        NotificationMan.showShortToast(this, movie.getTitel() + " is selected!");
     }
 
     private void removeTitleBar()
