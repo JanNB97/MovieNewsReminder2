@@ -203,7 +203,30 @@ public class MedZenMovieSiteScraper
             return this.movie.getStandort();
         }
 
-        return WebscrapingHelper.getText(getDoc(), "span#ContentPlaceHolderMain_LabellocationContent");
+        String standort = WebscrapingHelper.getText(getDoc(), "span#ContentPlaceHolderMain_LabellocationContent");
+
+        if(standort != null)
+        {
+            return standort;
+        }
+
+        String signatur = this.getSignatur();
+        if(signatur != null)
+        {
+            return signatur;
+        }
+
+        return this.getInteressenkreis();
+    }
+
+    private String getSignatur() throws IOException
+    {
+        return WebscrapingHelper.getText(this.getDoc(), "span.signatur");
+    }
+
+    private String getInteressenkreis() throws IOException
+    {
+        return WebscrapingHelper.getText(this.getDoc(),"table.DetailInformation td.DetailInformationEntryName:containsOwn(Interessenkreis) + td");
     }
 
     private Date getZugang() throws IOException
