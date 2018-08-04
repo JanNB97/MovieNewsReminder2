@@ -115,7 +115,6 @@ public class MedZenMovieSiteScraper
         this.movie.setStandort(this.getStandort());
         this.movie.setZugang(this.getZugang());
 
-
         //useful infos
         this.movie.setTitel(this.getTitel());
 

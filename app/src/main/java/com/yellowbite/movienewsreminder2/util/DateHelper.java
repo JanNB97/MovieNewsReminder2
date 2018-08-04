@@ -44,6 +44,11 @@ public final class DateHelper
 
     public static String toString(Date date)
     {
+        if(date == null)
+        {
+            return null;
+        }
+
         return df.format(date);
     }
 

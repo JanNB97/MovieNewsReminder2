@@ -3,10 +3,12 @@ package com.yellowbite.movienewsreminder2.webscraping.medienzentrum;
 import android.content.Context;
 
 import com.yellowbite.movienewsreminder2.model.Movie;
+import com.yellowbite.movienewsreminder2.util.DateHelper;
 import com.yellowbite.movienewsreminder2.util.FileManager;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 public class MedZenFileMan
@@ -36,6 +38,18 @@ public class MedZenFileMan
         FileManager.write(context, NEWEST_BARCODE, Integer.toString(barcode));
     }
 
+    // --- --- --- my movies --- --- ---
+    public static List<Movie> getMyMovies(Context context, List<Movie> myMovies)
+    {
+        List<String> lines = FileManager.readAll(context, MY_MOVIES);
+        return toMovies(lines, myMovies);
+    }
+
+    public static void setMyMovies(Context context, Collection<Movie> myMovies)
+    {
+        FileManager.write(context, MY_MOVIES, toLines(myMovies));
+    }
+
     // --- --- --- New movies --- --- ---
     public static List<Movie> getNewMovies(Context context)
     {
@@ -52,18 +66,6 @@ public class MedZenFileMan
         FileManager.deleteLast(context, NEW_MOVIES);
     }
 
-    // --- --- --- my movies --- --- ---
-    public static List<Movie> getMyMovies(Context context, List<Movie> myMovies)
-    {
-        List<String> lines = FileManager.readAll(context, MY_MOVIES);
-        return toMovies(lines, myMovies);
-    }
-
-    public static void setMyMovies(Context context, Collection<Movie> myMovies)
-    {
-        FileManager.write(context, MY_MOVIES, toLines(myMovies));
-    }
-
     // --- --- --- hot movies --- --- ---
     // TODO
 
@@ -78,7 +80,7 @@ public class MedZenFileMan
 
         String[] split = string.split(";");
 
-        if(split.length != 2)
+        if(split.length != 5)
         {
             return null;
         }
@@ -94,8 +96,24 @@ public class MedZenFileMan
         }
 
         String url = split[1];
+        String standort = split[2];
+        if("null".equals(standort))
+        {
+            standort = null;
+        }
+        Date zugang = DateHelper.toDate(split[3]);
 
-        return new Movie(barcode, url);
+        String titel = split[4];
+        if("null".equals(titel))
+        {
+            titel = null;
+        }
+
+        return new Movie(
+                barcode, url,
+                null, -1, null,
+                standort, zugang,
+                titel);
     }
 
     private static List<String> toLines(Collection<Movie> movies)
@@ -112,14 +130,21 @@ public class MedZenFileMan
 
     private static String toLine(Movie movie)
     {
-        return movie.getMediaBarcode() + ";" + movie.getURL();
+        return movie.getMediaBarcode() + ";" + movie.getURL() + ";"
+                + movie.getStandort() + ";" + DateHelper.toString(movie.getZugang()) + ";"
+                + movie.getTitel();
     }
 
     private static List<Movie> toMovies(Collection<String> strings, List<Movie> output)
     {
         for(String s : strings)
         {
-            output.add(toMovie(s));
+            Movie movie = toMovie(s);
+
+            if(movie != null)
+            {
+                output.add(movie);
+            }
         }
 
         return output;
