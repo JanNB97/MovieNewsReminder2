@@ -119,11 +119,18 @@ public class MainActivity extends AppCompatActivity
             movie = MedZenMovieSiteScraper.getMovie(url);
         } catch (IOException ignored)
         {
+            NotificationMan.showShortToast(this, "Keine gültige URL oder keine Internetverbindung");
             return;
         }
         finally
         {
             urlTextView.setText("");
+        }
+
+        if(movie == null)
+        {
+            NotificationMan.showShortToast(this, "Die URL führte zu keiner Seite des Medienzentrum Rotenburg an der Fulda");
+            return;
         }
 
         this.movieAdapter.addItem(movie);
