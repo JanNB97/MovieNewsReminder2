@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 public class Movie implements Comparable<Movie>
 {
     // essential
-    private final int mediaBarcode;
+    private int mediaBarcode = -1;
     private final String url;
 
     //status informations
@@ -33,6 +33,11 @@ public class Movie implements Comparable<Movie>
         this.url = url;
     }
 
+    public Movie(String url)
+    {
+        this.url = url;
+    }
+
     public Movie(int mediaBarcode, String url, Status status, int vorbestellungen, Date entliehenBis, String standort, Date zugang, String titel)
     {
         this.mediaBarcode = mediaBarcode;
@@ -43,6 +48,11 @@ public class Movie implements Comparable<Movie>
         this.standort = standort;
         this.zugang = zugang;
         this.titel = titel;
+    }
+
+    public void setMediaBarcode(int mediaBarcode)
+    {
+        this.mediaBarcode = mediaBarcode;
     }
 
     public int getMediaBarcode() {

@@ -8,7 +8,6 @@ import org.jsoup.nodes.Document;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -20,39 +19,39 @@ public class MedZenMovieSiteScraper
 {
     private Movie movie;
 
-    private final Future<Document> futureDoc;
-    private final String url;
-    private int mediaBarcode = -1;
+    private Future<Document> futureDoc;
 
-    // --- --- --- Constructors --- --- ---
     public MedZenMovieSiteScraper(String url)
     {
-        this.url = url;
-        this.futureDoc = WebscrapingHelper.getFutureDoc(url);
+        Movie movie = null;
+        if(url != null)
+        {
+            movie = new Movie(url);
+        }
+
+        this.init(movie);
     }
 
     public MedZenMovieSiteScraper(Movie movie)
     {
-        this.url = movie.getURL();
-        this.futureDoc = WebscrapingHelper.getFutureDoc(url);
-        this.mediaBarcode = movie.getMediaBarcode();
-
-        this.movie = movie;
+        this.init(movie);
     }
 
-    public MedZenMovieSiteScraper(int mediaBarcode, String url)
+    private void init(Movie movie)
     {
-        this.url = url;
-        this.futureDoc = WebscrapingHelper.getFutureDoc(url);
-        this.mediaBarcode = mediaBarcode;
+        if(movie == null)
+        {
+            throw new NullPointerException();
+        }
 
-        this.movie = new Movie(mediaBarcode, url);
+        this.futureDoc = WebscrapingHelper.getFutureDoc(movie.getURL());
+        this.movie = movie;
     }
 
     // --- --- --- Static methods --- --- ---
     public static Movie getMovie(String url) throws IOException
     {
-        return new MedZenMovieSiteScraper(url).getMovie();
+        return new MedZenMovieSiteScraper(new Movie(url)).getMovie();
     }
 
     public static void getMovies(List<Movie> essentialMovies)
@@ -75,18 +74,13 @@ public class MedZenMovieSiteScraper
     }
 
     // --- --- --- Add information to local movie --- --- ---
-    public Movie getEssentialMovie() throws IOException
+    public Movie getMediaBarcodeMovie() throws IOException
     {
-        if(this.mediaBarcode == -1)
+        this.movie.setMediaBarcode(this.getMediaBarcode());
+
+        if(this.movie.getMediaBarcode() == -1)
         {
-            this.mediaBarcode = getMediaBarcode();
-
-            if(this.mediaBarcode == -1)
-            {
-                return null;
-            }
-
-            this.movie = new Movie(this.mediaBarcode, url);
+            return null;
         }
 
         return this.movie;
@@ -94,14 +88,11 @@ public class MedZenMovieSiteScraper
 
     public Movie getMovieStatus() throws IOException
     {
-        if(this.movie == null)
-        {
-            this.getEssentialMovie();
+        this.getMediaBarcodeMovie();
 
-            if(this.movie == null)
-            {
-                return null;
-            }
+        if(this.movie.getMediaBarcode() == -1)
+        {
+            return null;
         }
 
         this.addStatusToMovie();
@@ -110,13 +101,11 @@ public class MedZenMovieSiteScraper
 
     public Movie getMovie() throws IOException
     {
-        if(this.movie == null)
+        this.getMediaBarcodeMovie();
+
+        if(this.movie.getMediaBarcode() == -1)
         {
-            this.getEssentialMovie();
-            if(this.movie == null)
-            {
-                return null;
-            }
+            return null;
         }
 
         //status infos
@@ -126,8 +115,9 @@ public class MedZenMovieSiteScraper
         this.movie.setStandort(this.getStandort());
         this.movie.setZugang(this.getZugang());
 
+
         //useful infos
-        this.movie.setTitel(getTitel());
+        this.movie.setTitel(this.getTitel());
 
         return this.movie;
     }
@@ -164,9 +154,9 @@ public class MedZenMovieSiteScraper
 
     private int getMediaBarcode() throws IOException
     {
-        if(this.mediaBarcode != -1)
+        if(this.movie.getMediaBarcode() != -1)
         {
-            return mediaBarcode;
+            return this.movie.getMediaBarcode();
         }
 
         return WebscrapingHelper.getInt(this.getDoc(), "span.mediabarcode");
@@ -209,11 +199,21 @@ public class MedZenMovieSiteScraper
 
     private String getStandort() throws IOException
     {
+        if(this.movie.getStandort() != null)
+        {
+            return this.movie.getStandort();
+        }
+
         return WebscrapingHelper.getText(getDoc(), "span#ContentPlaceHolderMain_LabellocationContent");
     }
 
     private Date getZugang() throws IOException
     {
+        if(this.movie.getZugang() != null)
+        {
+            return this.movie.getZugang();
+        }
+
         return WebscrapingHelper.getDate(getDoc(), "span.accessDate");
     }
 
@@ -221,6 +221,11 @@ public class MedZenMovieSiteScraper
 
     private String getTitel() throws IOException
     {
+        if(this.movie.getTitel() != null)
+        {
+            return this.movie.getTitel();
+        }
+
         return WebscrapingHelper.getText(this.getDoc(),"table.DetailInformation td.DetailInformationEntryName:containsOwn(Titel):not(:containsOwn(zusatz)) + td");
     }
 
