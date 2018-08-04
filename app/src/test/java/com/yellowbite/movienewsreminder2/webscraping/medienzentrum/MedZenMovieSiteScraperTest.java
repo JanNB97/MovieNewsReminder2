@@ -32,7 +32,7 @@ public class MedZenMovieSiteScraperTest
 
     private static final Movie DIE_EISKOENINGIN_EXPECTED = new Movie(
             80891534, DIE_EISKOENINGIN_URL,
-            Status.ENTLIEHEN, 0, DateHelper.toDate("02.08.2018"),
+            Status.ENTLIEHEN, 0, DateHelper.toDate("10.08.2018"),
             "Walt Disney", DateHelper.toDate("06.05.2014"),
             "Die Eiskönigin - Völlig Unverfroren"
     );
@@ -55,7 +55,7 @@ public class MedZenMovieSiteScraperTest
         Movie sevenWorkouts = null;
         try
         {
-            sevenWorkouts = siteScraper.getEssentialMovie();
+            sevenWorkouts = siteScraper.getMediaBarcodeMovie();
         } catch (IOException e)
         {
             e.printStackTrace();
