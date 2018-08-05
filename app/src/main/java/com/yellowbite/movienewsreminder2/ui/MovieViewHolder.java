@@ -11,7 +11,7 @@ import com.yellowbite.movienewsreminder2.util.DateHelper;
 
 public class MovieViewHolder extends RecyclerView.ViewHolder
 {
-    private static final int MAX_TITEL_LENGTH = 25;
+    private static final int MAX_TITEL_LENGTH = 22;
 
     private View view;
 
