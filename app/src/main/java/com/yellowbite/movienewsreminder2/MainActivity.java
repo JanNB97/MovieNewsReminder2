@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity
 {
     private RecyclerView movieRecyclerView;
     private TextView urlTextView;
+    private Button addMovieButton;
     private ProgressBar loadingProgressBar;
 
     private List<Movie> myMovies;
@@ -42,8 +43,8 @@ public class MainActivity extends AppCompatActivity
 
         this.myMovies = new ArrayList<>();
 
-        Button addMovieButton = findViewById(R.id.addMovieButton);
-        addMovieButton.setOnClickListener(this::handleOnAddMovieClicked);
+        this.addMovieButton = findViewById(R.id.addMovieButton);
+        this.addMovieButton.setOnClickListener(this::handleOnAddMovieClicked);
 
         this.urlTextView = findViewById(R.id.urlTextView);
         this.loadingProgressBar = findViewById(R.id.loadingProgressBar);
@@ -78,7 +79,7 @@ public class MainActivity extends AppCompatActivity
 
     private void loadMyMovies()
     {
-        new LoadMoviesTask(this, this.movieRecyclerView, this.loadingProgressBar).execute(myMovies);
+        new LoadMoviesTask(this, this.movieRecyclerView, this.loadingProgressBar, this.addMovieButton).execute(myMovies);
     }
 
     // --- --- --- Interaction with user --- --- ---

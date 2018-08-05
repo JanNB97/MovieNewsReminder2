@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
 
 import com.yellowbite.movienewsreminder2.R;
@@ -27,13 +28,16 @@ public class LoadMoviesTask extends AsyncTask<List<Movie>, Integer, List<Movie>>
     private RecyclerView movieRecyclerView;
 
     private ProgressBar loadingProgressBar;
+    private Button addMovieButton;
 
-    public LoadMoviesTask(Context context, RecyclerView movieRecyclerView, ProgressBar loadingProgressBar)
+    public LoadMoviesTask(Context context, RecyclerView movieRecyclerView, ProgressBar loadingProgressBar, Button addMovieButton)
     {
         this.context = context;
         this.movieRecyclerView = movieRecyclerView;
 
         this.loadingProgressBar = loadingProgressBar;
+
+        this.addMovieButton = addMovieButton;
     }
 
     @Override
@@ -87,6 +91,7 @@ public class LoadMoviesTask extends AsyncTask<List<Movie>, Integer, List<Movie>>
     {
         this.loadingProgressBar.setVisibility(View.GONE);
         this.addAdapterToRecyclerView(myMovies);
+        this.addMovieButton.setEnabled(true);
     }
 
     private void addAdapterToRecyclerView(List<Movie> myMovies)
