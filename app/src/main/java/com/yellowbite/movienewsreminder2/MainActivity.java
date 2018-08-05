@@ -9,6 +9,7 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.yellowbite.movienewsreminder2.model.Movie;
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity
 {
     private RecyclerView movieRecyclerView;
     private TextView urlTextView;
+    private ProgressBar loadingProgressBar;
 
     private List<Movie> myMovies;
 
@@ -44,6 +46,7 @@ public class MainActivity extends AppCompatActivity
         addMovieButton.setOnClickListener(this::handleOnAddMovieClicked);
 
         this.urlTextView = findViewById(R.id.urlTextView);
+        this.loadingProgressBar = findViewById(R.id.loadingProgressBar);
 
         this.initRecyclerView();
         this.loadMyMovies();
@@ -75,7 +78,7 @@ public class MainActivity extends AppCompatActivity
 
     private void loadMyMovies()
     {
-        new LoadMoviesTask(this, this.movieRecyclerView).execute(myMovies);
+        new LoadMoviesTask(this, this.movieRecyclerView, this.loadingProgressBar).execute(myMovies);
     }
 
     // --- --- --- Interaction with user --- --- ---

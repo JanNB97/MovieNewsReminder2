@@ -54,18 +54,9 @@ public class MedZenMovieSiteScraper
         return new MedZenMovieSiteScraper(new Movie(url)).getMovie();
     }
 
-    public static void getMovies(List<Movie> essentialMovies)
+    public static void getMovie(Movie essentialMovie) throws IOException
     {
-        for(Movie essentialMovie : essentialMovies)
-        {
-            try
-            {
-                new MedZenMovieSiteScraper(essentialMovie).getMovie();
-            }
-            catch (IOException ignored) {}
-        }
-
-        Collections.sort(essentialMovies);
+        new MedZenMovieSiteScraper(essentialMovie).getMovie();
     }
 
     // --- --- --- Add information to local movie --- --- ---
