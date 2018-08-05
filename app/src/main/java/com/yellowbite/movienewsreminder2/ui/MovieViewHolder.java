@@ -33,6 +33,8 @@ public class MovieViewHolder extends RecyclerView.ViewHolder
 
     public void showMovie(Movie movie)
     {
+        this.resetComponents();
+
         if(movie == null || movie.getTitel() == null)
         {
             return;
@@ -78,6 +80,16 @@ public class MovieViewHolder extends RecyclerView.ViewHolder
         this.showColor(movie);
     }
 
+    private void resetComponents()
+    {
+        this.titelTextView.setText("");
+        this.standortTextView.setText("");
+        this.wocheTextView.setText("");
+        this.wochentagTextView.setText("");
+
+        this.resetPaint();
+    }
+
     private String cutTitel(String titel)
     {
         if(titel.length() > MAX_TITEL_LENGTH)
@@ -113,6 +125,11 @@ public class MovieViewHolder extends RecyclerView.ViewHolder
                 this.paintVorbestellt();
                 break;
         }
+    }
+
+    private void resetPaint()
+    {
+        this.view.setBackgroundColor(Color.parseColor("#e5e5e5"));
     }
 
     private void paintVerfuegbar()
