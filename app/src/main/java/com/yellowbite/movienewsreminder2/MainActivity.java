@@ -5,6 +5,7 @@ import android.app.job.JobScheduler;
 import android.content.ComponentName;
 import android.content.Context;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.util.SortedList;
@@ -108,7 +109,11 @@ public class MainActivity extends AppCompatActivity
     private void removeTitleBar()
     {
         requestWindowFeature(Window.FEATURE_NO_TITLE);//will hide the title
-        getSupportActionBar().hide(); //hide the title bar
+        ActionBar actionBar = getSupportActionBar(); //hide the title bar
+        if(actionBar != null)
+        {
+            actionBar.hide();
+        }
     }
 
     private void handleOnAddMovieClicked(View view)
