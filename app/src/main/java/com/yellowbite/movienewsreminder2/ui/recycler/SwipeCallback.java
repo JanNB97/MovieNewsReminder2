@@ -1,14 +1,9 @@
-package com.yellowbite.movienewsreminder2.ui;
+package com.yellowbite.movienewsreminder2.ui.recycler;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.widget.Adapter;
 
-import com.yellowbite.movienewsreminder2.model.Movie;
-import com.yellowbite.movienewsreminder2.webscraping.medienzentrum.MedZenFileMan;
-
-import java.util.List;
+import com.yellowbite.movienewsreminder2.ui.recycler.MovieAdapter;
 
 public class SwipeCallback extends ItemTouchHelper.SimpleCallback
 {

@@ -19,9 +19,9 @@ public class MedZenMovieSiteScraper
 {
     private Movie movie;
 
-    private Future<Document> futureDoc;
+    private Document doc;
 
-    public MedZenMovieSiteScraper(String url)
+    public MedZenMovieSiteScraper(String url) throws IOException
     {
         Movie movie = null;
         if(url != null)
@@ -32,19 +32,19 @@ public class MedZenMovieSiteScraper
         this.init(movie);
     }
 
-    public MedZenMovieSiteScraper(Movie movie)
+    public MedZenMovieSiteScraper(Movie movie) throws IOException
     {
         this.init(movie);
     }
 
-    private void init(Movie movie)
+    private void init(Movie movie) throws IOException
     {
         if(movie == null)
         {
             throw new NullPointerException();
         }
 
-        this.futureDoc = WebscrapingHelper.getFutureDoc(movie.getURL());
+        this.doc = WebscrapingHelper.getDoc(movie.getURL());
         this.movie = movie;
     }
 
@@ -56,25 +56,20 @@ public class MedZenMovieSiteScraper
 
     public static void getMovies(List<Movie> essentialMovies)
     {
-        List<MedZenMovieSiteScraper> siteScrapers = new ArrayList<>();
-        for(Movie movie : essentialMovies)
-        {
-            siteScrapers.add(new MedZenMovieSiteScraper(movie));
-        }
-
-        for(MedZenMovieSiteScraper siteScraper : siteScrapers)
+        for(Movie essentialMovie : essentialMovies)
         {
             try
             {
-                siteScraper.getMovie();
-            } catch (IOException ignored) {}
+                new MedZenMovieSiteScraper(essentialMovie).getMovie();
+            }
+            catch (IOException ignored) {}
         }
 
         Collections.sort(essentialMovies);
     }
 
     // --- --- --- Add information to local movie --- --- ---
-    public Movie getMediaBarcodeMovie() throws IOException
+    public Movie getMediaBarcodeMovie()
     {
         this.movie.setMediaBarcode(this.getMediaBarcode());
 
@@ -86,7 +81,7 @@ public class MedZenMovieSiteScraper
         return this.movie;
     }
 
-    public Movie getMovieStatus() throws IOException
+    public Movie getMovieStatus()
     {
         this.getMediaBarcodeMovie();
 
@@ -99,7 +94,7 @@ public class MedZenMovieSiteScraper
         return this.movie;
     }
 
-    public Movie getMovie() throws IOException
+    public Movie getMovie()
     {
         this.getMediaBarcodeMovie();
 
@@ -121,7 +116,7 @@ public class MedZenMovieSiteScraper
         return this.movie;
     }
 
-    private void addStatusToMovie() throws IOException
+    private void addStatusToMovie()
     {
         Status status = this.getStatus();
         if(status == null)
@@ -151,26 +146,26 @@ public class MedZenMovieSiteScraper
 
     // --- get essentials ---
 
-    private int getMediaBarcode() throws IOException
+    private int getMediaBarcode()
     {
         if(this.movie.getMediaBarcode() != -1)
         {
             return this.movie.getMediaBarcode();
         }
 
-        return WebscrapingHelper.getInt(this.getDoc(), "span.mediabarcode");
+        return WebscrapingHelper.getInt(this.doc, "span.mediabarcode");
     }
 
     // --- get status informations ---
 
-    private Status getStatus() throws IOException
+    private Status getStatus()
     {
-        return WebscrapingHelper.getStatus(this.getDoc(), "span#ContentPlaceHolderMain_LabelStatus");
+        return WebscrapingHelper.getStatus(this.doc, "span#ContentPlaceHolderMain_LabelStatus");
     }
 
-    private int getVorbestellungen() throws IOException
+    private int getVorbestellungen()
     {
-        String vorbestellungen = WebscrapingHelper.getText(getDoc(), "span.DetailLeftContent");
+        String vorbestellungen = WebscrapingHelper.getText(doc, "span.DetailLeftContent");
 
         if(vorbestellungen == null)
         {
@@ -189,21 +184,21 @@ public class MedZenMovieSiteScraper
         }
     }
 
-    private Date getEntliehenBis() throws IOException
+    private Date getEntliehenBis()
     {
-        return WebscrapingHelper.getDate(this.getDoc(), "span.borrowUntil");
+        return WebscrapingHelper.getDate(this.doc, "span.borrowUntil");
     }
 
     // --- get standort informations ---
 
-    private String getStandort() throws IOException
+    private String getStandort()
     {
         if(this.movie.getStandort() != null)
         {
             return this.movie.getStandort();
         }
 
-        String standort = WebscrapingHelper.getText(getDoc(), "span#ContentPlaceHolderMain_LabellocationContent");
+        String standort = WebscrapingHelper.getText(doc, "span#ContentPlaceHolderMain_LabellocationContent");
 
         if(standort != null)
         {
@@ -219,51 +214,35 @@ public class MedZenMovieSiteScraper
         return this.getInteressenkreis();
     }
 
-    private String getSignatur() throws IOException
+    private String getSignatur()
     {
-        return WebscrapingHelper.getText(this.getDoc(), "span.signatur");
+        return WebscrapingHelper.getText(this.doc, "span.signatur");
     }
 
-    private String getInteressenkreis() throws IOException
+    private String getInteressenkreis()
     {
-        return WebscrapingHelper.getText(this.getDoc(),"table.DetailInformation td.DetailInformationEntryName:containsOwn(Interessenkreis) + td");
+        return WebscrapingHelper.getText(this.doc,"table.DetailInformation td.DetailInformationEntryName:containsOwn(Interessenkreis) + td");
     }
 
-    private Date getZugang() throws IOException
+    private Date getZugang()
     {
         if(this.movie.getZugang() != null)
         {
             return this.movie.getZugang();
         }
 
-        return WebscrapingHelper.getDate(getDoc(), "span.accessDate");
+        return WebscrapingHelper.getDate(doc, "span.accessDate");
     }
 
     // --- get other useful informations ---
 
-    private String getTitel() throws IOException
+    private String getTitel()
     {
         if(this.movie.getTitel() != null)
         {
             return this.movie.getTitel();
         }
 
-        return WebscrapingHelper.getText(this.getDoc(),"table.DetailInformation td.DetailInformationEntryName:containsOwn(Titel):not(:containsOwn(zusatz)) + td");
-    }
-
-    // --- --- --- Others --- --- ---
-    private Document getDoc() throws IOException
-    {
-        try
-        {
-            return futureDoc.get();
-        } catch (InterruptedException e)
-        {
-            e.printStackTrace();
-            return null;
-        } catch (ExecutionException e)
-        {
-            throw new IOException();
-        }
+        return WebscrapingHelper.getText(this.doc,"table.DetailInformation td.DetailInformationEntryName:containsOwn(Titel):not(:containsOwn(zusatz)) + td");
     }
 }

@@ -50,29 +50,24 @@ public class MedZenMovieSiteScraperTest
     @Test
     public void testGetEssentialMovie()
     {
-        MedZenMovieSiteScraper siteScraper = new MedZenMovieSiteScraper(SEVEN_WORKOUTS_EXPECTED.getURL());
-
-        Movie sevenWorkouts = null;
         try
         {
-            sevenWorkouts = siteScraper.getMediaBarcodeMovie();
+            Movie sevenWorkouts = new MedZenMovieSiteScraper(SEVEN_WORKOUTS_EXPECTED.getURL()).getMediaBarcodeMovie();
+            Assert.assertNotNull(sevenWorkouts);
+            WebscrapingTestHelper.assertEssentialMovie(SEVEN_WORKOUTS_EXPECTED, sevenWorkouts);
         } catch (IOException e)
         {
             e.printStackTrace();
         }
-        Assert.assertNotNull(sevenWorkouts);
-
-        WebscrapingTestHelper.assertEssentialMovie(SEVEN_WORKOUTS_EXPECTED, sevenWorkouts);
     }
 
     @Test
     public void testGetMovieVerfuegbar()
     {
-        MedZenMovieSiteScraper siteScraper = new MedZenMovieSiteScraper(DANCE_WITH_ME_EXPECTED.getURL());
-
         try
         {
-            WebscrapingTestHelper.assertMovie(DANCE_WITH_ME_EXPECTED, siteScraper.getMovie());
+            WebscrapingTestHelper.assertMovie(DANCE_WITH_ME_EXPECTED,
+                    new MedZenMovieSiteScraper(DANCE_WITH_ME_EXPECTED.getURL()).getMovie());
         } catch (IOException e)
         {
             e.printStackTrace();
@@ -94,11 +89,10 @@ public class MedZenMovieSiteScraperTest
     @Test
     public void testGetMovieWithHiddenTitle()
     {
-        MedZenMovieSiteScraper siteScraper = new MedZenMovieSiteScraper(SEVEN_WORKOUTS_EXPECTED.getURL());
-
         try
         {
-            WebscrapingTestHelper.assertMovie(SEVEN_WORKOUTS_EXPECTED, siteScraper.getMovie());
+            WebscrapingTestHelper.assertMovie(SEVEN_WORKOUTS_EXPECTED,
+                    new MedZenMovieSiteScraper(SEVEN_WORKOUTS_EXPECTED.getURL()).getMovie());
         } catch (IOException e)
         {
             e.printStackTrace();

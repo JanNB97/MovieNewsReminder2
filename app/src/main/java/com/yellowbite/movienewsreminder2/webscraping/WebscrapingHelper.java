@@ -3,12 +3,14 @@ package com.yellowbite.movienewsreminder2.webscraping;
 import com.yellowbite.movienewsreminder2.model.enums.Status;
 import com.yellowbite.movienewsreminder2.util.DateHelper;
 
+import org.jsoup.HttpStatusException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -21,12 +23,6 @@ import java.util.logging.Logger;
 
 public class WebscrapingHelper
 {
-    public static Future<Document> getFutureDoc(String url)
-    {
-        ExecutorService executor = Executors.newSingleThreadExecutor();
-        return executor.submit(() -> Jsoup.connect(url).maxBodySize(0).get());
-    }
-
     public static Document getDoc(String url) throws IOException
     {
         return Jsoup.connect(url).maxBodySize(0).get();
