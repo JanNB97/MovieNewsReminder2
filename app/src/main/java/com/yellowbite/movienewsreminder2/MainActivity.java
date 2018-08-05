@@ -27,8 +27,6 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity
 {
     private RecyclerView movieRecyclerView;
-    private RecyclerView.LayoutManager layoutManager;
-
     private TextView urlTextView;
 
     private List<Movie> myMovies;
@@ -53,40 +51,7 @@ public class MainActivity extends AppCompatActivity
         NewsService.start(this);
     }
 
-    private void initRecyclerView()
-    {
-        this.movieRecyclerView = (RecyclerView) findViewById(R.id.movieRecyclerView);
-        this.movieRecyclerView.setHasFixedSize(true);
-        this.movieRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), this.movieRecyclerView, new RecyclerTouchListener.ClickListener() {
-            @Override
-            public void onClick(View view, int position)
-            {
-                handleClickedOnMovieItem(view, position);
-            }
-
-            @Override
-            public void onLongClick(View view, int position)
-            {
-                handleClickedLongOnMovieItem(view, position);
-            }
-        }));
-
-        // use linear layout manager
-        this.layoutManager = new LinearLayoutManager(this);
-        this.movieRecyclerView.setLayoutManager(layoutManager);
-    }
-
-    private void handleClickedOnMovieItem(View view, int position)
-    {
-
-    }
-
-    private void handleClickedLongOnMovieItem(View view, int position)
-    {
-        // TODO - Mark movie as hot
-        Movie movie = myMovies.get(position);
-        NotificationMan.showShortToast(this, movie.getTitel() + " is selected!");
-    }
+    // --- --- --- Initialization of UI --- --- ---
 
     private void removeTitleBar()
     {
@@ -98,14 +63,26 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    private void handleOnAddMovieClicked(View view)
+    private void initRecyclerView()
     {
-        new AddMovieTask(this, (MovieAdapter)this.movieRecyclerView.getAdapter(), this.urlTextView)
-                .execute(urlTextView.getText().toString());
+        this.movieRecyclerView = (RecyclerView) findViewById(R.id.movieRecyclerView);
+        this.movieRecyclerView.setHasFixedSize(true);
+
+        // use linear layout manager
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        this.movieRecyclerView.setLayoutManager(layoutManager);
     }
 
     private void loadMyMovies()
     {
         new LoadMoviesTask(this, this.movieRecyclerView).execute(myMovies);
+    }
+
+    // --- --- --- Interaction with user --- --- ---
+
+    private void handleOnAddMovieClicked(View view)
+    {
+        new AddMovieTask(this, (MovieAdapter)this.movieRecyclerView.getAdapter(), this.urlTextView)
+                .execute(urlTextView.getText().toString());
     }
 }

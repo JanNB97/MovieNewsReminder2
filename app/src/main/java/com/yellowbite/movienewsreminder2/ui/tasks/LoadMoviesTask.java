@@ -61,5 +61,19 @@ public class LoadMoviesTask extends AsyncTask<List<Movie>, Void, List<Movie>>
         this.movieRecyclerView.setAdapter(movieAdapter);
 
         new ItemTouchHelper(new SwipeCallback(movieAdapter)).attachToRecyclerView(this.movieRecyclerView);
+
+        this.movieRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(context, this.movieRecyclerView, new RecyclerTouchListener.ClickListener() {
+            @Override
+            public void onClick(View view, int position)
+            {
+                movieAdapter.handleClickedOnMovieItem(view, position);
+            }
+
+            @Override
+            public void onLongClick(View view, int position)
+            {
+                movieAdapter.handleClickedLongOnMovieItem(view, position);
+            }
+        }));
     }
 }
