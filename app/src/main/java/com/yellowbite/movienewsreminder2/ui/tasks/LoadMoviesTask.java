@@ -2,12 +2,14 @@ package com.yellowbite.movienewsreminder2.ui.tasks;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.yellowbite.movienewsreminder2.R;
 import com.yellowbite.movienewsreminder2.model.Movie;
@@ -29,15 +31,17 @@ public class LoadMoviesTask extends AsyncTask<List<Movie>, Integer, List<Movie>>
 
     private ProgressBar loadingProgressBar;
     private Button addMovieButton;
+    private TextView moviesUpdateTextView;
 
-    public LoadMoviesTask(Context context, RecyclerView movieRecyclerView, ProgressBar loadingProgressBar, Button addMovieButton)
+    public LoadMoviesTask(AppCompatActivity app, RecyclerView movieRecyclerView)
     {
-        this.context = context;
+        this.context = app.getApplicationContext();
         this.movieRecyclerView = movieRecyclerView;
 
-        this.loadingProgressBar = loadingProgressBar;
+        this.loadingProgressBar = app.findViewById(R.id.loadingProgressBar);
 
-        this.addMovieButton = addMovieButton;
+        this.addMovieButton = app.findViewById(R.id.addMovieButton);
+        this.moviesUpdateTextView = app.findViewById(R.id.moviesUpdateTextView);
     }
 
     @Override
@@ -90,6 +94,7 @@ public class LoadMoviesTask extends AsyncTask<List<Movie>, Integer, List<Movie>>
     protected void onPostExecute(List<Movie> myMovies)
     {
         this.loadingProgressBar.setVisibility(View.GONE);
+        this.moviesUpdateTextView.setVisibility(View.GONE);
         this.addAdapterToRecyclerView(myMovies);
         this.addMovieButton.setEnabled(true);
     }
