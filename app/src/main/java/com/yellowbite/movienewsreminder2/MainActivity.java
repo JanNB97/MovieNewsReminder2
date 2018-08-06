@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -42,12 +44,10 @@ public class MainActivity extends AppCompatActivity
 
         this.myMovies = new ArrayList<>();
 
-        this.addMovieButton = findViewById(R.id.addMovieButton);
-        this.addMovieButton.setOnClickListener(this::handleOnAddMovieClicked);
-
-        this.urlTextView = findViewById(R.id.urlTextView);
-
+        this.initAddMovieButton();
+        this.initURLTextView();
         this.initRecyclerView();
+
         this.loadMyMovies();
 
         NewsService.start(this);
@@ -65,6 +65,31 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    private void initAddMovieButton()
+    {
+        this.addMovieButton = findViewById(R.id.addMovieButton);
+        this.addMovieButton.setOnClickListener(this::handleOnAddMovieClicked);
+    }
+
+    private void initURLTextView()
+    {
+        this.urlTextView = findViewById(R.id.urlTextView);
+        this.urlTextView.addTextChangedListener(new TextWatcher()
+        {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2)
+            {
+                addMovieButton.setEnabled(charSequence.length() != 0);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {}
+        });
+    }
+
     private void initRecyclerView()
     {
         this.movieRecyclerView = (RecyclerView) findViewById(R.id.movieRecyclerView);
@@ -77,7 +102,7 @@ public class MainActivity extends AppCompatActivity
 
     private void loadMyMovies()
     {
-        new LoadMoviesTask(this, this.movieRecyclerView).execute(myMovies);
+        new LoadMoviesTask(this, this.movieRecyclerView, this.urlTextView).execute(myMovies);
     }
 
     // --- --- --- Interaction with user --- --- ---

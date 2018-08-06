@@ -30,17 +30,17 @@ public class LoadMoviesTask extends AsyncTask<List<Movie>, Integer, List<Movie>>
     private RecyclerView movieRecyclerView;
 
     private ProgressBar loadingProgressBar;
-    private Button addMovieButton;
+    private TextView urlTextView;
     private TextView moviesUpdateTextView;
 
-    public LoadMoviesTask(AppCompatActivity app, RecyclerView movieRecyclerView)
+    public LoadMoviesTask(AppCompatActivity app, RecyclerView movieRecyclerView, TextView urlTextView)
     {
         this.context = app.getApplicationContext();
         this.movieRecyclerView = movieRecyclerView;
 
         this.loadingProgressBar = app.findViewById(R.id.loadingProgressBar);
 
-        this.addMovieButton = app.findViewById(R.id.addMovieButton);
+        this.urlTextView = urlTextView;
         this.moviesUpdateTextView = app.findViewById(R.id.moviesUpdateTextView);
     }
 
@@ -96,7 +96,7 @@ public class LoadMoviesTask extends AsyncTask<List<Movie>, Integer, List<Movie>>
         this.loadingProgressBar.setVisibility(View.GONE);
         this.moviesUpdateTextView.setVisibility(View.GONE);
         this.addAdapterToRecyclerView(myMovies);
-        this.addMovieButton.setEnabled(true);
+        this.urlTextView.setEnabled(true);
     }
 
     private void addAdapterToRecyclerView(List<Movie> myMovies)
