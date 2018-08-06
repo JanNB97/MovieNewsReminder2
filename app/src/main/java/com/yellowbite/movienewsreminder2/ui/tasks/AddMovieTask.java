@@ -38,7 +38,8 @@ public class AddMovieTask extends AsyncTask<String, Void, Movie>
         try
         {
             return MedZenMovieSiteScraper.getMovie(url);
-        } catch (IOException e)
+        }
+        catch (IllegalArgumentException | IOException e)
         {
             return null;
         }
