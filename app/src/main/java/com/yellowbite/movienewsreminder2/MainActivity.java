@@ -1,5 +1,6 @@
 package com.yellowbite.movienewsreminder2;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -14,10 +15,12 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.yellowbite.movienewsreminder2.model.Movie;
+import com.yellowbite.movienewsreminder2.ui.NotificationMan;
 import com.yellowbite.movienewsreminder2.ui.newMovies.NewMoviesActivity;
-import com.yellowbite.movienewsreminder2.ui.tasks.AddMovieTaskMainActivity;
+import com.yellowbite.movienewsreminder2.ui.tasks.GetMoviesTask;
 import com.yellowbite.movienewsreminder2.ui.recycler.MovieAdapter;
 import com.yellowbite.movienewsreminder2.ui.tasks.LoadMoviesTask;
+import com.yellowbite.movienewsreminder2.ui.tasks.MovieRunnable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -114,7 +117,23 @@ public class MainActivity extends AppCompatActivity
 
     private void handleOnAddMovieClicked(View view)
     {
-        new AddMovieTaskMainActivity(this, (MovieAdapter)this.movieRecyclerView.getAdapter(), this.urlTextView)
-                .execute(urlTextView.getText().toString());
+        Context context = this;
+        new GetMoviesTask(new MovieRunnable()
+        {
+            @Override
+            public void run(Movie movie)
+            {
+                urlTextView.setText("");
+
+                if(movie == null)
+                {
+                    NotificationMan.showShortToast(context, "Falsche URL oder keine Internetverbindung");
+                    return;
+                }
+
+                ((MovieAdapter)movieRecyclerView.getAdapter()).addItem(movie);
+            }
+        })
+        .execute(new Movie(urlTextView.getText().toString()));
     }
 }

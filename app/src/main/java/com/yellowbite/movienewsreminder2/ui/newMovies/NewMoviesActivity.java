@@ -4,13 +4,12 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Window;
-import android.widget.Button;
 
 import com.yellowbite.movienewsreminder2.R;
 import com.yellowbite.movienewsreminder2.model.Movie;
+import com.yellowbite.movienewsreminder2.ui.tasks.GetMoviesTask;
 import com.yellowbite.movienewsreminder2.webscraping.medienzentrum.MedZenFileMan;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class NewMoviesActivity extends AppCompatActivity

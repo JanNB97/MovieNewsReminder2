@@ -44,6 +44,13 @@ public class MedZenFileMan
     }
 
     // --- --- --- my movies --- --- ---
+    public static void addMyMovie(Context context, Movie movie)
+    {
+        List<Movie> movies = getMyMovies(context, new ArrayList<>());
+        movies.add(movie);
+        setMyMovies(context, movies);
+    }
+
     public static List<Movie> getMyMovies(Context context, List<Movie> myMovies)
     {
         List<String> lines = FileManager.readAll(context, MY_MOVIES);

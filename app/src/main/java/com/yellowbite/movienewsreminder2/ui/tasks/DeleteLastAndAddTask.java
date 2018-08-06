@@ -13,21 +13,32 @@ import com.yellowbite.movienewsreminder2.webscraping.medienzentrum.MedZenMovieSi
 
 import java.io.IOException;
 
-public class DeleteLastNewMovieTask extends AsyncTask<Void, Void, Void>
+public class DeleteLastAndAddTask extends AsyncTask<Movie, Void, Void>
 {
-    Context context;
-    Runnable runnable;
+    private Context context;
+    private Runnable runnable;
 
-    public DeleteLastNewMovieTask(Context context, Runnable runnable)
+    public DeleteLastAndAddTask(Context context, Runnable runnable)
     {
         this.context = context;
         this.runnable = runnable;
     }
 
     @Override
-    protected Void doInBackground(Void... strings)
+    protected Void doInBackground(Movie... movies)
     {
+        if(movies.length > 1)
+        {
+            throw new IllegalArgumentException();
+        }
+
         MedZenFileMan.deleteLastNewMovie(context);
+
+        if(movies.length != 0 && movies[0] != null)
+        {
+            MedZenFileMan.addMyMovie(this.context, movies[0]);
+        }
+
         return null;
     }
 
