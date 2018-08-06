@@ -11,14 +11,14 @@ import com.yellowbite.movienewsreminder2.webscraping.medienzentrum.MedZenMovieSi
 
 import java.io.IOException;
 
-public class AddMovieTask extends AsyncTask<String, Void, Movie>
+public class AddMovieTaskMainActivity extends AsyncTask<String, Void, Movie>
 {
     private Context context;
     private MovieAdapter movieAdapter;
 
     private TextView urlTextView;
 
-    public AddMovieTask(Context context, MovieAdapter movieAdapter, TextView urlTextView)
+    public AddMovieTaskMainActivity(Context context, MovieAdapter movieAdapter, TextView urlTextView)
     {
         this.context = context;
         this.movieAdapter = movieAdapter;

@@ -23,6 +23,11 @@ public class MedZenFileMan
     {
         String s = FileManager.read(context, NEWEST_BARCODE);
 
+        if(s == null)
+        {
+            return -1;
+        }
+
         try
         {
             return Integer.parseInt(s);

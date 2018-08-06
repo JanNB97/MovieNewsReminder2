@@ -5,6 +5,8 @@ import android.content.Context;
 import com.yellowbite.movienewsreminder2.model.Movie;
 import com.yellowbite.movienewsreminder2.webscraping.WebscrapingHandler;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MedZenHandler extends WebscrapingHandler
 {
@@ -29,13 +31,13 @@ public class MedZenHandler extends WebscrapingHandler
             return false;
         }
 
-
-        int thisBarcode = listScraper.getEssentialMovie(0).getMediaBarcode();
+        Movie thisMovie = listScraper.getEssentialMovie(0);
+        int thisBarcode = thisMovie.getMediaBarcode();
         int lastBarcode = MedZenFileMan.getNewestBarcode(context);
 
         if(lastBarcode == -1 || thisBarcode != lastBarcode)
         {
-            // TODO - Write new movies in file
+            this.writeNewMoviesInFile(context, listScraper, thisMovie, lastBarcode);
 
             MedZenFileMan.setNewestBarcode(context, thisBarcode);
             return true;
@@ -44,5 +46,27 @@ public class MedZenHandler extends WebscrapingHandler
         {
             return false;
         }
+    }
+
+    private void writeNewMoviesInFile(Context context, MedZenMovieListScraper listScraper, Movie newestMovie, int lastNewestBarcode)
+    {
+        List<Movie> newMovies = new ArrayList<>();
+        newMovies.add(newestMovie);
+
+        for(int i = 1; i < listScraper.getListEntrySize(); i++)
+        {
+            Movie movie = listScraper.getEssentialMovie(i);
+
+            if(movie.getMediaBarcode() != lastNewestBarcode)
+            {
+                newMovies.add(movie);
+            }
+            else
+            {
+                break;
+            }
+        }
+
+        MedZenFileMan.addNewMovies(context, newMovies);
     }
 }

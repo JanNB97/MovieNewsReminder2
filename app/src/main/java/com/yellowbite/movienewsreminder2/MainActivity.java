@@ -1,28 +1,23 @@
 package com.yellowbite.movienewsreminder2;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.yellowbite.movienewsreminder2.model.Movie;
-import com.yellowbite.movienewsreminder2.ui.tasks.AddMovieTask;
+import com.yellowbite.movienewsreminder2.ui.newMovies.NewMoviesActivity;
+import com.yellowbite.movienewsreminder2.ui.tasks.AddMovieTaskMainActivity;
 import com.yellowbite.movienewsreminder2.ui.recycler.MovieAdapter;
-import com.yellowbite.movienewsreminder2.ui.NotificationMan;
-import com.yellowbite.movienewsreminder2.ui.recycler.RecyclerTouchListener;
-import com.yellowbite.movienewsreminder2.ui.recycler.SwipeCallback;
 import com.yellowbite.movienewsreminder2.ui.tasks.LoadMoviesTask;
-import com.yellowbite.movienewsreminder2.webscraping.medienzentrum.MedZenFileMan;
-import com.yellowbite.movienewsreminder2.webscraping.medienzentrum.MedZenMovieSiteScraper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +37,8 @@ public class MainActivity extends AppCompatActivity
         this.removeTitleBar();
         setContentView(R.layout.activity_main);
 
+        this.launchNewMoviesActivity();
+
         this.myMovies = new ArrayList<>();
 
         this.initAddMovieButton();
@@ -51,6 +48,14 @@ public class MainActivity extends AppCompatActivity
         this.loadMyMovies();
 
         NewsService.start(this);
+    }
+
+    // --- --- --- Open NewMoviesActivity --- --- ---
+
+    private void launchNewMoviesActivity()
+    {
+        Intent intent = new Intent(this, NewMoviesActivity.class);
+        this.startActivity(intent);
     }
 
     // --- --- --- Initialization of UI --- --- ---
@@ -109,7 +114,7 @@ public class MainActivity extends AppCompatActivity
 
     private void handleOnAddMovieClicked(View view)
     {
-        new AddMovieTask(this, (MovieAdapter)this.movieRecyclerView.getAdapter(), this.urlTextView)
+        new AddMovieTaskMainActivity(this, (MovieAdapter)this.movieRecyclerView.getAdapter(), this.urlTextView)
                 .execute(urlTextView.getText().toString());
     }
 }
