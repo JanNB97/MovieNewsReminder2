@@ -12,7 +12,7 @@ import com.yellowbite.movienewsreminder2.ui.tasks.MovieRunnable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NewMoviesController
+public class NewMoviesController implements LoadedMovieEvent
 {
     private NewMoviesActivity activity;
 
@@ -23,6 +23,8 @@ public class NewMoviesController
 
     private Button addToMyMoviesButton;
     private Button nextMovieButton;
+
+    private int loadedMovieId;
 
     private int displayedMovieId;
     private Movie displayedMovie;
@@ -38,7 +40,10 @@ public class NewMoviesController
 
         this.addToMyMovies = new ArrayList<>();
 
-        this.showNextMovie();
+        new GetMoviesDescendingNotifier(this.activity, this, this.newMovies);
+        this.loadedMovieId = this.newMovies.size();
+
+        this.tryToShowNextMovie();
 
         nextMovieButton.setOnClickListener(e -> this.handleClickOnNextMovie());
         addToMyMoviesButton.setOnClickListener(e -> this.handleClickOnAddMovie());
@@ -50,7 +55,7 @@ public class NewMoviesController
 
         new DeleteLastAndAddTask(activity.getApplicationContext(), () -> {
                     addToMyMovies.add(displayedMovie);
-                    showNextMovie();
+                    tryToShowNextMovie();
         })
         .execute(this.displayedMovie);
     }
@@ -60,11 +65,11 @@ public class NewMoviesController
         this.setButtonsEnabled(false);
 
         new DeleteLastAndAddTask(activity.getApplicationContext(),
-                this::showNextMovie)
+                this::tryToShowNextMovie)
         .execute();
     }
 
-    private void showNextMovie()
+    private void tryToShowNextMovie()
     {
         this.displayedMovieId--;
         if(this.displayedMovieId < 0)
@@ -73,17 +78,18 @@ public class NewMoviesController
             return;
         }
 
-        this.displayedMovie = newMovies.get(this.displayedMovieId);
-        new GetMoviesTask(new MovieRunnable()
+        if(this.displayedMovieId >= this.loadedMovieId)
         {
-            @Override
-            public void run(Movie movie)
-            {
-                showMovie(movie);
-                setButtonsEnabled(true);
-            }
-        })
-        .execute(this.displayedMovie);
+            this.showNextMovie();
+        }
+    }
+
+    private void showNextMovie()
+    {
+        this.displayedMovie = newMovies.get(this.displayedMovieId);
+
+        showMovie(this.displayedMovie);
+        setButtonsEnabled(true);
     }
 
     private void showMovie(Movie movie)
@@ -95,5 +101,15 @@ public class NewMoviesController
     {
         this.nextMovieButton.setEnabled(b);
         this.addToMyMoviesButton.setEnabled(b);
+    }
+
+    @Override
+    public void loadedMovie(int id)
+    {
+        this.loadedMovieId = id;
+        if(this.loadedMovieId == displayedMovieId)
+        {
+            this.showNextMovie();
+        }
     }
 }
