@@ -67,13 +67,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder>
     {
         for(Movie movie : movies)
         {
-            if(!this.isNew(movie))
-            {
-                NotificationMan.showShortToast(this.context, movie.getTitel() + " is already in the database");
-                continue;
-            }
-
-            this.movies.add(movie);
+            this.addItemSimple(movie);
         }
 
         Collections.sort(this.movies);
@@ -82,6 +76,14 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder>
 
     public void addItem(Movie movie, boolean saveInFile)
     {
+        this.addItemSimple(movie);
+        Collections.sort(movies);
+
+        this.dataSetChanged(saveInFile);
+    }
+
+    private void addItemSimple(Movie movie)
+    {
         if(!isNew(movie))
         {
             NotificationMan.showShortToast(this.context, movie.getTitel() + " is already in the database");
@@ -89,9 +91,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder>
         }
 
         this.movies.add(movie);
-        Collections.sort(movies);
-
-        this.dataSetChanged(saveInFile);
     }
 
     public void removeItem(int position)
