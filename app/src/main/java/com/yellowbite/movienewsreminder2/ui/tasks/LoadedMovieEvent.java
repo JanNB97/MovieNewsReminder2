@@ -1,4 +1,4 @@
-package com.yellowbite.movienewsreminder2.ui.newMovies;
+package com.yellowbite.movienewsreminder2.ui.tasks;
 
 public interface LoadedMovieEvent
 {

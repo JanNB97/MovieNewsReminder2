@@ -216,7 +216,11 @@ public class MedZenFileMan
             titel = null;
         }
 
-        Status status = Status.valueOf(split[5]);
+        Status status = null;
+        if(split[5] != null)
+        {
+            status = Status.valueOf(split[5]);
+        }
 
         int vorbestellungen;
         try

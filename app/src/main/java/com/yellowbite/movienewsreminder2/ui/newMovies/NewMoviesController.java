@@ -6,8 +6,8 @@ import android.widget.TextView;
 import com.yellowbite.movienewsreminder2.R;
 import com.yellowbite.movienewsreminder2.model.Movie;
 import com.yellowbite.movienewsreminder2.ui.tasks.DeleteLastAndAddTask;
-import com.yellowbite.movienewsreminder2.ui.tasks.GetMoviesTask;
-import com.yellowbite.movienewsreminder2.ui.tasks.MovieRunnable;
+import com.yellowbite.movienewsreminder2.ui.tasks.GetMoviesDescendingNotifier;
+import com.yellowbite.movienewsreminder2.ui.tasks.LoadedMovieEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +24,7 @@ public class NewMoviesController implements LoadedMovieEvent
     private Button addToMyMoviesButton;
     private Button nextMovieButton;
 
-    private int loadedMovieId;
+    private boolean[] movieIsLoaded;
 
     private int displayedMovieId;
     private Movie displayedMovie;
@@ -41,7 +41,7 @@ public class NewMoviesController implements LoadedMovieEvent
         this.addToMyMovies = new ArrayList<>();
 
         new GetMoviesDescendingNotifier(this.activity, this, this.newMovies);
-        this.loadedMovieId = this.newMovies.size();
+        this.movieIsLoaded = new boolean[this.newMovies.size()];
 
         this.tryToShowNextMovie();
 
@@ -78,7 +78,7 @@ public class NewMoviesController implements LoadedMovieEvent
             return;
         }
 
-        if(this.displayedMovieId >= this.loadedMovieId)
+        if(this.movieIsLoaded[this.displayedMovieId])
         {
             this.showNextMovie();
         }
@@ -106,8 +106,9 @@ public class NewMoviesController implements LoadedMovieEvent
     @Override
     public void loadedMovie(int id)
     {
-        this.loadedMovieId = id;
-        if(this.loadedMovieId == displayedMovieId)
+        this.movieIsLoaded[id] = true;
+
+        if(this.movieIsLoaded[this.displayedMovieId] && id == this.displayedMovieId)
         {
             this.showNextMovie();
         }
