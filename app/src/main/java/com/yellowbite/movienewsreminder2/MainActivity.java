@@ -1,5 +1,6 @@
 package com.yellowbite.movienewsreminder2;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.ActionBar;
@@ -21,6 +22,7 @@ import com.yellowbite.movienewsreminder2.ui.tasks.GetMoviesTask;
 import com.yellowbite.movienewsreminder2.ui.recycler.MovieAdapter;
 import com.yellowbite.movienewsreminder2.ui.tasks.LoadMoviesTask;
 import com.yellowbite.movienewsreminder2.ui.tasks.MovieRunnable;
+import com.yellowbite.movienewsreminder2.webscraping.medienzentrum.MedZenFileMan;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,7 +60,28 @@ public class MainActivity extends AppCompatActivity
     private void launchNewMoviesActivity()
     {
         Intent intent = new Intent(this, NewMoviesActivity.class);
-        this.startActivity(intent);
+        this.startActivityForResult(intent, 1);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        if(requestCode == 1)
+        {
+            if(resultCode == Activity.RESULT_OK)
+            {
+                String result = data.getStringExtra("result");
+                List<Movie> resultMovies = MedZenFileMan.toStatusMovies(result);
+                if(resultMovies != null && !resultMovies.isEmpty())
+                {
+                    ((MovieAdapter)movieRecyclerView.getAdapter()).addItems(resultMovies, false);
+                }
+            }
+            else if(resultCode == Activity.RESULT_CANCELED)
+            {
+                // TODO
+            }
+        }
     }
 
     // --- --- --- Initialization of UI --- --- ---
@@ -131,7 +154,7 @@ public class MainActivity extends AppCompatActivity
                     return;
                 }
 
-                ((MovieAdapter)movieRecyclerView.getAdapter()).addItem(movie);
+                ((MovieAdapter)movieRecyclerView.getAdapter()).addItem(movie, true);
             }
         })
         .execute(new Movie(urlTextView.getText().toString()));

@@ -11,6 +11,7 @@ import com.yellowbite.movienewsreminder2.model.Movie;
 import com.yellowbite.movienewsreminder2.ui.NotificationMan;
 import com.yellowbite.movienewsreminder2.webscraping.medienzentrum.MedZenFileMan;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -62,7 +63,24 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder>
         NotificationMan.showShortToast(this.context, movie.getTitel() + " is selected!");
     }
 
-    public void addItem(Movie movie)
+    public void addItems(List<Movie> movies, boolean saveInFile)
+    {
+        for(Movie movie : movies)
+        {
+            if(!this.isNew(movie))
+            {
+                NotificationMan.showShortToast(this.context, movie.getTitel() + " is already in the database");
+                continue;
+            }
+
+            this.movies.add(movie);
+        }
+
+        Collections.sort(this.movies);
+        this.dataSetChanged(saveInFile);
+    }
+
+    public void addItem(Movie movie, boolean saveInFile)
     {
         if(!isNew(movie))
         {
@@ -73,22 +91,25 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder>
         this.movies.add(movie);
         Collections.sort(movies);
 
-        this.dataSetChanged();
+        this.dataSetChanged(saveInFile);
     }
 
     public void removeItem(int position)
     {
         this.movies.remove(position);
 
-        this.dataSetChanged();
+        this.dataSetChanged(true);
     }
 
-    private void dataSetChanged()
+    private void dataSetChanged(boolean saveInFile)
     {
         this.notifyDataSetChanged();
 
-        new Thread(() -> MedZenFileMan.setMyMovies(this.context, this.movies))
-                .start();
+        if(saveInFile)
+        {
+            new Thread(() -> MedZenFileMan.setMyMovies(this.context, this.movies))
+                    .start();
+        }
     }
 
     private boolean isNew(Movie movie)

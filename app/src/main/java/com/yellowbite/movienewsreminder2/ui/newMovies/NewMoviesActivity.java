@@ -1,5 +1,7 @@
 package com.yellowbite.movienewsreminder2.ui.newMovies;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,9 +9,9 @@ import android.view.Window;
 
 import com.yellowbite.movienewsreminder2.R;
 import com.yellowbite.movienewsreminder2.model.Movie;
-import com.yellowbite.movienewsreminder2.ui.tasks.GetMoviesTask;
 import com.yellowbite.movienewsreminder2.webscraping.medienzentrum.MedZenFileMan;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class NewMoviesActivity extends AppCompatActivity
@@ -24,7 +26,7 @@ public class NewMoviesActivity extends AppCompatActivity
         List<Movie> newMovies = MedZenFileMan.getNewMovies(this);
         if(newMovies.size() == 0)
         {
-            this.showMainActivity();
+            this.showMainActivity(null);
         }
 
         new NewMoviesController(this, newMovies);
@@ -40,8 +42,15 @@ public class NewMoviesActivity extends AppCompatActivity
         }
     }
 
-    public void showMainActivity()
+    public void showMainActivity(List<Movie> resultMovies)
     {
+        if(resultMovies != null && !resultMovies.isEmpty())
+        {
+            Intent returnIntent = new Intent();
+            returnIntent.putExtra("result", MedZenFileMan.toStatusLine(resultMovies));
+            this.setResult(Activity.RESULT_OK, returnIntent);
+        }
+
         this.finish();
     }
 }

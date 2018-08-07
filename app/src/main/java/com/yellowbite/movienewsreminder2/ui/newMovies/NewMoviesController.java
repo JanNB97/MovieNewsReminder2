@@ -9,6 +9,7 @@ import com.yellowbite.movienewsreminder2.ui.tasks.DeleteLastAndAddTask;
 import com.yellowbite.movienewsreminder2.ui.tasks.GetMoviesTask;
 import com.yellowbite.movienewsreminder2.ui.tasks.MovieRunnable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class NewMoviesController
@@ -16,6 +17,7 @@ public class NewMoviesController
     private NewMoviesActivity activity;
 
     private List<Movie> newMovies;
+    private List<Movie> addToMyMovies;
 
     private TextView movieTitelTextView;
 
@@ -34,6 +36,8 @@ public class NewMoviesController
         this.movieTitelTextView = activity.findViewById(R.id.movieNameTextView);
         this.displayedMovieId = newMovies.size();
 
+        this.addToMyMovies = new ArrayList<>();
+
         this.showNextMovie();
 
         nextMovieButton.setOnClickListener(e -> this.handleClickOnNextMovie());
@@ -44,8 +48,10 @@ public class NewMoviesController
     {
         this.setButtonsEnabled(false);
 
-        new DeleteLastAndAddTask(activity.getApplicationContext(),
-                this::showNextMovie)
+        new DeleteLastAndAddTask(activity.getApplicationContext(), () -> {
+                    addToMyMovies.add(displayedMovie);
+                    showNextMovie();
+        })
         .execute(this.displayedMovie);
     }
 
@@ -63,7 +69,7 @@ public class NewMoviesController
         this.displayedMovieId--;
         if(this.displayedMovieId < 0)
         {
-            activity.showMainActivity();
+            activity.showMainActivity(this.addToMyMovies);
             return;
         }
 

@@ -3,6 +3,7 @@ package com.yellowbite.movienewsreminder2.webscraping.medienzentrum;
 import android.content.Context;
 
 import com.yellowbite.movienewsreminder2.model.Movie;
+import com.yellowbite.movienewsreminder2.model.enums.Status;
 import com.yellowbite.movienewsreminder2.util.DateHelper;
 import com.yellowbite.movienewsreminder2.util.FileManager;
 
@@ -82,8 +83,8 @@ public class MedZenFileMan
     // TODO
 
     // --- --- --- Movie file parsing --- --- ---
-    //barcode;url
-    private static Movie toMovie(String string)
+    //barcode;url;standort;zugang;titel
+    public static Movie toMovie(String string)
     {
         if(string == null)
         {
@@ -128,7 +129,7 @@ public class MedZenFileMan
                 titel);
     }
 
-    private static List<String> toLines(Collection<Movie> movies)
+    public static List<String> toLines(Collection<Movie> movies)
     {
         List<String> strings = new ArrayList<>();
 
@@ -140,14 +141,14 @@ public class MedZenFileMan
         return strings;
     }
 
-    private static String toLine(Movie movie)
+    public static String toLine(Movie movie)
     {
         return movie.getMediaBarcode() + ";" + movie.getURL() + ";"
                 + movie.getStandort() + ";" + DateHelper.toString(movie.getZugang()) + ";"
                 + movie.getTitel();
     }
 
-    private static List<Movie> toMovies(Collection<String> strings, List<Movie> output)
+    public static List<Movie> toMovies(Collection<String> strings, List<Movie> output)
     {
         for(String s : strings)
         {
@@ -160,5 +161,114 @@ public class MedZenFileMan
         }
 
         return output;
+    }
+
+    // --- --- --- Parsing for sending between activites --- --- ---
+
+    public static String toStatusLine(Movie movie)
+    {
+        StringBuilder builder = new StringBuilder();
+
+        builder.append(toLine(movie));
+
+        builder.append(";" + movie.getStatus() + ";"
+                + movie.getVorbestellungen() + ";"
+                + DateHelper.toString(movie.getEntliehenBis()));
+
+        return builder.toString();
+    }
+
+    public static Movie toStatusMovie(String string)
+    {
+        if(string == null)
+        {
+            return null;
+        }
+
+        String[] split = string.split(";");
+
+        if(split.length != 8)
+        {
+            return null;
+        }
+
+        int barcode;
+        try
+        {
+            barcode = Integer.parseInt(split[0]);
+        }
+        catch (NumberFormatException e)
+        {
+            return null;
+        }
+
+        String url = split[1];
+        String standort = split[2];
+        if("null".equals(standort))
+        {
+            standort = null;
+        }
+        Date zugang = DateHelper.toDate(split[3]);
+
+        String titel = split[4];
+        if("null".equals(titel))
+        {
+            titel = null;
+        }
+
+        Status status = Status.valueOf(split[5]);
+
+        int vorbestellungen;
+        try
+        {
+            vorbestellungen = Integer.parseInt(split[6]);
+        }
+        catch (NumberFormatException e)
+        {
+            vorbestellungen = -1;
+        }
+
+        Date entliehenBis = DateHelper.toDate(split[7]);
+
+        return new Movie(
+                barcode, url,
+                status, vorbestellungen, entliehenBis,
+                standort, zugang,
+                titel);
+    }
+
+    //movie1\nmovie2\nmovie3
+    public static String toStatusLine(List<Movie> movies)
+    {
+        StringBuilder builder = new StringBuilder();
+
+        int i = 0;
+        for (Movie movie : movies)
+        {
+            if(i != movies.size() - 1)
+            {
+                builder.append(toStatusLine(movie) + '\n');
+            }
+            else
+            {
+                builder.append(toStatusLine(movie));
+            }
+            i++;
+        }
+
+        return builder.toString();
+    }
+
+    public static List<Movie> toStatusMovies(String string)
+    {
+        String[] lines = string.split("\n");
+
+        List<Movie> movies = new ArrayList<>();
+        for (String line : lines)
+        {
+            movies.add(toStatusMovie(line));
+        }
+
+        return movies;
     }
 }
