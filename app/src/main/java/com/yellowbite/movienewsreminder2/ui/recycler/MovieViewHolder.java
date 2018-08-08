@@ -20,6 +20,13 @@ public class MovieViewHolder extends RecyclerView.ViewHolder
     private TextView wocheTextView;
     private TextView wochentagTextView;
 
+    // color
+    private static final String RESET_COLOR = "#e5e5e5";
+    private static final String VERFUEGBAR_COLOR = "#90ff60";
+    private static final String ENTLIEHEN_COLOR = "#ffff75";
+    private static final String VORBESTELLT_COLOR = "#ffb06b";
+    private static final String TEXT_RESET_COLOR = "black";
+
     public MovieViewHolder(View view)
     {
         super(view);
@@ -89,15 +96,24 @@ public class MovieViewHolder extends RecyclerView.ViewHolder
         this.wocheTextView.setText("");
         this.wochentagTextView.setText("");
 
-        this.resetPaint();
+        this.resetViewBg();
+
+        this.titelTextView.setTextColor(Color.parseColor(TEXT_RESET_COLOR));
+        this.standortTextView.setTextColor(Color.parseColor(TEXT_RESET_COLOR));
+        this.wochentagTextView.setTextColor(Color.parseColor(TEXT_RESET_COLOR));
+        this.wocheTextView.setTextColor(Color.parseColor(TEXT_RESET_COLOR));
     }
 
     private void showIfHot(Movie movie)
     {
         if(movie.isHot())
         {
-            this.titelTextView.setText("🔥 " + this.titelTextView.getText());
-            this.standortTextView.setText("       " + this.standortTextView.getText());
+            Movie.Status status = movie.getStatus();
+            if(status != null)
+            {
+                this.switchColors(movie.getStatus(), movie.getVorbestellungen());
+            }
+            this.standortTextView.setText(this.standortTextView.getText() + " 🔥");
         }
     }
 
@@ -118,45 +134,52 @@ public class MovieViewHolder extends RecyclerView.ViewHolder
 
     private void showColor(Movie movie)
     {
-        switch (movie.getStatus())
+        this.paintStatus(movie.getStatus(), movie.getVorbestellungen());
+    }
+
+    private void resetViewBg()
+    {
+        this.view.setBackgroundColor(Color.parseColor(RESET_COLOR));
+    }
+
+    private void paintStatus(Movie.Status status, int vorbestellungen)
+    {
+        this.view.setBackgroundColor(Color.parseColor(this.getColor(status, vorbestellungen)));
+    }
+
+    private void switchColors(Movie.Status status, int vorbestellungen)
+    {
+        String bgColor = this.getColor(status, vorbestellungen);
+        if(bgColor == null)
         {
-
-            case VERFUEGBAR:
-                paintVerfuegbar();
-                break;
-            case ENTLIEHEN:
-                if(movie.getVorbestellungen() == 0)
-                {
-                    this.paintEntliehenNoVor();
-                }
-                else
-                {
-                    this.paintVorbestellt();
-                }
-                break;
-            case VORBESTELLT:
-                this.paintVorbestellt();
-                break;
+            return;
         }
+
+        this.titelTextView.setTextColor(Color.parseColor(bgColor));
+        this.standortTextView.setTextColor(Color.parseColor(bgColor));
+        this.wochentagTextView.setTextColor(Color.parseColor(bgColor));
+        this.wocheTextView.setTextColor(Color.parseColor(bgColor));
+
+        this.view.setBackgroundColor(Color.parseColor(TEXT_RESET_COLOR));
     }
 
-    private void resetPaint()
+    private String getColor(Movie.Status status, int vorbestellungen)
     {
-        this.view.setBackgroundColor(Color.parseColor("#e5e5e5"));
-    }
+        switch(status)
+        {
+            case VERFUEGBAR:
+                return VERFUEGBAR_COLOR;
+            case ENTLIEHEN:
+                if(vorbestellungen == 0)
+                {
+                    return ENTLIEHEN_COLOR;
+                }
 
-    private void paintVerfuegbar()
-    {
-        this.view.setBackgroundColor(Color.parseColor("#90ff60"));
-    }
+                return VORBESTELLT_COLOR;
+            case VORBESTELLT:
+                return VORBESTELLT_COLOR;
+        }
 
-    private void paintEntliehenNoVor()
-    {
-        this.view.setBackgroundColor(Color.parseColor("#ffff75"));
-    }
-
-    private void paintVorbestellt()
-    {
-        this.view.setBackgroundColor(Color.parseColor("#ffb06b"));
+        return null;
     }
 }
