@@ -1,17 +1,18 @@
-package com.yellowbite.movienewsreminder2.ui.tasks;
+package com.yellowbite.movienewsreminder2.tasks.mainActivity;
 
 import android.os.AsyncTask;
 
 import com.yellowbite.movienewsreminder2.model.Movie;
+import com.yellowbite.movienewsreminder2.tasks.MovieRunnable;
 import com.yellowbite.movienewsreminder2.webscraping.medienzentrum.MedZenMovieSiteScraper;
 
 import java.io.IOException;
 
-public class GetMoviesTask extends AsyncTask<Movie, Void, Movie>
+public class GetMovieAsyncTask extends AsyncTask<Movie, Void, Movie>
 {
     private MovieRunnable onPostExecute;
 
-    public GetMoviesTask(MovieRunnable onPostExecute)
+    public GetMovieAsyncTask(MovieRunnable onPostExecute)
     {
         this.onPostExecute = onPostExecute;
     }

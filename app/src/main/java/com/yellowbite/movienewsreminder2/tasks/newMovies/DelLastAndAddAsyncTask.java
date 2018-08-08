@@ -1,4 +1,4 @@
-package com.yellowbite.movienewsreminder2.ui.tasks;
+package com.yellowbite.movienewsreminder2.tasks.newMovies;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -6,15 +6,15 @@ import android.os.AsyncTask;
 import com.yellowbite.movienewsreminder2.model.Movie;
 import com.yellowbite.movienewsreminder2.webscraping.medienzentrum.MedZenFileMan;
 
-public class DeleteLastAndAddTask extends AsyncTask<Movie, Void, Void>
+public class DelLastAndAddAsyncTask extends AsyncTask<Movie, Void, Void>
 {
     private Context context;
-    private Runnable runnable;
+    private Runnable onTaskFinished;
 
-    public DeleteLastAndAddTask(Context context, Runnable runnable)
+    public DelLastAndAddAsyncTask(Context context, Runnable onTaskFinished)
     {
         this.context = context;
-        this.runnable = runnable;
+        this.onTaskFinished = onTaskFinished;
     }
 
     @Override
@@ -38,6 +38,6 @@ public class DeleteLastAndAddTask extends AsyncTask<Movie, Void, Void>
     @Override
     protected void onPostExecute(Void v)
     {
-        runnable.run();
+        onTaskFinished.run();
     }
 }

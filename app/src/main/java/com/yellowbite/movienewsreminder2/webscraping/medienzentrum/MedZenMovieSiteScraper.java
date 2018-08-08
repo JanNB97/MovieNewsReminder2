@@ -1,18 +1,12 @@
 package com.yellowbite.movienewsreminder2.webscraping.medienzentrum;
 
 import com.yellowbite.movienewsreminder2.model.Movie;
-import com.yellowbite.movienewsreminder2.model.enums.Status;
 import com.yellowbite.movienewsreminder2.webscraping.WebscrapingHelper;
 
 import org.jsoup.nodes.Document;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
-import java.util.List;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
 import java.util.logging.Logger;
 
 public class MedZenMovieSiteScraper
@@ -109,25 +103,25 @@ public class MedZenMovieSiteScraper
 
     private void addStatusToMovie()
     {
-        Status status = this.getStatus();
+        Movie.Status status = this.getStatus();
         if(status == null)
         {
             return;
         }
         this.movie.setStatus(status);
 
-        if(status == Status.VERFUEGBAR)
+        if(status == Movie.Status.VERFUEGBAR)
         {
             this.movie.setVorbestellungen(0);
             this.movie.setEntliehenBis(null);
             return;
         }
 
-        if(status == Status.VORBESTELLT)
+        if(status == Movie.Status.VORBESTELLT)
         {
             this.movie.setEntliehenBis(null);
         }
-        else if(status == Status.ENTLIEHEN)
+        else if(status == Movie.Status.ENTLIEHEN)
         {
             this.movie.setEntliehenBis(this.getEntliehenBis());
         }
@@ -149,7 +143,7 @@ public class MedZenMovieSiteScraper
 
     // --- get status informations ---
 
-    private Status getStatus()
+    private Movie.Status getStatus()
     {
         return WebscrapingHelper.getStatus(this.doc, "span#ContentPlaceHolderMain_LabelStatus");
     }

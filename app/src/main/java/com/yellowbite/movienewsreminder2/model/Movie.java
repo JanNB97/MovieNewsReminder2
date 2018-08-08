@@ -2,7 +2,6 @@ package com.yellowbite.movienewsreminder2.model;
 
 import android.support.annotation.NonNull;
 
-import com.yellowbite.movienewsreminder2.model.enums.Status;
 import com.yellowbite.movienewsreminder2.util.DateHelper;
 
 import java.util.Date;
@@ -338,6 +337,23 @@ public class Movie implements Comparable<Movie>
         {
             Logger.getGlobal().severe("Something went wrong");
             return 0;
+        }
+    }
+
+    public enum Status {
+        VERFUEGBAR("verfügbar"),
+        ENTLIEHEN("entliehen"),
+        VORBESTELLT("vorbestellt");
+
+        private String value;
+
+        Status(String value)
+        {
+            this.value = value;
+        }
+
+        public String getValue() {
+            return value;
         }
     }
 }

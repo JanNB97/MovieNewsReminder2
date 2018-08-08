@@ -3,7 +3,6 @@ package com.yellowbite.movienewsreminder2.webscraping.medienzentrum;
 import android.content.Context;
 
 import com.yellowbite.movienewsreminder2.model.Movie;
-import com.yellowbite.movienewsreminder2.model.enums.Status;
 import com.yellowbite.movienewsreminder2.util.DateHelper;
 import com.yellowbite.movienewsreminder2.util.FileManager;
 
@@ -222,10 +221,10 @@ public class MedZenFileMan
             titel = null;
         }
 
-        Status status = null;
+        Movie.Status status = null;
         if(split[5] != null)
         {
-            status = Status.valueOf(split[5]);
+            status = Movie.Status.valueOf(split[5]);
         }
 
         int vorbestellungen;

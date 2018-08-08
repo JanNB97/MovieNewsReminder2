@@ -1,8 +1,9 @@
-package com.yellowbite.movienewsreminder2.ui.tasks;
+package com.yellowbite.movienewsreminder2.tasks.newMovies;
 
 import android.support.v7.app.AppCompatActivity;
 
 import com.yellowbite.movienewsreminder2.model.Movie;
+import com.yellowbite.movienewsreminder2.tasks.LoadedMovieEvent;
 import com.yellowbite.movienewsreminder2.webscraping.medienzentrum.MedZenMovieSiteScraper;
 
 import java.io.IOException;
@@ -10,7 +11,7 @@ import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
 
-public class GetMoviesDescendingNotifier
+public class GetMoviesDescendingExecutor
 {
     private static final int THREAD_POOL_SIZE = 2;
 
@@ -19,7 +20,7 @@ public class GetMoviesDescendingNotifier
 
     private ThreadPoolExecutor executor;
 
-    public GetMoviesDescendingNotifier(AppCompatActivity activity, LoadedMovieEvent event, List<Movie> movies)
+    public GetMoviesDescendingExecutor(AppCompatActivity activity, LoadedMovieEvent event, List<Movie> movies)
     {
         this.activity = activity;
         this.event = event;

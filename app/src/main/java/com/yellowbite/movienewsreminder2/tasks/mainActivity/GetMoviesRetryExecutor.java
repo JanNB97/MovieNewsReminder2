@@ -1,8 +1,9 @@
-package com.yellowbite.movienewsreminder2.ui.tasks;
+package com.yellowbite.movienewsreminder2.tasks.mainActivity;
 
 import android.support.v7.app.AppCompatActivity;
 
 import com.yellowbite.movienewsreminder2.model.Movie;
+import com.yellowbite.movienewsreminder2.tasks.LoadedMoviesEvent;
 import com.yellowbite.movienewsreminder2.webscraping.medienzentrum.MedZenMovieSiteScraper;
 
 import java.io.IOException;
@@ -11,12 +12,12 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class GetMoviesAsyn
+public class GetMoviesRetryExecutor
 {
     private final static int MAX_RETRIES_TO_LOAD = 3;
 
     private AppCompatActivity activity;
-    private LoadedMovieEvent event;
+    private LoadedMoviesEvent event;
 
     private ThreadPoolExecutor executor;
 
@@ -24,7 +25,7 @@ public class GetMoviesAsyn
 
     private AtomicInteger loadedMovies = new AtomicInteger(0);
 
-    public GetMoviesAsyn(AppCompatActivity activity, LoadedMovieEvent event, List<Movie> movies, Runnable onFinishedLoading)
+    public GetMoviesRetryExecutor(AppCompatActivity activity, LoadedMoviesEvent event, List<Movie> movies, Runnable onFinishedLoading)
     {
         this.activity = activity;
         this.event = event;
@@ -72,14 +73,14 @@ public class GetMoviesAsyn
         {
             // all movies loaded
             this.activity.runOnUiThread(() -> {
-                this.event.loadedMovie(l);
+                this.event.loadedMovies(l);
                 this.onFinishedLoading.run();
                 this.executor.shutdown();
             });
         }
         else
         {
-            this.activity.runOnUiThread(() -> this.event.loadedMovie(l));
+            this.activity.runOnUiThread(() -> this.event.loadedMovies(l));
         }
     }
 }

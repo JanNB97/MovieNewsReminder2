@@ -1,24 +1,15 @@
 package com.yellowbite.movienewsreminder2.webscraping;
 
-import com.yellowbite.movienewsreminder2.model.enums.Status;
+import com.yellowbite.movienewsreminder2.model.Movie;
 import com.yellowbite.movienewsreminder2.util.DateHelper;
 
-import org.jsoup.HttpStatusException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 import java.util.logging.Logger;
 
 public class WebscrapingHelper
@@ -30,7 +21,7 @@ public class WebscrapingHelper
 
     // --- Returning text ---
 
-    public static Status getStatus(Element element, String cssQuery)
+    public static Movie.Status getStatus(Element element, String cssQuery)
     {
         if(element == null)
         {
@@ -45,7 +36,7 @@ public class WebscrapingHelper
         }
         else
         {
-            for(Status status : Status.values())
+            for(Movie.Status status : Movie.Status.values())
             {
                 if(status.getValue().equals(text))
                 {

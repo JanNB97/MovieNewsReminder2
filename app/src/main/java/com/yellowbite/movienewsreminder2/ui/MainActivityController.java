@@ -21,17 +21,17 @@ import com.yellowbite.movienewsreminder2.ui.notifications.NotificationMan;
 import com.yellowbite.movienewsreminder2.ui.recycler.MovieAdapter;
 import com.yellowbite.movienewsreminder2.ui.recycler.RecyclerTouchListener;
 import com.yellowbite.movienewsreminder2.ui.recycler.SwipeCallback;
-import com.yellowbite.movienewsreminder2.ui.tasks.GetMoviesAsyn;
-import com.yellowbite.movienewsreminder2.ui.tasks.GetMoviesTask;
-import com.yellowbite.movienewsreminder2.ui.tasks.LoadedMovieEvent;
-import com.yellowbite.movienewsreminder2.ui.tasks.MovieRunnable;
+import com.yellowbite.movienewsreminder2.tasks.LoadedMoviesEvent;
+import com.yellowbite.movienewsreminder2.tasks.mainActivity.GetMovieAsyncTask;
+import com.yellowbite.movienewsreminder2.tasks.mainActivity.GetMoviesRetryExecutor;
+import com.yellowbite.movienewsreminder2.tasks.MovieRunnable;
 import com.yellowbite.movienewsreminder2.webscraping.medienzentrum.MedZenFileMan;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class MainActivityController implements LoadedMovieEvent
+public class MainActivityController implements LoadedMoviesEvent
 {
     private MainActivity mainActivity;
 
@@ -112,7 +112,7 @@ public class MainActivityController implements LoadedMovieEvent
             this.loadingProgressBar.setMax(this.myMovies.size());
 
             // download status
-            new GetMoviesAsyn(this.mainActivity, this, this.myMovies,
+            new GetMoviesRetryExecutor(this.mainActivity, this, this.myMovies,
                     this::onLoadingFinished);
         }
         else
@@ -122,9 +122,9 @@ public class MainActivityController implements LoadedMovieEvent
     }
 
     @Override
-    public void loadedMovie(int i)
+    public void loadedMovies(int numOfMovies)
     {
-        this.loadingProgressBar.setProgress(i);
+        this.loadingProgressBar.setProgress(numOfMovies);
     }
 
     private void onLoadingFinished()
@@ -187,7 +187,7 @@ public class MainActivityController implements LoadedMovieEvent
     private void handleOnAddMovieClicked(View view)
     {
         Context context = this.mainActivity;
-        new GetMoviesTask(new MovieRunnable()
+        new GetMovieAsyncTask(new MovieRunnable()
         {
             @Override
             public void run(Movie movie)

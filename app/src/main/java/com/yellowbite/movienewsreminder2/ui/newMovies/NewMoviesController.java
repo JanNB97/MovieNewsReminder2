@@ -5,9 +5,9 @@ import android.widget.TextView;
 
 import com.yellowbite.movienewsreminder2.R;
 import com.yellowbite.movienewsreminder2.model.Movie;
-import com.yellowbite.movienewsreminder2.ui.tasks.DeleteLastAndAddTask;
-import com.yellowbite.movienewsreminder2.ui.tasks.GetMoviesDescendingNotifier;
-import com.yellowbite.movienewsreminder2.ui.tasks.LoadedMovieEvent;
+import com.yellowbite.movienewsreminder2.tasks.newMovies.DelLastAndAddAsyncTask;
+import com.yellowbite.movienewsreminder2.tasks.newMovies.GetMoviesDescendingExecutor;
+import com.yellowbite.movienewsreminder2.tasks.LoadedMovieEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +40,7 @@ public class NewMoviesController implements LoadedMovieEvent
 
         this.addToMyMovies = new ArrayList<>();
 
-        new GetMoviesDescendingNotifier(this.activity, this, this.newMovies);
+        new GetMoviesDescendingExecutor(this.activity, this, this.newMovies);
         this.movieIsLoaded = new boolean[this.newMovies.size()];
 
         this.tryToShowNextMovie();
@@ -53,7 +53,7 @@ public class NewMoviesController implements LoadedMovieEvent
     {
         this.setButtonsEnabled(false);
 
-        new DeleteLastAndAddTask(activity.getApplicationContext(), () -> {
+        new DelLastAndAddAsyncTask(activity.getApplicationContext(), () -> {
                     addToMyMovies.add(displayedMovie);
                     tryToShowNextMovie();
         })
@@ -64,7 +64,7 @@ public class NewMoviesController implements LoadedMovieEvent
     {
         this.setButtonsEnabled(false);
 
-        new DeleteLastAndAddTask(activity.getApplicationContext(),
+        new DelLastAndAddAsyncTask(activity.getApplicationContext(),
                 this::tryToShowNextMovie)
         .execute();
     }
