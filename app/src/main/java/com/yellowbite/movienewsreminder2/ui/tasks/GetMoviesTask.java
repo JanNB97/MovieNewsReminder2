@@ -6,15 +6,14 @@ import com.yellowbite.movienewsreminder2.model.Movie;
 import com.yellowbite.movienewsreminder2.webscraping.medienzentrum.MedZenMovieSiteScraper;
 
 import java.io.IOException;
-import java.util.List;
 
 public class GetMoviesTask extends AsyncTask<Movie, Void, Movie>
 {
-    private MovieRunnable movieRunnable;
+    private MovieRunnable onPostExecute;
 
-    public GetMoviesTask(MovieRunnable movieRunnable)
+    public GetMoviesTask(MovieRunnable onPostExecute)
     {
-        this.movieRunnable = movieRunnable;
+        this.onPostExecute = onPostExecute;
     }
 
     @Override
@@ -41,6 +40,6 @@ public class GetMoviesTask extends AsyncTask<Movie, Void, Movie>
     @Override
     protected void onPostExecute(Movie movie)
     {
-        this.movieRunnable.run(movie);
+        this.onPostExecute.run(movie);
     }
 }
