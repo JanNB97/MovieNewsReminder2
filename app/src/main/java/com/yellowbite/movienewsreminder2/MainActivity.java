@@ -8,32 +8,42 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.yellowbite.movienewsreminder2.model.Movie;
 import com.yellowbite.movienewsreminder2.ui.NotificationMan;
 import com.yellowbite.movienewsreminder2.ui.newMovies.NewMoviesActivity;
+import com.yellowbite.movienewsreminder2.ui.recycler.RecyclerTouchListener;
+import com.yellowbite.movienewsreminder2.ui.recycler.SwipeCallback;
+import com.yellowbite.movienewsreminder2.ui.tasks.GetMoviesDescendingNotifier;
 import com.yellowbite.movienewsreminder2.ui.tasks.GetMoviesTask;
 import com.yellowbite.movienewsreminder2.ui.recycler.MovieAdapter;
-import com.yellowbite.movienewsreminder2.ui.tasks.LoadMoviesTask;
+import com.yellowbite.movienewsreminder2.ui.tasks.LoadedMovieEvent;
 import com.yellowbite.movienewsreminder2.ui.tasks.MovieRunnable;
 import com.yellowbite.movienewsreminder2.webscraping.medienzentrum.MedZenFileMan;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends AppCompatActivity implements LoadedMovieEvent
 {
     private static final int REQUEST_CODE = 1;
 
     private RecyclerView movieRecyclerView;
     private TextView urlTextView;
     private Button addMovieButton;
+    private ProgressBar loadingProgressBar;
+    private TextView moviesUpdateTextView;
+    private AtomicInteger loadedMovies = new AtomicInteger(0);
 
     private List<Movie> myMovies;
 
@@ -48,6 +58,8 @@ public class MainActivity extends AppCompatActivity
 
         this.myMovies = new ArrayList<>();
 
+        this.loadingProgressBar = this.findViewById(R.id.loadingProgressBar);
+        this.moviesUpdateTextView = this.findViewById(R.id.moviesUpdateTextView);
         this.initAddMovieButton();
         this.initURLTextView();
         this.initRecyclerView();
@@ -138,7 +150,57 @@ public class MainActivity extends AppCompatActivity
 
     private void loadMyMovies()
     {
-        new LoadMoviesTask(this, this.movieRecyclerView, this.urlTextView).execute(myMovies);
+        // load out of file
+        MedZenFileMan.getMyMovies(this, this.myMovies);
+        this.loadingProgressBar.setMax(this.myMovies.size());
+
+        // download status
+        new GetMoviesDescendingNotifier(this, this, this.myMovies);
+    }
+
+    @Override
+    public void loadedMovie(int id)
+    {
+        int l = this.loadedMovies.incrementAndGet();
+        this.loadingProgressBar.setProgress(l);
+
+        if(l >= this.myMovies.size())
+        {
+            this.onLoadingFinished();
+        }
+    }
+
+    private void onLoadingFinished()
+    {
+        Collections.sort(this.myMovies);
+
+        this.loadingProgressBar.setVisibility(View.GONE);
+        this.moviesUpdateTextView.setVisibility(View.GONE);
+        this.addAdapterToRecyclerView(myMovies);
+        this.urlTextView.setEnabled(true);
+    }
+
+    private void addAdapterToRecyclerView(List<Movie> myMovies)
+    {
+        // specify adapter
+        MovieAdapter movieAdapter = new MovieAdapter(this, myMovies);
+        this.movieRecyclerView.setAdapter(movieAdapter);
+
+        new ItemTouchHelper(new SwipeCallback(movieAdapter)).attachToRecyclerView(this.movieRecyclerView);
+
+        this.movieRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(this, this.movieRecyclerView, new RecyclerTouchListener.ClickListener() {
+            @Override
+            public void onClick(View view, int position)
+            {
+                movieAdapter.handleClickedOnMovieItem(view, position);
+            }
+
+            @Override
+            public void onLongClick(View view, int position)
+            {
+                movieAdapter.handleClickedLongOnMovieItem(view, position);
+            }
+        }));
     }
 
     // --- --- --- Interaction with user --- --- ---

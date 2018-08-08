@@ -21,6 +21,11 @@ public class GetMoviesDescendingNotifier
 
     public GetMoviesDescendingNotifier(AppCompatActivity activity, LoadedMovieEvent event, List<Movie> movies)
     {
+        if(movies.isEmpty())
+        {
+            event.loadedMovie(0);
+        }
+
         this.activity = activity;
         this.event = event;
 
