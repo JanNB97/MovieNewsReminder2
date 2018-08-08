@@ -14,7 +14,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class GetMoviesRetryExecutor
 {
-    private final static int MAX_RETRIES_TO_LOAD = 3;
+    private final static int MAX_RETRIES_PER_MOVIE = 3;
 
     private AppCompatActivity activity;
     private LoadedMoviesEvent event;
@@ -49,24 +49,28 @@ public class GetMoviesRetryExecutor
 
     private void executeMovie(Movie movie, int numOfMovies, int numOfRetries)
     {
-        if(numOfRetries > MAX_RETRIES_TO_LOAD)
-        {
-            return;
-        }
-
         try
         {
             MedZenMovieSiteScraper.getMovie(movie);
 
-            if(movie.getStatus() == null)
+            if(movie.getStatus() == null && numOfRetries < MAX_RETRIES_PER_MOVIE)
             {
-                numOfRetries++;
-                int finalNumOfRetries = numOfRetries;
-                this.executor.execute(() -> this.executeMovie(movie, numOfMovies, finalNumOfRetries));
+                this.retryToLoadMovie(movie, numOfMovies, numOfRetries);
                 return;
             }
         } catch (IOException ignored) {}
 
+        this.callbackLoadedMovies(numOfMovies);
+    }
+
+    private void retryToLoadMovie(Movie movie, int numOfMovies, int numOfRetries)
+    {
+        int finalNumOfRetries = numOfRetries + 1;
+        this.executor.execute(() -> this.executeMovie(movie, numOfMovies, finalNumOfRetries));
+    }
+
+    private void callbackLoadedMovies(int numOfMovies)
+    {
         int l = loadedMovies.incrementAndGet();
 
         if(l >= numOfMovies)
