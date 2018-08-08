@@ -152,10 +152,18 @@ public class MainActivity extends AppCompatActivity implements LoadedMovieEvent
     {
         // load out of file
         MedZenFileMan.getMyMovies(this, this.myMovies);
-        this.loadingProgressBar.setMax(this.myMovies.size());
 
-        // download status
-        new GetMoviesDescendingNotifier(this, this, this.myMovies);
+        if(!this.myMovies.isEmpty())
+        {
+            this.loadingProgressBar.setMax(this.myMovies.size());
+
+            // download status
+            new GetMoviesDescendingNotifier(this, this, this.myMovies);
+        }
+        else
+        {
+            this.loadedMovie(0);
+        }
     }
 
     @Override
