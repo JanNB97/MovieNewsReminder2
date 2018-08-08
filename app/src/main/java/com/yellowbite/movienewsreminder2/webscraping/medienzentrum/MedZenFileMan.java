@@ -64,6 +64,7 @@ public class MedZenFileMan
     }
 
     // --- --- --- New movies --- --- ---
+
     public static List<Movie> getNewMovies(Context context)
     {
         return toMovies(FileManager.readAll(context, NEW_MOVIES), new ArrayList<>());
@@ -77,6 +78,11 @@ public class MedZenFileMan
     public static void deleteLastNewMovie(Context context)
     {
         FileManager.deleteLast(context, NEW_MOVIES);
+    }
+
+    public static boolean newMoviesIsEmpty(Context context)
+    {
+        return FileManager.isEmpty(context, NEW_MOVIES);
     }
 
     // --- --- --- hot movies --- --- ---

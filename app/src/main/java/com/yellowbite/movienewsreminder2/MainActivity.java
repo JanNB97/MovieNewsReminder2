@@ -29,6 +29,8 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity
 {
+    private static final int REQUEST_CODE = 1;
+
     private RecyclerView movieRecyclerView;
     private TextView urlTextView;
     private Button addMovieButton;
@@ -59,14 +61,17 @@ public class MainActivity extends AppCompatActivity
 
     private void launchNewMoviesActivity()
     {
-        Intent intent = new Intent(this, NewMoviesActivity.class);
-        this.startActivityForResult(intent, 1);
+        if(!MedZenFileMan.newMoviesIsEmpty(this))
+        {
+            Intent intent = new Intent(this, NewMoviesActivity.class);
+            this.startActivityForResult(intent, REQUEST_CODE);
+        }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
-        if(requestCode == 1)
+        if(requestCode == REQUEST_CODE)
         {
             if(resultCode == Activity.RESULT_OK)
             {

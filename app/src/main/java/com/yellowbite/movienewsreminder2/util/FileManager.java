@@ -75,6 +75,11 @@ public class FileManager
         return readLines;
     }
 
+    public static boolean isEmpty(Context context, String filename)
+    {
+        return read(context, filename) == null;
+    }
+
     // --- --- --- Insert --- --- ---
     public static void insertFirst(Context context, String filename, String line)
     {

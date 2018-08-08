@@ -23,13 +23,7 @@ public class NewMoviesActivity extends AppCompatActivity
         this.removeTitleBar();
         setContentView(R.layout.activity_new_movies);
 
-        List<Movie> newMovies = MedZenFileMan.getNewMovies(this);
-        if(newMovies.size() == 0)
-        {
-            this.showMainActivity(null);
-        }
-
-        new NewMoviesController(this, newMovies);
+        new NewMoviesController(this, MedZenFileMan.getNewMovies(this));
     }
 
     private void removeTitleBar()
