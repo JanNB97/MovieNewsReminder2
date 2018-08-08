@@ -21,8 +21,7 @@ import com.yellowbite.movienewsreminder2.ui.notifications.NotificationMan;
 import com.yellowbite.movienewsreminder2.ui.recycler.MovieAdapter;
 import com.yellowbite.movienewsreminder2.ui.recycler.RecyclerTouchListener;
 import com.yellowbite.movienewsreminder2.ui.recycler.SwipeCallback;
-import com.yellowbite.movienewsreminder2.ui.tasks.GetMoviesDescendingNotifier;
-import com.yellowbite.movienewsreminder2.ui.tasks.GetMoviesNotifier;
+import com.yellowbite.movienewsreminder2.ui.tasks.GetMoviesAsyn;
 import com.yellowbite.movienewsreminder2.ui.tasks.GetMoviesTask;
 import com.yellowbite.movienewsreminder2.ui.tasks.LoadedMovieEvent;
 import com.yellowbite.movienewsreminder2.ui.tasks.MovieRunnable;
@@ -31,7 +30,6 @@ import com.yellowbite.movienewsreminder2.webscraping.medienzentrum.MedZenFileMan
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class MainActivityController implements LoadedMovieEvent
 {
@@ -114,7 +112,7 @@ public class MainActivityController implements LoadedMovieEvent
             this.loadingProgressBar.setMax(this.myMovies.size());
 
             // download status
-            new GetMoviesNotifier(this.mainActivity, this, this.myMovies,
+            new GetMoviesAsyn(this.mainActivity, this, this.myMovies,
                     this::onLoadingFinished);
         }
         else

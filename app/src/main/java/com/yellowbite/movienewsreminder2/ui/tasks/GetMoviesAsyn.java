@@ -11,8 +11,10 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class GetMoviesNotifier
+public class GetMoviesAsyn
 {
+    private final static int MAX_RETRIES_TO_LOAD = 3;
+
     private AppCompatActivity activity;
     private LoadedMovieEvent event;
 
@@ -22,7 +24,7 @@ public class GetMoviesNotifier
 
     private AtomicInteger loadedMovies = new AtomicInteger(0);
 
-    public GetMoviesNotifier(AppCompatActivity activity, LoadedMovieEvent event, List<Movie> movies, Runnable onFinishedLoading)
+    public GetMoviesAsyn(AppCompatActivity activity, LoadedMovieEvent event, List<Movie> movies, Runnable onFinishedLoading)
     {
         this.activity = activity;
         this.event = event;
@@ -40,15 +42,28 @@ public class GetMoviesNotifier
 
         for(Movie movie : movies)
         {
-            this.executor.execute(() -> executeMovie(movie, numOfMovies));
+            this.executor.execute(() -> executeMovie(movie, numOfMovies, 0));
         }
     }
 
-    private void executeMovie(Movie movie, int numOfMovies)
+    private void executeMovie(Movie movie, int numOfMovies, int numOfRetries)
     {
+        if(numOfRetries > MAX_RETRIES_TO_LOAD)
+        {
+            return;
+        }
+
         try
         {
             MedZenMovieSiteScraper.getMovie(movie);
+
+            if(movie.getStatus() == null)
+            {
+                numOfRetries++;
+                int finalNumOfRetries = numOfRetries;
+                this.executor.execute(() -> this.executeMovie(movie, numOfMovies, finalNumOfRetries));
+                return;
+            }
         } catch (IOException ignored) {}
 
         int l = loadedMovies.incrementAndGet();
