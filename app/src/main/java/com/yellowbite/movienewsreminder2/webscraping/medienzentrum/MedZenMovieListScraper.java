@@ -16,6 +16,11 @@ public class MedZenMovieListScraper
     public MedZenMovieListScraper(String url) throws IOException
     {
         this.listEntries = WebscrapingHelper.getDoc(url).select(movieCssQuery);
+
+        if(this.listEntries.isEmpty())
+        {
+            throw new IOException();
+        }
     }
 
     public Movie getEssentialMovie(int index)
