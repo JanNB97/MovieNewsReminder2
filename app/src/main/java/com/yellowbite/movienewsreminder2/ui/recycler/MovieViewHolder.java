@@ -97,6 +97,7 @@ public class MovieViewHolder extends RecyclerView.ViewHolder
         if(movie.isHot())
         {
             this.titelTextView.setText("🔥 " + this.titelTextView.getText());
+            this.standortTextView.setText("       " + this.standortTextView.getText());
         }
     }
 

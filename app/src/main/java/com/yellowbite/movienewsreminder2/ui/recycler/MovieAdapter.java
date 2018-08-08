@@ -61,7 +61,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder>
         movie.setHot(!movie.isHot());
         // TODO - Save hot movie in file
         this.dataSetChanged(false);
-        NotificationMan.showShortToast(this.context, movie.getTitel() + " is selected!");
     }
 
     public void addItems(List<Movie> movies, boolean saveInFile)
