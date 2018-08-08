@@ -10,6 +10,8 @@ import java.util.logging.Logger;
 
 public class Movie implements Comparable<Movie>
 {
+    private boolean isHot;
+
     // essential
     private int mediaBarcode = -1;
     private final String url;
@@ -110,6 +112,16 @@ public class Movie implements Comparable<Movie>
 
     public void setTitel(String titel) {
         this.titel = titel;
+    }
+
+    public boolean isHot()
+    {
+        return isHot;
+    }
+
+    public void setHot(boolean hot)
+    {
+        isHot = hot;
     }
 
     // --- --- --- Overritten methods --- --- ---

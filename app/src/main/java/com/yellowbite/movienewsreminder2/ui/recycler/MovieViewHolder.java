@@ -78,6 +78,8 @@ public class MovieViewHolder extends RecyclerView.ViewHolder
         }
 
         this.showColor(movie);
+
+        this.showIfHot(movie);
     }
 
     private void resetComponents()
@@ -88,6 +90,14 @@ public class MovieViewHolder extends RecyclerView.ViewHolder
         this.wochentagTextView.setText("");
 
         this.resetPaint();
+    }
+
+    private void showIfHot(Movie movie)
+    {
+        if(movie.isHot())
+        {
+            this.titelTextView.setText("🔥 " + this.titelTextView.getText());
+        }
     }
 
     private String cutTitel(String titel)
@@ -102,6 +112,8 @@ public class MovieViewHolder extends RecyclerView.ViewHolder
 
         return titel;
     }
+
+    // --- --- --- Color showing --- --- ---
 
     private void showColor(Movie movie)
     {

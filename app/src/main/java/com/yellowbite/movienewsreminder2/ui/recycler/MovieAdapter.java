@@ -57,8 +57,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder>
 
     public void handleClickedLongOnMovieItem(View view, int position)
     {
-        // TODO - Mark movie as hot
         Movie movie = movies.get(position);
+        movie.setHot(!movie.isHot());
+        // TODO - Save hot movie in file
+        this.dataSetChanged(false);
         NotificationMan.showShortToast(this.context, movie.getTitel() + " is selected!");
     }
 
