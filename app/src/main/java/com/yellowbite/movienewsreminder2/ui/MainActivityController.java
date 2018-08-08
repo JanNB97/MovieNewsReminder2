@@ -22,6 +22,7 @@ import com.yellowbite.movienewsreminder2.ui.recycler.MovieAdapter;
 import com.yellowbite.movienewsreminder2.ui.recycler.RecyclerTouchListener;
 import com.yellowbite.movienewsreminder2.ui.recycler.SwipeCallback;
 import com.yellowbite.movienewsreminder2.ui.tasks.GetMoviesDescendingNotifier;
+import com.yellowbite.movienewsreminder2.ui.tasks.GetMoviesNotifier;
 import com.yellowbite.movienewsreminder2.ui.tasks.GetMoviesTask;
 import com.yellowbite.movienewsreminder2.ui.tasks.LoadedMovieEvent;
 import com.yellowbite.movienewsreminder2.ui.tasks.MovieRunnable;
@@ -46,7 +47,6 @@ public class MainActivityController implements LoadedMovieEvent
     // views for loading time
     private ProgressBar loadingProgressBar;
     private TextView moviesUpdateTextView;
-    private AtomicInteger loadedMovies = new AtomicInteger(0);
 
     public MainActivityController(MainActivity mainActivity)
     {
@@ -114,24 +114,19 @@ public class MainActivityController implements LoadedMovieEvent
             this.loadingProgressBar.setMax(this.myMovies.size());
 
             // download status
-            new GetMoviesDescendingNotifier(this.mainActivity, this, this.myMovies);
+            new GetMoviesNotifier(this.mainActivity, this, this.myMovies,
+                    this::onLoadingFinished);
         }
         else
         {
-            this.loadedMovie(0);
+            this.onLoadingFinished();
         }
     }
 
     @Override
-    public void loadedMovie(int id)
+    public void loadedMovie(int i)
     {
-        int l = this.loadedMovies.incrementAndGet();
-        this.loadingProgressBar.setProgress(l);
-
-        if(l >= this.myMovies.size())
-        {
-            this.onLoadingFinished();
-        }
+        this.loadingProgressBar.setProgress(i);
     }
 
     private void onLoadingFinished()

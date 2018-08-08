@@ -104,11 +104,11 @@ public class NewMoviesController implements LoadedMovieEvent
     }
 
     @Override
-    public void loadedMovie(int id)
+    public void loadedMovie(int i)
     {
-        this.movieIsLoaded[id] = true;
+        this.movieIsLoaded[i] = true;
 
-        if(this.movieIsLoaded[this.displayedMovieId] && id == this.displayedMovieId)
+        if(this.movieIsLoaded[this.displayedMovieId] && i == this.displayedMovieId)
         {
             this.showNextMovie();
         }
