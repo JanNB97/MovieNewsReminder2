@@ -1,4 +1,4 @@
-package com.yellowbite.movienewsreminder2.ui;
+package com.yellowbite.movienewsreminder2.ui.notifications;
 
 import android.app.PendingIntent;
 import android.content.Context;

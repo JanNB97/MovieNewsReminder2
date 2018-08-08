@@ -1,18 +1,14 @@
 package com.yellowbite.movienewsreminder2;
 
-import android.app.PendingIntent;
 import android.app.job.JobInfo;
 import android.app.job.JobParameters;
 import android.app.job.JobScheduler;
 import android.app.job.JobService;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.Intent;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
 
-import com.yellowbite.movienewsreminder2.ui.NotificationMan;
+import com.yellowbite.movienewsreminder2.ui.notifications.NotificationMan;
 import com.yellowbite.movienewsreminder2.webscraping.WebscrapingHandler;
 
 import java.util.ArrayList;

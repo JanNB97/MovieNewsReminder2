@@ -2,16 +2,9 @@ package com.yellowbite.movienewsreminder2.ui.tasks;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.widget.TextView;
 
 import com.yellowbite.movienewsreminder2.model.Movie;
-import com.yellowbite.movienewsreminder2.ui.NotificationMan;
-import com.yellowbite.movienewsreminder2.ui.newMovies.NewMoviesController;
-import com.yellowbite.movienewsreminder2.ui.recycler.MovieAdapter;
 import com.yellowbite.movienewsreminder2.webscraping.medienzentrum.MedZenFileMan;
-import com.yellowbite.movienewsreminder2.webscraping.medienzentrum.MedZenMovieSiteScraper;
-
-import java.io.IOException;
 
 public class DeleteLastAndAddTask extends AsyncTask<Movie, Void, Void>
 {
