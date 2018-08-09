@@ -1,9 +1,11 @@
-package com.yellowbite.movienewsreminder2.webscraping.medienzentrum;
+package com.yellowbite.movienewsreminder2.news;
 
 import android.content.Context;
 
+import com.yellowbite.movienewsreminder2.files.MedZenFileMan;
 import com.yellowbite.movienewsreminder2.model.Movie;
-import com.yellowbite.movienewsreminder2.webscraping.WebscrapingHandler;
+import com.yellowbite.movienewsreminder2.webscraping.medienzentrum.MedZenMovieListScraper;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;

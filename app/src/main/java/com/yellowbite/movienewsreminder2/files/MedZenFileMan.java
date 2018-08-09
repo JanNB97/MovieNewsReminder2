@@ -1,4 +1,4 @@
-package com.yellowbite.movienewsreminder2.webscraping.medienzentrum;
+package com.yellowbite.movienewsreminder2.files;
 
 import android.content.Context;
 

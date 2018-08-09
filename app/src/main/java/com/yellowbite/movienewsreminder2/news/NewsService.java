@@ -1,4 +1,4 @@
-package com.yellowbite.movienewsreminder2;
+package com.yellowbite.movienewsreminder2.news;
 
 import android.app.job.JobInfo;
 import android.app.job.JobParameters;
@@ -8,8 +8,8 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 
+import com.yellowbite.movienewsreminder2.R;
 import com.yellowbite.movienewsreminder2.ui.notifications.NotificationMan;
-import com.yellowbite.movienewsreminder2.webscraping.WebscrapingHandler;
 
 import java.util.ArrayList;
 import java.util.logging.Logger;

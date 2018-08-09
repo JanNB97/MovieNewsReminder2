@@ -1,8 +1,6 @@
-package com.yellowbite.movienewsreminder2.webscraping;
+package com.yellowbite.movienewsreminder2.news;
 
 import android.content.Context;
-
-import com.yellowbite.movienewsreminder2.webscraping.medienzentrum.MedZenHandler;
 
 import java.util.ArrayList;
 import java.util.List;
