@@ -85,7 +85,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder>
         this.dataSetChanged(true);
     }
 
-    private void dataSetChanged(boolean saveInFile)
+    public void dataSetChanged(boolean saveInFile)
     {
         this.notifyDataSetChanged();
 

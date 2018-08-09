@@ -164,12 +164,7 @@ public class MainActivityController implements LoadedMoviesEvent
         {
             if(resultCode == Activity.RESULT_OK)
             {
-                String result = data.getStringExtra("result");
-                List<Movie> resultMovies = MedZenFileMan.toStatusMovies(result);
-                if(resultMovies != null && !resultMovies.isEmpty())
-                {
-                    ((MovieAdapter)movieRecyclerView.getAdapter()).addItems(resultMovies, false);
-                }
+                ((MovieAdapter)movieRecyclerView.getAdapter()).dataSetChanged(false);
             }
             else if(resultCode == Activity.RESULT_CANCELED)
             {

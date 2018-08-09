@@ -23,9 +23,9 @@ public class MainActivity extends AppCompatActivity
         this.removeTitleBar();
         setContentView(R.layout.activity_main);
 
-        this.launchNewMoviesActivity();
-
         this.controller = new MainActivityController(this);
+
+        this.launchNewMoviesActivity();
     }
 
     private void removeTitleBar()

@@ -35,14 +35,10 @@ public class NewMoviesActivity extends AppCompatActivity
         }
     }
 
-    public void showMainActivity(List<Movie> resultMovies)
+    public void showMainActivity()
     {
-        if(resultMovies != null && !resultMovies.isEmpty())
-        {
-            Intent returnIntent = new Intent();
-            returnIntent.putExtra("result", MedZenFileMan.toStatusLine(resultMovies));
-            this.setResult(Activity.RESULT_OK, returnIntent);
-        }
+        Intent returnIntent = new Intent();
+        this.setResult(Activity.RESULT_OK, returnIntent);
 
         this.finish();
     }

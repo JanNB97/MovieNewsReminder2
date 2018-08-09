@@ -11,7 +11,7 @@ import java.util.List;
 
 public class MyMoviesSortedList
 {
-    private static final String MY_MOVIES = "myMovies.txt";
+    private static final String FILE_NAME = "myMovies.txt";
 
     private static List<Movie> myMovies;
 
@@ -43,7 +43,7 @@ public class MyMoviesSortedList
 
         for(Movie movie : movies)
         {
-            if(isNew(context, movie))
+            if(isNew(movie))
             {
                 myMovies.add(movie);
             }
@@ -56,7 +56,7 @@ public class MyMoviesSortedList
     {
         getFromFileIfNecessary(context);
 
-        if(!isNew(context, movie))
+        if(!isNew(movie))
         {
             return false;
         }
@@ -101,18 +101,18 @@ public class MyMoviesSortedList
 
     private static List<Movie> getFromFile(Context context)
     {
-        List<String> lines = FileManager.readAll(context, MY_MOVIES);
-        return MedZenFileMan.toMovies(lines, new ArrayList<>());
+        List<String> lines = FileManager.readAll(context, FILE_NAME);
+        return MedZenFileMan.toMovies(lines, Collections.synchronizedList(new ArrayList<>()));
     }
 
     private static void saveToFile(Context context)
     {
-        FileManager.write(context, MY_MOVIES, MedZenFileMan.toLines(myMovies));
+        FileManager.write(context, FILE_NAME, MedZenFileMan.toLines(myMovies));
     }
 
     // --- --- --- helper methods --- --- ---
 
-    private static boolean isNew(Context context, Movie movie)
+    private static boolean isNew(Movie movie)
     {
         for(Movie movieInDatabase : myMovies)
         {

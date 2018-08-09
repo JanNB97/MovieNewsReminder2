@@ -17,7 +17,6 @@ public class NewMoviesController implements LoadedMovieEvent
     private NewMoviesActivity activity;
 
     private List<Movie> newMovies;
-    private List<Movie> addToMyMovies;
 
     private TextView movieTitelTextView;
 
@@ -38,8 +37,6 @@ public class NewMoviesController implements LoadedMovieEvent
         this.movieTitelTextView = activity.findViewById(R.id.movieNameTextView);
         this.displayedMovieId = newMovies.size();
 
-        this.addToMyMovies = new ArrayList<>();
-
         new GetMoviesDescendingExecutor(this.activity, this, this.newMovies);
         this.movieIsLoaded = new boolean[this.newMovies.size()];
 
@@ -53,11 +50,8 @@ public class NewMoviesController implements LoadedMovieEvent
     {
         this.setButtonsEnabled(false);
 
-        new DelLastAndAddAsyncTask(activity.getApplicationContext(), () -> {
-                    addToMyMovies.add(displayedMovie);
-                    tryToShowNextMovie();
-        })
-        .execute(this.displayedMovie);
+        new DelLastAndAddAsyncTask(activity.getApplicationContext(), this::tryToShowNextMovie)
+            .execute(this.displayedMovie);
     }
 
     private void handleClickOnNextMovie()
@@ -74,7 +68,7 @@ public class NewMoviesController implements LoadedMovieEvent
         this.displayedMovieId--;
         if(this.displayedMovieId < 0)
         {
-            activity.showMainActivity(this.addToMyMovies);
+            this.activity.showMainActivity();
             return;
         }
 
