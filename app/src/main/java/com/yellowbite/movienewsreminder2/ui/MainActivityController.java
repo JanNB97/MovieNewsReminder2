@@ -24,7 +24,7 @@ import com.yellowbite.movienewsreminder2.ui.recycler.RecyclerTouchListener;
 import com.yellowbite.movienewsreminder2.ui.recycler.SwipeCallback;
 import com.yellowbite.movienewsreminder2.tasks.LoadedMoviesEvent;
 import com.yellowbite.movienewsreminder2.tasks.mainActivity.GetMovieAsyncTask;
-import com.yellowbite.movienewsreminder2.tasks.mainActivity.GetMoviesRetryExecutor;
+import com.yellowbite.movienewsreminder2.tasks.mainActivity.LoadMyMoviesRetryExecutor;
 import com.yellowbite.movienewsreminder2.tasks.MovieRunnable;
 
 import java.util.Collections;
@@ -106,7 +106,7 @@ public class MainActivityController implements LoadedMoviesEvent
             this.loadingProgressBar.setMax(MyMoviesSortedList.size(this.mainActivity));
 
             // download status
-            new GetMoviesRetryExecutor(this.mainActivity, this, myMovies,
+            new LoadMyMoviesRetryExecutor(this.mainActivity, this, myMovies,
                     this::onLoadingFinished);
         }
         else
