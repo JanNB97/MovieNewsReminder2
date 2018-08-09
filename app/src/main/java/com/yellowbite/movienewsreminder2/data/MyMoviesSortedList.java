@@ -2,8 +2,9 @@ package com.yellowbite.movienewsreminder2.data;
 
 import android.content.Context;
 
+import com.yellowbite.movienewsreminder2.files.MedZenFileMan;
 import com.yellowbite.movienewsreminder2.model.Movie;
-import com.yellowbite.movienewsreminder2.util.FileManager;
+import com.yellowbite.movienewsreminder2.files.FileManager;
 
 import java.util.ArrayList;
 import java.util.Collections;

@@ -1,8 +1,8 @@
-package com.yellowbite.movienewsreminder2.news;
+package com.yellowbite.movienewsreminder2.newsService;
 
 import android.content.Context;
 
-import com.yellowbite.movienewsreminder2.data.MedZenFileMan;
+import com.yellowbite.movienewsreminder2.files.MedZenFileMan;
 import com.yellowbite.movienewsreminder2.model.Movie;
 import com.yellowbite.movienewsreminder2.webscraping.medienzentrum.MedZenMovieListScraper;
 

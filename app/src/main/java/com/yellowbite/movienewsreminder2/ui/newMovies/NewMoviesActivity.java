@@ -8,10 +8,7 @@ import android.os.Bundle;
 import android.view.Window;
 
 import com.yellowbite.movienewsreminder2.R;
-import com.yellowbite.movienewsreminder2.model.Movie;
-import com.yellowbite.movienewsreminder2.data.MedZenFileMan;
-
-import java.util.List;
+import com.yellowbite.movienewsreminder2.files.MedZenFileMan;
 
 public class NewMoviesActivity extends AppCompatActivity
 {

@@ -1,10 +1,10 @@
-package com.yellowbite.movienewsreminder2.data;
+package com.yellowbite.movienewsreminder2.files;
 
 import android.content.Context;
 
 import com.yellowbite.movienewsreminder2.model.Movie;
 import com.yellowbite.movienewsreminder2.util.DateHelper;
-import com.yellowbite.movienewsreminder2.util.FileManager;
+import com.yellowbite.movienewsreminder2.files.FileManager;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -224,40 +224,5 @@ public class MedZenFileMan
                 status, vorbestellungen, entliehenBis,
                 standort, zugang,
                 titel);
-    }
-
-    //movie1\nmovie2\nmovie3
-    public static String toStatusLine(List<Movie> movies)
-    {
-        StringBuilder builder = new StringBuilder();
-
-        int i = 0;
-        for (Movie movie : movies)
-        {
-            if(i != movies.size() - 1)
-            {
-                builder.append(toStatusLine(movie) + '\n');
-            }
-            else
-            {
-                builder.append(toStatusLine(movie));
-            }
-            i++;
-        }
-
-        return builder.toString();
-    }
-
-    public static List<Movie> toStatusMovies(String string)
-    {
-        String[] lines = string.split("\n");
-
-        List<Movie> movies = new ArrayList<>();
-        for (String line : lines)
-        {
-            movies.add(toStatusMovie(line));
-        }
-
-        return movies;
     }
 }
