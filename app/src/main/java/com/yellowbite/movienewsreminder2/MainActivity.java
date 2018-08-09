@@ -8,7 +8,7 @@ import android.view.Window;
 
 import com.yellowbite.movienewsreminder2.ui.MainActivityController;
 import com.yellowbite.movienewsreminder2.ui.newMovies.NewMoviesActivity;
-import com.yellowbite.movienewsreminder2.files.MedZenFileMan;
+import com.yellowbite.movienewsreminder2.data.MedZenFileMan;
 
 public class MainActivity extends AppCompatActivity
 {

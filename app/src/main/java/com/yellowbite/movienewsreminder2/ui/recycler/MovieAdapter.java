@@ -7,22 +7,19 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.yellowbite.movienewsreminder2.R;
+import com.yellowbite.movienewsreminder2.data.MyMoviesSortedList;
 import com.yellowbite.movienewsreminder2.model.Movie;
 import com.yellowbite.movienewsreminder2.ui.notifications.NotificationMan;
-import com.yellowbite.movienewsreminder2.files.MedZenFileMan;
 
-import java.util.Collections;
 import java.util.List;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder>
 {
     private Context context;
-    private List<Movie> movies;
 
-    public MovieAdapter(Context context, List<Movie> movies)
+    public MovieAdapter(Context context)
     {
         this.context = context;
-        this.movies = movies;
     }
 
     @Override
@@ -36,7 +33,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder>
     @Override
     public void onBindViewHolder(MovieViewHolder holder, int position)
     {
-        Movie movieToShow = movies.get(position);
+        Movie movieToShow = MyMoviesSortedList.get(this.context, position);
 
         if(movieToShow != null)
         {
@@ -47,7 +44,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder>
     @Override
     public int getItemCount()
     {
-        return movies.size();
+        return MyMoviesSortedList.size(this.context);
     }
 
     public void handleClickedOnMovieItem(View view, int position)
@@ -57,7 +54,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder>
 
     public void handleClickedLongOnMovieItem(View view, int position)
     {
-        Movie movie = movies.get(position);
+        Movie movie = MyMoviesSortedList.get(this.context, position);
         movie.setHot(!movie.isHot());
         // TODO - Save hot movie in file
         this.dataSetChanged(false);
@@ -65,38 +62,26 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder>
 
     public void addItems(List<Movie> movies, boolean saveInFile)
     {
-        for(Movie movie : movies)
-        {
-            this.addItemSimple(movie);
-        }
-
-        Collections.sort(this.movies);
+        MyMoviesSortedList.addAll(this.context, movies);
         this.dataSetChanged(saveInFile);
     }
 
     public void addItem(Movie movie, boolean saveInFile)
     {
-        this.addItemSimple(movie);
-        Collections.sort(movies);
-
-        this.dataSetChanged(saveInFile);
-    }
-
-    private void addItemSimple(Movie movie)
-    {
-        if(!isNew(movie))
+        if(!MyMoviesSortedList.add(context, movie))
         {
             NotificationMan.showShortToast(this.context, movie.getTitel() + " is already in the database");
-            return;
         }
-
-        this.movies.add(movie);
+        else
+        {
+            // no movie added
+            this.dataSetChanged(saveInFile);
+        }
     }
 
     public void removeItem(int position)
     {
-        this.movies.remove(position);
-
+        MyMoviesSortedList.remove(this.context, position);
         this.dataSetChanged(true);
     }
 
@@ -106,21 +91,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder>
 
         if(saveInFile)
         {
-            new Thread(() -> MedZenFileMan.setMyMovies(this.context, this.movies))
+            new Thread(() -> MyMoviesSortedList.save(this.context))
                     .start();
         }
-    }
-
-    private boolean isNew(Movie movie)
-    {
-        for(Movie movieInDatabase : this.movies)
-        {
-            if(movieInDatabase.getMediaBarcode() == movie.getMediaBarcode())
-            {
-                return false;
-            }
-        }
-
-        return true;
     }
 }

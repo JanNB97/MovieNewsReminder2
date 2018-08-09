@@ -3,8 +3,9 @@ package com.yellowbite.movienewsreminder2.tasks.newMovies;
 import android.content.Context;
 import android.os.AsyncTask;
 
+import com.yellowbite.movienewsreminder2.data.MyMoviesSortedList;
 import com.yellowbite.movienewsreminder2.model.Movie;
-import com.yellowbite.movienewsreminder2.files.MedZenFileMan;
+import com.yellowbite.movienewsreminder2.data.MedZenFileMan;
 
 public class DelLastAndAddAsyncTask extends AsyncTask<Movie, Void, Void>
 {
@@ -29,7 +30,8 @@ public class DelLastAndAddAsyncTask extends AsyncTask<Movie, Void, Void>
 
         if(movies.length != 0 && movies[0] != null)
         {
-            MedZenFileMan.addMyMovie(this.context, movies[0]);
+            MyMoviesSortedList.add(this.context, movies[0]);
+            MyMoviesSortedList.save(this.context);
         }
 
         return null;

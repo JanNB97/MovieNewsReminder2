@@ -9,7 +9,7 @@ import android.view.Window;
 
 import com.yellowbite.movienewsreminder2.R;
 import com.yellowbite.movienewsreminder2.model.Movie;
-import com.yellowbite.movienewsreminder2.files.MedZenFileMan;
+import com.yellowbite.movienewsreminder2.data.MedZenFileMan;
 
 import java.util.List;
 

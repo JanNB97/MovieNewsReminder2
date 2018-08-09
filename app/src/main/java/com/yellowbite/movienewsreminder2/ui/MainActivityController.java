@@ -14,6 +14,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.yellowbite.movienewsreminder2.MainActivity;
+import com.yellowbite.movienewsreminder2.data.MyMoviesSortedList;
 import com.yellowbite.movienewsreminder2.news.NewsService;
 import com.yellowbite.movienewsreminder2.R;
 import com.yellowbite.movienewsreminder2.model.Movie;
@@ -25,7 +26,7 @@ import com.yellowbite.movienewsreminder2.tasks.LoadedMoviesEvent;
 import com.yellowbite.movienewsreminder2.tasks.mainActivity.GetMovieAsyncTask;
 import com.yellowbite.movienewsreminder2.tasks.mainActivity.GetMoviesRetryExecutor;
 import com.yellowbite.movienewsreminder2.tasks.MovieRunnable;
-import com.yellowbite.movienewsreminder2.files.MedZenFileMan;
+import com.yellowbite.movienewsreminder2.data.MedZenFileMan;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -34,8 +35,6 @@ import java.util.List;
 public class MainActivityController implements LoadedMoviesEvent
 {
     private MainActivity mainActivity;
-
-    private List<Movie> myMovies;
 
     // main views
     private RecyclerView movieRecyclerView;
@@ -49,8 +48,6 @@ public class MainActivityController implements LoadedMoviesEvent
     public MainActivityController(MainActivity mainActivity)
     {
         this.mainActivity = mainActivity;
-
-        this.myMovies = new ArrayList<>();
 
         this.loadingProgressBar = this.mainActivity.findViewById(R.id.loadingProgressBar);
         this.moviesUpdateTextView = this.mainActivity.findViewById(R.id.moviesUpdateTextView);
@@ -104,15 +101,14 @@ public class MainActivityController implements LoadedMoviesEvent
 
     private void loadMyMovies()
     {
-        // load out of file
-        MedZenFileMan.getMyMovies(this.mainActivity, this.myMovies);
+        List<Movie> myMovies = MyMoviesSortedList.get(this.mainActivity);
 
-        if(!this.myMovies.isEmpty())
+        if(!myMovies.isEmpty())
         {
-            this.loadingProgressBar.setMax(this.myMovies.size());
+            this.loadingProgressBar.setMax(MyMoviesSortedList.size(this.mainActivity));
 
             // download status
-            new GetMoviesRetryExecutor(this.mainActivity, this, this.myMovies,
+            new GetMoviesRetryExecutor(this.mainActivity, this, myMovies,
                     this::onLoadingFinished);
         }
         else
@@ -129,18 +125,18 @@ public class MainActivityController implements LoadedMoviesEvent
 
     private void onLoadingFinished()
     {
-        Collections.sort(this.myMovies);
+        Collections.sort(MyMoviesSortedList.get(this.mainActivity));
 
         this.loadingProgressBar.setVisibility(View.GONE);
         this.moviesUpdateTextView.setVisibility(View.GONE);
-        this.addAdapterToRecyclerView(myMovies);
+        this.addAdapterToRecyclerView();
         this.urlTextView.setEnabled(true);
     }
 
-    private void addAdapterToRecyclerView(List<Movie> myMovies)
+    private void addAdapterToRecyclerView()
     {
         // specify adapter
-        MovieAdapter movieAdapter = new MovieAdapter(this.mainActivity, myMovies);
+        MovieAdapter movieAdapter = new MovieAdapter(this.mainActivity);
         this.movieRecyclerView.setAdapter(movieAdapter);
 
         new ItemTouchHelper(new SwipeCallback(movieAdapter)).attachToRecyclerView(this.movieRecyclerView);
@@ -202,7 +198,6 @@ public class MainActivityController implements LoadedMoviesEvent
 
                 ((MovieAdapter)movieRecyclerView.getAdapter()).addItem(movie, true);
             }
-        })
-                .execute(new Movie(urlTextView.getText().toString()));
+        }).execute(new Movie(urlTextView.getText().toString()));
     }
 }

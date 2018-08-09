@@ -1,4 +1,4 @@
-package com.yellowbite.movienewsreminder2.files;
+package com.yellowbite.movienewsreminder2.data;
 
 import android.content.Context;
 
@@ -16,7 +16,6 @@ public class MedZenFileMan
     private static final String NEWEST_BARCODE = "newestBarcode.txt";
     private static final String NEW_MOVIES = "newMovies.txt";
     private static final String HOT_MOVIES = "hotMovies.txt";
-    private static final String MY_MOVIES = "myMovies.txt";
 
     // --- --- --- Newest movie --- --- ---
     public static int getNewestBarcode(Context context)
@@ -41,25 +40,6 @@ public class MedZenFileMan
     public static void setNewestBarcode(Context context, int barcode)
     {
         FileManager.write(context, NEWEST_BARCODE, Integer.toString(barcode));
-    }
-
-    // --- --- --- my movies --- --- ---
-    public static void addMyMovie(Context context, Movie movie)
-    {
-        List<Movie> movies = getMyMovies(context, new ArrayList<>());
-        movies.add(movie);
-        setMyMovies(context, movies);
-    }
-
-    public static List<Movie> getMyMovies(Context context, List<Movie> myMovies)
-    {
-        List<String> lines = FileManager.readAll(context, MY_MOVIES);
-        return toMovies(lines, myMovies);
-    }
-
-    public static void setMyMovies(Context context, Collection<Movie> myMovies)
-    {
-        FileManager.write(context, MY_MOVIES, toLines(myMovies));
     }
 
     // --- --- --- New movies --- --- ---
