@@ -20,7 +20,7 @@
         </activity>
 
         <service
-            android:name=".news.NewsService"
+            android:name=".newsService.NewsService"
             android:exported="true"
             android:permission="android.permission.BIND_JOB_SERVICE" />
 

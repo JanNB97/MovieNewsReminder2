@@ -5,7 +5,7 @@ import android.os.AsyncTask;
 
 import com.yellowbite.movienewsreminder2.data.MyMoviesSortedList;
 import com.yellowbite.movienewsreminder2.model.Movie;
-import com.yellowbite.movienewsreminder2.data.MedZenFileMan;
+import com.yellowbite.movienewsreminder2.files.MedZenFileMan;
 
 public class DelLastAndAddAsyncTask extends AsyncTask<Movie, Void, Void>
 {
