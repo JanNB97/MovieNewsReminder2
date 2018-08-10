@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Window;
 
-import com.yellowbite.movienewsreminder2.data.NewMoviesQueue;
+import com.yellowbite.movienewsreminder2.files.data.NewMoviesQueue;
 import com.yellowbite.movienewsreminder2.ui.MainActivityController;
 import com.yellowbite.movienewsreminder2.ui.newMovies.NewMoviesActivity;
 

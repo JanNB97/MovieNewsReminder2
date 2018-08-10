@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.yellowbite.movienewsreminder2.R;
-import com.yellowbite.movienewsreminder2.data.MyMoviesSortedList;
+import com.yellowbite.movienewsreminder2.files.data.MyMoviesSortedList;
 import com.yellowbite.movienewsreminder2.model.Movie;
 import com.yellowbite.movienewsreminder2.ui.notifications.NotificationMan;
 

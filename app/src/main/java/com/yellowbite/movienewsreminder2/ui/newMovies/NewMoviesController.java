@@ -4,7 +4,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.yellowbite.movienewsreminder2.R;
-import com.yellowbite.movienewsreminder2.data.NewMoviesQueue;
+import com.yellowbite.movienewsreminder2.files.data.NewMoviesQueue;
 import com.yellowbite.movienewsreminder2.model.Movie;
 import com.yellowbite.movienewsreminder2.tasks.newMovies.DelLastAndAddAsyncTask;
 import com.yellowbite.movienewsreminder2.tasks.newMovies.LoadNewMoviesDescendingExecutor;

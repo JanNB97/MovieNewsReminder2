@@ -14,7 +14,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.yellowbite.movienewsreminder2.MainActivity;
-import com.yellowbite.movienewsreminder2.data.MyMoviesSortedList;
+import com.yellowbite.movienewsreminder2.files.data.MyMoviesSortedList;
 import com.yellowbite.movienewsreminder2.newsService.NewsService;
 import com.yellowbite.movienewsreminder2.R;
 import com.yellowbite.movienewsreminder2.model.Movie;
