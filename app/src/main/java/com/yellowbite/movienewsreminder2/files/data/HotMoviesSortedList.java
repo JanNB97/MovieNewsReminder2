@@ -71,6 +71,12 @@ public class HotMoviesSortedList
         }
     }
 
+    public static List<Movie> get(Context context)
+    {
+        getFromFileIfNecessary(context);
+        return hotMovies;
+    }
+
     // --- --- --- data type operations --- --- ---
 
     private static int getIdInList(Movie movie)
