@@ -16,11 +16,11 @@ public class HotMovieMessage extends WebScraperMessage
     {
         if (hotVerfuegbarMovies.size() == 1)
         {
-            return "Ein begehrte Film ist verfügbar:";
+            return "Ein begehrte Film ist verfügbar";
         }
         else
         {
-            return hotVerfuegbarMovies.size() + " begehrte Filme sind verfügbar:";
+            return hotVerfuegbarMovies.size() + " begehrte Filme sind verfügbar";
         }
     }
 
