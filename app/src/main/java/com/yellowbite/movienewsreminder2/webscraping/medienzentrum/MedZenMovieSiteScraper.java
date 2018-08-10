@@ -53,6 +53,12 @@ public class MedZenMovieSiteScraper
         new MedZenMovieSiteScraper(essentialMovie).getMovie();
     }
 
+    public static boolean isVerfuegbar(Movie movie) throws IOException
+    {
+        Movie.Status status = (new MedZenMovieSiteScraper(movie)).getStatus();
+        return status != null && status == Movie.Status.VERFUEGBAR;
+    }
+
     // --- --- --- Add information to local movie --- --- ---
     public Movie getMediaBarcodeMovie()
     {
