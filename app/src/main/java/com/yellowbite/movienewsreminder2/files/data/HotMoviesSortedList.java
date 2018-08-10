@@ -3,7 +3,9 @@ package com.yellowbite.movienewsreminder2.files.data;
 import android.content.Context;
 
 import com.yellowbite.movienewsreminder2.files.FileManager;
+import com.yellowbite.movienewsreminder2.files.MovieFileHelper;
 import com.yellowbite.movienewsreminder2.model.Movie;
+import com.yellowbite.movienewsreminder2.util.DateHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,14 +14,14 @@ public class HotMoviesSortedList
 {
     private static final String FILE_NAME = "hotMovies.txt";
 
-    private static List<Integer> hotMovies;
+    private static List<Movie> hotMovies;
 
     public static boolean addSave(Context context, Movie movie)
     {
         getFromFileIfNecessary(context);
         movie.setHot(true);
 
-        boolean success = addSorted(movie.getMediaBarcode());
+        boolean success = addSorted(movie);
         if(success)
         {
             saveToFile(context);
@@ -43,7 +45,7 @@ public class HotMoviesSortedList
     {
         getFromFileIfNecessary(context);
         movie.setHot(false);
-        boolean success = delSorted(movie.getMediaBarcode());
+        boolean success = delSorted(movie);
         if(success)
         {
             saveToFile(context);
@@ -59,42 +61,33 @@ public class HotMoviesSortedList
             return;
         }
         List<Movie> myMovies = MyMoviesSortedList.getAll(context);
-        List<Integer> hotMoviesToDel = clone(hotMovies);
 
         for(Movie movie : myMovies)
         {
-            int i = getIdInList(movie.getMediaBarcode());
-            if(i != -1)
+            if(getIdInList(movie) != -1)
             {
                 movie.setHot(true);
-                hotMoviesToDel.set(i, -1);
-            }
-        }
-
-        for(int i = 0; i < hotMoviesToDel.size(); i++)
-        {
-            int barcode = hotMoviesToDel.get(i);
-
-            if(barcode != -1)
-            {
-                hotMoviesToDel.remove(i);
             }
         }
     }
 
     // --- --- --- data type operations --- --- ---
 
-    private static int getIdInList(int barcode)
+    private static int getIdInList(Movie movie)
     {
+        int movieBarcode = movie.getMediaBarcode();
+
         int i = 0;
-        for(Integer b2 : hotMovies)
+        for(Movie m2 : hotMovies)
         {
-            if(b2 == barcode)
+            int b2 = m2.getMediaBarcode();
+
+            if(b2 == movieBarcode)
             {
                 return i;
             }
 
-            if(b2 > barcode)
+            if(b2 > movieBarcode)
             {
                 return -1;
             }
@@ -105,31 +98,35 @@ public class HotMoviesSortedList
         return -1;
     }
 
-    private static boolean addSorted(int barcode)
+    private static boolean addSorted(Movie movie)
     {
+        int movieBarcode = movie.getMediaBarcode();
+
         int i = 0;
-        for(Integer b2 : hotMovies)
+        for(Movie m2 : hotMovies)
         {
-            if(b2 == barcode)
+            int barcode2 = m2.getMediaBarcode();
+
+            if(barcode2 == movieBarcode)
             {
                 return false;
             }
 
-            if(b2 > barcode)
+            if(barcode2 > movieBarcode)
             {
-                hotMovies.add(i, barcode);
+                hotMovies.add(i, movie);
                 return true;
             }
 
             i++;
         }
-        hotMovies.add(barcode);
+        hotMovies.add(movie);
         return true;
     }
 
-    private static boolean delSorted(int barcode)
+    private static boolean delSorted(Movie movie)
     {
-        int i = getIdInList(barcode);
+        int i = getIdInList(movie);
         boolean success = i != -1;
 
         if(success)
@@ -141,52 +138,29 @@ public class HotMoviesSortedList
 
     // --- --- --- file operations --- --- ---
 
-    private static List<Integer> clone(List<Integer> list)
-    {
-        List<Integer> newList = new ArrayList<>();
-        for(Integer integer : list)
-        {
-            newList.add(Integer.valueOf(integer));
-        }
-        return newList;
-    }
-
     private static void getFromFileIfNecessary(Context context)
     {
-        hotMovies = toList(FileManager.readAll(context, FILE_NAME));
-    }
-
-    private static List<Integer> toList(List<String> strings)
-    {
-        List<Integer> intergerList = new ArrayList<>();
-
-        for(String string : strings)
-        {
-            try
-            {
-                int i = Integer.parseInt(string);
-                intergerList.add(i);
-            }
-            catch (NumberFormatException ignored) {}
-        }
-
-        return intergerList;
-    }
-
-    private static List<String> toLines(List<Integer> barcodes)
-    {
-        List<String> lines = new ArrayList<>();
-
-        for (Integer i : barcodes)
-        {
-            lines.add(i.toString());
-        }
-
-        return lines;
+        hotMovies = MovieFileHelper.toMovies(FileManager.readAll(context, FILE_NAME), new ArrayList<>());
     }
 
     private static void saveToFile(Context context)
     {
         FileManager.write(context, FILE_NAME, toLines(hotMovies));
+    }
+
+    private static List<String> toLines(List<Movie> movies)
+    {
+        List<String> lines = new ArrayList<>();
+        for(Movie movie : movies)
+        {
+            lines.add(toLine(movie));
+        }
+        return lines;
+    }
+
+    private static String toLine(Movie movie)
+    {
+        return movie.getMediaBarcode() + ";" + movie.getURL() + ";;;"
+                + movie.getTitel();
     }
 }
