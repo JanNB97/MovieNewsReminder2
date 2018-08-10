@@ -78,11 +78,9 @@ public class MedZenHandler extends WebscrapingHandler
 
     private WebScraperMessage checkForHotMovies(Context context)
     {
-        List<Movie> hotMovies = HotMoviesSortedList.get(context);
-
         List<Movie> verfuegbarHotMovies = new ArrayList<>();
 
-        for (Movie hotMovie : hotMovies)
+        for (Movie hotMovie : HotMoviesSortedList.get(context))
         {
             try
             {
@@ -100,7 +98,7 @@ public class MedZenHandler extends WebscrapingHandler
         }
         else
         {
-            return new HotMovieMessage(hotMovies);
+            return new HotMovieMessage(verfuegbarHotMovies);
         }
     }
 
