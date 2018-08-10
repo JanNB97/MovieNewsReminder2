@@ -79,7 +79,22 @@ public class MedZenHandler extends WebscrapingHandler
     private WebScraperMessage checkForHotMovies(Context context)
     {
         List<Movie> verfuegbarHotMovies = new ArrayList<>();
+        List<Movie> shownMovies = new ArrayList<>();
 
+        getVerfuegbarHotMovies(context, verfuegbarHotMovies, shownMovies);
+
+        if(verfuegbarHotMovies.isEmpty())
+        {
+            return null;
+        }
+        else
+        {
+            return new HotMovieMessage(verfuegbarHotMovies, shownMovies);
+        }
+    }
+
+    private void getVerfuegbarHotMovies(Context context, List<Movie> verfuegbarHotMovies, List<Movie> shownMovies)
+    {
         List<Movie> hotMovies = HotMoviesSortedList.get(context);
         for (int i = 0; i < hotMovies.size(); i++)
         {
@@ -92,24 +107,19 @@ public class MedZenHandler extends WebscrapingHandler
                     if(!hotMovie.notificationWasShown())
                     {
                         verfuegbarHotMovies.add(hotMovie);
-                        HotMoviesSortedList.setNotificationWasShownSave(context, hotMovie, true);
+                        HotMoviesSortedList.setNotificationWasShownSave(context, i, true);
+                    }
+                    else
+                    {
+                        shownMovies.add(hotMovie);
                     }
                 }
                 else if (hotMovie.notificationWasShown())
                 {
                     // again unavailable
-                    HotMoviesSortedList.setNotificationWasShownSave(context, hotMovie, false);
+                    HotMoviesSortedList.setNotificationWasShownSave(context, i, false);
                 }
             } catch (IOException ignored) {}
-        }
-
-        if(verfuegbarHotMovies.isEmpty())
-        {
-            return null;
-        }
-        else
-        {
-            return new HotMovieMessage(verfuegbarHotMovies);
         }
     }
 

@@ -77,10 +77,10 @@ public class HotMoviesSortedList
         return hotMovies;
     }
 
-    public static void setNotificationWasShownSave(Context context, Movie movie, boolean b)
+    public static void setNotificationWasShownSave(Context context, int id, boolean b)
     {
         getFromFileIfNecessary(context);
-        movie.setNotificationWasShown(b);
+        hotMovies.get(id).setNotificationWasShown(b);
         saveToFile(context);
     }
 
