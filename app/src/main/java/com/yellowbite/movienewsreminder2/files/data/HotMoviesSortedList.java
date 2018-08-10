@@ -77,6 +77,13 @@ public class HotMoviesSortedList
         return hotMovies;
     }
 
+    public static void setNotificationWasShownSave(Context context, Movie movie, boolean b)
+    {
+        getFromFileIfNecessary(context);
+        movie.setNotificationWasShown(b);
+        saveToFile(context);
+    }
+
     // --- --- --- data type operations --- --- ---
 
     private static int getIdInList(Movie movie)
@@ -167,6 +174,6 @@ public class HotMoviesSortedList
     private static String toLine(Movie movie)
     {
         return movie.getMediaBarcode() + ";" + movie.getURL() + ";;;"
-                + movie.getTitel();
+                + movie.getTitel() + ";" + movie.notificationWasShown();
     }
 }

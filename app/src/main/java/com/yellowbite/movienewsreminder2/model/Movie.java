@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 public class Movie implements Comparable<Movie>
 {
     private boolean isHot;
+    private boolean notificationWasShown;
 
     // essential
     private int mediaBarcode = -1;
@@ -122,6 +123,16 @@ public class Movie implements Comparable<Movie>
     public void setHot(boolean hot)
     {
         isHot = hot;
+    }
+
+    public boolean notificationWasShown()
+    {
+        return notificationWasShown;
+    }
+
+    public void setNotificationWasShown(boolean notificationWasShown)
+    {
+        this.notificationWasShown = notificationWasShown;
     }
 
     // --- --- --- Overritten methods --- --- ---

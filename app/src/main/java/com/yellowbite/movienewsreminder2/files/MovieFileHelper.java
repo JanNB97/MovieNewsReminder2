@@ -21,7 +21,7 @@ public class MovieFileHelper
 
         String[] split = string.split(";");
 
-        if(split.length != 5)
+        if(split.length != 5 && split.length != 6)
         {
             return null;
         }
@@ -50,11 +50,18 @@ public class MovieFileHelper
             titel = null;
         }
 
-        return new Movie(
+        Movie movie = new Movie(
                 barcode, url,
                 null, -1, null,
                 standort, zugang,
                 titel);
+
+        if(split.length == 6)
+        {
+            movie.setNotificationWasShown(split[5].equals("true"));
+        }
+
+        return movie;
     }
 
     public static List<String> toLines(Collection<Movie> movies)

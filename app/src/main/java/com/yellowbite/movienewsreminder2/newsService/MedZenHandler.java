@@ -80,14 +80,25 @@ public class MedZenHandler extends WebscrapingHandler
     {
         List<Movie> verfuegbarHotMovies = new ArrayList<>();
 
-        for (Movie hotMovie : HotMoviesSortedList.get(context))
+        List<Movie> hotMovies = HotMoviesSortedList.get(context);
+        for (int i = 0; i < hotMovies.size(); i++)
         {
+            Movie hotMovie = hotMovies.get(i);
+
             try
             {
                 if(MedZenMovieSiteScraper.isVerfuegbar(hotMovie))
                 {
-                    // TODO - Proove if message was already send for this movie
-                    verfuegbarHotMovies.add(hotMovie);
+                    if(!hotMovie.notificationWasShown())
+                    {
+                        verfuegbarHotMovies.add(hotMovie);
+                        HotMoviesSortedList.setNotificationWasShownSave(context, hotMovie, true);
+                    }
+                }
+                else if (hotMovie.notificationWasShown())
+                {
+                    // again unavailable
+                    HotMoviesSortedList.setNotificationWasShownSave(context, hotMovie, false);
                 }
             } catch (IOException ignored) {}
         }
