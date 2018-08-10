@@ -55,7 +55,7 @@ public class MedZenMovieListScraper
         return listEntries.size();
     }
 
-    // --- get essentials ---
+    // --- getAll essentials ---
 
     private int getMediaBarcode(int index)
     {

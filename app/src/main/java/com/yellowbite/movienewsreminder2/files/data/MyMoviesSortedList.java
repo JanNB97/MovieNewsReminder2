@@ -17,14 +17,14 @@ public class MyMoviesSortedList
     private static List<Movie> myMovies;
 
     // --- --- --- data operations --- --- ---
-    // get
+    // getAll
     public static Movie get(Context context, int i)
     {
         getFromFileIfNecessary(context);
         return myMovies.get(i);
     }
 
-    public static List<Movie> get(Context context)
+    public static List<Movie> getAll(Context context)
     {
         getFromFileIfNecessary(context);
         return myMovies;

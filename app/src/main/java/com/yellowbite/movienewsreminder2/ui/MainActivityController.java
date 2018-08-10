@@ -99,7 +99,7 @@ public class MainActivityController implements LoadedMoviesEvent
 
     private void loadMyMovies()
     {
-        List<Movie> myMovies = MyMoviesSortedList.get(this.mainActivity);
+        List<Movie> myMovies = MyMoviesSortedList.getAll(this.mainActivity);
 
         if(!myMovies.isEmpty())
         {
@@ -123,7 +123,7 @@ public class MainActivityController implements LoadedMoviesEvent
 
     private void onLoadingFinished()
     {
-        Collections.sort(MyMoviesSortedList.get(this.mainActivity));
+        Collections.sort(MyMoviesSortedList.getAll(this.mainActivity));
 
         this.loadingProgressBar.setVisibility(View.GONE);
         this.moviesUpdateTextView.setVisibility(View.GONE);
