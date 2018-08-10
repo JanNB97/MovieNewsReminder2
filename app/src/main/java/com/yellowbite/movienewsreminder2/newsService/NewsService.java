@@ -12,6 +12,7 @@ import com.yellowbite.movienewsreminder2.R;
 import com.yellowbite.movienewsreminder2.ui.notifications.NotificationMan;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 public class NewsService extends JobService
@@ -54,22 +55,11 @@ public class NewsService extends JobService
 
     private void checkWebscrapers()
     {
-        ArrayList<WebscrapingHandler> updatedWebscrapers = WebscrapingHandler.getUpdatedWebscrapers(getApplicationContext());
+        List<WebScraperMessage> webScraperMessages = WebscrapingHandler.getWebScraperMessages(getApplicationContext());
 
-        if(updatedWebscrapers.size() == 1)
+        for(WebScraperMessage webScraperMessage : webScraperMessages)
         {
-            NotificationMan.showNotification(getApplicationContext(), updatedWebscrapers.get(0).getName() + " has been updated", "", R.drawable.ic_launcher_background);
-        }
-        else if(updatedWebscrapers.size() > 1)
-        {
-            StringBuilder builder = new StringBuilder();
-
-            for(WebscrapingHandler webscrapingHandler : updatedWebscrapers)
-            {
-                builder.append(webscrapingHandler.getName() + "\n");
-            }
-
-            NotificationMan.showNotification(getApplicationContext(),"The following websites have been updated:", builder.toString(), R.drawable.ic_launcher_background);
+            NotificationMan.showNotification(getApplicationContext(), webScraperMessage.getTitel(), webScraperMessage.getText(), webScraperMessage.getIcon());
         }
     }
 }

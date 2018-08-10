@@ -22,9 +22,9 @@ public abstract class WebscrapingHandler
         registerHandler(new MedZenHandler());
     }
 
-    public static ArrayList<WebscrapingHandler> getUpdatedWebscrapers(Context context)
+    public static List<WebScraperMessage> getWebScraperMessages(Context context)
     {
-        ArrayList<WebscrapingHandler> updatedWebscrapers = new ArrayList<>();
+        ArrayList<WebScraperMessage> webScraperMessages = new ArrayList<>();
 
         if(handlers == null)
         {
@@ -34,16 +34,17 @@ public abstract class WebscrapingHandler
 
         for(WebscrapingHandler webscrapingHandler : handlers)
         {
-            if(webscrapingHandler.hasUpdated(context))
+            WebScraperMessage message = webscrapingHandler.checkForNews(context);
+            if(message != null)
             {
-                updatedWebscrapers.add(webscrapingHandler);
+                webScraperMessages.add(message);
             }
         }
 
-        return updatedWebscrapers;
+        return webScraperMessages;
     }
 
-    public abstract boolean hasUpdated(Context context);
+    public abstract WebScraperMessage checkForNews(Context context);
 
     private static void registerHandler(WebscrapingHandler handler)
     {

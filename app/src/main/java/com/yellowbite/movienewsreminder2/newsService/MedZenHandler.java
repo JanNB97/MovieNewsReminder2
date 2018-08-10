@@ -3,7 +3,6 @@ package com.yellowbite.movienewsreminder2.newsService;
 import android.content.Context;
 
 import com.yellowbite.movienewsreminder2.files.data.NewMoviesQueue;
-import com.yellowbite.movienewsreminder2.files.MovieFileHelper;
 import com.yellowbite.movienewsreminder2.files.data.NewestMovie;
 import com.yellowbite.movienewsreminder2.model.Movie;
 import com.yellowbite.movienewsreminder2.webscraping.medienzentrum.MedZenMovieListScraper;
@@ -23,7 +22,7 @@ public class MedZenHandler extends WebscrapingHandler
     }
 
     @Override
-    public boolean hasUpdated(Context context)
+    public WebScraperMessage checkForNews(Context context)
     {
         MedZenMovieListScraper listScraper;
         try
@@ -33,7 +32,7 @@ public class MedZenHandler extends WebscrapingHandler
         {
             // No internet connection
             e.printStackTrace();
-            return false;
+            return null;
         }
 
         Movie thisMovie = listScraper.getEssentialMovie(0);
@@ -42,18 +41,18 @@ public class MedZenHandler extends WebscrapingHandler
 
         if(lastBarcode == -1 || thisBarcode != lastBarcode)
         {
-            this.writeNewMoviesInFile(context, listScraper, thisMovie, lastBarcode);
+            int numOfNewMovies = this.writeNewMoviesInFile(context, listScraper, thisMovie, lastBarcode);
 
             NewestMovie.setBarcode(context, thisBarcode);
-            return true;
+            return new AddedMovieMessage(numOfNewMovies);
         }
         else
         {
-            return false;
+            return null;
         }
     }
 
-    private void writeNewMoviesInFile(Context context, MedZenMovieListScraper listScraper, Movie newestMovie, int lastNewestBarcode)
+    private int writeNewMoviesInFile(Context context, MedZenMovieListScraper listScraper, Movie newestMovie, int lastNewestBarcode)
     {
         List<Movie> newMovies = new ArrayList<>();
         newMovies.add(newestMovie);
@@ -85,5 +84,6 @@ public class MedZenHandler extends WebscrapingHandler
         }
 
         NewMoviesQueue.addAll(context, newMovies);
+        return newMovies.size();
     }
 }
