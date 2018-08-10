@@ -14,6 +14,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.yellowbite.movienewsreminder2.MainActivity;
+import com.yellowbite.movienewsreminder2.files.data.HotMoviesSortedList;
 import com.yellowbite.movienewsreminder2.files.data.MyMoviesSortedList;
 import com.yellowbite.movienewsreminder2.newsService.NewsService;
 import com.yellowbite.movienewsreminder2.R;
@@ -124,6 +125,8 @@ public class MainActivityController implements LoadedMoviesEvent
     private void onLoadingFinished()
     {
         Collections.sort(MyMoviesSortedList.getAll(this.mainActivity));
+
+        HotMoviesSortedList.getMyHotMovies(this.mainActivity);
 
         this.loadingProgressBar.setVisibility(View.GONE);
         this.moviesUpdateTextView.setVisibility(View.GONE);

@@ -14,7 +14,7 @@ public class HotMoviesSortedList
 
     private static List<Integer> hotMovies;
 
-    public boolean addSave(Context context, Movie movie)
+    public static boolean addSave(Context context, Movie movie)
     {
         getFromFileIfNecessary(context);
         movie.setHot(true);
@@ -25,6 +25,18 @@ public class HotMoviesSortedList
             saveToFile(context);
         }
         return success;
+    }
+
+    public static boolean switchSave(Context context, Movie movie)
+    {
+        if(movie.isHot())
+        {
+            return deleteSave(context, movie);
+        }
+        else
+        {
+            return addSave(context, movie);
+        }
     }
 
     public static boolean deleteSave(Context context, Movie movie)
@@ -39,7 +51,7 @@ public class HotMoviesSortedList
         return success;
     }
 
-    public void getMyHotMovies(Context context)
+    public static void getMyHotMovies(Context context)
     {
         getFromFileIfNecessary(context);
         if(hotMovies.isEmpty())
@@ -52,8 +64,11 @@ public class HotMoviesSortedList
         for(Movie movie : myMovies)
         {
             int i = getIdInList(movie.getMediaBarcode());
-            movie.setHot(i != -1);
-            hotMoviesToDel.set(i, -1);
+            if(i != -1)
+            {
+                movie.setHot(true);
+                hotMoviesToDel.set(i, -1);
+            }
         }
 
         for(int i = 0; i < hotMoviesToDel.size(); i++)
@@ -105,6 +120,8 @@ public class HotMoviesSortedList
                 hotMovies.add(i, barcode);
                 return true;
             }
+
+            i++;
         }
         hotMovies.add(barcode);
         return true;
@@ -126,7 +143,11 @@ public class HotMoviesSortedList
 
     private static List<Integer> clone(List<Integer> list)
     {
-        List<Integer> newList = new ArrayList<>(list);
+        List<Integer> newList = new ArrayList<>();
+        for(Integer integer : list)
+        {
+            newList.add(Integer.valueOf(integer));
+        }
         return newList;
     }
 

@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.yellowbite.movienewsreminder2.R;
+import com.yellowbite.movienewsreminder2.files.data.HotMoviesSortedList;
 import com.yellowbite.movienewsreminder2.files.data.MyMoviesSortedList;
 import com.yellowbite.movienewsreminder2.model.Movie;
 import com.yellowbite.movienewsreminder2.ui.notifications.NotificationMan;
@@ -55,9 +56,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder>
     public void handleClickedLongOnMovieItem(View view, int position)
     {
         Movie movie = MyMoviesSortedList.get(this.context, position);
-        movie.setHot(!movie.isHot());
-        // TODO - Save hot movie in file
-        this.dataSetChanged(false);
+        if(HotMoviesSortedList.switchSave(this.context, movie))
+        {
+            this.dataSetChanged(false);
+        }
     }
 
     public void addItems(List<Movie> movies, boolean saveInFile)
