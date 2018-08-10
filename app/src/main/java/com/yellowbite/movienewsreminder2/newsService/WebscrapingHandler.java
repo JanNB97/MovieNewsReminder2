@@ -2,6 +2,8 @@ package com.yellowbite.movienewsreminder2.newsService;
 
 import android.content.Context;
 
+import com.yellowbite.movienewsreminder2.newsService.messages.WebScraperMessage;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,17 +36,17 @@ public abstract class WebscrapingHandler
 
         for(WebscrapingHandler webscrapingHandler : handlers)
         {
-            WebScraperMessage message = webscrapingHandler.checkForNews(context);
-            if(message != null)
+            List<WebScraperMessage> messages = webscrapingHandler.checkForNews(context);
+            if(!messages.isEmpty())
             {
-                webScraperMessages.add(message);
+                webScraperMessages.addAll(messages);
             }
         }
 
         return webScraperMessages;
     }
 
-    public abstract WebScraperMessage checkForNews(Context context);
+    public abstract List<WebScraperMessage> checkForNews(Context context);
 
     private static void registerHandler(WebscrapingHandler handler)
     {

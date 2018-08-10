@@ -1,4 +1,4 @@
-package com.yellowbite.movienewsreminder2.newsService;
+package com.yellowbite.movienewsreminder2.newsService.messages;
 
 public class WebScraperMessage
 {

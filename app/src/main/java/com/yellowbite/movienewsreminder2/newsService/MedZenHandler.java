@@ -5,6 +5,8 @@ import android.content.Context;
 import com.yellowbite.movienewsreminder2.files.data.NewMoviesQueue;
 import com.yellowbite.movienewsreminder2.files.data.NewestMovie;
 import com.yellowbite.movienewsreminder2.model.Movie;
+import com.yellowbite.movienewsreminder2.newsService.messages.AddedMovieMessage;
+import com.yellowbite.movienewsreminder2.newsService.messages.WebScraperMessage;
 import com.yellowbite.movienewsreminder2.webscraping.medienzentrum.MedZenMovieListScraper;
 
 import java.io.IOException;
@@ -22,7 +24,26 @@ public class MedZenHandler extends WebscrapingHandler
     }
 
     @Override
-    public WebScraperMessage checkForNews(Context context)
+    public List<WebScraperMessage> checkForNews(Context context)
+    {
+        List<WebScraperMessage> messages = new ArrayList<>();
+
+        WebScraperMessage addedMovieMessage = this.checkForAddedMovies(context);
+        if(addedMovieMessage != null)
+        {
+            messages.add(addedMovieMessage);
+        }
+
+        WebScraperMessage hotMovieMessage = this.checkForHotMovies(context);
+        if(hotMovieMessage != null)
+        {
+            messages.add(hotMovieMessage);
+        }
+
+        return messages;
+    }
+
+    private WebScraperMessage checkForAddedMovies(Context context)
     {
         MedZenMovieListScraper listScraper;
         try
@@ -50,6 +71,12 @@ public class MedZenHandler extends WebscrapingHandler
         {
             return null;
         }
+    }
+
+    private WebScraperMessage checkForHotMovies(Context context)
+    {
+        // TODO
+        return null;
     }
 
     private int writeNewMoviesInFile(Context context, MedZenMovieListScraper listScraper, Movie newestMovie, int lastNewestBarcode)

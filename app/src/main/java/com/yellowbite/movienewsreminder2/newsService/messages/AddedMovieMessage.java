@@ -1,4 +1,4 @@
-package com.yellowbite.movienewsreminder2.newsService;
+package com.yellowbite.movienewsreminder2.newsService.messages;
 
 import com.yellowbite.movienewsreminder2.R;
 
