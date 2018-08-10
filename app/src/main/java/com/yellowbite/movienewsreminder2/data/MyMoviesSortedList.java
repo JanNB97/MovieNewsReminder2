@@ -2,7 +2,7 @@ package com.yellowbite.movienewsreminder2.data;
 
 import android.content.Context;
 
-import com.yellowbite.movienewsreminder2.files.MedZenFileMan;
+import com.yellowbite.movienewsreminder2.files.MovieFileHelper;
 import com.yellowbite.movienewsreminder2.model.Movie;
 import com.yellowbite.movienewsreminder2.files.FileManager;
 
@@ -103,12 +103,12 @@ public class MyMoviesSortedList
     private static List<Movie> getFromFile(Context context)
     {
         List<String> lines = FileManager.readAll(context, FILE_NAME);
-        return MedZenFileMan.toMovies(lines, Collections.synchronizedList(new ArrayList<>()));
+        return MovieFileHelper.toMovies(lines, Collections.synchronizedList(new ArrayList<>()));
     }
 
     private static void saveToFile(Context context)
     {
-        FileManager.write(context, FILE_NAME, MedZenFileMan.toLines(myMovies));
+        FileManager.write(context, FILE_NAME, MovieFileHelper.toLines(myMovies));
     }
 
     // --- --- --- helper methods --- --- ---

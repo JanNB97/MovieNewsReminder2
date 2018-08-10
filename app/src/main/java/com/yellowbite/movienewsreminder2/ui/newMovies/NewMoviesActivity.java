@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.view.Window;
 
 import com.yellowbite.movienewsreminder2.R;
-import com.yellowbite.movienewsreminder2.files.MedZenFileMan;
+import com.yellowbite.movienewsreminder2.files.MovieFileHelper;
 
 public class NewMoviesActivity extends AppCompatActivity
 {
@@ -19,7 +19,7 @@ public class NewMoviesActivity extends AppCompatActivity
         this.removeTitleBar();
         setContentView(R.layout.activity_new_movies);
 
-        new NewMoviesController(this, MedZenFileMan.getNewMovies(this));
+        new NewMoviesController(this);
     }
 
     private void removeTitleBar()

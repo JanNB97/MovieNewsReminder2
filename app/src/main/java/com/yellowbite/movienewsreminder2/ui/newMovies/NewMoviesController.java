@@ -4,18 +4,15 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.yellowbite.movienewsreminder2.R;
+import com.yellowbite.movienewsreminder2.data.NewMoviesQueue;
 import com.yellowbite.movienewsreminder2.model.Movie;
 import com.yellowbite.movienewsreminder2.tasks.newMovies.DelLastAndAddAsyncTask;
 import com.yellowbite.movienewsreminder2.tasks.newMovies.LoadNewMoviesDescendingExecutor;
 import com.yellowbite.movienewsreminder2.tasks.LoadedMovieEvent;
 
-import java.util.List;
-
 public class NewMoviesController implements LoadedMovieEvent
 {
     private NewMoviesActivity activity;
-
-    private List<Movie> newMovies;
 
     private TextView movieTitelTextView;
 
@@ -27,17 +24,16 @@ public class NewMoviesController implements LoadedMovieEvent
     private int displayedMovieId;
     private Movie displayedMovie;
 
-    public NewMoviesController(NewMoviesActivity activity, List<Movie> newMovies)
+    public NewMoviesController(NewMoviesActivity activity)
     {
         this.activity = activity;
-        this.newMovies = newMovies;
         addToMyMoviesButton = activity.findViewById(R.id.addToMyMoviesButton);
         nextMovieButton = activity.findViewById(R.id.nextMovieButton);
         this.movieTitelTextView = activity.findViewById(R.id.movieNameTextView);
-        this.displayedMovieId = newMovies.size();
+        this.displayedMovieId = NewMoviesQueue.size(activity);
 
-        new LoadNewMoviesDescendingExecutor(this.activity, this, this.newMovies);
-        this.movieIsLoaded = new boolean[this.newMovies.size()];
+        new LoadNewMoviesDescendingExecutor(this.activity, this, NewMoviesQueue.getAll(activity));
+        this.movieIsLoaded = new boolean[NewMoviesQueue.size(activity)];
 
         this.tryToShowNextMovie();
 
@@ -79,7 +75,7 @@ public class NewMoviesController implements LoadedMovieEvent
 
     private void showNextMovie()
     {
-        this.displayedMovie = newMovies.get(this.displayedMovieId);
+        this.displayedMovie = NewMoviesQueue.get(activity, this.displayedMovieId);
 
         showMovie(this.displayedMovie);
         setButtonsEnabled(true);

@@ -11,10 +11,9 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
-public class MedZenFileMan
+public class MovieFileHelper
 {
     private static final String NEWEST_BARCODE = "newestBarcode.txt";
-    private static final String NEW_MOVIES = "newMovies.txt";
     private static final String HOT_MOVIES = "hotMovies.txt";
 
     // --- --- --- Newest movie --- --- ---
@@ -41,31 +40,6 @@ public class MedZenFileMan
     {
         FileManager.write(context, NEWEST_BARCODE, Integer.toString(barcode));
     }
-
-    // --- --- --- New movies --- --- ---
-
-    public static List<Movie> getNewMovies(Context context)
-    {
-        return toMovies(FileManager.readAll(context, NEW_MOVIES), new ArrayList<>());
-    }
-
-    public static void addNewMovies(Context context, Collection<Movie> newMovies)
-    {
-        FileManager.insertFirst(context, NEW_MOVIES, toLines(newMovies));
-    }
-
-    public static void deleteLastNewMovie(Context context)
-    {
-        FileManager.deleteLast(context, NEW_MOVIES);
-    }
-
-    public static boolean newMoviesIsEmpty(Context context)
-    {
-        return FileManager.isEmpty(context, NEW_MOVIES);
-    }
-
-    // --- --- --- hot movies --- --- ---
-    // TODO
 
     // --- --- --- Movie file parsing --- --- ---
     //barcode;url;standort;zugang;titel

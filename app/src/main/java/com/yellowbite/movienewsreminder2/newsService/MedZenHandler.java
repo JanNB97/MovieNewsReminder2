@@ -2,7 +2,8 @@ package com.yellowbite.movienewsreminder2.newsService;
 
 import android.content.Context;
 
-import com.yellowbite.movienewsreminder2.files.MedZenFileMan;
+import com.yellowbite.movienewsreminder2.data.NewMoviesQueue;
+import com.yellowbite.movienewsreminder2.files.MovieFileHelper;
 import com.yellowbite.movienewsreminder2.model.Movie;
 import com.yellowbite.movienewsreminder2.webscraping.medienzentrum.MedZenMovieListScraper;
 
@@ -36,13 +37,13 @@ public class MedZenHandler extends WebscrapingHandler
 
         Movie thisMovie = listScraper.getEssentialMovie(0);
         int thisBarcode = thisMovie.getMediaBarcode();
-        int lastBarcode = MedZenFileMan.getNewestBarcode(context);
+        int lastBarcode = MovieFileHelper.getNewestBarcode(context);
 
         if(lastBarcode == -1 || thisBarcode != lastBarcode)
         {
             this.writeNewMoviesInFile(context, listScraper, thisMovie, lastBarcode);
 
-            MedZenFileMan.setNewestBarcode(context, thisBarcode);
+            MovieFileHelper.setNewestBarcode(context, thisBarcode);
             return true;
         }
         else
@@ -82,6 +83,6 @@ public class MedZenHandler extends WebscrapingHandler
             }
         }
 
-        MedZenFileMan.addNewMovies(context, newMovies);
+        NewMoviesQueue.addAll(context, newMovies);
     }
 }

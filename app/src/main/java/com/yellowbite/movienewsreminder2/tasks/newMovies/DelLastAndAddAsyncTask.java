@@ -4,8 +4,9 @@ import android.content.Context;
 import android.os.AsyncTask;
 
 import com.yellowbite.movienewsreminder2.data.MyMoviesSortedList;
+import com.yellowbite.movienewsreminder2.data.NewMoviesQueue;
 import com.yellowbite.movienewsreminder2.model.Movie;
-import com.yellowbite.movienewsreminder2.files.MedZenFileMan;
+import com.yellowbite.movienewsreminder2.files.MovieFileHelper;
 
 public class DelLastAndAddAsyncTask extends AsyncTask<Movie, Void, Void>
 {
@@ -26,7 +27,7 @@ public class DelLastAndAddAsyncTask extends AsyncTask<Movie, Void, Void>
             throw new IllegalArgumentException();
         }
 
-        MedZenFileMan.deleteLastNewMovie(context);
+        NewMoviesQueue.deleteLast(context);
 
         if(movies.length != 0 && movies[0] != null)
         {

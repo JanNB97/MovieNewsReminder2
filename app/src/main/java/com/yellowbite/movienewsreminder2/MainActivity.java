@@ -6,9 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Window;
 
+import com.yellowbite.movienewsreminder2.data.NewMoviesQueue;
 import com.yellowbite.movienewsreminder2.ui.MainActivityController;
 import com.yellowbite.movienewsreminder2.ui.newMovies.NewMoviesActivity;
-import com.yellowbite.movienewsreminder2.files.MedZenFileMan;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity
 
     private void launchNewMoviesActivity()
     {
-        if(!MedZenFileMan.newMoviesIsEmpty(this))
+        if(!NewMoviesQueue.isEmpty(this))
         {
             Intent intent = new Intent(this, NewMoviesActivity.class);
             this.startActivityForResult(intent, REQUEST_CODE);
