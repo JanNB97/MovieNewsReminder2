@@ -83,6 +83,12 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder>
 
     public void removeItem(int position)
     {
+        Movie movieToRemove = MyMoviesSortedList.get(this.context, position);
+        if(movieToRemove.isHot())
+        {
+            HotMoviesSortedList.deleteSave(this.context, movieToRemove);
+        }
+
         MyMoviesSortedList.remove(this.context, position);
         this.dataSetChanged(true);
     }
