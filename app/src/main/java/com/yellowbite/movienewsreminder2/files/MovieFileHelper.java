@@ -38,14 +38,14 @@ public class MovieFileHelper
 
         String url = split[1];
         String standort = split[2];
-        if("null".equals(standort))
+        if("null".equals(standort) || standort.isEmpty())
         {
             standort = null;
         }
         Date zugang = DateHelper.toDate(split[3]);
 
         String titel = split[4];
-        if("null".equals(titel))
+        if("null".equals(titel) || titel.isEmpty())
         {
             titel = null;
         }
