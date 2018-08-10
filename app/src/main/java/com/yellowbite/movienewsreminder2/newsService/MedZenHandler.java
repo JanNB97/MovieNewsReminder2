@@ -2,12 +2,15 @@ package com.yellowbite.movienewsreminder2.newsService;
 
 import android.content.Context;
 
+import com.yellowbite.movienewsreminder2.files.data.HotMoviesSortedList;
 import com.yellowbite.movienewsreminder2.files.data.NewMoviesQueue;
 import com.yellowbite.movienewsreminder2.files.data.NewestMovie;
 import com.yellowbite.movienewsreminder2.model.Movie;
 import com.yellowbite.movienewsreminder2.newsService.messages.AddedMovieMessage;
+import com.yellowbite.movienewsreminder2.newsService.messages.HotMovieMessage;
 import com.yellowbite.movienewsreminder2.newsService.messages.WebScraperMessage;
 import com.yellowbite.movienewsreminder2.webscraping.medienzentrum.MedZenMovieListScraper;
+import com.yellowbite.movienewsreminder2.webscraping.medienzentrum.MedZenMovieSiteScraper;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -75,8 +78,32 @@ public class MedZenHandler extends WebscrapingHandler
 
     private WebScraperMessage checkForHotMovies(Context context)
     {
-        // TODO
-        return null;
+        List<Movie> hotMovies = HotMoviesSortedList.get(context);
+
+        List<Movie> verfuegbarHotMovies = new ArrayList<>();
+        int numOfVerfuegbarHotMovies = 0;
+
+        for (Movie hotMovie : hotMovies)
+        {
+            try
+            {
+                if(MedZenMovieSiteScraper.isVerfuegbar(hotMovie))
+                {
+                    // TODO - Proove if message was already send for this movie
+                    numOfVerfuegbarHotMovies++;
+                    verfuegbarHotMovies.add(hotMovie);
+                }
+            } catch (IOException ignored) {}
+        }
+
+        if(verfuegbarHotMovies.isEmpty())
+        {
+            return null;
+        }
+        else
+        {
+            return new HotMovieMessage(numOfVerfuegbarHotMovies, hotMovies);
+        }
     }
 
     private int writeNewMoviesInFile(Context context, MedZenMovieListScraper listScraper, Movie newestMovie, int lastNewestBarcode)
