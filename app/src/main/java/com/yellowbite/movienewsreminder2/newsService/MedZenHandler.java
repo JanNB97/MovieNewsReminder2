@@ -81,7 +81,6 @@ public class MedZenHandler extends WebscrapingHandler
         List<Movie> hotMovies = HotMoviesSortedList.get(context);
 
         List<Movie> verfuegbarHotMovies = new ArrayList<>();
-        int numOfVerfuegbarHotMovies = 0;
 
         for (Movie hotMovie : hotMovies)
         {
@@ -90,7 +89,6 @@ public class MedZenHandler extends WebscrapingHandler
                 if(MedZenMovieSiteScraper.isVerfuegbar(hotMovie))
                 {
                     // TODO - Proove if message was already send for this movie
-                    numOfVerfuegbarHotMovies++;
                     verfuegbarHotMovies.add(hotMovie);
                 }
             } catch (IOException ignored) {}
@@ -102,7 +100,7 @@ public class MedZenHandler extends WebscrapingHandler
         }
         else
         {
-            return new HotMovieMessage(numOfVerfuegbarHotMovies, hotMovies);
+            return new HotMovieMessage(hotMovies);
         }
     }
 

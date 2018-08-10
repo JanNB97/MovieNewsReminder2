@@ -58,7 +58,9 @@ public class NewsService extends JobService
 
         for(WebScraperMessage webScraperMessage : webScraperMessages)
         {
-            NotificationMan.showNotification(getApplicationContext(), webScraperMessage.getTitel(), webScraperMessage.getText(), webScraperMessage.getIcon());
+            NotificationMan.showNotification(getApplicationContext(),
+                    webScraperMessage.getTitel(), webScraperMessage.getText(),
+                    webScraperMessage.getIcon(), webScraperMessage.isShowMultiLinedText());
         }
     }
 }

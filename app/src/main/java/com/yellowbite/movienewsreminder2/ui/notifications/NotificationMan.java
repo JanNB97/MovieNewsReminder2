@@ -11,7 +11,7 @@ import com.yellowbite.movienewsreminder2.MainActivity;
 
 public final class NotificationMan
 {
-    public static void showNotification(Context context, String title, String text, int icon)
+    public static void showNotification(Context context, String title, String text, int icon, boolean multiLinedText)
     {
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
                 .setSmallIcon(icon)
@@ -19,6 +19,12 @@ public final class NotificationMan
                 .setContentText(text)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setAutoCancel(true);
+
+        if(multiLinedText)
+        {
+            mBuilder.setStyle(new NotificationCompat.BigTextStyle()
+                .bigText(text));
+        }
 
         PendingIntent contentIntent = PendingIntent.getActivity(context, 0,
                 new Intent(context, MainActivity.class), PendingIntent.FLAG_UPDATE_CURRENT);
