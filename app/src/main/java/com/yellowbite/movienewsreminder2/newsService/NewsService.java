@@ -16,12 +16,14 @@ import java.util.logging.Logger;
 
 public class NewsService extends JobService
 {
+    public static final int TIME_UNTIL_NEXT_UPDATE = 1000 * 60 * 30;
+
     public static void start(AppCompatActivity app)
     {
         ComponentName name = new ComponentName(app, NewsService.class);
         JobInfo job = (new JobInfo.Builder(0, name))
                 .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
-                .setPeriodic(1000 * 60 * 30)
+                .setPeriodic(TIME_UNTIL_NEXT_UPDATE)
                 .build();
 
         JobScheduler jobScheduler = (JobScheduler)app.getSystemService(Context.JOB_SCHEDULER_SERVICE);
@@ -38,7 +40,6 @@ public class NewsService extends JobService
     @Override
     public boolean onStartJob(JobParameters jobParameters)
     {
-        System.out.println("Checks newswebsites...");
         new Thread(() -> {
             checkWebscrapers();
             jobFinished(jobParameters, false);
@@ -48,7 +49,8 @@ public class NewsService extends JobService
     }
 
     @Override
-    public boolean onStopJob(JobParameters jobParameters) {
+    public boolean onStopJob(JobParameters jobParameters)
+    {
         return false;
     }
 
