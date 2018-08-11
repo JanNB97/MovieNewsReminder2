@@ -13,7 +13,7 @@ public class HotMovieMessage extends WebScraperMessage
     {
         super(toTitel(hotVerfuegbarMovies, shownMovies),
                 toText(hotVerfuegbarMovies, shownMovies),
-                R.drawable.ic_launcher_background, true);
+                R.drawable.hotmovieicon, true);
     }
 
     private static String toTitel(List<Movie> hotVerfuegbarMovies, List<Movie> shownMovies)
