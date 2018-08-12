@@ -3,6 +3,7 @@ package com.yellowbite.movienewsreminder2.ui;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.opengl.Visibility;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -65,6 +66,7 @@ public class MainActivityController implements LoadedMoviesEvent
     {
         this.addMovieButton = this.mainActivity.findViewById(R.id.addMovieButton);
         this.addMovieButton.setOnClickListener(this::handleOnAddMovieClicked);
+        this.addMovieButton.setVisibility(View.GONE);
     }
 
     private void initURLTextView()
@@ -78,7 +80,15 @@ public class MainActivityController implements LoadedMoviesEvent
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2)
             {
-                addMovieButton.setEnabled(charSequence.length() != 0);
+                if(charSequence.length() != 0)
+                {
+                    addMovieButton.setVisibility(View.VISIBLE);
+                }
+                else
+                {
+                    addMovieButton.setVisibility(View.GONE);
+                }
+
             }
 
             @Override
