@@ -1,6 +1,5 @@
 package com.yellowbite.movienewsreminder2.ui.newMovies;
 
-import android.graphics.Bitmap;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -11,7 +10,6 @@ import com.yellowbite.movienewsreminder2.model.Movie;
 import com.yellowbite.movienewsreminder2.tasks.newMovies.DelLastAndAddAsyncTask;
 import com.yellowbite.movienewsreminder2.tasks.newMovies.LoadNewMoviesDescendingExecutor;
 import com.yellowbite.movienewsreminder2.tasks.LoadedMovieEvent;
-import com.yellowbite.movienewsreminder2.webscraping.ImageDownloader;
 
 public class NewMoviesController implements LoadedMovieEvent
 {
