@@ -1,5 +1,7 @@
 package com.yellowbite.movienewsreminder2.ui.newMovies;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -10,6 +12,8 @@ import com.yellowbite.movienewsreminder2.model.Movie;
 import com.yellowbite.movienewsreminder2.tasks.newMovies.DelLastAndAddAsyncTask;
 import com.yellowbite.movienewsreminder2.tasks.newMovies.LoadNewMoviesDescendingExecutor;
 import com.yellowbite.movienewsreminder2.tasks.LoadedMovieEvent;
+
+import java.net.URLEncoder;
 
 public class NewMoviesController implements LoadedMovieEvent
 {
@@ -45,7 +49,12 @@ public class NewMoviesController implements LoadedMovieEvent
 
         nextMovieButton.setOnClickListener(e -> this.handleClickOnNextMovie());
         addToMyMoviesButton.setOnClickListener(e -> this.handleClickOnAddMovie());
+
+        movieTitelTextView.setOnClickListener(e -> this.handleClickOnTitel());
+        einheitstitelTextView.setOnClickListener(e -> this.handleClickOnTitel());
     }
+
+    // --- --- --- handle clicks --- --- ---
 
     private void handleClickOnAddMovie()
     {
@@ -62,6 +71,19 @@ public class NewMoviesController implements LoadedMovieEvent
         new DelLastAndAddAsyncTask(activity.getApplicationContext(),
                 this::tryToShowNextMovie)
         .execute();
+    }
+
+    private void handleClickOnTitel()
+    {
+        String searchword = movieTitelTextView.getText().toString();
+        String einheitssachtitel = einheitstitelTextView.getText().toString();
+        if(!einheitssachtitel.isEmpty())
+        {
+            searchword = einheitssachtitel;
+        }
+        Uri uri = Uri.parse("https://www.google.com/#q=" + searchword + " wikipedia english");
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        activity.startActivity(intent);
     }
 
     private void tryToShowNextMovie()
