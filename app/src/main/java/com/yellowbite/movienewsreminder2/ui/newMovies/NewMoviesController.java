@@ -16,9 +16,11 @@ public class NewMoviesController implements LoadedMovieEvent
     private NewMoviesActivity activity;
 
     private TextView movieTitelTextView;
+    private TextView einheitstitelTextView;
 
     private Button addToMyMoviesButton;
     private Button nextMovieButton;
+
     private ImageView movieImageView;
 
     private boolean[] movieIsLoaded;
@@ -34,6 +36,7 @@ public class NewMoviesController implements LoadedMovieEvent
         this.movieTitelTextView = activity.findViewById(R.id.movieNameTextView);
         this.displayedMovieId = NewMoviesQueue.size(activity);
         this.movieImageView = this.activity.findViewById(R.id.movieImageView);
+        this.einheitstitelTextView = this.activity.findViewById(R.id.einheitstitelTextView);
 
         new LoadNewMoviesDescendingExecutor(this.activity, this, NewMoviesQueue.getAll(activity));
         this.movieIsLoaded = new boolean[NewMoviesQueue.size(activity)];
@@ -88,6 +91,16 @@ public class NewMoviesController implements LoadedMovieEvent
     {
         this.movieTitelTextView.setText(movie.getTitel());
         this.movieImageView.setImageBitmap(movie.getImageBitmap());
+
+        String einheitstitel = movie.getEinheitstitel();
+        if(einheitstitel != null)
+        {
+            this.einheitstitelTextView.setText(einheitstitel);
+        }
+        else
+        {
+            this.einheitstitelTextView.setText("");
+        }
     }
 
     private void setButtonsEnabled(boolean b)

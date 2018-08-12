@@ -51,9 +51,9 @@ public class MedZenMovieSiteScraper
         return new MedZenMovieSiteScraper(new Movie(url)).getMovie();
     }
 
-    public static Movie getMovieWithImgBitmap(Movie essentialMovie) throws IOException
+    public static Movie getMovieWithDetails(Movie essentialMovie) throws IOException
     {
-        return new MedZenMovieSiteScraper(essentialMovie).getMovieWithImgBitmap();
+        return new MedZenMovieSiteScraper(essentialMovie).getMovieWithDetails();
     }
 
     public static void getMovie(Movie essentialMovie) throws IOException
@@ -115,7 +115,7 @@ public class MedZenMovieSiteScraper
         return this.movie;
     }
 
-    public Movie getMovieWithImgBitmap()
+    public Movie getMovieWithDetails()
     {
         this.getMovie();
         if(this.movie == null)
@@ -124,6 +124,7 @@ public class MedZenMovieSiteScraper
         }
 
         this.movie.setImageBitmap(this.getImageBitmap());
+        this.movie.setEinheitstitel(this.getEinheitstitel());
         return this.movie;
     }
 
@@ -155,7 +156,7 @@ public class MedZenMovieSiteScraper
         this.movie.setVorbestellungen(this.getVorbestellungen());
     }
 
-    // --- get image url ---
+    // --- get detail informations ---
 
     private Bitmap getImageBitmap()
     {
@@ -166,6 +167,11 @@ public class MedZenMovieSiteScraper
         }
 
         return ImageDownloader.getImageBitmap(url);
+    }
+
+    private String getEinheitstitel()
+    {
+        return WebscrapingHelper.getText(this.doc, "table.DetailInformation td.DetailInformationEntryName:containsOwn(Einheitssachtitel) + td");
     }
 
     // --- get essentials ---

@@ -14,6 +14,7 @@ public class Movie implements Comparable<Movie>
     private Bitmap imageBitmap;
     private boolean isHot;
     private boolean notificationWasShown;
+    private String einheitstitel;
 
     // essential
     private int mediaBarcode = -1;
@@ -145,6 +146,16 @@ public class Movie implements Comparable<Movie>
     public void setImageBitmap(Bitmap imageBitmap)
     {
         this.imageBitmap = imageBitmap;
+    }
+
+    public String getEinheitstitel()
+    {
+        return einheitstitel;
+    }
+
+    public void setEinheitstitel(String einheitstitel)
+    {
+        this.einheitstitel = einheitstitel;
     }
 
     // --- --- --- Overritten methods --- --- ---
