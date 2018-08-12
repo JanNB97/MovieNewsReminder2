@@ -1,5 +1,6 @@
 package com.yellowbite.movienewsreminder2.model;
 
+import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 
 import com.yellowbite.movienewsreminder2.util.DateHelper;
@@ -10,6 +11,7 @@ import java.util.logging.Logger;
 
 public class Movie implements Comparable<Movie>
 {
+    private Bitmap imageBitmap;
     private boolean isHot;
     private boolean notificationWasShown;
 
@@ -133,6 +135,16 @@ public class Movie implements Comparable<Movie>
     public void setNotificationWasShown(boolean notificationWasShown)
     {
         this.notificationWasShown = notificationWasShown;
+    }
+
+    public Bitmap getImageBitmap()
+    {
+        return imageBitmap;
+    }
+
+    public void setImageBitmap(Bitmap imageBitmap)
+    {
+        this.imageBitmap = imageBitmap;
     }
 
     // --- --- --- Overritten methods --- --- ---

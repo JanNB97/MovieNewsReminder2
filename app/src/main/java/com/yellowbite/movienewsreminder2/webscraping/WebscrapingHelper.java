@@ -127,4 +127,21 @@ public class WebscrapingHelper
 
         return elements.attr("href");
     }
+
+    public static String getImageURL(Element element, String cssQuery)
+    {
+        if(element == null)
+        {
+            return null;
+        }
+
+        Elements elements = element.select(cssQuery);
+
+        if(elements.size() == 0)
+        {
+            return null;
+        }
+
+        return elements.attr("data-src");
+    }
 }

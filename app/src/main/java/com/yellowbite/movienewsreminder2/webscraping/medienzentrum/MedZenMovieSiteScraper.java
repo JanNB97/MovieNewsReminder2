@@ -1,6 +1,9 @@
 package com.yellowbite.movienewsreminder2.webscraping.medienzentrum;
 
+import android.graphics.Bitmap;
+
 import com.yellowbite.movienewsreminder2.model.Movie;
+import com.yellowbite.movienewsreminder2.webscraping.ImageDownloader;
 import com.yellowbite.movienewsreminder2.webscraping.WebscrapingHelper;
 
 import org.jsoup.nodes.Document;
@@ -46,6 +49,11 @@ public class MedZenMovieSiteScraper
     public static Movie getMovie(String url) throws IOException
     {
         return new MedZenMovieSiteScraper(new Movie(url)).getMovie();
+    }
+
+    public static Movie getMovieWithImgBitmap(Movie essentialMovie) throws IOException
+    {
+        return new MedZenMovieSiteScraper(essentialMovie).getMovieWithImgBitmap();
     }
 
     public static void getMovie(Movie essentialMovie) throws IOException
@@ -107,6 +115,18 @@ public class MedZenMovieSiteScraper
         return this.movie;
     }
 
+    public Movie getMovieWithImgBitmap()
+    {
+        this.getMovie();
+        if(this.movie == null)
+        {
+            return null;
+        }
+
+        this.movie.setImageBitmap(this.getImageBitmap());
+        return this.movie;
+    }
+
     private void addStatusToMovie()
     {
         Movie.Status status = this.getStatus();
@@ -133,6 +153,19 @@ public class MedZenMovieSiteScraper
         }
 
         this.movie.setVorbestellungen(this.getVorbestellungen());
+    }
+
+    // --- get image url ---
+
+    private Bitmap getImageBitmap()
+    {
+        String url = WebscrapingHelper.getImageURL(this.doc, "img.cover");
+        if(url == null)
+        {
+            return null;
+        }
+
+        return ImageDownloader.getImageBitmap(url);
     }
 
     // --- get essentials ---

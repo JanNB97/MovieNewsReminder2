@@ -24,7 +24,8 @@ public class LoadMyMoviesRetryExecutor extends LoadMoviesRetryExecutor
 
     public LoadMyMoviesRetryExecutor(AppCompatActivity activity, LoadedMoviesEvent event, List<Movie> movies, Runnable onFinishedLoading)
     {
-        super((ThreadPoolExecutor) Executors.newCachedThreadPool(), movies, true);
+        super((ThreadPoolExecutor) Executors.newCachedThreadPool(), movies,
+                MedZenMovieSiteScraper::getMovie,true);
 
         this.activity = activity;
         this.event = event;

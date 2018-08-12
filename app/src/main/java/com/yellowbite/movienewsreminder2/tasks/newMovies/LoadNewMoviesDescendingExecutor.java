@@ -19,7 +19,8 @@ public class LoadNewMoviesDescendingExecutor extends LoadMoviesRetryExecutor
 
     public LoadNewMoviesDescendingExecutor(AppCompatActivity activity, LoadedMovieEvent event, List<Movie> movies)
     {
-        super((ThreadPoolExecutor) Executors.newFixedThreadPool(2), movies, false);
+        super((ThreadPoolExecutor) Executors.newFixedThreadPool(2), movies,
+                MedZenMovieSiteScraper::getMovieWithImgBitmap,false);
 
         this.activity = activity;
         this.event = event;

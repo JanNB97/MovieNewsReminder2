@@ -1,6 +1,8 @@
 package com.yellowbite.movienewsreminder2.ui.newMovies;
 
+import android.graphics.Bitmap;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.yellowbite.movienewsreminder2.R;
@@ -9,6 +11,7 @@ import com.yellowbite.movienewsreminder2.model.Movie;
 import com.yellowbite.movienewsreminder2.tasks.newMovies.DelLastAndAddAsyncTask;
 import com.yellowbite.movienewsreminder2.tasks.newMovies.LoadNewMoviesDescendingExecutor;
 import com.yellowbite.movienewsreminder2.tasks.LoadedMovieEvent;
+import com.yellowbite.movienewsreminder2.webscraping.ImageDownloader;
 
 public class NewMoviesController implements LoadedMovieEvent
 {
@@ -18,6 +21,7 @@ public class NewMoviesController implements LoadedMovieEvent
 
     private Button addToMyMoviesButton;
     private Button nextMovieButton;
+    private ImageView movieImageView;
 
     private boolean[] movieIsLoaded;
 
@@ -31,6 +35,7 @@ public class NewMoviesController implements LoadedMovieEvent
         nextMovieButton = activity.findViewById(R.id.nextMovieButton);
         this.movieTitelTextView = activity.findViewById(R.id.movieNameTextView);
         this.displayedMovieId = NewMoviesQueue.size(activity);
+        this.movieImageView = this.activity.findViewById(R.id.movieImageView);
 
         new LoadNewMoviesDescendingExecutor(this.activity, this, NewMoviesQueue.getAll(activity));
         this.movieIsLoaded = new boolean[NewMoviesQueue.size(activity)];
@@ -84,6 +89,7 @@ public class NewMoviesController implements LoadedMovieEvent
     private void showMovie(Movie movie)
     {
         this.movieTitelTextView.setText(movie.getTitel());
+        this.movieImageView.setImageBitmap(movie.getImageBitmap());
     }
 
     private void setButtonsEnabled(boolean b)
