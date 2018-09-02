@@ -66,21 +66,24 @@ public final class DateHelper
     protected static String[] getWeekdayAsMessage(Date date, Calendar nowCalendar)
     {
         Calendar dateCalendar = getCalendar(date);
+        Date nowDate = nowCalendar.getTime();
 
-        int weeksNowUntilDate = getWeeksNowUntilDate(date, nowCalendar);
+        int weeksNowUntilDate = getWeeksNowUntilDate(date, nowCalendar, nowDate);
         Weekday dateWeekday = getWeekday(dateCalendar);
 
         // Special days
-        Weekday nowWeekday = getWeekday(nowCalendar);
-
-        if(isNow(dateWeekday, nowWeekday, weeksNowUntilDate))
+        switch (getDistance(nowDate, date))
         {
-            return new String[]{TODAY};
-        }
-
-        if(isTomorrow(dateWeekday, nowWeekday, weeksNowUntilDate))
-        {
-            return new String[]{TOMORROW};
+            case -2:
+                return new String[]{THE_DAY_BEFORE_YESTERDAY};
+            case -1:
+                return new String[]{YESTERDAY};
+            case 0:
+                return new String[]{TODAY};
+            case 1:
+                return new String[]{TOMORROW};
+            case 2:
+                return new String[]{THE_DAY_AFTER_TOMORROW};
         }
 
         // Normal days
@@ -117,35 +120,8 @@ public final class DateHelper
         return new String[]{IN_MORE_THAN_TWO_WEEKS};
     }
 
-    private static boolean isNow(Weekday dateWeekday, Weekday nowWeekday, int weeksUntilDate)
+    private static int getWeeksNowUntilDate(Date date, Calendar nowCalendar, Date nowDate)
     {
-        if(weeksUntilDate != 0)
-        {
-            return false;
-        }
-
-        return dateWeekday == nowWeekday;
-    }
-
-    private static boolean isTomorrow(Weekday dateWeekday, Weekday nowWeekday, int weeksUnilDate)
-    {
-        if(weeksUnilDate == 1 && dateWeekday == Weekday.Montag && nowWeekday ==Weekday.Sonntag)
-        {
-            return true;
-        }
-
-        if(weeksUnilDate != 0)
-        {
-            return false;
-        }
-
-        return nowWeekday.ordinal() + 1 == dateWeekday.ordinal();
-    }
-
-    private static int getWeeksNowUntilDate(Date date, Calendar nowCalendar)
-    {
-        Date nowDate = nowCalendar.getTime();
-
         int nowWeek = nowCalendar.get(Calendar.WEEK_OF_YEAR);
 
         int dateWeek = getWeek(date);
@@ -201,6 +177,6 @@ public final class DateHelper
 
     private static int toDays(long ms)
     {
-        return (int) (ms / 1000 / 60 / 60 / 24);
+        return (int) (Math.ceil((double)ms / 1000 / 60 / 60 / 24));
     }
 }

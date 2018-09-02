@@ -39,11 +39,11 @@ public class DateHelperTest
 
         // this week
         this.assertDateMessage(DateHelper.Weekday.Montag, "30.07.2018");
-        this.assertDateMessage(DateHelper.Weekday.Dienstag, "31.07.2018");
-        this.assertDateMessage(DateHelper.Weekday.Mittwoch, "01.08.2018");
+        this.assertDateMessage(DateHelper.THE_DAY_BEFORE_YESTERDAY, "31.07.2018");
+        this.assertDateMessage(DateHelper.YESTERDAY, "01.08.2018");
         this.assertDateMessage(DateHelper.TODAY, "02.08.2018");
         this.assertDateMessage(DateHelper.TOMORROW, "03.08.2018");
-        this.assertDateMessage(DateHelper.Weekday.Samstag, "04.08.2018");
+        this.assertDateMessage(DateHelper.THE_DAY_AFTER_TOMORROW, "04.08.2018");
         this.assertDateMessage(DateHelper.Weekday.Sonntag, "05.08.2018");
 
         // in one week
