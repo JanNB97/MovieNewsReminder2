@@ -95,13 +95,16 @@ public class DateHelperTest
     public void testGetDateDistance()
     {
         this.assertDateDistanceIsRight("11.01.2000", "11.01.2000", 0);
+        this.assertDateDistanceIsRight("03.09.2018", "02.09.2018", -1);
         this.assertDateDistanceIsRight("02.09.2018", "03.09.2018", 1);
-        this.assertDateDistanceIsRight("04.09.2018", "28.08.2018", 7);
+        this.assertDateDistanceIsRight("04.09.2018", "28.08.2018", -7);
         this.assertDateDistanceIsRight("28.08.2018", "04.09.2018", 7);
-        this.assertDateDistanceIsRight("04.09.2018", "04.09.2017", 365);
-        this.assertDateDistanceIsRight("04.09.2018", "05.09.2017", 364);
-        this.assertDateDistanceIsRight("04.09.2018", "06.09.2017", 363);
-        this.assertDateDistanceIsRight("04.09.2018", "07.09.2017", 362);
+        this.assertDateDistanceIsRight("04.09.2018", "04.09.2017", -365);
+        this.assertDateDistanceIsRight("04.09.2017","04.09.2018",  365);
+        this.assertDateDistanceIsRight("04.09.2018", "05.09.2017", -364);
+        this.assertDateDistanceIsRight("05.09.2017", "04.09.2018", 364);
+        this.assertDateDistanceIsRight("04.09.2018", "06.09.2017", -363);
+        this.assertDateDistanceIsRight("04.09.2018", "07.09.2017", -362);
     }
 
     private void assertDateDistanceIsRight(String d1, String d2, int expectedDis)

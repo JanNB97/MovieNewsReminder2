@@ -15,12 +15,16 @@ public final class DateHelper
     public static final String MORE_THAN_TWO_WEEKS_AGO = "Vor mehr als 2 Wochen";
     public static final String TWO_WEEKS_AGO = "Vorletzte Woche";
     public static final String ONE_WEEK_AGO = "Letzte Woche";
+    public static final String THE_DAY_BEFORE_YESTERDAY = "Vorgestern";
+    public static final String YESTERDAY = "Gestern";
+
     public static final String TODAY = "Heute";
+
     public static final String TOMORROW = "Morgen";
+    public static final String THE_DAY_AFTER_TOMORROW = "Übermorgen";
     public static final String IN_ONE_WEEK = "Nächste Woche";
     public static final String IN_TWO_WEEKS = "Übernächste Woche";
     public static final String IN_MORE_THAN_TWO_WEEKS = "mehr als 2 Wochen";
-
 
     public enum Weekday {
         Montag, Dienstag, Mittwoch, Donnerstag, Freitag, Samstag, Sonntag
@@ -185,12 +189,12 @@ public final class DateHelper
     }
 
     // --- --- --- distance between dates --- --- ---
-    public static int getDistance(Date d1, Date d2)
+    public static int getDistance(Date earlierDate, Date laterDate)
     {
-        long t1 = d1.getTime();
-        long t2 = d2.getTime();
+        long earlierTime = earlierDate.getTime();
+        long laterTime = laterDate.getTime();
 
-        long distanceInMilliSeconds = Math.abs(t1 - t2);
+        long distanceInMilliSeconds = laterTime - earlierTime;
 
         return toDays(distanceInMilliSeconds);
     }
