@@ -105,7 +105,39 @@ public class WebscrapingHelper
         }
         else
         {
-            return DateHelper.toDate(string);
+            return DateHelper.toDate(cutToDate(string));
+        }
+    }
+
+    private static String cutToDate(String string)
+    {
+        StringBuilder builder = null;
+
+        int i = 0;
+        for(char c : string.toCharArray())
+        {
+            if(c < 48 && c != 46 || c > 57 )
+            {
+                if(builder == null)
+                {
+                    builder = new StringBuilder(string);
+                }
+
+                builder.delete(i, i+1);
+            }
+            else
+            {
+                i++;
+            }
+        }
+
+        if(builder == null)
+        {
+            return string;
+        }
+        else
+        {
+            return builder.toString();
         }
     }
 

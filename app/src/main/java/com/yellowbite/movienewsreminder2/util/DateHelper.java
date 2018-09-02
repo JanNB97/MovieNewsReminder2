@@ -179,4 +179,14 @@ public final class DateHelper
     {
         return (int) (Math.ceil((double)ms / 1000 / 60 / 60 / 24));
     }
+
+    // --- --- --- get date in future --- --- ---
+    public static Date incrementDays(Date date, int days)
+    {
+        Calendar dateCalendar = Calendar.getInstance();
+        dateCalendar.setTime(date);
+        dateCalendar.add(Calendar.DATE, days);
+
+        return dateCalendar.getTime();
+    }
 }

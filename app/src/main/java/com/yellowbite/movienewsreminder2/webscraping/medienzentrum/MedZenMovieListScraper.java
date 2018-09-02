@@ -3,19 +3,23 @@ package com.yellowbite.movienewsreminder2.webscraping.medienzentrum;
 import com.yellowbite.movienewsreminder2.model.Movie;
 import com.yellowbite.movienewsreminder2.webscraping.WebscrapingHelper;
 
+import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.util.Date;
 
 public class MedZenMovieListScraper
 {
+    private Document doc;
     private Elements listEntries;
     private static final String movieCssQuery = "tr.ResultItem";
 
     public MedZenMovieListScraper(String url) throws IOException
     {
-        this.listEntries = WebscrapingHelper.getDoc(url).select(movieCssQuery);
+        this.doc = WebscrapingHelper.getDoc(url);
+        this.listEntries = doc.select(movieCssQuery);
 
         if(this.listEntries.isEmpty())
         {
@@ -38,6 +42,16 @@ public class MedZenMovieListScraper
         }
 
         return new Movie(mediaBarcode, url);
+    }
+
+    public Date getZugang(int index)
+    {
+        return WebscrapingHelper.getDate(getListEntry(index), "span.accessDate");
+    }
+
+    public String getURLToNextPage()
+    {
+        return WebscrapingHelper.getURL(doc, "a#ContentPlaceHolderMain_resultList_searchPagingView_HyperlinkNext");
     }
 
     private Element getListEntry(int index)
