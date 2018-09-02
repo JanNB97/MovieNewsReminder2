@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 public final class DateHelper
 {
@@ -27,7 +28,7 @@ public final class DateHelper
 
     static
     {
-        df = new SimpleDateFormat("dd.MM.yyyy");
+        df = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMANY);
     }
 
     // --- --- --- converting date to string --- --- ---
@@ -181,5 +182,21 @@ public final class DateHelper
         Calendar calDate = Calendar.getInstance();
         calDate.setTime(date);
         return calDate;
+    }
+
+    // --- --- --- distance between dates --- --- ---
+    public static int getDistance(Date d1, Date d2)
+    {
+        long t1 = d1.getTime();
+        long t2 = d2.getTime();
+
+        long distanceInMilliSeconds = Math.abs(t1 - t2);
+
+        return toDays(distanceInMilliSeconds);
+    }
+
+    private static int toDays(long ms)
+    {
+        return (int) (ms / 1000 / 60 / 60 / 24);
     }
 }

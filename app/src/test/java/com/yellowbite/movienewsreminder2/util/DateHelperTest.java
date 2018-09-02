@@ -5,6 +5,7 @@ import junit.framework.Assert;
 import org.junit.Test;
 
 import java.util.Calendar;
+import java.util.Date;
 
 public class DateHelperTest
 {
@@ -19,12 +20,20 @@ public class DateHelperTest
         this.assertDateMessage(DateHelper.MORE_THAN_TWO_WEEKS_AGO, "15.07.2018");
 
         // two weeks ago
+        this.assertDateMessage(DateHelper.TWO_WEEKS_AGO, DateHelper.Weekday.Montag, "16.07.2018");
         this.assertDateMessage(DateHelper.TWO_WEEKS_AGO, DateHelper.Weekday.Dienstag, "17.07.2018");
+        this.assertDateMessage(DateHelper.TWO_WEEKS_AGO, DateHelper.Weekday.Mittwoch, "18.07.2018");
         this.assertDateMessage(DateHelper.TWO_WEEKS_AGO, DateHelper.Weekday.Donnerstag, "19.07.2018");
+        this.assertDateMessage(DateHelper.TWO_WEEKS_AGO, DateHelper.Weekday.Freitag, "20.07.2018");
+        this.assertDateMessage(DateHelper.TWO_WEEKS_AGO, DateHelper.Weekday.Samstag, "21.07.2018");
         this.assertDateMessage(DateHelper.TWO_WEEKS_AGO, DateHelper.Weekday.Sonntag, "22.07.2018");
 
         // one week ago
         this.assertDateMessage(DateHelper.ONE_WEEK_AGO, DateHelper.Weekday.Montag, "23.07.2018");
+        this.assertDateMessage(DateHelper.ONE_WEEK_AGO, DateHelper.Weekday.Dienstag, "24.07.2018");
+        this.assertDateMessage(DateHelper.ONE_WEEK_AGO, DateHelper.Weekday.Mittwoch, "25.07.2018");
+        this.assertDateMessage(DateHelper.ONE_WEEK_AGO, DateHelper.Weekday.Donnerstag, "26.07.2018");
+        this.assertDateMessage(DateHelper.ONE_WEEK_AGO, DateHelper.Weekday.Freitag, "27.07.2018");
         this.assertDateMessage(DateHelper.ONE_WEEK_AGO, DateHelper.Weekday.Samstag, "28.07.2018");
         this.assertDateMessage(DateHelper.ONE_WEEK_AGO, DateHelper.Weekday.Sonntag, "29.07.2018");
 
@@ -80,5 +89,23 @@ public class DateHelperTest
     private void assertDateMessage(DateHelper.Weekday expected1, String dateString)
     {
         assertDateMessage(expected1.toString(), dateString);
+    }
+
+    @Test
+    public void testGetDateDistance()
+    {
+        this.assertDateDistanceIsRight("11.01.2000", "11.01.2000", 0);
+        this.assertDateDistanceIsRight("02.09.2018", "03.09.2018", 1);
+        this.assertDateDistanceIsRight("04.09.2018", "28.08.2018", 7);
+        this.assertDateDistanceIsRight("28.08.2018", "04.09.2018", 7);
+        this.assertDateDistanceIsRight("04.09.2018", "04.09.2017", 365);
+        this.assertDateDistanceIsRight("04.09.2018", "05.09.2017", 364);
+        this.assertDateDistanceIsRight("04.09.2018", "06.09.2017", 363);
+        this.assertDateDistanceIsRight("04.09.2018", "07.09.2017", 362);
+    }
+
+    private void assertDateDistanceIsRight(String d1, String d2, int expectedDis)
+    {
+        Assert.assertEquals(expectedDis, DateHelper.getDistance(DateHelper.toDate(d1), DateHelper.toDate(d2)));
     }
 }

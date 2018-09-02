@@ -31,7 +31,7 @@ public class MedZenMovieSiteScraperTest
 
     private static final Movie DIE_EISKOENINGIN_EXPECTED = new Movie(
             80891534, DIE_EISKOENINGIN_URL,
-            Movie.Status.ENTLIEHEN, 0, DateHelper.toDate("10.08.2018"),
+            Movie.Status.ENTLIEHEN, 0, DateHelper.toDate("20.08.2018"),
             "Walt Disney", DateHelper.toDate("06.05.2014"),
             "Die Eiskönigin - Völlig Unverfroren"
     );
