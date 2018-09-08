@@ -6,6 +6,7 @@ import com.yellowbite.movienewsreminder2.util.DateHelper;
 import com.yellowbite.movienewsreminder2.webscraping.medienzentrum.MedZenMovieListScraper;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -36,7 +37,7 @@ public class NewMoviesPredictor
         Date lastDate = null;
         Date firstDate = null;
 
-        int sumWaitingDays = 0;
+        ArrayList<Integer> allWaitDays = new ArrayList<>();
         int sumMovies = 0;
         int numOfMovieLoads = 0;
 
@@ -55,10 +56,10 @@ public class NewMoviesPredictor
                     {
                         numOfMovieLoads++;
                         int daysUntilLastDate = DateHelper.getDistance(date, lastDate);
-                        sumWaitingDays += daysUntilLastDate;
                         sumMovies += newMovies;
                         System.out.println(numOfMovieLoads + ": " + daysUntilLastDate + " days (" + newMovies + " movies)\t"
                                 + DateHelper.toString(date) + " - " + DateHelper.toString(lastDate));
+                        allWaitDays.add(daysUntilLastDate);
 
                         if(DateHelper.getDistance(lastDate, firstDate) > DISTANCE_FOR_STATS)
                         {
@@ -84,11 +85,30 @@ public class NewMoviesPredictor
         }
         while (newMoviesURL != null);
 
-        System.out.println("\nFinished with: " + DateHelper.toString(lastDate));
-        int averageWaitingTime = Math.round((float)sumWaitingDays / numOfMovieLoads);
-        System.out.println("\nAverage waiting time: " + averageWaitingTime);
-        System.out.println("Average new movies: " + Math.round((float)sumMovies / numOfMovieLoads));
+        int sumWaitingDays = 0;
+        for(Integer i : allWaitDays)
+        {
+            sumWaitingDays += i;
+        }
 
-        System.out.println("Predicted date: " + DateHelper.toString(DateHelper.incrementDays(firstDate, averageWaitingTime)));
+        System.out.println("\nFinished with: " + DateHelper.toString(lastDate));
+        float averageWaitingTime = (float)sumWaitingDays / numOfMovieLoads;
+        System.out.println("\nAverage waiting time: " + averageWaitingTime);
+        System.out.println("Average new movies: " + (float)sumMovies / numOfMovieLoads);
+
+        System.out.println("Predicted date: " + DateHelper.toString(DateHelper.incrementDays(firstDate, (int)Math.ceil(averageWaitingTime))));
+
+        ArrayList<Float> allDifToAverageWaitingTime = new ArrayList<>();
+        for(Integer waitDays : allWaitDays)
+        {
+            allDifToAverageWaitingTime.add(Math.abs(averageWaitingTime - waitDays));
+        }
+
+        float difToAverageWaitingTimeSum = 0;
+        for(Float dif : allDifToAverageWaitingTime)
+        {
+            difToAverageWaitingTimeSum += dif;
+        }
+        System.out.println("Abweichung: " + difToAverageWaitingTimeSum / allDifToAverageWaitingTime.size());
     }
 }
