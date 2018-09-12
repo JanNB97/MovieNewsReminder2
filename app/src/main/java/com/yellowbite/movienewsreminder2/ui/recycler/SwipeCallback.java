@@ -7,12 +7,12 @@ import com.yellowbite.movienewsreminder2.ui.recycler.MovieAdapter;
 
 public class SwipeCallback extends ItemTouchHelper.SimpleCallback
 {
-    private MovieAdapter movieAdapter;
+    private MovieRecyclerView movieRecyclerView;
 
-    public SwipeCallback(MovieAdapter movieAdapter)
+    public SwipeCallback(MovieRecyclerView movieRecyclerView)
     {
         super(0, ItemTouchHelper.LEFT);
-        this.movieAdapter = movieAdapter;
+        this.movieRecyclerView = movieRecyclerView;
     }
 
     @Override
@@ -25,6 +25,6 @@ public class SwipeCallback extends ItemTouchHelper.SimpleCallback
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction)
     {
         int position = viewHolder.getAdapterPosition();
-        movieAdapter.removeItem(position);
+        movieRecyclerView.removeItem(position);
     }
 }

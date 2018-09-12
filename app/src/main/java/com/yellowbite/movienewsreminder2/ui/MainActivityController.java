@@ -22,6 +22,7 @@ import com.yellowbite.movienewsreminder2.R;
 import com.yellowbite.movienewsreminder2.model.Movie;
 import com.yellowbite.movienewsreminder2.ui.notifications.NotificationMan;
 import com.yellowbite.movienewsreminder2.ui.recycler.MovieAdapter;
+import com.yellowbite.movienewsreminder2.ui.recycler.MovieRecyclerView;
 import com.yellowbite.movienewsreminder2.ui.recycler.RecyclerTouchListener;
 import com.yellowbite.movienewsreminder2.ui.recycler.SwipeCallback;
 import com.yellowbite.movienewsreminder2.tasks.LoadedMoviesEvent;
@@ -37,7 +38,7 @@ public class MainActivityController implements LoadedMoviesEvent
     private MainActivity mainActivity;
 
     // main views
-    private RecyclerView movieRecyclerView;
+    private MovieRecyclerView movieRecyclerView;
     private TextView urlTextView;
     private Button addMovieButton;
 
@@ -53,7 +54,7 @@ public class MainActivityController implements LoadedMoviesEvent
         this.moviesUpdateTextView = this.mainActivity.findViewById(R.id.moviesUpdateTextView);
         this.initAddMovieButton();
         this.initURLTextView();
-        this.initRecyclerView();
+        this.movieRecyclerView = new MovieRecyclerView(mainActivity, R.id.movieRecyclerView);
 
         this.loadMyMovies();
 
@@ -65,7 +66,7 @@ public class MainActivityController implements LoadedMoviesEvent
     private void initAddMovieButton()
     {
         this.addMovieButton = this.mainActivity.findViewById(R.id.addMovieButton);
-        this.addMovieButton.setOnClickListener(this::handleOnAddMovieClicked);
+        this.addMovieButton.setOnClickListener(v -> this.handleOnAddMovieClicked());
         this.addMovieButton.setVisibility(View.GONE);
     }
 
@@ -96,16 +97,6 @@ public class MainActivityController implements LoadedMoviesEvent
         });
     }
 
-    private void initRecyclerView()
-    {
-        this.movieRecyclerView = (RecyclerView) this.mainActivity.findViewById(R.id.movieRecyclerView);
-        this.movieRecyclerView.setHasFixedSize(true);
-
-        // use linear layout manager
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.mainActivity);
-        this.movieRecyclerView.setLayoutManager(layoutManager);
-    }
-
     // --- --- --- Load movies --- --- ---
 
     private void loadMyMovies()
@@ -117,8 +108,7 @@ public class MainActivityController implements LoadedMoviesEvent
             this.loadingProgressBar.setMax(MyMoviesSortedList.size(this.mainActivity));
 
             // download status
-            new LoadMyMoviesRetryExecutor(this.mainActivity, this, myMovies,
-                    this::onLoadingFinished);
+            new LoadMyMoviesRetryExecutor(this.mainActivity, this, myMovies, this::onLoadingFinished);
         }
         else
         {
@@ -146,25 +136,7 @@ public class MainActivityController implements LoadedMoviesEvent
 
     private void addAdapterToRecyclerView()
     {
-        // specify adapter
-        MovieAdapter movieAdapter = new MovieAdapter(this.mainActivity);
-        this.movieRecyclerView.setAdapter(movieAdapter);
-
-        new ItemTouchHelper(new SwipeCallback(movieAdapter)).attachToRecyclerView(this.movieRecyclerView);
-
-        this.movieRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(this.mainActivity, this.movieRecyclerView, new RecyclerTouchListener.ClickListener() {
-            @Override
-            public void onClick(View view, int position)
-            {
-                movieAdapter.handleClickedOnMovieItem(view, position);
-            }
-
-            @Override
-            public void onLongClick(View view, int position)
-            {
-                movieAdapter.handleClickedLongOnMovieItem(view, position);
-            }
-        }));
+        movieRecyclerView.addAdapter();
     }
 
     // --- --- --- Handle NewMoviesActivity results --- --- ---
@@ -175,7 +147,7 @@ public class MainActivityController implements LoadedMoviesEvent
         {
             if(resultCode == Activity.RESULT_OK)
             {
-                ((MovieAdapter)movieRecyclerView.getAdapter()).dataSetChanged(false);
+                this.movieRecyclerView.dataSetChanged(false);
             }
             else if(resultCode == Activity.RESULT_CANCELED)
             {
@@ -186,24 +158,19 @@ public class MainActivityController implements LoadedMoviesEvent
 
     // --- --- --- Interaction with user --- --- ---
 
-    private void handleOnAddMovieClicked(View view)
+    private void handleOnAddMovieClicked()
     {
         Context context = this.mainActivity;
-        new GetMovieAsyncTask(new MovieRunnable()
-        {
-            @Override
-            public void run(Movie movie)
+        new GetMovieAsyncTask(movie -> {
+            urlTextView.setText("");
+
+            if(movie == null)
             {
-                urlTextView.setText("");
-
-                if(movie == null)
-                {
-                    NotificationMan.showShortToast(context, "Falsche URL oder keine Internetverbindung");
-                    return;
-                }
-
-                ((MovieAdapter)movieRecyclerView.getAdapter()).addItem(movie, true);
+                NotificationMan.showShortToast(context, "Falsche URL oder keine Internetverbindung");
+                return;
             }
+
+            movieRecyclerView.addItem(movie, true);
         }).execute(new Movie(urlTextView.getText().toString()));
     }
 }
