@@ -12,7 +12,7 @@ import com.yellowbite.movienewsreminder2.ui.newMovies.NewMoviesActivity;
 
 public class MainActivity extends AppCompatActivity
 {
-    private static final int REQUEST_CODE = 1;
+    public static final int REQUEST_CODE = 1;
 
     private MainActivityController controller;
 
@@ -24,8 +24,6 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         this.controller = new MainActivityController(this);
-
-        this.launchNewMoviesActivity();
     }
 
     private void removeTitleBar()
@@ -35,17 +33,6 @@ public class MainActivity extends AppCompatActivity
         if(actionBar != null)
         {
             actionBar.hide();
-        }
-    }
-
-    // --- --- --- Open NewMoviesActivity --- --- ---
-
-    private void launchNewMoviesActivity()
-    {
-        if(!NewMoviesQueue.isEmpty(this))
-        {
-            Intent intent = new Intent(this, NewMoviesActivity.class);
-            this.startActivityForResult(intent, REQUEST_CODE);
         }
     }
 

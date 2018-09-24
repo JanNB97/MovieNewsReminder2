@@ -1,5 +1,6 @@
 package com.yellowbite.movienewsreminder2.ui.newMovies;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.widget.Button;
@@ -54,6 +55,14 @@ public class NewMoviesController implements LoadedMovieEvent
         einheitstitelTextView.setOnClickListener(e -> this.handleClickOnTitel());
     }
 
+    private void showMainActivity()
+    {
+        Intent returnIntent = new Intent();
+        this.activity.setResult(Activity.RESULT_OK, returnIntent);
+
+        this.activity.finish();
+    }
+
     // --- --- --- handle clicks --- --- ---
 
     private void handleClickOnAddMovie()
@@ -91,7 +100,7 @@ public class NewMoviesController implements LoadedMovieEvent
         this.displayedMovieId--;
         if(this.displayedMovieId < 0)
         {
-            this.activity.showMainActivity();
+            this.showMainActivity();
             return;
         }
 

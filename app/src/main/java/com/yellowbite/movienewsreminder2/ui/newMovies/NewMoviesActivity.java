@@ -1,6 +1,7 @@
 package com.yellowbite.movienewsreminder2.ui.newMovies;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -24,19 +25,17 @@ public class NewMoviesActivity extends AppCompatActivity
 
     private void removeTitleBar()
     {
-        requestWindowFeature(Window.FEATURE_NO_TITLE);//will hide the title
-        ActionBar actionBar = getSupportActionBar(); //hide the title bar
+        requestWindowFeature(Window.FEATURE_NO_TITLE);  // will hide the title
+        ActionBar actionBar = getSupportActionBar();    // will hide the title bar
         if(actionBar != null)
         {
             actionBar.hide();
         }
     }
 
-    public void showMainActivity()
+    public static void startForResult(AppCompatActivity app, int REQUEST_CODE)
     {
-        Intent returnIntent = new Intent();
-        this.setResult(Activity.RESULT_OK, returnIntent);
-
-        this.finish();
+        Intent intent = new Intent(app, NewMoviesActivity.class);
+        app.startActivityForResult(intent, REQUEST_CODE);
     }
 }

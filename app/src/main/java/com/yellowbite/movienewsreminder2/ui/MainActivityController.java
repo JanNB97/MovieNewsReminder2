@@ -17,9 +17,11 @@ import android.widget.TextView;
 import com.yellowbite.movienewsreminder2.MainActivity;
 import com.yellowbite.movienewsreminder2.files.data.HotMoviesSortedList;
 import com.yellowbite.movienewsreminder2.files.data.MyMoviesSortedList;
+import com.yellowbite.movienewsreminder2.files.data.NewMoviesQueue;
 import com.yellowbite.movienewsreminder2.newsService.NewsService;
 import com.yellowbite.movienewsreminder2.R;
 import com.yellowbite.movienewsreminder2.model.Movie;
+import com.yellowbite.movienewsreminder2.ui.newMovies.NewMoviesActivity;
 import com.yellowbite.movienewsreminder2.ui.notifications.NotificationMan;
 import com.yellowbite.movienewsreminder2.ui.recycler.MovieAdapter;
 import com.yellowbite.movienewsreminder2.ui.recycler.MovieRecyclerView;
@@ -59,6 +61,8 @@ public class MainActivityController implements LoadedMoviesEvent
         this.loadMyMovies();
 
         NewsService.start(this.mainActivity);
+
+        this.launchNewMoviesActivity();
     }
 
     // --- --- --- Initialization of UI --- --- ---
@@ -139,7 +143,15 @@ public class MainActivityController implements LoadedMoviesEvent
         movieRecyclerView.addAdapter();
     }
 
-    // --- --- --- Handle NewMoviesActivity results --- --- ---
+    // --- --- --- Launch and Handle NewMoviesActivity --- --- ---
+
+    private void launchNewMoviesActivity()
+    {
+        if(!NewMoviesQueue.isEmpty(mainActivity))
+        {
+            NewMoviesActivity.startForResult(this.mainActivity, MainActivity.REQUEST_CODE);
+        }
+    }
 
     public void onNewMoviesActivityResult(int requestCode, int expectedRequestCode, int resultCode, Intent data)
     {
