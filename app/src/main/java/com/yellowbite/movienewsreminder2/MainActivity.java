@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        this.removeTitleBar();
+        this.removeTitleBar();      // has to stay here
         setContentView(R.layout.activity_main);
 
         this.controller = new MainActivityController(this);
