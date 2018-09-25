@@ -148,7 +148,7 @@ public class MainActivityController implements LoadedMoviesEvent
     {
         if(!NewMoviesQueue.isEmpty(mainActivity))
         {
-            NewMoviesActivity.startForResult(this.mainActivity, MainActivity.REQUEST_CODE);
+            NewMoviesActivity.startForResult(this.mainActivity);
         }
     }
 
