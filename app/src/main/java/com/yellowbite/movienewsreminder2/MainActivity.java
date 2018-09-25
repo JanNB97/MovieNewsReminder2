@@ -7,11 +7,11 @@ import android.os.Bundle;
 import android.view.Window;
 
 import com.yellowbite.movienewsreminder2.ui.mainActivity.MainActivityController;
+import com.yellowbite.movienewsreminder2.ui.newMovies.NewMoviesActivity;
+import com.yellowbite.movienewsreminder2.ui.newMovies.NewMoviesController;
 
 public class MainActivity extends AppCompatActivity
 {
-    public static final int REQUEST_CODE = 1;
-
     private MainActivityController controller;
 
     @Override
@@ -37,6 +37,6 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
-        this.controller.onNewMoviesActivityResult(requestCode, REQUEST_CODE, resultCode, data);
+        this.controller.onNewMoviesActivityResult(requestCode, NewMoviesActivity.REQUEST_CODE, resultCode, data);
     }
 }
