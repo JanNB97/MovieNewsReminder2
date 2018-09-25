@@ -134,13 +134,9 @@ public class MainActivityController implements LoadedMoviesEvent
 
         this.loadingProgressBar.setVisibility(View.GONE);
         this.moviesUpdateTextView.setVisibility(View.GONE);
-        this.addAdapterToRecyclerView();
         this.urlTextView.setEnabled(true);
-    }
 
-    private void addAdapterToRecyclerView()
-    {
-        movieRecyclerView.addAdapter();
+        this.movieRecyclerView.showMovies();
     }
 
     // --- --- --- Launch and Handle NewMoviesActivity --- --- ---

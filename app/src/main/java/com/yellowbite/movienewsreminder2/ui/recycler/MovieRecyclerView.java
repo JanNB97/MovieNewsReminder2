@@ -36,16 +36,11 @@ public class MovieRecyclerView
         // use linear layout manager
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(activity);
         this.recyclerView.setLayoutManager(layoutManager);
-    }
 
-    public void addAdapter()
-    {
-        // specify adapter
-        movieAdapter = new MovieAdapter(this.activity);
-        this.recyclerView.setAdapter(movieAdapter);
-
+        // register touch listener
         new ItemTouchHelper(new SwipeCallback(this)).attachToRecyclerView(this.recyclerView);
 
+        // register swipe listener
         this.recyclerView.addOnItemTouchListener(new RecyclerTouchListener(this.activity, this.recyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position)
@@ -59,6 +54,13 @@ public class MovieRecyclerView
                 handleClickedLongOnMovieItem(view, position);
             }
         }));
+
+        movieAdapter = new MovieAdapter(this.activity);
+    }
+
+    public void showMovies()
+    {
+        this.recyclerView.setAdapter(movieAdapter);
     }
 
     // --- --- --- handle movie clicks --- --- ---
