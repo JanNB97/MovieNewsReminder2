@@ -3,6 +3,7 @@ package com.yellowbite.movienewsreminder2.ui.mainActivity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.yellowbite.movienewsreminder2.files.data.NewMoviesQueue;
 import com.yellowbite.movienewsreminder2.newsService.NewsService;
 import com.yellowbite.movienewsreminder2.R;
 import com.yellowbite.movienewsreminder2.model.Movie;
+import com.yellowbite.movienewsreminder2.ui.addMovie.AddMovieActivity;
 import com.yellowbite.movienewsreminder2.ui.newMovies.NewMoviesActivity;
 import com.yellowbite.movienewsreminder2.ui.notifications.NotificationMan;
 import com.yellowbite.movienewsreminder2.ui.mainActivity.recycler.MovieRecyclerView;
@@ -35,6 +37,7 @@ public class MainActivityController implements LoadedMoviesEvent
     private MovieRecyclerView movieRecyclerView;
     private TextView urlTextView;
     private Button addMovieButton;
+    private FloatingActionButton addMovieFloatingButton;
 
     // views for loading time
     private ProgressBar loadingProgressBar;
@@ -47,6 +50,8 @@ public class MainActivityController implements LoadedMoviesEvent
 
         this.loadingProgressBar = this.mainActivity.findViewById(R.id.loadingProgressBar);
         this.moviesUpdateTextView = this.mainActivity.findViewById(R.id.moviesUpdateTextView);
+        this.addMovieFloatingButton = this.mainActivity.findViewById(R.id.addMovieFloatingButton);
+        this.initAddMovieFloatingButton();
         this.initAddMovieButton();
         this.initURLTextView();
         this.movieRecyclerView = new MovieRecyclerView(mainActivity, R.id.movieRecyclerView);
@@ -56,6 +61,13 @@ public class MainActivityController implements LoadedMoviesEvent
         NewsService.start(this.mainActivity);
 
         this.launchNewMoviesActivity();
+    }
+
+    private void initAddMovieFloatingButton()
+    {
+        this.addMovieFloatingButton.setOnClickListener(v -> {
+            AddMovieActivity.startForResult(mainActivity);
+        });
     }
 
     private void initAddMovieButton()
