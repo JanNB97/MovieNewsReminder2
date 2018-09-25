@@ -4,7 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.yellowbite.movienewsreminder2.model.Movie;
 import com.yellowbite.movienewsreminder2.tasks.LoadMoviesRetryExecutor;
-import com.yellowbite.movienewsreminder2.tasks.LoadedMovieEvent;
+import com.yellowbite.movienewsreminder2.tasks.functionalInterfaces.LoadedMovieEvent;
 import com.yellowbite.movienewsreminder2.webscraping.medienzentrum.MedZenMovieSiteScraper;
 
 import java.util.List;

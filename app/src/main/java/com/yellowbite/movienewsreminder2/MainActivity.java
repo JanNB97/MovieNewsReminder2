@@ -16,7 +16,7 @@ import com.yellowbite.movienewsreminder2.files.data.MyMoviesSortedList;
 import com.yellowbite.movienewsreminder2.files.data.NewMoviesQueue;
 import com.yellowbite.movienewsreminder2.model.Movie;
 import com.yellowbite.movienewsreminder2.newsService.NewsService;
-import com.yellowbite.movienewsreminder2.tasks.LoadedMoviesEvent;
+import com.yellowbite.movienewsreminder2.tasks.functionalInterfaces.LoadedMoviesEvent;
 import com.yellowbite.movienewsreminder2.tasks.mainActivity.GetMovieAsyncTask;
 import com.yellowbite.movienewsreminder2.tasks.mainActivity.LoadMyMoviesRetryExecutor;
 import com.yellowbite.movienewsreminder2.ui.NoTitleBarActivity;

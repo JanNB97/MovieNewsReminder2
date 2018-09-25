@@ -4,10 +4,9 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.yellowbite.movienewsreminder2.model.Movie;
 import com.yellowbite.movienewsreminder2.tasks.LoadMoviesRetryExecutor;
-import com.yellowbite.movienewsreminder2.tasks.LoadedMoviesEvent;
+import com.yellowbite.movienewsreminder2.tasks.functionalInterfaces.LoadedMoviesEvent;
 import com.yellowbite.movienewsreminder2.webscraping.medienzentrum.MedZenMovieSiteScraper;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
