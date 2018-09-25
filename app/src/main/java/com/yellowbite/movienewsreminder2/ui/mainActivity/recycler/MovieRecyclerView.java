@@ -12,11 +12,10 @@ import com.yellowbite.movienewsreminder2.files.data.MyMoviesSortedList;
 import com.yellowbite.movienewsreminder2.model.Movie;
 import com.yellowbite.movienewsreminder2.ui.notifications.NotificationMan;
 import com.yellowbite.movienewsreminder2.ui.mainActivity.recycler.touchListeners.RecyclerTouchListener;
-import com.yellowbite.movienewsreminder2.ui.mainActivity.recycler.touchListeners.SwipeCallback;
 
 import java.util.List;
 
-public class MovieRecyclerView
+public class MovieRecyclerView extends ItemTouchHelper.SimpleCallback
 {
     private AppCompatActivity activity;
     private RecyclerView recyclerView;
@@ -26,6 +25,7 @@ public class MovieRecyclerView
     // --- --- --- Initialization --- --- ---
     public MovieRecyclerView(AppCompatActivity activity, @IdRes int id)
     {
+        super(0, ItemTouchHelper.LEFT);
         this.activity = activity;
 
         this.recyclerView = activity.findViewById(id);
@@ -47,7 +47,7 @@ public class MovieRecyclerView
     private void initTouchSwipeListener()
     {
         // register touch listener
-        new ItemTouchHelper(new SwipeCallback(this)).attachToRecyclerView(this.recyclerView);
+        new ItemTouchHelper(this).attachToRecyclerView(this.recyclerView);
 
         // register swipe listener
         this.recyclerView.addOnItemTouchListener(new RecyclerTouchListener(this.activity, this.recyclerView, new RecyclerTouchListener.ClickListener() {
@@ -63,6 +63,20 @@ public class MovieRecyclerView
                 handleClickedLongOnMovieItem(view, position);
             }
         }));
+    }
+
+    // --- --- --- handle swipes --- --- ---
+    @Override
+    public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target)
+    {
+        return false;
+    }
+
+    @Override
+    public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction)
+    {
+        int position = viewHolder.getAdapterPosition();
+        this.removeItem(position);
     }
 
     // --- --- --- handle movie clicks --- --- ---
