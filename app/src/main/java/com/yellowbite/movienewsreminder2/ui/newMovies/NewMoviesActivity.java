@@ -73,17 +73,15 @@ public class NewMoviesActivity extends NoTitleBarActivity implements LoadedMovie
     {
         this.setButtonsEnabled(false);
 
-        new DelLastAndAddAsyncTask(this.getApplicationContext(), this::tryToShowNextMovie)
-                .execute(this.displayedMovie);
+        DelLastAndAddAsyncTask.delLastAndAdd(this.getApplicationContext(),
+                /* Movie to add: */ this.displayedMovie,
+                /* Executed after tasks finished: */this::tryToShowNextMovie);
     }
 
     private void handleClickOnNextMovie()
     {
         this.setButtonsEnabled(false);
-
-        new DelLastAndAddAsyncTask(this.getApplicationContext(),
-                this::tryToShowNextMovie)
-                .execute();
+        DelLastAndAddAsyncTask.delLast(this.getApplicationContext(), this::tryToShowNextMovie);
     }
 
     private void handleClickOnTitel()

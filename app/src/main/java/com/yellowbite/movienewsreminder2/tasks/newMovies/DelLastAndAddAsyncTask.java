@@ -18,6 +18,16 @@ public class DelLastAndAddAsyncTask extends AsyncTask<Movie, Void, Void>
         this.onTaskFinished = onTaskFinished;
     }
 
+    public static void delLastAndAdd(Context context, Movie movie, Runnable onTaskFinished)
+    {
+        new DelLastAndAddAsyncTask(context, onTaskFinished).execute(movie);
+    }
+
+    public static void delLast(Context context, Runnable onTaskFinished)
+    {
+        delLastAndAdd(context, null, onTaskFinished);
+    }
+
     @Override
     protected Void doInBackground(Movie... movies)
     {
