@@ -23,6 +23,9 @@ public class MovieRecyclerView extends SwipeCallback
 
     private MovieAdapter movieAdapter;
 
+    private boolean recentlySwiped = false;
+    private final static int SWIPE_COOLDOWN = 1000;
+
     // --- --- --- Initialization --- --- ---
     public MovieRecyclerView(AppCompatActivity activity, @IdRes int id)
     {
@@ -71,6 +74,18 @@ public class MovieRecyclerView extends SwipeCallback
     {
         int position = viewHolder.getAdapterPosition();
         this.removeItem(position);
+
+        recentlySwiped = true;
+        new Thread(() -> {
+            try
+            {
+                Thread.sleep(SWIPE_COOLDOWN);
+            } catch (InterruptedException e)
+            {
+                e.printStackTrace();
+            }
+            this.recentlySwiped = false;
+        }).start();
     }
 
     private void handleClickedOnMovieItem(View view, int position)
@@ -80,6 +95,11 @@ public class MovieRecyclerView extends SwipeCallback
 
     private void handleClickedLongOnMovieItem(View view, int position)
     {
+        if(recentlySwiped)
+        {
+            return;
+        }
+
         Movie movie = MyMoviesSortedList.get(this.activity, position);
         if(HotMoviesSortedList.switchSave(this.activity, movie))
         {
