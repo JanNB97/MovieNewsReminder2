@@ -26,6 +26,8 @@ public final class DateHelper
     public static final String IN_TWO_WEEKS = "Übernächste Woche";
     public static final String IN_MORE_THAN_TWO_WEEKS = "mehr als 2 Wochen";
 
+    private static final String DATE_IS_NULL_ERROR = "Error";
+
     public enum Weekday {
         Montag, Dienstag, Mittwoch, Donnerstag, Freitag, Samstag, Sonntag
     };
@@ -65,6 +67,11 @@ public final class DateHelper
 
     protected static String[] getWeekdayAsMessage(Date date, Calendar nowCalendar)
     {
+        if(date == null)
+        {
+            return new String[]{DATE_IS_NULL_ERROR};
+        }
+
         Calendar dateCalendar = getCalendar(date);
         Date nowDate = nowCalendar.getTime();
 
