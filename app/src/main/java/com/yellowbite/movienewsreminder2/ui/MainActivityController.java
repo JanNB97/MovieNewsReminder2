@@ -40,6 +40,7 @@ public class MainActivityController implements LoadedMoviesEvent
     private ProgressBar loadingProgressBar;
     private TextView moviesUpdateTextView;
 
+    // --- --- --- Initialization --- --- ---
     public MainActivityController(MainActivity mainActivity)
     {
         this.mainActivity = mainActivity;
@@ -56,8 +57,6 @@ public class MainActivityController implements LoadedMoviesEvent
 
         this.launchNewMoviesActivity();
     }
-
-    // --- --- --- Initialization of UI --- --- ---
 
     private void initAddMovieButton()
     {
