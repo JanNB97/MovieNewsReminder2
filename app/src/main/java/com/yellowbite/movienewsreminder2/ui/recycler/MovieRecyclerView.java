@@ -22,21 +22,29 @@ public class MovieRecyclerView
 
     private MovieAdapter movieAdapter;
 
+    // --- --- --- Initialization --- --- ---
     public MovieRecyclerView(AppCompatActivity activity, @IdRes int id)
     {
         this.activity = activity;
-        this.recyclerView = activity.findViewById(id);
-        this.init();
-    }
 
-    private void init()
-    {
+        this.recyclerView = activity.findViewById(id);
         this.recyclerView.setHasFixedSize(true);
 
+        this.initLayout();
+        this.initTouchSwipeListener();
+
+        this.movieAdapter = new MovieAdapter(this.activity);
+    }
+
+    private void initLayout()
+    {
         // use linear layout manager
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(activity);
         this.recyclerView.setLayoutManager(layoutManager);
+    }
 
+    private void initTouchSwipeListener()
+    {
         // register touch listener
         new ItemTouchHelper(new SwipeCallback(this)).attachToRecyclerView(this.recyclerView);
 
@@ -54,13 +62,6 @@ public class MovieRecyclerView
                 handleClickedLongOnMovieItem(view, position);
             }
         }));
-
-        movieAdapter = new MovieAdapter(this.activity);
-    }
-
-    public void showMovies()
-    {
-        this.recyclerView.setAdapter(movieAdapter);
     }
 
     // --- --- --- handle movie clicks --- --- ---
@@ -79,6 +80,11 @@ public class MovieRecyclerView
     }
 
     // --- --- --- manage items --- --- ---
+    public void showItems()
+    {
+        this.recyclerView.setAdapter(movieAdapter);
+    }
+
     public void addItems(List<Movie> movies, boolean saveInFile)
     {
         MyMoviesSortedList.addAll(this.activity, movies);

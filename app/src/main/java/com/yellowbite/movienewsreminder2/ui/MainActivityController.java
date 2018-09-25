@@ -3,10 +3,6 @@ package com.yellowbite.movienewsreminder2.ui;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.opengl.Visibility;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -23,14 +19,10 @@ import com.yellowbite.movienewsreminder2.R;
 import com.yellowbite.movienewsreminder2.model.Movie;
 import com.yellowbite.movienewsreminder2.ui.newMovies.NewMoviesActivity;
 import com.yellowbite.movienewsreminder2.ui.notifications.NotificationMan;
-import com.yellowbite.movienewsreminder2.ui.recycler.MovieAdapter;
 import com.yellowbite.movienewsreminder2.ui.recycler.MovieRecyclerView;
-import com.yellowbite.movienewsreminder2.ui.recycler.RecyclerTouchListener;
-import com.yellowbite.movienewsreminder2.ui.recycler.SwipeCallback;
 import com.yellowbite.movienewsreminder2.tasks.LoadedMoviesEvent;
 import com.yellowbite.movienewsreminder2.tasks.mainActivity.GetMovieAsyncTask;
 import com.yellowbite.movienewsreminder2.tasks.mainActivity.LoadMyMoviesRetryExecutor;
-import com.yellowbite.movienewsreminder2.tasks.MovieRunnable;
 
 import java.util.Collections;
 import java.util.List;
@@ -136,7 +128,7 @@ public class MainActivityController implements LoadedMoviesEvent
         this.moviesUpdateTextView.setVisibility(View.GONE);
         this.urlTextView.setEnabled(true);
 
-        this.movieRecyclerView.showMovies();
+        this.movieRecyclerView.showItems();
     }
 
     // --- --- --- Launch and Handle NewMoviesActivity --- --- ---
