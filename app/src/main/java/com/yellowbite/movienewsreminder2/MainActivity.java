@@ -176,16 +176,19 @@ public class MainActivity extends NoTitleBarActivity implements LoadedMoviesEven
 
     private void handleOnAddMovieClicked()
     {
-        new GetMovieAsyncTask(movie -> {
-            urlTextView.setText("");
+        Movie movieToAdd = new Movie(urlTextView.getText().toString());
 
-            if(movie == null)
-            {
-                NotificationMan.showShortToast(this, "Falsche URL oder keine Internetverbindung");
-                return;
-            }
+        GetMovieAsyncTask.getMovie(movieToAdd,
+            (Movie movie) -> {
+                urlTextView.setText("");
 
-            movieRecyclerView.addItem(movie, true);
-        }).execute(new Movie(urlTextView.getText().toString()));
+                if(movie == null)
+                {
+                    NotificationMan.showShortToast(this, "Falsche URL oder keine Internetverbindung");
+                    return;
+                }
+
+                movieRecyclerView.addItem(movie, true);
+        });
     }
 }

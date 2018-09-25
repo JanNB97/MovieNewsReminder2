@@ -17,6 +17,11 @@ public class GetMovieAsyncTask extends AsyncTask<Movie, Void, Movie>
         this.onPostExecute = onPostExecute;
     }
 
+    public static void getMovie(Movie movie, MovieRunnable onPostExecute)
+    {
+        new GetMovieAsyncTask(onPostExecute).execute(movie);
+    }
+
     @Override
     protected Movie doInBackground(Movie...movies)
     {
