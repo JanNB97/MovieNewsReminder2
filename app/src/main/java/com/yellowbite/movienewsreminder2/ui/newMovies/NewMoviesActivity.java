@@ -33,6 +33,7 @@ public class NewMoviesActivity extends AppCompatActivity
         }
     }
 
+    // start me from another activity
     public static void startForResult(AppCompatActivity app, int REQUEST_CODE)
     {
         Intent intent = new Intent(app, NewMoviesActivity.class);

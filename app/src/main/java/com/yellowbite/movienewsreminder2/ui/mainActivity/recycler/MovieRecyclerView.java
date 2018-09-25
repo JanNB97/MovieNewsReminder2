@@ -1,6 +1,5 @@
-package com.yellowbite.movienewsreminder2.ui.recycler;
+package com.yellowbite.movienewsreminder2.ui.mainActivity.recycler;
 
-import android.content.Context;
 import android.support.annotation.IdRes;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,6 +11,8 @@ import com.yellowbite.movienewsreminder2.files.data.HotMoviesSortedList;
 import com.yellowbite.movienewsreminder2.files.data.MyMoviesSortedList;
 import com.yellowbite.movienewsreminder2.model.Movie;
 import com.yellowbite.movienewsreminder2.ui.notifications.NotificationMan;
+import com.yellowbite.movienewsreminder2.ui.mainActivity.recycler.touchListeners.RecyclerTouchListener;
+import com.yellowbite.movienewsreminder2.ui.mainActivity.recycler.touchListeners.SwipeCallback;
 
 import java.util.List;
 

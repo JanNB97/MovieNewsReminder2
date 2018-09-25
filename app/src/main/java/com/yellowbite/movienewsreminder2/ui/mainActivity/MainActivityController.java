@@ -1,4 +1,4 @@
-package com.yellowbite.movienewsreminder2.ui;
+package com.yellowbite.movienewsreminder2.ui.mainActivity;
 
 import android.app.Activity;
 import android.content.Context;
@@ -19,7 +19,7 @@ import com.yellowbite.movienewsreminder2.R;
 import com.yellowbite.movienewsreminder2.model.Movie;
 import com.yellowbite.movienewsreminder2.ui.newMovies.NewMoviesActivity;
 import com.yellowbite.movienewsreminder2.ui.notifications.NotificationMan;
-import com.yellowbite.movienewsreminder2.ui.recycler.MovieRecyclerView;
+import com.yellowbite.movienewsreminder2.ui.mainActivity.recycler.MovieRecyclerView;
 import com.yellowbite.movienewsreminder2.tasks.LoadedMoviesEvent;
 import com.yellowbite.movienewsreminder2.tasks.mainActivity.GetMovieAsyncTask;
 import com.yellowbite.movienewsreminder2.tasks.mainActivity.LoadMyMoviesRetryExecutor;
