@@ -1,13 +1,9 @@
 package com.yellowbite.movienewsreminder2.ui;
 
-import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
-
-import com.yellowbite.movienewsreminder2.R;
-import com.yellowbite.movienewsreminder2.ui.mainActivity.MainActivityController;
 
 public abstract class NoTitleBarActivity extends AppCompatActivity
 {
