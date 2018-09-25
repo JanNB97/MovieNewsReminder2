@@ -9,29 +9,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
 
 import com.yellowbite.movienewsreminder2.R;
+import com.yellowbite.movienewsreminder2.ui.NoTitleBarActivity;
 import com.yellowbite.movienewsreminder2.ui.newMovies.NewMoviesActivity;
 
-public class AddMovieActivity extends AppCompatActivity
+public class AddMovieActivity extends NoTitleBarActivity
 {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        this.removeTitleBar();
-        setContentView(R.layout.activity_add_movie);
+        setContentViewWithoutTitleBar(R.layout.activity_add_movie);
     }
 
-    private void removeTitleBar()
-    {
-        requestWindowFeature(Window.FEATURE_NO_TITLE);//will hide the title
-        ActionBar actionBar = getSupportActionBar(); //hide the title bar
-        if(actionBar != null)
-        {
-            actionBar.hide();
-        }
-    }
-
-    // start me from another activity
+    // --- --- --- start me from another activity --- --- ---
     public static int REQUEST_CODE = 2;
 
     public static void startForResult(AppCompatActivity app)

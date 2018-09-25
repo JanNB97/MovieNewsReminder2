@@ -13,7 +13,7 @@ public abstract class NoTitleBarActivity extends AppCompatActivity
         this.setContentView(layoutResID);
     }
 
-    protected void removeTitleBar()
+    private void removeTitleBar()
     {
         requestWindowFeature(Window.FEATURE_NO_TITLE);//will hide the title
         ActionBar actionBar = getSupportActionBar(); //hide the title bar
