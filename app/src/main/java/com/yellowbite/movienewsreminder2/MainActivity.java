@@ -11,9 +11,9 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.yellowbite.movienewsreminder2.files.data.HotMoviesSortedList;
-import com.yellowbite.movienewsreminder2.files.data.MyMoviesSortedList;
-import com.yellowbite.movienewsreminder2.files.data.NewMoviesQueue;
+import com.yellowbite.movienewsreminder2.files.datastructures.HotMoviesSortedList;
+import com.yellowbite.movienewsreminder2.files.datastructures.MyMoviesSortedList;
+import com.yellowbite.movienewsreminder2.files.datastructures.NewMoviesQueue;
 import com.yellowbite.movienewsreminder2.model.Movie;
 import com.yellowbite.movienewsreminder2.newsService.NewsService;
 import com.yellowbite.movienewsreminder2.tasks.functionalInterfaces.LoadedMoviesEvent;
@@ -112,11 +112,11 @@ public class MainActivity extends NoTitleBarActivity implements LoadedMoviesEven
 
     private void loadMyMovies()
     {
-        List<Movie> myMovies = MyMoviesSortedList.getAll(this);
+        List<Movie> myMovies = MyMoviesSortedList.getInstance().getAll(this);
 
         if(!myMovies.isEmpty())
         {
-            this.loadingProgressBar.setMax(MyMoviesSortedList.size(this));
+            this.loadingProgressBar.setMax(MyMoviesSortedList.getInstance().size(this));
 
             // download status
             new LoadMyMoviesRetryExecutor(this, this, myMovies, this::onLoadingFinished);
@@ -135,7 +135,7 @@ public class MainActivity extends NoTitleBarActivity implements LoadedMoviesEven
 
     private void onLoadingFinished()
     {
-        Collections.sort(MyMoviesSortedList.getAll(this));
+        Collections.sort(MyMoviesSortedList.getInstance().getAll(this));
 
         HotMoviesSortedList.getMyHotMovies(this);
 

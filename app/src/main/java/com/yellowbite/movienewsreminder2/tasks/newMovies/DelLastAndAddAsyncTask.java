@@ -40,8 +40,8 @@ public class DelLastAndAddAsyncTask extends AsyncTask<Movie, Void, Void>
 
         if(movies.length != 0 && movies[0] != null)
         {
-            MyMoviesSortedList.add(this.context, movies[0]);
-            MyMoviesSortedList.save(this.context);
+            MyMoviesSortedList.getInstance().add(this.context, movies[0]);
+            MyMoviesSortedList.getInstance().save(this.context);
         }
 
         return null;

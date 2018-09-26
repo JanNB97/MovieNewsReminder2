@@ -30,7 +30,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder>
     @Override
     public void onBindViewHolder(MovieViewHolder holder, int position)
     {
-        Movie movieToShow = MyMoviesSortedList.get(this.context, position);
+        Movie movieToShow = MyMoviesSortedList.getInstance().get(this.context, position);
 
         if(movieToShow != null)
         {
@@ -41,6 +41,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder>
     @Override
     public int getItemCount()
     {
-        return MyMoviesSortedList.size(this.context);
+        return MyMoviesSortedList.getInstance().size(this.context);
     }
 }

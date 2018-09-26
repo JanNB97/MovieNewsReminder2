@@ -59,7 +59,7 @@ public final class HotMoviesSortedList
         {
             return;
         }
-        List<Movie> myMovies = MyMoviesSortedList.getAll(context);
+        List<Movie> myMovies = MyMoviesSortedList.getInstance().getAll(context);
 
         for(Movie movie : myMovies)
         {

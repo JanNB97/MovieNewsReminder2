@@ -100,7 +100,7 @@ public class MovieRecyclerView extends SwipeCallback
             return;
         }
 
-        Movie movie = MyMoviesSortedList.get(this.activity, position);
+        Movie movie = MyMoviesSortedList.getInstance().get(this.activity, position);
         if(HotMoviesSortedList.switchSave(this.activity, movie))
         {
             this.dataSetChanged(false);
@@ -115,13 +115,13 @@ public class MovieRecyclerView extends SwipeCallback
 
     public void addItems(List<Movie> movies, boolean saveInFile)
     {
-        MyMoviesSortedList.addAll(this.activity, movies);
+        MyMoviesSortedList.getInstance().addAll(this.activity, movies);
         this.dataSetChanged(saveInFile);
     }
 
     public void addItem(Movie movie, boolean saveInFile)
     {
-        if(!MyMoviesSortedList.add(activity, movie))
+        if(!MyMoviesSortedList.getInstance().add(activity, movie))
         {
             NotificationMan.showShortToast(this.activity, movie.getTitel() + " is already in the database");
         }
@@ -134,13 +134,13 @@ public class MovieRecyclerView extends SwipeCallback
 
     public void removeItem(int position)
     {
-        Movie movieToRemove = MyMoviesSortedList.get(this.activity, position);
+        Movie movieToRemove = MyMoviesSortedList.getInstance().get(this.activity, position);
         if(movieToRemove.isHot())
         {
             HotMoviesSortedList.deleteSave(this.activity, movieToRemove);
         }
 
-        MyMoviesSortedList.remove(this.activity, position);
+        MyMoviesSortedList.getInstance().remove(this.activity, position);
         this.dataSetChanged(true);
     }
 
@@ -150,7 +150,7 @@ public class MovieRecyclerView extends SwipeCallback
 
         if(saveInFile)
         {
-            new Thread(() -> MyMoviesSortedList.save(this.activity))
+            new Thread(() -> MyMoviesSortedList.getInstance().save(this.activity))
                     .start();
         }
     }
