@@ -6,17 +6,17 @@ import com.yellowbite.movienewsreminder2.model.Movie;
 
 import java.util.List;
 
-public abstract class MovieList
+public interface MovieList
 {
-    public abstract Movie get(Context context, int i);
+    Movie get(Context context, int i);
+    List<Movie> getAll(Context context);
 
-    public abstract List<Movie> getAll(Context context);
+    void addAll(Context context, List<Movie> movies);
+    boolean add(Context context, Movie movie);
 
-    public abstract void addAll(Context context, List<Movie> movies);
+    void remove(Context context, int i);
 
-    public abstract boolean add(Context context, Movie movie);
+    void save(Context context);
 
-    public abstract void remove(Context context, int i);
-
-    public abstract void save(Context context);
+    int size(Context context);
 }

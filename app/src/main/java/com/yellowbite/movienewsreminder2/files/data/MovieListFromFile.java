@@ -10,10 +10,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public abstract class MovieListFromFile
+public abstract class MovieListFromFile implements MovieList
 {
     private final String FILE_NAME;
-    private List<Movie> movieList;
+    protected List<Movie> movieList;
 
     protected MovieListFromFile(String fileName)
     {
@@ -22,12 +22,14 @@ public abstract class MovieListFromFile
 
     // --- --- --- data operations --- --- ---
     // getAll
+    @Override
     public Movie get(Context context, int i)
     {
         this.getFromFileIfNecessary(context);
         return this.movieList.get(i);
     }
 
+    @Override
     public List<Movie> getAll(Context context)
     {
         this.getFromFileIfNecessary(context);
@@ -35,6 +37,7 @@ public abstract class MovieListFromFile
     }
 
     // others
+    @Override
     public int size(Context context)
     {
         this.getFromFileIfNecessary(context);
@@ -42,6 +45,7 @@ public abstract class MovieListFromFile
     }
 
     // add
+    @Override
     public void addAll(Context context, List<Movie> movies)
     {
         this.getFromFileIfNecessary(context);
@@ -53,10 +57,9 @@ public abstract class MovieListFromFile
                 this.movieList.add(movie);
             }
         }
-
-        this.sort();
     }
 
+    @Override
     public boolean add(Context context, Movie movie)
     {
         this.getFromFileIfNecessary(context);
@@ -67,26 +70,20 @@ public abstract class MovieListFromFile
         }
 
         this.movieList.add(movie);
-        this.sort();
 
         return true;
     }
 
     // remove
+    @Override
     public void remove(Context context, int i)
     {
         this.getFromFileIfNecessary(context);
         this.movieList.remove(i);
     }
 
-    // others
-    protected void sort()
-    {
-        Collections.sort(this.movieList);
-    }
-
     // --- --- --- file operations --- --- ---
-
+    @Override
     public void save(Context context)
     {
         if(movieList != null)

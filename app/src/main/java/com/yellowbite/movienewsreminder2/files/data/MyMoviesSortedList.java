@@ -10,119 +10,61 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class MyMoviesSortedList
+public class MyMoviesSortedList extends MovieListFromFile
 {
-    private static final String FILE_NAME = "myMovies.txt";
+    private static MyMoviesSortedList instance;
 
-    private static List<Movie> myMovies;
+    private MyMoviesSortedList()
+    {
+        super("myMovies.txt");
+    }
+
+    // --- --- --- get Instance --- --- ---
+    public static MyMoviesSortedList getInstance()
+    {
+        if(instance == null)
+        {
+            instance = new MyMoviesSortedList();
+        }
+
+        return instance;
+    }
 
     // --- --- --- data operations --- --- ---
-    // getAll
-    public static Movie get(Context context, int i)
+    @Override
+    public void addAll(Context context, List<Movie> movies)
     {
-        getFromFileIfNecessary(context);
-        return myMovies.get(i);
-    }
-
-    public static List<Movie> getAll(Context context)
-    {
-        getFromFileIfNecessary(context);
-        return myMovies;
-    }
-
-    // others
-    public static int size(Context context)
-    {
-        getFromFileIfNecessary(context);
-        return myMovies.size();
-    }
-
-    // add
-    public static void addAll(Context context, List<Movie> movies)
-    {
-        getFromFileIfNecessary(context);
+        this.getFromFileIfNecessary(context);
 
         for(Movie movie : movies)
         {
-            if(isNew(movie))
+            if(this.isNew(movie))
             {
-                myMovies.add(movie);
+                this.movieList.add(movie);
             }
         }
 
-        sort();
+        this.sort();
     }
 
-    public static boolean add(Context context, Movie movie)
+    @Override
+    public boolean add(Context context, Movie movie)
     {
-        getFromFileIfNecessary(context);
+        this.getFromFileIfNecessary(context);
 
-        if(!isNew(movie))
+        if(!this.isNew(movie))
         {
             return false;
         }
 
-        myMovies.add(movie);
-        sort();
+        this.movieList.add(movie);
+        this.sort();
 
         return true;
     }
 
-    // remove
-    public static void remove(Context context, int i)
+    private void sort()
     {
-        getFromFileIfNecessary(context);
-        myMovies.remove(i);
-    }
-
-    // others
-    private static void sort()
-    {
-        Collections.sort(myMovies);
-    }
-
-    // --- --- --- file operations --- --- ---
-
-    public static void save(Context context)
-    {
-        if(myMovies != null)
-        {
-            saveToFile(context);
-        }
-    }
-
-    // file helper operations
-    private static void getFromFileIfNecessary(Context context)
-    {
-        if(myMovies == null)
-        {
-            myMovies = getFromFile(context);
-        }
-    }
-
-    private static List<Movie> getFromFile(Context context)
-    {
-        List<String> lines = FileManager.readAll(context, FILE_NAME);
-        return MovieFileHelper.toMovies(lines, Collections.synchronizedList(new ArrayList<>()));
-    }
-
-    private static void saveToFile(Context context)
-    {
-        FileManager.write(context, FILE_NAME, MovieFileHelper.toLines(myMovies));
-    }
-
-    // --- --- --- helper methods --- --- ---
-
-    private static boolean isNew(Movie movie)
-    {
-        for(Movie movieInDatabase : myMovies)
-        {
-            if(movieInDatabase.getMediaBarcode() == movie.getMediaBarcode())
-            {
-                return false;
-            }
-        }
-
-        return true;
+        Collections.sort(super.movieList);
     }
 }
