@@ -11,6 +11,7 @@ import com.yellowbite.movienewsreminder2.files.datastructures.HotMoviesSortedLis
 import com.yellowbite.movienewsreminder2.files.datastructures.MovieList;
 import com.yellowbite.movienewsreminder2.model.Movie;
 import com.yellowbite.movienewsreminder2.ui.notifications.NotificationMan;
+import com.yellowbite.movienewsreminder2.ui.recyclerView.itemHolder.MovieAdapter;
 import com.yellowbite.movienewsreminder2.ui.recyclerView.touchListeners.RecyclerTouchListener;
 import com.yellowbite.movienewsreminder2.ui.recyclerView.touchListeners.SwipeCallback;
 
