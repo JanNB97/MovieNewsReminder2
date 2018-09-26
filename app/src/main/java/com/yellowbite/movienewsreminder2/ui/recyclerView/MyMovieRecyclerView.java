@@ -4,7 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.yellowbite.movienewsreminder2.files.datastructures.HotMoviesSortedList;
-import com.yellowbite.movienewsreminder2.files.superclasses.MovieList;
+import com.yellowbite.movienewsreminder2.files.abstractDatatypes.MovieList;
 import com.yellowbite.movienewsreminder2.model.Movie;
 
 public class MyMovieRecyclerView extends MovieRecyclerView
