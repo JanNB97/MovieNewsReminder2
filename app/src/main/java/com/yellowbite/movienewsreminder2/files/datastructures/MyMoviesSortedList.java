@@ -7,7 +7,7 @@ import com.yellowbite.movienewsreminder2.model.Movie;
 import java.util.Collections;
 import java.util.List;
 
-public final class MyMoviesSortedList extends MovieListFromFile
+public class MyMoviesSortedList extends MovieListFromFile
 {
     private static MyMoviesSortedList instance;
 
