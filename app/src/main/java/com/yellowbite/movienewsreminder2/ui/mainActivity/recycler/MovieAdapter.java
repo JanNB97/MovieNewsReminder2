@@ -7,16 +7,19 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.yellowbite.movienewsreminder2.R;
+import com.yellowbite.movienewsreminder2.files.datastructures.MovieList;
 import com.yellowbite.movienewsreminder2.files.datastructures.MyMoviesSortedList;
 import com.yellowbite.movienewsreminder2.model.Movie;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder>
 {
     private Context context;
+    private MovieList movieList;
 
-    public MovieAdapter(Context context)
+    public MovieAdapter(Context context, MovieList movieList)
     {
         this.context = context;
+        this.movieList = movieList;
     }
 
     @Override
@@ -30,7 +33,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder>
     @Override
     public void onBindViewHolder(MovieViewHolder holder, int position)
     {
-        Movie movieToShow = MyMoviesSortedList.getInstance().get(this.context, position);
+        Movie movieToShow = movieList.get(this.context, position);
 
         if(movieToShow != null)
         {
@@ -41,6 +44,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder>
     @Override
     public int getItemCount()
     {
-        return MyMoviesSortedList.getInstance().size(this.context);
+        return movieList.size(this.context);
     }
 }
