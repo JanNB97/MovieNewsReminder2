@@ -3,8 +3,8 @@ package com.yellowbite.movienewsreminder2.ui.recyclerView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.yellowbite.movienewsreminder2.files.datastructures.HotMoviesSortedList;
-import com.yellowbite.movienewsreminder2.files.abstractDatatypes.MovieList;
+import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.HotMoviesSortedList;
+import com.yellowbite.movienewsreminder2.files.datatypes.MovieList;
 import com.yellowbite.movienewsreminder2.model.Movie;
 
 public class MyMovieRecyclerView extends MovieRecyclerView

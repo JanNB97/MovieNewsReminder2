@@ -1,7 +1,8 @@
-package com.yellowbite.movienewsreminder2.files.abstractDatatypes;
+package com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles;
 
 import android.content.Context;
 
+import com.yellowbite.movienewsreminder2.files.datatypes.MovieList;
 import com.yellowbite.movienewsreminder2.files.helper.FileManager;
 import com.yellowbite.movienewsreminder2.files.helper.MovieFileHelper;
 import com.yellowbite.movienewsreminder2.model.Movie;

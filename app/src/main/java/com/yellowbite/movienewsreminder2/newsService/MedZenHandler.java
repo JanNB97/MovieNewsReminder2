@@ -2,9 +2,9 @@ package com.yellowbite.movienewsreminder2.newsService;
 
 import android.content.Context;
 
-import com.yellowbite.movienewsreminder2.files.datastructures.HotMoviesSortedList;
-import com.yellowbite.movienewsreminder2.files.datastructures.NewMoviesQueue;
-import com.yellowbite.movienewsreminder2.files.datastructures.NewestMovie;
+import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.HotMoviesSortedList;
+import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.NewMoviesQueue;
+import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.NewestMovie;
 import com.yellowbite.movienewsreminder2.model.Movie;
 import com.yellowbite.movienewsreminder2.newsService.messages.AddedMovieMessage;
 import com.yellowbite.movienewsreminder2.newsService.messages.HotMovieMessage;

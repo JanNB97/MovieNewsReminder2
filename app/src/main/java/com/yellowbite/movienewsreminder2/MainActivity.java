@@ -11,9 +11,9 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.yellowbite.movienewsreminder2.files.datastructures.HotMoviesSortedList;
-import com.yellowbite.movienewsreminder2.files.datastructures.MyMoviesSortedList;
-import com.yellowbite.movienewsreminder2.files.datastructures.NewMoviesQueue;
+import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.HotMoviesSortedList;
+import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.MyMoviesSortedList;
+import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.NewMoviesQueue;
 import com.yellowbite.movienewsreminder2.model.Movie;
 import com.yellowbite.movienewsreminder2.newsService.NewsService;
 import com.yellowbite.movienewsreminder2.tasks.functionalInterfaces.LoadedMoviesEvent;
