@@ -21,7 +21,7 @@ import com.yellowbite.movienewsreminder2.tasks.mainActivity.GetMovieAsyncTask;
 import com.yellowbite.movienewsreminder2.tasks.mainActivity.LoadMyMoviesRetryExecutor;
 import com.yellowbite.movienewsreminder2.ui.NoTitleBarActivity;
 import com.yellowbite.movienewsreminder2.ui.addMovie.AddMovieActivity;
-import com.yellowbite.movienewsreminder2.ui.recyclerView.MovieRecyclerView;
+import com.yellowbite.movienewsreminder2.ui.recyclerView.MyMovieRecyclerView;
 import com.yellowbite.movienewsreminder2.ui.newMovies.NewMoviesActivity;
 import com.yellowbite.movienewsreminder2.ui.notifications.NotificationMan;
 
@@ -31,7 +31,7 @@ import java.util.List;
 public class MainActivity extends NoTitleBarActivity implements LoadedMoviesEvent
 {
     // main views
-    private MovieRecyclerView movieRecyclerView;
+    private MyMovieRecyclerView myMovieRecyclerView;
     private TextView urlTextView;
     private Button addMovieButton;
     private FloatingActionButton addMovieFloatingButton;
@@ -58,7 +58,7 @@ public class MainActivity extends NoTitleBarActivity implements LoadedMoviesEven
         this.initAddMovieFloatingButton();
         this.initAddMovieButton();
         this.initURLTextView();
-        this.movieRecyclerView = new MovieRecyclerView(this, R.id.movieRecyclerView,
+        this.myMovieRecyclerView = new MyMovieRecyclerView(this, R.id.movieRecyclerView,
                 MyMoviesSortedList.getInstance());
 
         this.loadMyMovies();
@@ -144,7 +144,7 @@ public class MainActivity extends NoTitleBarActivity implements LoadedMoviesEven
         this.moviesUpdateTextView.setVisibility(View.GONE);
         this.urlTextView.setEnabled(true);
 
-        this.movieRecyclerView.showItems();
+        this.myMovieRecyclerView.showItems();
     }
 
     // --- --- --- Launch and Handle NewMoviesActivity --- --- ---
@@ -164,7 +164,7 @@ public class MainActivity extends NoTitleBarActivity implements LoadedMoviesEven
         {
             if(resultCode == Activity.RESULT_OK)
             {
-                this.movieRecyclerView.dataSetChanged(false);
+                this.myMovieRecyclerView.dataSetChanged(false);
             }
             else if(resultCode == Activity.RESULT_CANCELED)
             {
@@ -189,7 +189,7 @@ public class MainActivity extends NoTitleBarActivity implements LoadedMoviesEven
                     return;
                 }
 
-                movieRecyclerView.addItem(movie, true);
+                myMovieRecyclerView.addItem(movie, true);
         });
     }
 }

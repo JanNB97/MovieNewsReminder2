@@ -10,26 +10,27 @@ import android.view.View;
 import com.yellowbite.movienewsreminder2.files.datastructures.HotMoviesSortedList;
 import com.yellowbite.movienewsreminder2.files.datastructures.MovieList;
 import com.yellowbite.movienewsreminder2.model.Movie;
-import com.yellowbite.movienewsreminder2.ui.recyclerView.touchListeners.SwipeCallback;
 import com.yellowbite.movienewsreminder2.ui.notifications.NotificationMan;
 import com.yellowbite.movienewsreminder2.ui.recyclerView.touchListeners.RecyclerTouchListener;
+import com.yellowbite.movienewsreminder2.ui.recyclerView.touchListeners.SwipeCallback;
 
 import java.util.List;
 
-public class MovieRecyclerView extends SwipeCallback
+public abstract class MovieRecyclerView extends SwipeCallback
 {
-    private AppCompatActivity activity;
-    private RecyclerView recyclerView;
+    protected AppCompatActivity activity;
+    protected RecyclerView recyclerView;
 
-    private MovieList movieList;
+    protected MovieList movieList;
 
-    private MovieAdapter movieAdapter;
+    protected MovieAdapter movieAdapter;
 
-    private boolean recentlySwiped = false;
-    private final static int SWIPE_COOLDOWN = 1000;
+    protected boolean recentlySwiped = false;
+    protected final static int SWIPE_COOLDOWN = 1000;
 
     // --- --- --- Initialization --- --- ---
-    public MovieRecyclerView(AppCompatActivity activity, @IdRes int id, MovieList movieList)
+    public MovieRecyclerView(AppCompatActivity activity, @IdRes int id, MovieList movieList,
+             boolean isSwipeable)
     {
         this.activity = activity;
 
@@ -39,7 +40,7 @@ public class MovieRecyclerView extends SwipeCallback
         this.movieList = movieList;
 
         this.initLayout();
-        this.initTouchSwipeListener();
+        this.initTouchSwipeListener(isSwipeable);
 
         this.movieAdapter = new MovieAdapter(this.activity, movieList);
     }
@@ -51,10 +52,13 @@ public class MovieRecyclerView extends SwipeCallback
         this.recyclerView.setLayoutManager(layoutManager);
     }
 
-    private void initTouchSwipeListener()
+    private void initTouchSwipeListener(boolean isSwipeable)
     {
         // register touch listener
-        new ItemTouchHelper(this).attachToRecyclerView(this.recyclerView);
+        if(isSwipeable)
+        {
+            new ItemTouchHelper(this).attachToRecyclerView(this.recyclerView);
+        }
 
         // register swipe listener
         this.recyclerView.addOnItemTouchListener(new RecyclerTouchListener(this.activity, this.recyclerView, new RecyclerTouchListener.ClickListener() {
@@ -92,24 +96,9 @@ public class MovieRecyclerView extends SwipeCallback
         }).start();
     }
 
-    private void handleClickedOnMovieItem(View view, int position)
-    {
+    protected abstract void handleClickedOnMovieItem(View view, int position);
 
-    }
-
-    private void handleClickedLongOnMovieItem(View view, int position)
-    {
-        if(recentlySwiped)
-        {
-            return;
-        }
-
-        Movie movie = this.movieList.get(this.activity, position);
-        if(HotMoviesSortedList.switchSave(this.activity, movie))
-        {
-            this.dataSetChanged(false);
-        }
-    }
+    protected abstract void handleClickedLongOnMovieItem(View view, int position);
 
     // --- --- --- manage items --- --- ---
     public void showItems()
