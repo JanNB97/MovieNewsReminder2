@@ -19,10 +19,15 @@ public class WebscrapingHelper
         return Jsoup.connect(url).maxBodySize(0).get();
     }
 
-    // --- other features --- --- ---
-    public static String getSearchURL(String searchWord)
+    // --- search features --- --- ---
+    public static String getNarrowSearchURL(String searchWord)
     {
         return "https://opac.winbiap.net/mzhr/search.aspx?q=\"" + searchWord + "\" Spielfilm";
+    }
+
+    public static String getWideSearchURL(String searchWord)
+    {
+        return "https://opac.winbiap.net/mzhr/search.aspx?q=\"" + searchWord + "\"";
     }
 
     // --- Returning text ---

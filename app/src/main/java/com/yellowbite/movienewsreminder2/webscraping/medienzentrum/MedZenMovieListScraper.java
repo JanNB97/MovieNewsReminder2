@@ -67,17 +67,6 @@ public class MedZenMovieListScraper
         return movie;
     }
 
-    public boolean isMovie(int index)
-    {
-        String mediagroup = this.getMediengruppe(index);
-        return mediagroup.contains(MOVIE_MEDIAGROUP);
-    }
-
-    public String getMediengruppe(int index)
-    {
-        return WebscrapingHelper.getText(getListEntry(index), "span.mediagroup");
-    }
-
     public Movie getEssentialMovie(int index)
     {
         int mediaBarcode = getMediaBarcode(index);
@@ -95,6 +84,31 @@ public class MedZenMovieListScraper
         return new Movie(mediaBarcode, url);
     }
 
+    // --- --- --- find out if list item is movie --- --- ---
+    public boolean isMovie(int index)
+    {
+        String mediagroup = this.getMediengruppe(index);
+        return mediagroup.contains(MOVIE_MEDIAGROUP);
+    }
+
+    public String getMediengruppe(int index)
+    {
+        return WebscrapingHelper.getText(getListEntry(index), "span.mediagroup");
+    }
+
+    // --- --- --- get movie informations --- --- ---
+    // --- essentials ---
+    private int getMediaBarcode(int index)
+    {
+        return WebscrapingHelper.getInt(getListEntry(index), "span.mediaBarcode");
+    }
+
+    private String getURL(int index)
+    {
+        return WebscrapingHelper.getURL(getListEntry(index), "a[href]");
+    }
+
+    // --- other info ---
     private String getBestStandort(int index)
     {
         String standort = this.getStandort(index);
@@ -138,6 +152,7 @@ public class MedZenMovieListScraper
         return WebscrapingHelper.getText(getListEntry(index), "span.title");
     }
 
+    // --- --- --- access to list --- --- ---
     public String getURLToNextPage()
     {
         return WebscrapingHelper.getURL(doc, "a#ContentPlaceHolderMain_resultList_searchPagingView_HyperlinkNext");
@@ -156,17 +171,5 @@ public class MedZenMovieListScraper
     public int getListEntrySize()
     {
         return listEntries.size();
-    }
-
-    // --- getAll essentials ---
-
-    private int getMediaBarcode(int index)
-    {
-        return WebscrapingHelper.getInt(getListEntry(index), "span.mediaBarcode");
-    }
-
-    private String getURL(int index)
-    {
-        return WebscrapingHelper.getURL(getListEntry(index), "a[href]");
     }
 }
