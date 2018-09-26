@@ -15,12 +15,6 @@ public class MyMovieRecyclerView extends MovieRecyclerView
     }
 
     @Override
-    protected void handleClickedOnMovieItem(View view, int position)
-    {
-
-    }
-
-    @Override
     protected void handleClickedLongOnMovieItem(View view, int position)
     {
         if(super.recentlySwiped)

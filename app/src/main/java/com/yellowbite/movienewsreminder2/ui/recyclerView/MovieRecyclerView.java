@@ -41,7 +41,7 @@ public abstract class MovieRecyclerView extends SwipeCallback
         this.movieList = movieList;
 
         this.initLayout();
-        this.initTouchSwipeListener(isSwipeable);
+        this.initTouchSwipeScrollListener(isSwipeable);
 
         this.movieAdapter = new MovieAdapter(this.activity, movieList);
         if(this.movieList.size(this.activity) == 0)
@@ -57,8 +57,25 @@ public abstract class MovieRecyclerView extends SwipeCallback
         this.recyclerView.setLayoutManager(layoutManager);
     }
 
-    private void initTouchSwipeListener(boolean isSwipeable)
+    private void initTouchSwipeScrollListener(boolean isSwipeable)
     {
+        this.recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener()
+        {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy)
+            {
+                super.onScrolled(recyclerView, dx, dy);
+                handleOnScrolled(recyclerView, dx, dy);
+            }
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState)
+            {
+                super.onScrollStateChanged(recyclerView, newState);
+                handleOnScrollStateChanged(recyclerView, newState);
+            }
+        });
+
         // register touch listener
         if(isSwipeable)
         {
@@ -81,7 +98,7 @@ public abstract class MovieRecyclerView extends SwipeCallback
         }));
     }
 
-    // --- --- --- handle touches and swipes --- --- ---
+    // --- --- --- handle user interaction --- --- ---
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction)
     {
@@ -101,9 +118,13 @@ public abstract class MovieRecyclerView extends SwipeCallback
         }).start();
     }
 
-    protected abstract void handleClickedOnMovieItem(View view, int position);
+    protected void handleClickedOnMovieItem(View view, int position){}
 
-    protected abstract void handleClickedLongOnMovieItem(View view, int position);
+    protected void handleClickedLongOnMovieItem(View view, int position){}
+
+    protected void handleOnScrolled(RecyclerView recyclerView, int dx, int dy){}
+
+    protected void handleOnScrollStateChanged(RecyclerView recyclerView, int newState){}
 
     // --- --- --- manage items --- --- ---
     public void showItems()

@@ -17,10 +17,4 @@ public class UnalterableRecyclerView extends MovieRecyclerView
     {
         // TODO
     }
-
-    @Override
-    protected void handleClickedLongOnMovieItem(View view, int position)
-    {
-
-    }
 }
