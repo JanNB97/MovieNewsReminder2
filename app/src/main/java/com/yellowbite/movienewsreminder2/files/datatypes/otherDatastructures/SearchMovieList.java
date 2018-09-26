@@ -51,7 +51,7 @@ public class SearchMovieList implements MovieList
     {
         try
         {
-            this.listScraper = new MedZenMovieListScraper(WebscrapingHelper.getNarrowSearchURL(searchWord));
+            this.listScraper = new MedZenMovieListScraper(WebscrapingHelper.getWideSearchURL(searchWord));
             this.addAll(null, this.listScraper.getAllMovie());
         } catch (IOException e)
         {

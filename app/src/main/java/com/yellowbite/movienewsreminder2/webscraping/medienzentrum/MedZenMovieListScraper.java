@@ -62,7 +62,6 @@ public class MedZenMovieListScraper
 
         movie.setStandort(this.getBestStandort(index));
         movie.setTitel(this.getTitel(index));
-        movie.setZugang(this.getZugang(index));
 
         return movie;
     }
