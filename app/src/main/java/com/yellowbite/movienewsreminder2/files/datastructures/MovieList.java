@@ -1,4 +1,4 @@
-package com.yellowbite.movienewsreminder2.files.data;
+package com.yellowbite.movienewsreminder2.files.datastructures;
 
 import android.content.Context;
 

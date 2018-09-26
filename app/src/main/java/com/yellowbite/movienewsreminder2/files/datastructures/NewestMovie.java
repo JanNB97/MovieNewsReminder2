@@ -1,8 +1,8 @@
-package com.yellowbite.movienewsreminder2.files.data;
+package com.yellowbite.movienewsreminder2.files.datastructures;
 
 import android.content.Context;
 
-import com.yellowbite.movienewsreminder2.files.FileManager;
+import com.yellowbite.movienewsreminder2.files.helper.FileManager;
 
 public final class NewestMovie
 {

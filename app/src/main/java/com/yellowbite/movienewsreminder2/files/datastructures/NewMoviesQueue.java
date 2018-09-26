@@ -1,16 +1,16 @@
-package com.yellowbite.movienewsreminder2.files.data;
+package com.yellowbite.movienewsreminder2.files.datastructures;
 
 import android.content.Context;
 
-import com.yellowbite.movienewsreminder2.files.FileManager;
-import com.yellowbite.movienewsreminder2.files.MovieFileHelper;
+import com.yellowbite.movienewsreminder2.files.helper.FileManager;
+import com.yellowbite.movienewsreminder2.files.helper.MovieFileHelper;
 import com.yellowbite.movienewsreminder2.model.Movie;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class NewMoviesQueue
+public final class NewMoviesQueue
 {
     private static final String NEW_MOVIES = "newMovies.txt";
 

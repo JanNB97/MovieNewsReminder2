@@ -7,8 +7,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 
-import com.yellowbite.movienewsreminder2.files.data.HotMoviesSortedList;
-import com.yellowbite.movienewsreminder2.files.data.MyMoviesSortedList;
+import com.yellowbite.movienewsreminder2.files.datastructures.HotMoviesSortedList;
+import com.yellowbite.movienewsreminder2.files.datastructures.MyMoviesSortedList;
 import com.yellowbite.movienewsreminder2.model.Movie;
 import com.yellowbite.movienewsreminder2.ui.mainActivity.recycler.touchListeners.SwipeCallback;
 import com.yellowbite.movienewsreminder2.ui.notifications.NotificationMan;

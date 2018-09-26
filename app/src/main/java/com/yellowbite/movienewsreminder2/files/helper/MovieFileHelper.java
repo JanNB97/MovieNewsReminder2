@@ -1,4 +1,4 @@
-package com.yellowbite.movienewsreminder2.files;
+package com.yellowbite.movienewsreminder2.files.helper;
 
 import com.yellowbite.movienewsreminder2.model.Movie;
 import com.yellowbite.movienewsreminder2.util.DateHelper;
