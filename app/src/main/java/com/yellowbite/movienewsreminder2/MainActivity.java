@@ -21,7 +21,7 @@ import com.yellowbite.movienewsreminder2.tasks.mainActivity.GetMovieAsyncTask;
 import com.yellowbite.movienewsreminder2.tasks.mainActivity.LoadMyMoviesRetryExecutor;
 import com.yellowbite.movienewsreminder2.ui.NoTitleBarActivity;
 import com.yellowbite.movienewsreminder2.ui.addMovie.AddMovieActivity;
-import com.yellowbite.movienewsreminder2.ui.mainActivity.recycler.MovieRecyclerView;
+import com.yellowbite.movienewsreminder2.ui.recyclerView.MovieRecyclerView;
 import com.yellowbite.movienewsreminder2.ui.newMovies.NewMoviesActivity;
 import com.yellowbite.movienewsreminder2.ui.notifications.NotificationMan;
 

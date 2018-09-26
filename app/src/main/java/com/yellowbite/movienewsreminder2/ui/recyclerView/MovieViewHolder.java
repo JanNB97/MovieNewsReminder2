@@ -1,4 +1,4 @@
-package com.yellowbite.movienewsreminder2.ui.mainActivity.recycler;
+package com.yellowbite.movienewsreminder2.ui.recyclerView;
 
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;

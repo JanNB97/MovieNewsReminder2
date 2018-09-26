@@ -1,4 +1,4 @@
-package com.yellowbite.movienewsreminder2.ui.mainActivity.recycler.touchListeners;
+package com.yellowbite.movienewsreminder2.ui.recyclerView.touchListeners;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
