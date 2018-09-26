@@ -45,8 +45,7 @@ public class AddMovieActivity extends NoTitleBarActivity
     // --- --- --- Handle user interaction --- --- ---
     private void handleClickedOnSearchMovie(String searchText)
     {
-        this.searchTextView.setEnabled(false);
-        this.searchMovieButton.setEnabled(false);
+        this.setUserInteractionEnabled(false);
 
         SimpleAsyncTask.runSimpleAsynTask(
                 () -> SearchMovieList.getInstance().addMovieSite(searchText),
@@ -56,9 +55,15 @@ public class AddMovieActivity extends NoTitleBarActivity
     private void onSiteScraped()
     {
         this.searchMovieRecyclerView.dataSetChanged(false);
-        this.searchMovieButton.setEnabled(true);
-        this.searchTextView.setEnabled(true);
+
+        this.setUserInteractionEnabled(true);
         this.searchTextView.setText("");
+    }
+
+    private void setUserInteractionEnabled(boolean enabled)
+    {
+        this.searchMovieButton.setEnabled(enabled);
+        this.searchTextView.setEnabled(enabled);
     }
 
     // --- --- --- start me from another activity --- --- ---

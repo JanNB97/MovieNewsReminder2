@@ -52,7 +52,7 @@ public class SearchMovieList implements MovieList
         try
         {
             this.listScraper = new MedZenMovieListScraper(WebscrapingHelper.getSearchURL(searchWord));
-            this.add(null, this.listScraper.getEssentialMovie(0));
+            this.addAll(null, this.listScraper.getAllMovie());
         } catch (IOException e)
         {
             e.printStackTrace();
