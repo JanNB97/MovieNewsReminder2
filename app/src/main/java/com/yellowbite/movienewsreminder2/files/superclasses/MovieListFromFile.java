@@ -1,9 +1,10 @@
-package com.yellowbite.movienewsreminder2.files.datastructures;
+package com.yellowbite.movienewsreminder2.files.superclasses;
 
 import android.content.Context;
 
 import com.yellowbite.movienewsreminder2.files.helper.FileManager;
 import com.yellowbite.movienewsreminder2.files.helper.MovieFileHelper;
+import com.yellowbite.movienewsreminder2.files.superclasses.MovieList;
 import com.yellowbite.movienewsreminder2.model.Movie;
 
 import java.util.ArrayList;
