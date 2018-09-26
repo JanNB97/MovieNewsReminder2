@@ -13,6 +13,7 @@ import com.yellowbite.movienewsreminder2.tasks.SimpleAsyncTask;
 import com.yellowbite.movienewsreminder2.ui.NoTitleBarActivity;
 import com.yellowbite.movienewsreminder2.ui.recyclerView.MovieRecyclerView;
 import com.yellowbite.movienewsreminder2.ui.recyclerView.UnalterableRecyclerView;
+import com.yellowbite.movienewsreminder2.webscraping.WebscrapingHelper;
 
 public class AddMovieActivity extends NoTitleBarActivity
 {
@@ -46,10 +47,18 @@ public class AddMovieActivity extends NoTitleBarActivity
     private void handleClickedOnSearchMovie(String searchText)
     {
         this.setUserInteractionEnabled(false);
+        SearchMovieList.getInstance().clear();
+        this.searchMovieRecyclerView.dataSetChanged(false);
 
-        SimpleAsyncTask.runSimpleAsynTask(
-                () -> SearchMovieList.getInstance().addMovieSite(searchText),
-                this::onSiteScraped);
+        SimpleAsyncTask.runSimpleAsynTask(() -> {
+            String urlToNextSite = WebscrapingHelper.getWideSearchURL(searchText);
+            
+            while (urlToNextSite != null)
+            {
+                urlToNextSite = SearchMovieList.getInstance().addMovieSite(urlToNextSite);
+            }
+
+            }, this::onSiteScraped);
     }
 
     private void onSiteScraped()

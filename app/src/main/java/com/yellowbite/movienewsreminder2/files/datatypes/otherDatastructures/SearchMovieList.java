@@ -16,7 +16,6 @@ public class SearchMovieList implements MovieList
     private static SearchMovieList instance;
 
     private List<Movie> movies;
-    private MedZenMovieListScraper listScraper;
 
     private SearchMovieList()
     {
@@ -47,15 +46,17 @@ public class SearchMovieList implements MovieList
     }
 
     // --- --- --- add --- --- ---
-    public void addMovieSite(String searchWord)
+    public String addMovieSite(String url)
     {
         try
         {
-            this.listScraper = new MedZenMovieListScraper(WebscrapingHelper.getWideSearchURL(searchWord));
-            this.addAll(null, this.listScraper.getAllMovie());
+            MedZenMovieListScraper listScraper = new MedZenMovieListScraper(url);
+            this.addAll(null, listScraper.getAllMovie());
+            return listScraper.getURLToNextPage();
         } catch (IOException e)
         {
             e.printStackTrace();
+            return null;
         }
     }
 
