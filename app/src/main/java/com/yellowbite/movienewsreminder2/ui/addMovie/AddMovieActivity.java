@@ -2,23 +2,41 @@ package com.yellowbite.movienewsreminder2.ui.addMovie;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Window;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.yellowbite.movienewsreminder2.R;
 import com.yellowbite.movienewsreminder2.ui.NoTitleBarActivity;
-import com.yellowbite.movienewsreminder2.ui.newMovies.NewMoviesActivity;
 
 public class AddMovieActivity extends NoTitleBarActivity
 {
+    private TextView searchTextView;
+    private Button searchMovieButton;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentViewWithoutTitleBar(R.layout.activity_add_movie);
+
+        this.searchTextView = this.findViewById(R.id.searchTextView);
+        this.searchMovieButton = this.findViewById(R.id.searchMovieButton);
+
+        this.initSearchMovieButton();
+    }
+
+    private void initSearchMovieButton()
+    {
+        this.searchMovieButton.setOnClickListener(
+                v -> this.handleClickedOnSearchMovie(searchTextView.getText().toString()));
+    }
+
+    // --- --- --- Handle user interaction --- --- ---
+    private void handleClickedOnSearchMovie(String searchText)
+    {
+        // TODO
     }
 
     // --- --- --- start me from another activity --- --- ---
