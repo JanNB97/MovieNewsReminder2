@@ -19,6 +19,12 @@ public class WebscrapingHelper
         return Jsoup.connect(url).maxBodySize(0).get();
     }
 
+    // --- other features --- --- ---
+    public static String getSearchURL(String searchWord)
+    {
+        return "https://opac.winbiap.net/mzhr/search.aspx?q=\"" + searchWord + "\" Spielfilm";
+    }
+
     // --- Returning text ---
 
     public static Movie.Status getStatus(Element element, String cssQuery)

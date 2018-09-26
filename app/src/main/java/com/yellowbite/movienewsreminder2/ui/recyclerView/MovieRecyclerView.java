@@ -44,6 +44,10 @@ public abstract class MovieRecyclerView extends SwipeCallback
         this.initTouchSwipeListener(isSwipeable);
 
         this.movieAdapter = new MovieAdapter(this.activity, movieList);
+        if(this.movieList.size(this.activity) == 0)
+        {
+            this.showItems();
+        }
     }
 
     private void initLayout()
