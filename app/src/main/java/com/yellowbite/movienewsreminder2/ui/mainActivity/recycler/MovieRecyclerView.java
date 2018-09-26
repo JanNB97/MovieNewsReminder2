@@ -8,6 +8,7 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 
 import com.yellowbite.movienewsreminder2.files.datastructures.HotMoviesSortedList;
+import com.yellowbite.movienewsreminder2.files.datastructures.MovieList;
 import com.yellowbite.movienewsreminder2.files.datastructures.MyMoviesSortedList;
 import com.yellowbite.movienewsreminder2.model.Movie;
 import com.yellowbite.movienewsreminder2.ui.mainActivity.recycler.touchListeners.SwipeCallback;
@@ -21,23 +22,27 @@ public class MovieRecyclerView extends SwipeCallback
     private AppCompatActivity activity;
     private RecyclerView recyclerView;
 
+    private MovieList movieList;
+
     private MovieAdapter movieAdapter;
 
     private boolean recentlySwiped = false;
     private final static int SWIPE_COOLDOWN = 1000;
 
     // --- --- --- Initialization --- --- ---
-    public MovieRecyclerView(AppCompatActivity activity, @IdRes int id)
+    public MovieRecyclerView(AppCompatActivity activity, @IdRes int id, MovieList movieList)
     {
         this.activity = activity;
 
         this.recyclerView = activity.findViewById(id);
         this.recyclerView.setHasFixedSize(true);
 
+        this.movieList = movieList;
+
         this.initLayout();
         this.initTouchSwipeListener();
 
-        this.movieAdapter = new MovieAdapter(this.activity, MyMoviesSortedList.getInstance());
+        this.movieAdapter = new MovieAdapter(this.activity, movieList);
     }
 
     private void initLayout()
@@ -100,7 +105,7 @@ public class MovieRecyclerView extends SwipeCallback
             return;
         }
 
-        Movie movie = MyMoviesSortedList.getInstance().get(this.activity, position);
+        Movie movie = this.movieList.get(this.activity, position);
         if(HotMoviesSortedList.switchSave(this.activity, movie))
         {
             this.dataSetChanged(false);
@@ -115,13 +120,13 @@ public class MovieRecyclerView extends SwipeCallback
 
     public void addItems(List<Movie> movies, boolean saveInFile)
     {
-        MyMoviesSortedList.getInstance().addAll(this.activity, movies);
+        this.movieList.addAll(this.activity, movies);
         this.dataSetChanged(saveInFile);
     }
 
     public void addItem(Movie movie, boolean saveInFile)
     {
-        if(!MyMoviesSortedList.getInstance().add(activity, movie))
+        if(!this.movieList.add(activity, movie))
         {
             NotificationMan.showShortToast(this.activity, movie.getTitel() + " is already in the database");
         }
@@ -134,13 +139,13 @@ public class MovieRecyclerView extends SwipeCallback
 
     public void removeItem(int position)
     {
-        Movie movieToRemove = MyMoviesSortedList.getInstance().get(this.activity, position);
+        Movie movieToRemove = this.movieList.get(this.activity, position);
         if(movieToRemove.isHot())
         {
             HotMoviesSortedList.deleteSave(this.activity, movieToRemove);
         }
 
-        MyMoviesSortedList.getInstance().remove(this.activity, position);
+        this.movieList.remove(this.activity, position);
         this.dataSetChanged(true);
     }
 
@@ -150,7 +155,7 @@ public class MovieRecyclerView extends SwipeCallback
 
         if(saveInFile)
         {
-            new Thread(() -> MyMoviesSortedList.getInstance().save(this.activity))
+            new Thread(() -> this.movieList.save(this.activity))
                     .start();
         }
     }

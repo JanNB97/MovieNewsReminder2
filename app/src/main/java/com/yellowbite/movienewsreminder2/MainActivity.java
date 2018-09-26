@@ -58,7 +58,8 @@ public class MainActivity extends NoTitleBarActivity implements LoadedMoviesEven
         this.initAddMovieFloatingButton();
         this.initAddMovieButton();
         this.initURLTextView();
-        this.movieRecyclerView = new MovieRecyclerView(this, R.id.movieRecyclerView);
+        this.movieRecyclerView = new MovieRecyclerView(this, R.id.movieRecyclerView,
+                MyMoviesSortedList.getInstance());
 
         this.loadMyMovies();
 
