@@ -17,6 +17,8 @@ public class LoadMovieListExecutor
     private Runnable onSiteLoaded;
     private Runnable onFinishedLoading;
 
+    private int maxPages;
+
     public LoadMovieListExecutor(AppCompatActivity activity, String urlToFirstSite, Runnable onSiteLoaded, Runnable onFinishedLoading)
     {
         this.activity = activity;

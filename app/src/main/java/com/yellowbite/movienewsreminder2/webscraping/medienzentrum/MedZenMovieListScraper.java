@@ -152,6 +152,17 @@ public class MedZenMovieListScraper
     }
 
     // --- --- --- access to list --- --- ---
+    public int getMaxPages()
+    {
+        String pageRangeString = WebscrapingHelper.getText(doc, "span#ContentPlaceHolderMain_resultList_searchPagingView_LabelStatus");
+
+        StringBuilder builder = new StringBuilder(pageRangeString);
+        int startPos = pageRangeString.indexOf('n') + 2;
+        builder.delete(0, startPos);
+
+        return Integer.parseInt(builder.toString());
+    }
+
     public String getURLToNextPage()
     {
         return WebscrapingHelper.getURL(doc, "a#ContentPlaceHolderMain_resultList_searchPagingView_HyperlinkNext");
