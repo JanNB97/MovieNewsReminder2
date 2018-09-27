@@ -11,10 +11,4 @@ public class UnalterableRecyclerView extends MovieRecyclerView
     {
         super(activity, id, movieList, false);
     }
-
-    @Override
-    protected void handleClickedOnMovieItem(View view, int position)
-    {
-        // TODO
-    }
 }

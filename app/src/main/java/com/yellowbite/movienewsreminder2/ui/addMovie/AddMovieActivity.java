@@ -1,5 +1,6 @@
 package com.yellowbite.movienewsreminder2.ui.addMovie;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,10 +10,13 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.yellowbite.movienewsreminder2.MainActivity;
 import com.yellowbite.movienewsreminder2.R;
 import com.yellowbite.movienewsreminder2.files.datatypes.otherDatastructures.SearchMovieList;
 import com.yellowbite.movienewsreminder2.tasks.loadMovieList.LoadMovieListExecutor;
 import com.yellowbite.movienewsreminder2.ui.NoTitleBarActivity;
+import com.yellowbite.movienewsreminder2.ui.recyclerView.AddMovieRecyclerView;
+import com.yellowbite.movienewsreminder2.ui.recyclerView.MyMovieRecyclerView;
 import com.yellowbite.movienewsreminder2.ui.recyclerView.UnalterableRecyclerView;
 import com.yellowbite.movienewsreminder2.webscraping.WebscrapingHelper;
 
@@ -21,7 +25,7 @@ public class AddMovieActivity extends NoTitleBarActivity
     private TextView searchTextView;
     private Button searchMovieButton;
 
-    private UnalterableRecyclerView searchMovieRecyclerView;
+    private AddMovieRecyclerView addMovieRecyclerView;
 
     private LoadMovieListExecutor searchExecutor;
 
@@ -40,7 +44,7 @@ public class AddMovieActivity extends NoTitleBarActivity
 
         this.initSearchMovieButton();
 
-        this.searchMovieRecyclerView = new UnalterableRecyclerView(this, R.id.movieRecyclerView,
+        this.addMovieRecyclerView = new AddMovieRecyclerView(this, R.id.movieRecyclerView,
                 SearchMovieList.getInstance());
 
         this.searchExecutor = new LoadMovieListExecutor(this,
@@ -59,7 +63,7 @@ public class AddMovieActivity extends NoTitleBarActivity
         this.searchProgressIndicator.setVisibility(View.VISIBLE);
         this.setUserInteractionEnabled(false);
         SearchMovieList.getInstance().clear();
-        this.searchMovieRecyclerView.dataSetChanged(false);
+        this.addMovieRecyclerView.dataSetChanged(false);
 
         String searchURL = WebscrapingHelper.getWideSearchURL(searchText);
         this.searchExecutor.startToLoadMovieList(searchURL);
@@ -67,12 +71,12 @@ public class AddMovieActivity extends NoTitleBarActivity
 
     private void onSiteScraped()
     {
-        this.searchMovieRecyclerView.dataSetChanged(false);
+        this.addMovieRecyclerView.dataSetChanged(false);
     }
 
     private void onScrapingFinished()
     {
-        this.searchMovieRecyclerView.dataSetChanged(false);
+        this.addMovieRecyclerView.dataSetChanged(false);
 
         this.setUserInteractionEnabled(true);
         this.searchProgressIndicator.setVisibility(View.GONE);
@@ -83,6 +87,14 @@ public class AddMovieActivity extends NoTitleBarActivity
     {
         this.searchMovieButton.setEnabled(enabled);
         this.searchTextView.setEnabled(enabled);
+    }
+
+    // --- --- --- movie selected --- --- ---
+    public void openMainActivity()
+    {
+        Intent resultIntent = new Intent();
+        setResult(Activity.RESULT_OK, resultIntent);
+        finish();
     }
 
     // --- --- --- start me from another activity --- --- ---
