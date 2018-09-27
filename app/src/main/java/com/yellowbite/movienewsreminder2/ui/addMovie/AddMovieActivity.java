@@ -10,17 +10,14 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.yellowbite.movienewsreminder2.MainActivity;
 import com.yellowbite.movienewsreminder2.R;
 import com.yellowbite.movienewsreminder2.files.datatypes.otherDatastructures.SearchMovieList;
 import com.yellowbite.movienewsreminder2.tasks.loadMovieList.LoadMovieListExecutor;
-import com.yellowbite.movienewsreminder2.ui.NoTitleBarActivity;
+import com.yellowbite.movienewsreminder2.ui.ToolbarActivity;
 import com.yellowbite.movienewsreminder2.ui.recyclerView.AddMovieRecyclerView;
-import com.yellowbite.movienewsreminder2.ui.recyclerView.MyMovieRecyclerView;
-import com.yellowbite.movienewsreminder2.ui.recyclerView.UnalterableRecyclerView;
 import com.yellowbite.movienewsreminder2.webscraping.WebscrapingHelper;
 
-public class AddMovieActivity extends NoTitleBarActivity
+public class AddMovieActivity extends ToolbarActivity
 {
     private TextView searchTextView;
     private Button searchMovieButton;

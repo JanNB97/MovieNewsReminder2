@@ -4,10 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -17,18 +14,16 @@ import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles
 import com.yellowbite.movienewsreminder2.model.Movie;
 import com.yellowbite.movienewsreminder2.newsService.NewsService;
 import com.yellowbite.movienewsreminder2.tasks.functionalInterfaces.LoadedMoviesEvent;
-import com.yellowbite.movienewsreminder2.tasks.mainActivity.GetMovieAsyncTask;
 import com.yellowbite.movienewsreminder2.tasks.mainActivity.LoadMyMoviesRetryExecutor;
-import com.yellowbite.movienewsreminder2.ui.NoTitleBarActivity;
+import com.yellowbite.movienewsreminder2.ui.ToolbarActivity;
 import com.yellowbite.movienewsreminder2.ui.addMovie.AddMovieActivity;
 import com.yellowbite.movienewsreminder2.ui.recyclerView.MyMovieRecyclerView;
 import com.yellowbite.movienewsreminder2.ui.newMovies.NewMoviesActivity;
-import com.yellowbite.movienewsreminder2.ui.notifications.NotificationMan;
 
 import java.util.Collections;
 import java.util.List;
 
-public class MainActivity extends NoTitleBarActivity implements LoadedMoviesEvent
+public class MainActivity extends ToolbarActivity implements LoadedMoviesEvent
 {
     // main views
     private MyMovieRecyclerView myMovieRecyclerView;

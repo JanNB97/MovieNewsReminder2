@@ -15,9 +15,9 @@ import com.yellowbite.movienewsreminder2.model.Movie;
 import com.yellowbite.movienewsreminder2.tasks.functionalInterfaces.LoadedMovieEvent;
 import com.yellowbite.movienewsreminder2.tasks.newMovies.DelLastAndAddAsyncTask;
 import com.yellowbite.movienewsreminder2.tasks.newMovies.LoadNewMoviesDescendingExecutor;
-import com.yellowbite.movienewsreminder2.ui.NoTitleBarActivity;
+import com.yellowbite.movienewsreminder2.ui.ToolbarActivity;
 
-public class NewMoviesActivity extends NoTitleBarActivity implements LoadedMovieEvent
+public class NewMoviesActivity extends ToolbarActivity implements LoadedMovieEvent
 {
     private TextView movieTitelTextView;
     private TextView einheitstitelTextView;
