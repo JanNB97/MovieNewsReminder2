@@ -70,6 +70,7 @@ public class MainActivity extends NoTitleBarActivity implements LoadedMoviesEven
 
     private void initAddMovieFloatingButton()
     {
+        this.addMovieFloatingButton.setEnabled(false);
         this.addMovieFloatingButton.setOnClickListener(v -> {
             AddMovieActivity.startForResult(this);
         });
@@ -143,6 +144,7 @@ public class MainActivity extends NoTitleBarActivity implements LoadedMoviesEven
         this.loadingProgressBar.setVisibility(View.GONE);
         this.moviesUpdateTextView.setVisibility(View.GONE);
         this.urlTextView.setEnabled(true);
+        this.addMovieFloatingButton.setEnabled(true);
 
         this.myMovieRecyclerView.showItems();
     }
