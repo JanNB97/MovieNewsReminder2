@@ -31,10 +31,10 @@ public class LoadMovieListExecutor
 
     public void startToLoadMovieList(String urlToFirstPage)
     {
-        executor.execute(() -> this.loadMovieList(urlToFirstPage));
+        executor.execute(() -> this.loadMovieList(urlToFirstPage, 1, -1));
     }
 
-    private void loadMovieList(String siteURL)
+    private void loadMovieList(String siteURL, int page, int maxPages)
     {
         if(siteURL == null)
         {
@@ -44,13 +44,25 @@ public class LoadMovieListExecutor
         try
         {
             MedZenMovieListScraper listScraper = new MedZenMovieListScraper(siteURL);
+            if(page == 1)
+            {
+                maxPages = listScraper.getMaxPages();
+            }
             String urlToNextPage = listScraper.getURLToNextPage();
 
-            this.executor.execute(() -> this.loadMovieList(urlToNextPage));
+            int finalMaxPages = maxPages;
+            this.executor.execute(() -> this.loadMovieList(urlToNextPage, page + 1, finalMaxPages));
 
             SearchMovieList.getInstance().addMovieSite(listScraper);
 
-            this.activity.runOnUiThread(() -> this.onSiteLoaded.run());
+            this.activity.runOnUiThread(() -> {
+                this.onSiteLoaded.run();
+
+                if(page == finalMaxPages)
+                {
+                    this.onFinishedLoading.run();
+                }
+            });
         } catch (IOException e)
         {
             e.printStackTrace();

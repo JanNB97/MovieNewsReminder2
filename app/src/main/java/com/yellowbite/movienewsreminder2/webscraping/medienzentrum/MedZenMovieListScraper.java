@@ -160,6 +160,9 @@ public class MedZenMovieListScraper
         int startPos = pageRangeString.indexOf('n') + 2;
         builder.delete(0, startPos);
 
+        int endPos = builder.indexOf("S") - 1;
+        builder.delete(endPos, builder.length());
+
         return Integer.parseInt(builder.toString());
     }
 

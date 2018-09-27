@@ -50,7 +50,7 @@ public class AddMovieActivity extends NoTitleBarActivity
     // --- --- --- Handle user interaction --- --- ---
     private void handleClickedOnSearchMovie(String searchText)
     {
-        //this.setUserInteractionEnabled(false);
+        this.setUserInteractionEnabled(false);
         SearchMovieList.getInstance().clear();
         this.searchMovieRecyclerView.dataSetChanged(false);
 
