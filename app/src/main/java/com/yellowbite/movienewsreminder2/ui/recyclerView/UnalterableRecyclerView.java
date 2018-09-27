@@ -10,5 +10,6 @@ public class UnalterableRecyclerView extends MovieRecyclerView
     public UnalterableRecyclerView(AppCompatActivity activity, int id, MovieList movieList)
     {
         super(activity, id, movieList, false);
+        this.showItems();
     }
 }
