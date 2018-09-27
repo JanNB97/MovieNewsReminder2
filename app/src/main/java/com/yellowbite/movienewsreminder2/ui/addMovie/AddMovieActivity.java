@@ -98,7 +98,7 @@ public class AddMovieActivity extends NoTitleBarActivity
     }
 
     // --- --- --- start me from another activity --- --- ---
-    public static int REQUEST_CODE = 2;
+    public static final int REQUEST_CODE = 2;
 
     public static void startForResult(AppCompatActivity app)
     {

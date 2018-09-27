@@ -162,17 +162,32 @@ public class MainActivity extends NoTitleBarActivity implements LoadedMoviesEven
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
-        if(requestCode == NewMoviesActivity.REQUEST_CODE)
+        switch (requestCode)
         {
-            if(resultCode == Activity.RESULT_OK)
-            {
-                this.myMovieRecyclerView.dataSetChanged(false);
-            }
-            else if(resultCode == Activity.RESULT_CANCELED)
-            {
-                // TODO
-            }
+            case NewMoviesActivity.REQUEST_CODE:
+                this.handleNewMovieResults(resultCode);
+                break;
+            case AddMovieActivity.REQUEST_CODE:
+                this.handleAddMovieResult();
+                break;
         }
+    }
+
+    private void handleNewMovieResults(int resultCode)
+    {
+        if(resultCode == Activity.RESULT_OK)
+        {
+            this.myMovieRecyclerView.dataSetChanged(false);
+        }
+        else if(resultCode == Activity.RESULT_CANCELED)
+        {
+            // TODO
+        }
+    }
+
+    private void handleAddMovieResult()
+    {
+        this.myMovieRecyclerView.dataSetChanged(false);
     }
 
     // --- --- --- Interaction with user --- --- ---
