@@ -89,7 +89,7 @@ public class AddMovieActivity extends NoTitleBarActivity
         this.searchTextView.setEnabled(enabled);
     }
 
-    // --- --- --- movie selected --- --- ---
+    // --- --- --- on finished --- --- ---
     public void openMainActivity()
     {
         Intent resultIntent = new Intent();
