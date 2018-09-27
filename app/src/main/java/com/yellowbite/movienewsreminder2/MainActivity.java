@@ -32,8 +32,6 @@ public class MainActivity extends NoTitleBarActivity implements LoadedMoviesEven
 {
     // main views
     private MyMovieRecyclerView myMovieRecyclerView;
-    private TextView urlTextView;
-    private Button addMovieButton;
     private FloatingActionButton addMovieFloatingButton;
 
     // views for loading time
@@ -56,8 +54,6 @@ public class MainActivity extends NoTitleBarActivity implements LoadedMoviesEven
         this.moviesUpdateTextView = this.findViewById(R.id.moviesUpdateTextView);
         this.addMovieFloatingButton = this.findViewById(R.id.addMovieFloatingButton);
         this.initAddMovieFloatingButton();
-        this.initAddMovieButton();
-        this.initURLTextView();
         this.myMovieRecyclerView = new MyMovieRecyclerView(this, R.id.movieRecyclerView,
                 MyMoviesSortedList.getInstance());
 
@@ -71,47 +67,16 @@ public class MainActivity extends NoTitleBarActivity implements LoadedMoviesEven
     private void initAddMovieFloatingButton()
     {
         this.addMovieFloatingButton.setEnabled(false);
-        this.addMovieFloatingButton.setOnClickListener(v -> {
-            AddMovieActivity.startForResult(this);
-        });
+        this.addMovieFloatingButton.setOnClickListener(this::handleOnAddMovieClicked);
     }
 
-    private void initAddMovieButton()
+    // --- --- --- User interaction --- --- ---
+    private void handleOnAddMovieClicked(View view)
     {
-        this.addMovieButton = this.findViewById(R.id.addMovieButton);
-        this.addMovieButton.setOnClickListener(v -> this.handleOnAddMovieClicked());
-        this.addMovieButton.setVisibility(View.GONE);
-    }
-
-    private void initURLTextView()
-    {
-        this.urlTextView = this.findViewById(R.id.urlTextView);
-        this.urlTextView.addTextChangedListener(new TextWatcher()
-        {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2)
-            {
-                if(charSequence.length() != 0)
-                {
-                    addMovieButton.setVisibility(View.VISIBLE);
-                }
-                else
-                {
-                    addMovieButton.setVisibility(View.GONE);
-                }
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {}
-        });
+        AddMovieActivity.startForResult(this);
     }
 
     // --- --- --- Load movies --- --- ---
-
     private void loadMyMovies()
     {
         List<Movie> myMovies = MyMoviesSortedList.getInstance().getAll(this);
@@ -143,14 +108,12 @@ public class MainActivity extends NoTitleBarActivity implements LoadedMoviesEven
 
         this.loadingProgressBar.setVisibility(View.GONE);
         this.moviesUpdateTextView.setVisibility(View.GONE);
-        this.urlTextView.setEnabled(true);
         this.addMovieFloatingButton.setEnabled(true);
 
         this.myMovieRecyclerView.showItems();
     }
 
     // --- --- --- Launch and Handle NewMoviesActivity --- --- ---
-
     private void launchNewMoviesActivity()
     {
         if(!NewMoviesQueue.isEmpty(this))
@@ -188,25 +151,5 @@ public class MainActivity extends NoTitleBarActivity implements LoadedMoviesEven
     private void handleAddMovieResult()
     {
         this.myMovieRecyclerView.dataSetChanged(false);
-    }
-
-    // --- --- --- Interaction with user --- --- ---
-
-    private void handleOnAddMovieClicked()
-    {
-        Movie movieToAdd = new Movie(urlTextView.getText().toString());
-
-        GetMovieAsyncTask.getMovie(movieToAdd,
-            (Movie movie) -> {
-                urlTextView.setText("");
-
-                if(movie == null)
-                {
-                    NotificationMan.showShortToast(this, "Falsche URL oder keine Internetverbindung");
-                    return;
-                }
-
-                myMovieRecyclerView.addItem(movie, true);
-        });
     }
 }
