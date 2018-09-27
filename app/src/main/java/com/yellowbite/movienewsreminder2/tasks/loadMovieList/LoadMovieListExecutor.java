@@ -40,8 +40,7 @@ public class LoadMovieListExecutor
             MedZenMovieListScraper listScraper = new MedZenMovieListScraper(siteURL);
             if(listScraper.isEmpty())
             {
-                NotificationMan.showShortToast(this.activity, "Keine Treffer gefunden");
-                this.finish();
+                this.finishWithoutResults();
                 return;
             }
 
@@ -86,9 +85,10 @@ public class LoadMovieListExecutor
         });
     }
 
-    private void finish()
+    private void finishWithoutResults()
     {
         this.activity.runOnUiThread(() -> {
+            NotificationMan.showShortToast(this.activity, "Keine Treffer gefunden");
             this.onFinishedLoading.run();
         });
     }
