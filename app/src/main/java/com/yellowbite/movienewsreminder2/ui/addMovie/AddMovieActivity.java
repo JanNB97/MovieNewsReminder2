@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.yellowbite.movienewsreminder2.R;
@@ -23,6 +25,8 @@ public class AddMovieActivity extends NoTitleBarActivity
 
     private LoadMovieListExecutor searchExecutor;
 
+    private ProgressBar searchProgressIndicator;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState)
     {
@@ -31,6 +35,8 @@ public class AddMovieActivity extends NoTitleBarActivity
 
         this.searchTextView = this.findViewById(R.id.searchTextView);
         this.searchMovieButton = this.findViewById(R.id.searchMovieButton);
+        this.searchProgressIndicator = this.findViewById(R.id.searchProgressIndicator);
+        this.searchProgressIndicator.setVisibility(View.GONE);
 
         this.initSearchMovieButton();
 
@@ -50,6 +56,7 @@ public class AddMovieActivity extends NoTitleBarActivity
     // --- --- --- Handle user interaction --- --- ---
     private void handleClickedOnSearchMovie(String searchText)
     {
+        this.searchProgressIndicator.setVisibility(View.VISIBLE);
         this.setUserInteractionEnabled(false);
         SearchMovieList.getInstance().clear();
         this.searchMovieRecyclerView.dataSetChanged(false);
@@ -68,6 +75,7 @@ public class AddMovieActivity extends NoTitleBarActivity
         this.searchMovieRecyclerView.dataSetChanged(false);
 
         this.setUserInteractionEnabled(true);
+        this.searchProgressIndicator.setVisibility(View.GONE);
         this.searchTextView.setText("");
     }
 
