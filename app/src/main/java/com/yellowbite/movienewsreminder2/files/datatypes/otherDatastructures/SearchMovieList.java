@@ -46,18 +46,9 @@ public class SearchMovieList implements MovieList
     }
 
     // --- --- --- add --- --- ---
-    public String addMovieSite(String url)
+    public void addMovieSite(MedZenMovieListScraper listScraper)
     {
-        try
-        {
-            MedZenMovieListScraper listScraper = new MedZenMovieListScraper(url);
-            this.addAll(null, listScraper.getAllMovie());
-            return listScraper.getURLToNextPage();
-        } catch (IOException e)
-        {
-            e.printStackTrace();
-            return null;
-        }
+        this.addAll(null, listScraper.getAllMovie());
     }
 
     @Override

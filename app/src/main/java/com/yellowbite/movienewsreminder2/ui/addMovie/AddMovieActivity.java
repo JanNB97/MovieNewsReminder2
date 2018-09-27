@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.yellowbite.movienewsreminder2.R;
 import com.yellowbite.movienewsreminder2.files.datatypes.otherDatastructures.SearchMovieList;
 import com.yellowbite.movienewsreminder2.tasks.SimpleAsyncTask;
+import com.yellowbite.movienewsreminder2.tasks.loadMovieList.LoadMovieListExecutor;
 import com.yellowbite.movienewsreminder2.ui.NoTitleBarActivity;
 import com.yellowbite.movienewsreminder2.ui.recyclerView.MovieRecyclerView;
 import com.yellowbite.movienewsreminder2.ui.recyclerView.UnalterableRecyclerView;
@@ -46,19 +47,14 @@ public class AddMovieActivity extends NoTitleBarActivity
     // --- --- --- Handle user interaction --- --- ---
     private void handleClickedOnSearchMovie(String searchText)
     {
-        this.setUserInteractionEnabled(false);
+        //this.setUserInteractionEnabled(false);
         SearchMovieList.getInstance().clear();
         this.searchMovieRecyclerView.dataSetChanged(false);
 
-        SimpleAsyncTask.runSimpleAsynTask(() -> {
-            String urlToNextSite = WebscrapingHelper.getWideSearchURL(searchText);
-            
-            while (urlToNextSite != null)
-            {
-                urlToNextSite = SearchMovieList.getInstance().addMovieSite(urlToNextSite);
-            }
-
-            }, this::onSiteScraped);
+        String searchURL = WebscrapingHelper.getWideSearchURL(searchText);
+        new LoadMovieListExecutor(this, searchURL,
+                () -> this.searchMovieRecyclerView.dataSetChanged(false),
+                this::onSiteScraped);
     }
 
     private void onSiteScraped()
