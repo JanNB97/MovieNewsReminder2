@@ -26,11 +26,6 @@ public class MedZenMovieListScraper
     {
         this.doc = WebscrapingHelper.getDoc(url);
         this.listEntries = doc.select(movieCssQuery);
-
-        if(this.listEntries.isEmpty())
-        {
-            throw new IOException();
-        }
     }
 
     public List<Movie> getAllMovie()
@@ -187,6 +182,11 @@ public class MedZenMovieListScraper
         }
 
         return listEntries.get(index);
+    }
+
+    public boolean isEmpty()
+    {
+        return getListEntrySize() == 0;
     }
 
     public int getListEntrySize()

@@ -35,22 +35,19 @@ public class LoadMovieListExecutor
 
     private void loadMovieList(String siteURL, int page, int maxPages)
     {
-        if(siteURL == null)
-        {
-            return;
-        }
-
         try
         {
             MedZenMovieListScraper listScraper = new MedZenMovieListScraper(siteURL);
+            if(listScraper.isEmpty())
+            {
+                NotificationMan.showShortToast(this.activity, "Keine Treffer gefunden");
+                this.finish();
+                return;
+            }
+
             if(page == 1)
             {
                 maxPages = listScraper.getMaxPages();
-                if(this.noSearchResults(maxPages))
-                {
-                    this.finish();
-                    return;
-                }
             }
 
             this.scrapeNextPage(listScraper, page, maxPages);
@@ -67,6 +64,11 @@ public class LoadMovieListExecutor
     private void scrapeNextPage(MedZenMovieListScraper listScraper, int page, int maxPages)
     {
         String urlToNextPage = listScraper.getURLToNextPage();
+
+        if(urlToNextPage == null)
+        {
+            return;
+        }
 
         int finalMaxPages = maxPages;
         this.executor.execute(() -> this.loadMovieList(urlToNextPage, page + 1, finalMaxPages));
@@ -98,10 +100,5 @@ public class LoadMovieListExecutor
             NotificationMan.showShortToast(this.activity, "Es ist ein Fehler aufgetreten");
             this.onFinishedLoading.run();
         });
-    }
-
-    private boolean noSearchResults(int maxPages)
-    {
-        return maxPages == -1;
     }
 }

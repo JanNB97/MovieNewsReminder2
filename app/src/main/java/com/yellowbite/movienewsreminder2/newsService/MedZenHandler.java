@@ -59,6 +59,11 @@ public class MedZenHandler extends WebscrapingHandler
             return null;
         }
 
+        if(listScraper.isEmpty())
+        {
+            return null;
+        }
+
         Movie thisMovie = listScraper.getEssentialMovie(0);
         int thisBarcode = thisMovie.getMediaBarcode();
         int lastBarcode = NewestMovie.getBarcode(context);
