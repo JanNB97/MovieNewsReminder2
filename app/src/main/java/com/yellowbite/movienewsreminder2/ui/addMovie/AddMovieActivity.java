@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -35,6 +37,8 @@ public class AddMovieActivity extends ToolbarActivity
         setContentViewWithoutTitleBar(R.layout.activity_add_movie);
 
         this.setTitle("Filme hinzufügen");
+
+        this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         this.searchTextView = this.findViewById(R.id.searchTextView);
         this.searchMovieButton = this.findViewById(R.id.searchMovieButton);
@@ -94,6 +98,20 @@ public class AddMovieActivity extends ToolbarActivity
         Intent resultIntent = new Intent();
         setResult(Activity.RESULT_OK, resultIntent);
         finish();
+    }
+
+    // --- --- --- toolbar interaction --- --- ---
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     // --- --- --- start me from another activity --- --- ---

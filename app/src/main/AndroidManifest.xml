@@ -11,12 +11,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.yellowbite.movienewsreminder2.ui.addMovie.AddMovieActivity"
+
+            android:parentActivityName="com.yellowbite.movienewsreminder2.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.yellowbite.movienewsreminder2.MainActivity" />
         </activity>
 
         <service
@@ -25,7 +35,6 @@
             android:permission="android.permission.BIND_JOB_SERVICE" />
 
         <activity android:name=".ui.newMovies.NewMoviesActivity"></activity>
-        <activity android:name=".ui.addMovie.AddMovieActivity"></activity>
     </application>
 
 </manifest>
