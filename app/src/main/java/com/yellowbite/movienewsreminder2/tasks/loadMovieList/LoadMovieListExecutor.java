@@ -18,8 +18,6 @@ public class LoadMovieListExecutor
     private Runnable onSiteLoaded;
     private Runnable onFinishedLoading;
 
-    private int maxPages;
-
     public LoadMovieListExecutor(AppCompatActivity activity, Runnable onSiteLoaded, Runnable onFinishedLoading)
     {
         this.activity = activity;
@@ -48,26 +46,49 @@ public class LoadMovieListExecutor
             if(page == 1)
             {
                 maxPages = listScraper.getMaxPages();
+                if(this.noSearchResults(maxPages))
+                {
+                    this.finish();
+                    return;
+                }
             }
-            String urlToNextPage = listScraper.getURLToNextPage();
 
-            int finalMaxPages = maxPages;
-            this.executor.execute(() -> this.loadMovieList(urlToNextPage, page + 1, finalMaxPages));
+            this.scrapeNextPage(listScraper, page, maxPages);
 
             SearchMovieList.getInstance().addMovieSite(listScraper);
 
-            this.activity.runOnUiThread(() -> {
-                this.onSiteLoaded.run();
-
-                if(page >= finalMaxPages)
-                {
-                    this.onFinishedLoading.run();
-                }
-            });
+            this.notifyMovieLoaded(page, maxPages);
         } catch (IOException e)
         {
             this.handleExceptionWhileWebscraping(e);
         }
+    }
+
+    private void scrapeNextPage(MedZenMovieListScraper listScraper, int page, int maxPages)
+    {
+        String urlToNextPage = listScraper.getURLToNextPage();
+
+        int finalMaxPages = maxPages;
+        this.executor.execute(() -> this.loadMovieList(urlToNextPage, page + 1, finalMaxPages));
+    }
+
+    private void notifyMovieLoaded(int page, int maxPages)
+    {
+        this.activity.runOnUiThread(() -> {
+            this.onSiteLoaded.run();
+
+            if(page >= maxPages)
+            {
+                this.onFinishedLoading.run();
+            }
+        });
+    }
+
+    private void finish()
+    {
+        this.activity.runOnUiThread(() -> {
+            this.onFinishedLoading.run();
+        });
     }
 
     private void handleExceptionWhileWebscraping(Exception e)
@@ -77,5 +98,10 @@ public class LoadMovieListExecutor
             NotificationMan.showShortToast(this.activity, "Es ist ein Fehler aufgetreten");
             this.onFinishedLoading.run();
         });
+    }
+
+    private boolean noSearchResults(int maxPages)
+    {
+        return maxPages == -1;
     }
 }

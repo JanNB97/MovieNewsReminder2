@@ -22,12 +22,22 @@ public class WebscrapingHelper
     // --- search features --- --- ---
     public static String getNarrowSearchURL(String searchWord)
     {
-        return "https://opac.winbiap.net/mzhr/search.aspx?q=\"" + searchWord + "\" Spielfilm";
+        return "https://opac.winbiap.net/mzhr/search.aspx?q=\"" + getValidSearchString(searchWord) + "\" Spielfilm";
     }
 
     public static String getWideSearchURL(String searchWord)
     {
-        return "https://opac.winbiap.net/mzhr/search.aspx?q=\"" + searchWord + "\"";
+        return "https://opac.winbiap.net/mzhr/search.aspx?q=\"" + getValidSearchString(searchWord) + "\"";
+    }
+
+    public static String getValidSearchString(String searchWord)
+    {
+        searchWord = searchWord.replaceAll("ä", "ae");
+        searchWord = searchWord.replaceAll("ü", "ue");
+        searchWord = searchWord.replaceAll("ö", "oe");
+        searchWord = searchWord.replaceAll("ß", "ss");
+
+        return searchWord;
     }
 
     // --- Returning text ---
