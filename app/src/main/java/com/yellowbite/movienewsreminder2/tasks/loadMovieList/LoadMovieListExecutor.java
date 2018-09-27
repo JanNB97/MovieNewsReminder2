@@ -3,6 +3,7 @@ package com.yellowbite.movienewsreminder2.tasks.loadMovieList;
 import android.support.v7.app.AppCompatActivity;
 
 import com.yellowbite.movienewsreminder2.files.datatypes.otherDatastructures.SearchMovieList;
+import com.yellowbite.movienewsreminder2.ui.notifications.NotificationMan;
 import com.yellowbite.movienewsreminder2.webscraping.medienzentrum.MedZenMovieListScraper;
 
 import java.io.IOException;
@@ -65,7 +66,16 @@ public class LoadMovieListExecutor
             });
         } catch (IOException e)
         {
-            e.printStackTrace();
+            this.handleExceptionWhileWebscraping(e);
         }
+    }
+
+    private void handleExceptionWhileWebscraping(Exception e)
+    {
+        e.printStackTrace();
+        this.activity.runOnUiThread(() -> {
+            NotificationMan.showShortToast(this.activity, "Es ist ein Fehler aufgetreten");
+            this.onFinishedLoading.run();
+        });
     }
 }
