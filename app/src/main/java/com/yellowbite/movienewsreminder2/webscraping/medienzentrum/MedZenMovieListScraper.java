@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MedZenMovieListScraper
 {
@@ -154,16 +156,22 @@ public class MedZenMovieListScraper
     // --- --- --- access to list --- --- ---
     public int getMaxPages()
     {
-        String pageRangeString = WebscrapingHelper.getText(doc, "span#ContentPlaceHolderMain_resultList_searchPagingView_LabelStatus");
+        return getMaxPages(WebscrapingHelper.getText(doc,
+                "span#ContentPlaceHolderMain_resultList_searchPagingView_LabelStatus"));
+    }
 
-        StringBuilder builder = new StringBuilder(pageRangeString);
-        int startPos = pageRangeString.indexOf('n') + 2;
-        builder.delete(0, startPos);
+    protected static int getMaxPages(String pageRangeString)
+    {
+        Pattern pagePattern = Pattern.compile("von (\\d+)");
+        Matcher pageMatch = pagePattern.matcher(pageRangeString);
 
-        int endPos = builder.indexOf("S") - 1;
-        builder.delete(endPos, builder.length());
+        if(pageMatch.find())
+        {
+            String group = pageMatch.group(1);
+            return Integer.parseInt(group);
+        }
 
-        return Integer.parseInt(builder.toString());
+        return -1;
     }
 
     public String getURLToNextPage()

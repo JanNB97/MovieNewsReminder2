@@ -57,4 +57,16 @@ public class MedZenMovieListScraperTest
         WebscrapingTestHelper.assertEssentialMovie(STAR_TREK_INTO_DARKNESS_EXPECTED, starTrekIntoDarkness);
         WebscrapingTestHelper.assertEssentialMovie(STAR_TREK_EXPECTED, starTrek);
     }
+
+    @Test
+    public void testGetPageMax()
+    {
+        Assert.assertEquals(MedZenMovieListScraper.getMaxPages("41 von 47 Seiten"), 47);
+        Assert.assertEquals(MedZenMovieListScraper.getMaxPages("1 von 1 Seiten"), 1);
+        Assert.assertEquals(MedZenMovieListScraper.getMaxPages("41 von 34234 Seiten"), 34234);
+
+        Assert.assertEquals(MedZenMovieListScraper.getMaxPages(" von 1 Seiten"), 1);
+        Assert.assertEquals(MedZenMovieListScraper.getMaxPages("3242 von  Seiten"), -1);
+        Assert.assertEquals(MedZenMovieListScraper.getMaxPages("von 500"), 500);
+    }
 }

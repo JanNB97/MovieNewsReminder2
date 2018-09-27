@@ -58,7 +58,7 @@ public class LoadMovieListExecutor
             this.activity.runOnUiThread(() -> {
                 this.onSiteLoaded.run();
 
-                if(page == finalMaxPages)
+                if(page >= finalMaxPages)
                 {
                     this.onFinishedLoading.run();
                 }
