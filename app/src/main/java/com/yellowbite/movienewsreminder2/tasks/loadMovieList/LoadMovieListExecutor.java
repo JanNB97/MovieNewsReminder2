@@ -19,15 +19,19 @@ public class LoadMovieListExecutor
 
     private int maxPages;
 
-    public LoadMovieListExecutor(AppCompatActivity activity, String urlToFirstSite, Runnable onSiteLoaded, Runnable onFinishedLoading)
+    public LoadMovieListExecutor(AppCompatActivity activity, Runnable onSiteLoaded, Runnable onFinishedLoading)
     {
         this.activity = activity;
+
         this.executor = (ThreadPoolExecutor) Executors.newCachedThreadPool();
 
         this.onSiteLoaded = onSiteLoaded;
         this.onFinishedLoading = onFinishedLoading;
+    }
 
-        executor.execute(() -> this.loadMovieList(urlToFirstSite));
+    public void startToLoadMovieList(String urlToFirstPage)
+    {
+        executor.execute(() -> this.loadMovieList(urlToFirstPage));
     }
 
     private void loadMovieList(String siteURL)
@@ -42,7 +46,7 @@ public class LoadMovieListExecutor
             MedZenMovieListScraper listScraper = new MedZenMovieListScraper(siteURL);
             String urlToNextPage = listScraper.getURLToNextPage();
 
-            executor.execute(() -> this.loadMovieList(urlToNextPage));
+            this.executor.execute(() -> this.loadMovieList(urlToNextPage));
 
             SearchMovieList.getInstance().addMovieSite(listScraper);
 

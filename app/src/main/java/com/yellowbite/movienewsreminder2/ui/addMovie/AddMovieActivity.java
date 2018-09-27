@@ -9,10 +9,8 @@ import android.widget.TextView;
 
 import com.yellowbite.movienewsreminder2.R;
 import com.yellowbite.movienewsreminder2.files.datatypes.otherDatastructures.SearchMovieList;
-import com.yellowbite.movienewsreminder2.tasks.SimpleAsyncTask;
 import com.yellowbite.movienewsreminder2.tasks.loadMovieList.LoadMovieListExecutor;
 import com.yellowbite.movienewsreminder2.ui.NoTitleBarActivity;
-import com.yellowbite.movienewsreminder2.ui.recyclerView.MovieRecyclerView;
 import com.yellowbite.movienewsreminder2.ui.recyclerView.UnalterableRecyclerView;
 import com.yellowbite.movienewsreminder2.webscraping.WebscrapingHelper;
 
@@ -22,6 +20,8 @@ public class AddMovieActivity extends NoTitleBarActivity
     private Button searchMovieButton;
 
     private UnalterableRecyclerView searchMovieRecyclerView;
+
+    private LoadMovieListExecutor searchExecutor;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState)
@@ -36,6 +36,9 @@ public class AddMovieActivity extends NoTitleBarActivity
 
         this.searchMovieRecyclerView = new UnalterableRecyclerView(this, R.id.movieRecyclerView,
                 SearchMovieList.getInstance());
+
+        this.searchExecutor = new LoadMovieListExecutor(this,
+                this::onSiteScraped, this::onScrapingFinished);
     }
 
     private void initSearchMovieButton()
@@ -52,12 +55,15 @@ public class AddMovieActivity extends NoTitleBarActivity
         this.searchMovieRecyclerView.dataSetChanged(false);
 
         String searchURL = WebscrapingHelper.getWideSearchURL(searchText);
-        new LoadMovieListExecutor(this, searchURL,
-                () -> this.searchMovieRecyclerView.dataSetChanged(false),
-                this::onSiteScraped);
+        this.searchExecutor.startToLoadMovieList(searchURL);
     }
 
     private void onSiteScraped()
+    {
+        this.searchMovieRecyclerView.dataSetChanged(false);
+    }
+
+    private void onScrapingFinished()
     {
         this.searchMovieRecyclerView.dataSetChanged(false);
 
