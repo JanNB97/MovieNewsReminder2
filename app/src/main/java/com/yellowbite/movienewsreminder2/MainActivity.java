@@ -45,6 +45,8 @@ public class MainActivity extends ToolbarActivity implements LoadedMoviesEvent
 
     public void initialize()
     {
+        this.setTitle("Merkliste");
+
         this.loadingProgressBar = this.findViewById(R.id.loadingProgressBar);
         this.moviesUpdateTextView = this.findViewById(R.id.moviesUpdateTextView);
         this.addMovieFloatingButton = this.findViewById(R.id.addMovieFloatingButton);

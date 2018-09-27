@@ -12,8 +12,8 @@ public abstract class ToolbarActivity extends AppCompatActivity
 {
     protected void setContentViewWithoutTitleBar(@LayoutRes int layoutResID)
     {
-        this.addToolbar();
         this.setContentView(layoutResID);
+        this.addToolbar();
     }
 
     private void addToolbar()
