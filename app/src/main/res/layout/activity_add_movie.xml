@@ -28,7 +28,7 @@
         android:inputType="textAutoComplete|textPersonName"
         app:layout_constraintEnd_toStartOf="@+id/searchMovieButton"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/my_toolbar" />
 
     <Button
         android:id="@+id/searchMovieButton"
@@ -40,7 +40,7 @@
         android:textColor="@android:color/background_light"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/my_toolbar" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/movieRecyclerView"
