@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.yellowbite.movienewsreminder2.R;
 import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.HotMoviesSortedList;
 import com.yellowbite.movienewsreminder2.files.datatypes.MovieList;
 import com.yellowbite.movienewsreminder2.model.Movie;
@@ -16,7 +17,7 @@ public class MyMovieRecyclerView extends MovieRecyclerView
     public MyMovieRecyclerView(AppCompatActivity activity, int id, MovieList movieList,
                                Runnable handleOnScrolledDown, Runnable handleOnScrolledUp)
     {
-        super(activity, id, movieList, true);
+        super(activity, id, movieList, true, R.layout.movie_list_row);
 
         this.handleOnScrolledUp = handleOnScrolledUp;
         this.handleOnScrolledDown = handleOnScrolledDown;

@@ -3,6 +3,7 @@ package com.yellowbite.movienewsreminder2.ui.recyclerView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.yellowbite.movienewsreminder2.R;
 import com.yellowbite.movienewsreminder2.files.datatypes.MovieList;
 import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.MyMoviesSortedList;
 import com.yellowbite.movienewsreminder2.files.datatypes.otherDatastructures.SearchMovieList;
@@ -17,7 +18,7 @@ public class AddMovieRecyclerView extends UnalterableRecyclerView
 
     public AddMovieRecyclerView(AddMovieActivity addMovieActivity, int id, MovieList movieList)
     {
-        super(addMovieActivity, id, movieList);
+        super(addMovieActivity, id, movieList, R.layout.simple_movie_list_row);
         this.addMovieActivity = addMovieActivity;
     }
 

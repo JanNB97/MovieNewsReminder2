@@ -27,6 +27,8 @@ public class MovieViewHolder extends RecyclerView.ViewHolder
     private static final String VORBESTELLT_COLOR = "#ffb06b";
     private static final String TEXT_RESET_COLOR = "black";
 
+    private boolean isSimpleRow = false;
+
     public MovieViewHolder(View view)
     {
         super(view);
@@ -36,6 +38,8 @@ public class MovieViewHolder extends RecyclerView.ViewHolder
         this.standortTextView = view.findViewById(R.id.standort);
         this.wocheTextView = view.findViewById(R.id.woche);
         this.wochentagTextView = view.findViewById(R.id.wochentag);
+
+        this.isSimpleRow = this.wochentagTextView == null;
     }
 
     public void showMovie(Movie movie)
@@ -53,7 +57,7 @@ public class MovieViewHolder extends RecyclerView.ViewHolder
             standortTextView.setText(movie.getStandort());
         }
 
-        if(movie.getStatus() == null)
+        if(movie.getStatus() == null || isSimpleRow)
         {
             return;
         }
@@ -93,15 +97,20 @@ public class MovieViewHolder extends RecyclerView.ViewHolder
     {
         this.titelTextView.setText("");
         this.standortTextView.setText("");
-        this.wocheTextView.setText("");
-        this.wochentagTextView.setText("");
+
+        if(!isSimpleRow)
+        {
+            this.wocheTextView.setText("");
+            this.wochentagTextView.setText("");
+
+            this.wochentagTextView.setTextColor(Color.parseColor(TEXT_RESET_COLOR));
+            this.wocheTextView.setTextColor(Color.parseColor(TEXT_RESET_COLOR));
+        }
 
         this.resetViewBg();
 
         this.titelTextView.setTextColor(Color.parseColor(TEXT_RESET_COLOR));
         this.standortTextView.setTextColor(Color.parseColor(TEXT_RESET_COLOR));
-        this.wochentagTextView.setTextColor(Color.parseColor(TEXT_RESET_COLOR));
-        this.wocheTextView.setTextColor(Color.parseColor(TEXT_RESET_COLOR));
     }
 
     private void showIfHot(Movie movie)
@@ -119,6 +128,11 @@ public class MovieViewHolder extends RecyclerView.ViewHolder
 
     private String cutTitel(String titel)
     {
+        if(isSimpleRow)
+        {
+            return titel;
+        }
+
         if(titel.length() > MAX_TITEL_LENGTH)
         {
             StringBuilder builder = new StringBuilder(titel);
