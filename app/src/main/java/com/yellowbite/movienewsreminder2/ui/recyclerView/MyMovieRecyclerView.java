@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.yellowbite.movienewsreminder2.MainActivity;
 import com.yellowbite.movienewsreminder2.R;
 import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.HotMoviesSortedList;
 import com.yellowbite.movienewsreminder2.files.datatypes.MovieList;
@@ -11,27 +12,19 @@ import com.yellowbite.movienewsreminder2.model.Movie;
 
 public class MyMovieRecyclerView extends MovieRecyclerView
 {
-    private Runnable handleOnScrolledUp;
-    private Runnable handleOnScrolledDown;
+    private MainActivity mainActivity;
 
-    private Runnable handleOnSwiped;
-
-    public MyMovieRecyclerView(AppCompatActivity activity, int id, MovieList movieList,
-                               Runnable handleOnScrolledDown, Runnable handleOnScrolledUp,
-                                Runnable handleOnSwiped)
+    public MyMovieRecyclerView(MainActivity mainActivity, int id, MovieList movieList)
     {
-        super(activity, id, movieList, true, R.layout.movie_list_row);
-
-        this.handleOnScrolledUp = handleOnScrolledUp;
-        this.handleOnScrolledDown = handleOnScrolledDown;
-        this.handleOnSwiped = handleOnSwiped;
+        super(mainActivity, id, movieList, true, R.layout.movie_list_row);
+        this.mainActivity = mainActivity;
     }
 
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction)
     {
         super.onSwiped(viewHolder, direction);
-        handleOnSwiped.run();
+        this.mainActivity.handleOnSwiped();
     }
 
     @Override
@@ -56,11 +49,11 @@ public class MyMovieRecyclerView extends MovieRecyclerView
 
         if(dy > 0)
         {
-            this.handleOnScrolledDown.run();
+            this.mainActivity.handleScrolledDown();
         }
         else
         {
-            this.handleOnScrolledUp.run();
+            this.mainActivity.handleScrolledUp();
         }
     }
 }

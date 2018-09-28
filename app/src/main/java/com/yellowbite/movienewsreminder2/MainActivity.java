@@ -56,8 +56,7 @@ public class MainActivity extends NavigationDrawerActivity implements LoadedMovi
         this.initAddMovieFloatingButton();
         this.initUndoFloatingButton();
         this.myMovieRecyclerView = new MyMovieRecyclerView(this, R.id.movieRecyclerView,
-                MyMoviesSortedList.getInstance(),
-                this::handleScrolledDown, this::handleScrolledUp, this::handleOnSwiped);
+                MyMoviesSortedList.getInstance());
 
         this.loadMyMovies();
 
@@ -84,7 +83,7 @@ public class MainActivity extends NavigationDrawerActivity implements LoadedMovi
         AddMovieActivity.startForResult(this);
     }
 
-    private void handleOnSwiped()
+    public void handleOnSwiped()
     {
         this.undoFloatingButton.show();
 
@@ -106,7 +105,7 @@ public class MainActivity extends NavigationDrawerActivity implements LoadedMovi
         // TODO
     }
 
-    private void handleScrolledDown()
+    public void handleScrolledDown()
     {
         if(addMovieFloatingButton.getVisibility() == View.VISIBLE)
         {
@@ -114,7 +113,7 @@ public class MainActivity extends NavigationDrawerActivity implements LoadedMovi
         }
     }
 
-    private void handleScrolledUp()
+    public void handleScrolledUp()
     {
         if(addMovieFloatingButton.getVisibility() != View.VISIBLE)
         {
