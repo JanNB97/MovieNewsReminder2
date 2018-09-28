@@ -24,7 +24,7 @@ public class MyMovieRecyclerView extends MovieRecyclerView
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction)
     {
         super.onSwiped(viewHolder, direction);
-        this.mainActivity.handleOnSwiped();
+        this.mainActivity.handleOnSwiped(super.lastSwipedMovie);
     }
 
     @Override

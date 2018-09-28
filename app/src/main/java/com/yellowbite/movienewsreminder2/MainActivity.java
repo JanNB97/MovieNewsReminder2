@@ -29,11 +29,13 @@ public class MainActivity extends NavigationDrawerActivity implements LoadedMovi
     private MyMovieRecyclerView myMovieRecyclerView;
     private FloatingActionButton addMovieFloatingButton;
     private FloatingActionButton undoFloatingButton;
-    private static final int undoShowTime = 5000;
+    private static final int UNDO_SHOW_TIME = 5000;
 
     // views for loading time
     private ProgressBar loadingProgressBar;
     private TextView moviesUpdateTextView;
+
+    private Movie lastSwipedMovie;
 
     // --- --- --- Initialization --- --- ---
     @Override
@@ -83,14 +85,15 @@ public class MainActivity extends NavigationDrawerActivity implements LoadedMovi
         AddMovieActivity.startForResult(this);
     }
 
-    public void handleOnSwiped()
+    public void handleOnSwiped(Movie swipedMovie)
     {
+        this.lastSwipedMovie = swipedMovie;
         this.undoFloatingButton.show();
 
         new Thread(() -> {
             try
             {
-                Thread.sleep(undoShowTime);
+                Thread.sleep(UNDO_SHOW_TIME);
             } catch (InterruptedException e)
             {
                 e.printStackTrace();
@@ -100,9 +103,17 @@ public class MainActivity extends NavigationDrawerActivity implements LoadedMovi
         }).start();
     }
 
+    // --- --- --- user interactions with recycler view --- --- ---
     private void handleOnUndoClicked(View view)
     {
-        // TODO
+        this.undoFloatingButton.hide();
+
+        if(lastSwipedMovie != null)
+        {
+            MyMoviesSortedList.getInstance().add(this, this.lastSwipedMovie);
+            MyMoviesSortedList.getInstance().save(this);
+            this.myMovieRecyclerView.dataSetChanged(false);
+        }
     }
 
     public void handleScrolledDown()
@@ -158,7 +169,7 @@ public class MainActivity extends NavigationDrawerActivity implements LoadedMovi
         this.myMovieRecyclerView.showItems();
     }
 
-    // --- --- --- Launch and Handle NewMoviesActivity --- --- ---
+    // --- --- --- launch and handle NewMoviesActivity --- --- ---
     private void launchNewMoviesActivity()
     {
         if(!NewMoviesQueue.isEmpty(this))

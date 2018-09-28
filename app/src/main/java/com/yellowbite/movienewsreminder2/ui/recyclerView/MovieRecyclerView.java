@@ -29,6 +29,8 @@ public abstract class MovieRecyclerView extends SwipeCallback
     protected boolean recentlySwiped = false;
     protected final static int SWIPE_COOLDOWN = 1000;
 
+    protected Movie lastSwipedMovie;
+
     // --- --- --- Initialization --- --- ---
     public MovieRecyclerView(AppCompatActivity activity, @IdRes int id, MovieList movieList,
              boolean isSwipeable, int viewHolderLayout)
@@ -99,6 +101,7 @@ public abstract class MovieRecyclerView extends SwipeCallback
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction)
     {
         int position = viewHolder.getAdapterPosition();
+        this.lastSwipedMovie = movieList.get(this.activity, position);
         this.removeItem(position);
 
         recentlySwiped = true;
