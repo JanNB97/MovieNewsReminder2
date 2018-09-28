@@ -28,6 +28,8 @@ public class MainActivity extends NavigationDrawerActivity implements LoadedMovi
     // main views
     private MyMovieRecyclerView myMovieRecyclerView;
     private FloatingActionButton addMovieFloatingButton;
+    private FloatingActionButton undoFloatingButton;
+    private static final int undoShowTime = 5000;
 
     // views for loading time
     private ProgressBar loadingProgressBar;
@@ -50,10 +52,12 @@ public class MainActivity extends NavigationDrawerActivity implements LoadedMovi
         this.loadingProgressBar = this.findViewById(R.id.loadingProgressBar);
         this.moviesUpdateTextView = this.findViewById(R.id.moviesUpdateTextView);
         this.addMovieFloatingButton = this.findViewById(R.id.addMovieFloatingButton);
+        this.undoFloatingButton = this.findViewById(R.id.undoFloatingButton);
         this.initAddMovieFloatingButton();
+        this.initUndoFloatingButton();
         this.myMovieRecyclerView = new MyMovieRecyclerView(this, R.id.movieRecyclerView,
                 MyMoviesSortedList.getInstance(),
-                this::handleScrolledDown, this::handleScrolledUp);
+                this::handleScrolledDown, this::handleScrolledUp, this::handleOnSwiped);
 
         this.loadMyMovies();
 
@@ -68,10 +72,38 @@ public class MainActivity extends NavigationDrawerActivity implements LoadedMovi
         this.addMovieFloatingButton.setOnClickListener(this::handleOnAddMovieClicked);
     }
 
+    private void initUndoFloatingButton()
+    {
+        this.undoFloatingButton.hide();
+        this.undoFloatingButton.setOnClickListener(this::handleOnUndoClicked);
+    }
+
     // --- --- --- User interaction --- --- ---
     private void handleOnAddMovieClicked(View view)
     {
         AddMovieActivity.startForResult(this);
+    }
+
+    private void handleOnSwiped()
+    {
+        this.undoFloatingButton.show();
+
+        new Thread(() -> {
+            try
+            {
+                Thread.sleep(undoShowTime);
+            } catch (InterruptedException e)
+            {
+                e.printStackTrace();
+            }
+
+            this.undoFloatingButton.hide();
+        }).start();
+    }
+
+    private void handleOnUndoClicked(View view)
+    {
+        // TODO
     }
 
     private void handleScrolledDown()

@@ -85,8 +85,10 @@
             android:layout_marginBottom="24dp"
             android:clickable="true"
             android:src="@drawable/ic_undo"
+            app:backgroundTint="@color/colorPrimary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:rippleColor="@color/colorPrimaryDark"
             tools:srcCompat="@tools:sample/avatars" />
 
     </android.support.constraint.ConstraintLayout>

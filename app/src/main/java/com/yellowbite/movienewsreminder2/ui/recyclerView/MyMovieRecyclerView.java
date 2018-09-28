@@ -14,13 +14,24 @@ public class MyMovieRecyclerView extends MovieRecyclerView
     private Runnable handleOnScrolledUp;
     private Runnable handleOnScrolledDown;
 
+    private Runnable handleOnSwiped;
+
     public MyMovieRecyclerView(AppCompatActivity activity, int id, MovieList movieList,
-                               Runnable handleOnScrolledDown, Runnable handleOnScrolledUp)
+                               Runnable handleOnScrolledDown, Runnable handleOnScrolledUp,
+                                Runnable handleOnSwiped)
     {
         super(activity, id, movieList, true, R.layout.movie_list_row);
 
         this.handleOnScrolledUp = handleOnScrolledUp;
         this.handleOnScrolledDown = handleOnScrolledDown;
+        this.handleOnSwiped = handleOnSwiped;
+    }
+
+    @Override
+    public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction)
+    {
+        super.onSwiped(viewHolder, direction);
+        handleOnSwiped.run();
     }
 
     @Override
