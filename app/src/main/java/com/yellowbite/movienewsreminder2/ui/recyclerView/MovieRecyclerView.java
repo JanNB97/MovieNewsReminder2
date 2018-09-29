@@ -145,7 +145,6 @@ public abstract class MovieRecyclerView extends SwipeCallback
         }
         else
         {
-            // no movie added
             this.dataSetChanged(saveInFile);
         }
     }
@@ -159,7 +158,17 @@ public abstract class MovieRecyclerView extends SwipeCallback
         }
 
         this.movieList.remove(this.activity, position);
-        this.dataSetChanged(true);
+        this.notifyItemRemoved(true, position);
+    }
+
+    public void notifyItemRemoved(boolean saveInFile, int position)
+    {
+        this.movieAdapter.notifyItemRemoved(position);
+
+        if(saveInFile)
+        {
+            this.saveInNewThread();
+        }
     }
 
     public void dataSetChanged(boolean saveInFile)
@@ -168,8 +177,13 @@ public abstract class MovieRecyclerView extends SwipeCallback
 
         if(saveInFile)
         {
-            new Thread(() -> this.movieList.save(this.activity))
-                    .start();
+            this.saveInNewThread();
         }
+    }
+
+    private void saveInNewThread()
+    {
+        new Thread(() -> this.movieList.save(this.activity))
+                .start();
     }
 }
