@@ -16,6 +16,7 @@ import com.yellowbite.movienewsreminder2.model.Movie;
 import com.yellowbite.movienewsreminder2.newsService.NewsService;
 import com.yellowbite.movienewsreminder2.tasks.functionalInterfaces.LoadedMoviesEvent;
 import com.yellowbite.movienewsreminder2.tasks.mainActivity.LoadMyMoviesRetryExecutor;
+import com.yellowbite.movienewsreminder2.ui.MyMoviesToolbarActivity;
 import com.yellowbite.movienewsreminder2.ui.NavigationDrawerActivity;
 import com.yellowbite.movienewsreminder2.ui.addMovie.AddMovieActivity;
 import com.yellowbite.movienewsreminder2.ui.recyclerView.MyMovieRecyclerView;
@@ -24,7 +25,7 @@ import com.yellowbite.movienewsreminder2.ui.newMovies.NewMoviesActivity;
 import java.util.Collections;
 import java.util.List;
 
-public class MainActivity extends NavigationDrawerActivity implements LoadedMoviesEvent
+public class MainActivity extends MyMoviesToolbarActivity implements LoadedMoviesEvent
 {
     // main views
     private MyMovieRecyclerView myMovieRecyclerView;
