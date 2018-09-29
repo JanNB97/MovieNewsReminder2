@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.os.Bundle;
+import android.text.format.Time;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -89,11 +90,20 @@ public class MainActivity extends NavigationDrawerActivity implements LoadedMovi
     {
         this.lastSwipedMovie = swipedMovie;
         this.undoFloatingButton.show();
+        this.undoFloatingButton.setVisibility(View.VISIBLE);
+
+        final int UNDO_TIME_PER_INTERVALL = 100;
 
         new Thread(() -> {
             try
             {
-                Thread.sleep(UNDO_SHOW_TIME);
+                for(int i = 0; i <= UNDO_SHOW_TIME; i += UNDO_TIME_PER_INTERVALL)
+                {
+                    if(this.undoFloatingButton.getVisibility() == View.VISIBLE)
+                    {
+                        Thread.sleep(UNDO_TIME_PER_INTERVALL);
+                    }
+                }
             } catch (InterruptedException e)
             {
                 e.printStackTrace();
