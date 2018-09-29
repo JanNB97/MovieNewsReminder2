@@ -36,6 +36,7 @@ public class MainActivity extends NavigationDrawerActivity implements LoadedMovi
     private TextView moviesUpdateTextView;
 
     private Movie lastSwipedMovie;
+    private Thread showUndoButtonThread;
 
     // --- --- --- Initialization --- --- ---
     @Override
@@ -84,7 +85,11 @@ public class MainActivity extends NavigationDrawerActivity implements LoadedMovi
 
         final int UNDO_TIME_PER_INTERVALL = 100;
 
-        new Thread(() -> {
+        if(this.showUndoButtonThread != null)
+        {
+            this.showUndoButtonThread.interrupt();
+        }
+        this.showUndoButtonThread = new Thread(() -> {
             try
             {
                 for(int i = 0; i <= UNDO_SHOW_TIME; i += UNDO_TIME_PER_INTERVALL)
@@ -94,13 +99,15 @@ public class MainActivity extends NavigationDrawerActivity implements LoadedMovi
                         Thread.sleep(UNDO_TIME_PER_INTERVALL);
                     }
                 }
+
+                this.runOnUiThread(() -> this.undoItem.setVisible(false));
             } catch (InterruptedException e)
             {
                 e.printStackTrace();
             }
+        });
 
-            this.runOnUiThread(() -> this.undoItem.setVisible(false));
-        }).start();
+        this.showUndoButtonThread.start();
     }
 
     // --- --- --- user interactions with recycler view --- --- ---
