@@ -76,21 +76,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:rippleColor="@color/colorPrimaryDark" />
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/undoFloatingButton"
-            android:layout_width="69dp"
-            android:layout_height="69dp"
-            android:layout_gravity="bottom|right"
-            android:layout_marginStart="24dp"
-            android:layout_marginBottom="24dp"
-            android:clickable="true"
-            android:src="@drawable/ic_undo"
-            app:backgroundTint="@color/colorPrimary"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:rippleColor="@color/colorPrimaryDark"
-            tools:srcCompat="@tools:sample/avatars" />
-
     </android.support.constraint.ConstraintLayout>
 
     <android.support.design.widget.NavigationView

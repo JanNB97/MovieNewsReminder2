@@ -165,4 +165,10 @@ public class NewMoviesActivity extends ToolbarActivity implements LoadedMovieEve
         Intent intent = new Intent(app, NewMoviesActivity.class);
         app.startActivityForResult(intent, REQUEST_CODE);
     }
+
+    @Override
+    protected void handleOnUndoClicked()
+    {
+        // TODO - remove me
+    }
 }

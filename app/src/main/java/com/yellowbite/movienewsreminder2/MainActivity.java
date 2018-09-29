@@ -29,7 +29,6 @@ public class MainActivity extends NavigationDrawerActivity implements LoadedMovi
     // main views
     private MyMovieRecyclerView myMovieRecyclerView;
     private FloatingActionButton addMovieFloatingButton;
-    private FloatingActionButton undoFloatingButton;
     private static final int UNDO_SHOW_TIME = 5000;
 
     // views for loading time
@@ -55,9 +54,7 @@ public class MainActivity extends NavigationDrawerActivity implements LoadedMovi
         this.loadingProgressBar = this.findViewById(R.id.loadingProgressBar);
         this.moviesUpdateTextView = this.findViewById(R.id.moviesUpdateTextView);
         this.addMovieFloatingButton = this.findViewById(R.id.addMovieFloatingButton);
-        this.undoFloatingButton = this.findViewById(R.id.undoFloatingButton);
         this.initAddMovieFloatingButton();
-        this.initUndoFloatingButton();
         this.myMovieRecyclerView = new MyMovieRecyclerView(this, R.id.movieRecyclerView,
                 MyMoviesSortedList.getInstance());
 
@@ -74,13 +71,7 @@ public class MainActivity extends NavigationDrawerActivity implements LoadedMovi
         this.addMovieFloatingButton.setOnClickListener(this::handleOnAddMovieClicked);
     }
 
-    private void initUndoFloatingButton()
-    {
-        this.undoFloatingButton.hide();
-        this.undoFloatingButton.setOnClickListener(this::handleOnUndoClicked);
-    }
-
-    // --- --- --- User interaction --- --- ---
+    // --- --- --- User interaction with main components --- --- ---
     private void handleOnAddMovieClicked(View view)
     {
         AddMovieActivity.startForResult(this);
@@ -89,8 +80,7 @@ public class MainActivity extends NavigationDrawerActivity implements LoadedMovi
     public void handleOnSwiped(Movie swipedMovie)
     {
         this.lastSwipedMovie = swipedMovie;
-        this.undoFloatingButton.show();
-        this.undoFloatingButton.setVisibility(View.VISIBLE);
+        this.undoItem.setVisible(true);
 
         final int UNDO_TIME_PER_INTERVALL = 100;
 
@@ -99,7 +89,7 @@ public class MainActivity extends NavigationDrawerActivity implements LoadedMovi
             {
                 for(int i = 0; i <= UNDO_SHOW_TIME; i += UNDO_TIME_PER_INTERVALL)
                 {
-                    if(this.undoFloatingButton.getVisibility() == View.VISIBLE)
+                    if(this.undoItem.isVisible())
                     {
                         Thread.sleep(UNDO_TIME_PER_INTERVALL);
                     }
@@ -109,23 +99,11 @@ public class MainActivity extends NavigationDrawerActivity implements LoadedMovi
                 e.printStackTrace();
             }
 
-            this.undoFloatingButton.hide();
+            this.runOnUiThread(() -> this.undoItem.setVisible(false));
         }).start();
     }
 
     // --- --- --- user interactions with recycler view --- --- ---
-    private void handleOnUndoClicked(View view)
-    {
-        this.undoFloatingButton.hide();
-
-        if(lastSwipedMovie != null)
-        {
-            MyMoviesSortedList.getInstance().add(this, this.lastSwipedMovie);
-            MyMoviesSortedList.getInstance().save(this);
-            this.myMovieRecyclerView.dataSetChanged(false);
-        }
-    }
-
     public void handleScrolledDown()
     {
         if(addMovieFloatingButton.getVisibility() == View.VISIBLE)
@@ -139,6 +117,20 @@ public class MainActivity extends NavigationDrawerActivity implements LoadedMovi
         if(addMovieFloatingButton.getVisibility() != View.VISIBLE)
         {
             addMovieFloatingButton.show();
+        }
+    }
+
+    // --- --- --- user interactions with toolbar --- --- ---
+    @Override
+    protected void handleOnUndoClicked()
+    {
+        this.undoItem.setVisible(false);
+
+        if(lastSwipedMovie != null)
+        {
+            MyMoviesSortedList.getInstance().add(this, this.lastSwipedMovie);
+            MyMoviesSortedList.getInstance().save(this);
+            this.myMovieRecyclerView.dataSetChanged(false);
         }
     }
 

@@ -114,6 +114,12 @@ public class AddMovieActivity extends ToolbarActivity
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void handleOnUndoClicked()
+    {
+        // TODO remove me
+    }
+
     // --- --- --- start me from another activity --- --- ---
     public static final int REQUEST_CODE = 2;
 
