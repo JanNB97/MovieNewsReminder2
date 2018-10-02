@@ -2,14 +2,14 @@ package com.yellowbite.movienewsreminder2.newsService.messages;
 
 public class WebScraperMessage
 {
-    private final String titel;
+    private final String title;
     private final String text;
     private final int icon;
     private final boolean showMultiLinedText;
 
-    public WebScraperMessage(String titel, String text, int icon, boolean showMultiLinedText)
+    public WebScraperMessage(String title, String text, int icon, boolean showMultiLinedText)
     {
-        this.titel = titel;
+        this.title = title;
         this.text = text;
         this.icon = icon;
         this.showMultiLinedText = showMultiLinedText;
@@ -20,9 +20,9 @@ public class WebScraperMessage
         return text;
     }
 
-    public String getTitel()
+    public String getTitle()
     {
-        return titel;
+        return title;
     }
 
     public int getIcon()
