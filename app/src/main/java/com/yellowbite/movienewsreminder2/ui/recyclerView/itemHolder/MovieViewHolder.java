@@ -86,6 +86,16 @@ public class MovieViewHolder extends RecyclerView.ViewHolder
             case VORBESTELLT:
                 wocheTextView.setText(movie.getVorbestellungen() + " Vor.");
                 break;
+            case IN_BEARBEITUNG:
+                if(movie.getVorbestellungen() == -1)
+                {
+                    wochentagTextView.setText("in Bearb.");
+                }
+                else
+                {
+                    wocheTextView.setText("in Bearb.");
+                    wochentagTextView.setText("(" + movie.getVorbestellungen() + " Vor.)");
+                }
         }
 
         this.showColor(movie);
@@ -190,7 +200,7 @@ public class MovieViewHolder extends RecyclerView.ViewHolder
                 }
 
                 return VORBESTELLT_COLOR;
-            case VORBESTELLT:
+            case VORBESTELLT: case IN_BEARBEITUNG:
                 return VORBESTELLT_COLOR;
         }
 

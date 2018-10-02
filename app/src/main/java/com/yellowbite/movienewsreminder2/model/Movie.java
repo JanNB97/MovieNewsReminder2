@@ -338,6 +338,8 @@ public class Movie implements Comparable<Movie>
                     case VORBESTELLT:
                         return this.compareTo(/* Last */ () -> THIS_EARLIER,
                                 /* First checked */ compareVorbestellungen);
+                    case IN_BEARBEITUNG:
+                        return THIS_EARLIER;
                 }
 
             case VORBESTELLT:
@@ -351,7 +353,18 @@ public class Movie implements Comparable<Movie>
                     case VORBESTELLT:
                         return this.compareTo(/* Last */ compareTitel,
                                 /* First checked */ compareVorbestellungen, compareZugang);
+                    case IN_BEARBEITUNG:
+                        return THIS_EARLIER;
                 }
+
+            case IN_BEARBEITUNG:
+                if(movie.status != Status.IN_BEARBEITUNG)
+                {
+                    return THIS_LATER;
+                }
+
+                return this.compareTo(/* Last */ compareTitel,
+                        /* first checked */ compareVorbestellungen);
         }
 
         Logger.getGlobal().severe("Something went wrong: Reached unreachable statement");
@@ -389,7 +402,8 @@ public class Movie implements Comparable<Movie>
     public enum Status {
         VERFUEGBAR("verfügbar"),
         ENTLIEHEN("entliehen"),
-        VORBESTELLT("vorbestellt");
+        VORBESTELLT("vorbestellt"),
+        IN_BEARBEITUNG("in Bearbeitung");
 
         private String value;
 

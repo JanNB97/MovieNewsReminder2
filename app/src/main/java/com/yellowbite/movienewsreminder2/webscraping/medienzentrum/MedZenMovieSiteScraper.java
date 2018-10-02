@@ -144,7 +144,7 @@ public class MedZenMovieSiteScraper
             return;
         }
 
-        if(status == Movie.Status.VORBESTELLT)
+        if(status == Movie.Status.VORBESTELLT || status == Movie.Status.IN_BEARBEITUNG)
         {
             this.movie.setEntliehenBis(null);
         }
