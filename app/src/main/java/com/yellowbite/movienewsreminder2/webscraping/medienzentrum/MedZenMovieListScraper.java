@@ -44,6 +44,22 @@ public class MedZenMovieListScraper
         return movies;
     }
 
+    public List<Movie> getAllEssentialMovies()
+    {
+        List<Movie> movies = new ArrayList<>();
+
+        for(int i = 0; i < this.getListEntrySize(); i++)
+        {
+            Movie movie = getEssentialMovie(i);
+            if(movie != null)
+            {
+                movies.add(movie);
+            }
+        }
+
+        return movies;
+    }
+
     public Movie getMovie(int index)
     {
         if(!isMovie(index))

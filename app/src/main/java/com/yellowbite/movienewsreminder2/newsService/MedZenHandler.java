@@ -5,8 +5,10 @@ import android.content.Context;
 import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.HotMoviesSortedList;
 import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.NewMoviesQueue;
 import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.NewestMovie;
+import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.SortedBookedMoviesList;
 import com.yellowbite.movienewsreminder2.model.Movie;
 import com.yellowbite.movienewsreminder2.newsService.messages.AddedMovieMessage;
+import com.yellowbite.movienewsreminder2.newsService.messages.BookedMovieMessage;
 import com.yellowbite.movienewsreminder2.newsService.messages.HotMovieMessage;
 import com.yellowbite.movienewsreminder2.newsService.messages.WebScraperMessage;
 import com.yellowbite.movienewsreminder2.webscraping.medienzentrum.MedZenMovieListScraper;
@@ -71,8 +73,19 @@ public class MedZenHandler extends WebscrapingHandler
             return null;
         }
 
-        // TODO
-        return null;
+        List<Movie> bookedMovies = listScraper.getAllEssentialMovies();
+
+        List<Movie> newBookedMovies = SortedBookedMoviesList.getInstance(context)
+                .getAndAddDifference(context, bookedMovies);
+
+        NewMoviesQueue.addAll(context, newBookedMovies);
+
+        if(newBookedMovies.size() == 0)
+        {
+            return null;
+        }
+
+        return new BookedMovieMessage(newBookedMovies.size());
     }
 
     private WebScraperMessage checkForAddedMovies(Context context)
