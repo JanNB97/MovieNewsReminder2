@@ -45,6 +45,7 @@ public class AddMovieActivity extends ToolbarActivity
         this.searchProgressIndicator = this.findViewById(R.id.searchProgressIndicator);
         this.searchProgressIndicator.setVisibility(View.GONE);
 
+        this.initSearchTextView();
         this.initSearchMovieButton();
 
         this.addMovieRecyclerView = new AddMovieRecyclerView(this, R.id.movieRecyclerView,
@@ -58,6 +59,17 @@ public class AddMovieActivity extends ToolbarActivity
     {
         this.searchMovieButton.setOnClickListener(
                 v -> this.handleClickedOnSearchMovie(searchTextView.getText().toString()));
+    }
+
+    private void initSearchTextView()
+    {
+        this.searchTextView.setOnKeyListener((v1, key, v3) -> {
+            if(key == 66)
+            {
+                this.handleClickedOnSearchMovie(this.searchTextView.getText().toString());
+            }
+            return false;
+        });
     }
 
     // --- --- --- Handle user interaction --- --- ---
