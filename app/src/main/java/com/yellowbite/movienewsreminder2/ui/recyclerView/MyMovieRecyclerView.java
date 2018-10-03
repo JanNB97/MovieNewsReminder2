@@ -10,6 +10,8 @@ import com.yellowbite.movienewsreminder2.R;
 import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.HotMoviesSortedList;
 import com.yellowbite.movienewsreminder2.files.datatypes.MovieList;
 import com.yellowbite.movienewsreminder2.model.Movie;
+import com.yellowbite.movienewsreminder2.ui.activites.MyMoviesToolbarActivity;
+import com.yellowbite.movienewsreminder2.ui.activites.ToolbarActivity;
 
 public class MyMovieRecyclerView extends MovieRecyclerView
 {

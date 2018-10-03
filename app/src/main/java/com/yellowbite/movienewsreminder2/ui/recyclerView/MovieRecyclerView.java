@@ -176,7 +176,7 @@ public abstract class MovieRecyclerView extends SwipeCallback
 
     private void callAllTouchedListeners(List<TouchListener> touchListeners, View view, int position)
     {
-        for(TouchListener touchListener : this.itemClickedListeners)
+        for(TouchListener touchListener : touchListeners)
         {
             touchListener.onTouch(view, position);
         }
