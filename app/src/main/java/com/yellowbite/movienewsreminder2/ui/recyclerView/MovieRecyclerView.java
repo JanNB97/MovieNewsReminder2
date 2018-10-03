@@ -12,9 +12,12 @@ import com.yellowbite.movienewsreminder2.files.datatypes.MovieList;
 import com.yellowbite.movienewsreminder2.model.Movie;
 import com.yellowbite.movienewsreminder2.ui.notifications.NotificationMan;
 import com.yellowbite.movienewsreminder2.ui.recyclerView.itemHolder.MovieAdapter;
+import com.yellowbite.movienewsreminder2.ui.recyclerView.listener.SwipeListener;
+import com.yellowbite.movienewsreminder2.ui.recyclerView.listener.TouchListener;
 import com.yellowbite.movienewsreminder2.ui.recyclerView.touchListeners.RecyclerTouchListener;
 import com.yellowbite.movienewsreminder2.ui.recyclerView.touchListeners.SwipeCallback;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class MovieRecyclerView extends SwipeCallback
@@ -31,11 +34,19 @@ public abstract class MovieRecyclerView extends SwipeCallback
 
     protected Movie lastSwipedMovie;
 
+    private List<SwipeListener> swipeListeners;
+    private List<TouchListener> itemClickedListeners;
+    private List<TouchListener> itemLongClickedListeners;
+
     // --- --- --- Initialization --- --- ---
     public MovieRecyclerView(AppCompatActivity activity, @IdRes int id, MovieList movieList,
              boolean isSwipeable, int viewHolderLayout)
     {
         this.activity = activity;
+
+        this.swipeListeners = new ArrayList<>();
+        this.itemClickedListeners = new ArrayList<>();
+        this.itemLongClickedListeners = new ArrayList<>();
 
         this.recyclerView = activity.findViewById(id);
         this.recyclerView.setHasFixedSize(true);
@@ -115,15 +126,55 @@ public abstract class MovieRecyclerView extends SwipeCallback
             }
             this.recentlySwiped = false;
         }).start();
+
+        this.callAllSwipeListeners(viewHolder, direction);
     }
 
-    protected void handleClickedOnMovieItem(View view, int position){}
+    protected void handleClickedOnMovieItem(View view, int position)
+    {
+        this.callAllTouchedListeners(this.itemClickedListeners, view, position);
+    }
 
-    protected void handleClickedLongOnMovieItem(View view, int position){}
+    protected void handleClickedLongOnMovieItem(View view, int position)
+    {
+        this.callAllTouchedListeners(this.itemLongClickedListeners, view, position);
+    }
 
     protected void handleOnScrolled(RecyclerView recyclerView, int dx, int dy){}
 
     protected void handleOnScrollStateChanged(RecyclerView recyclerView, int newState){}
+
+    // --- --- --- listeners --- --- ---
+    public void setOnSwipeListener(SwipeListener swipeListener)
+    {
+        this.swipeListeners.add(swipeListener);
+    }
+
+    private void callAllSwipeListeners(RecyclerView.ViewHolder viewHolder, int direction)
+    {
+        for(SwipeListener swipeListener : swipeListeners)
+        {
+            swipeListener.onSwipe(viewHolder, direction, this.lastSwipedMovie);
+        }
+    }
+
+    public void setOnClickedListener(TouchListener touchListener)
+    {
+        this.itemClickedListeners.add(touchListener);
+    }
+
+    public void setOnLongClickedListener(TouchListener touchListener)
+    {
+        this.itemLongClickedListeners.add(touchListener);
+    }
+
+    private void callAllTouchedListeners(List<TouchListener> touchListeners, View view, int position)
+    {
+        for(TouchListener touchListener : this.itemClickedListeners)
+        {
+            touchListener.onTouch(view, position);
+        }
+    }
 
     // --- --- --- manage items --- --- ---
     public void showItems()

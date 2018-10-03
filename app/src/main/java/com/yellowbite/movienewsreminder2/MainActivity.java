@@ -52,14 +52,22 @@ public class MainActivity extends MyMoviesToolbarActivity implements LoadedMovie
     {
         this.addMovieFloatingButton.setEnabled(false);
 
-        this.myMovieRecyclerView = new MyMovieRecyclerView(this, R.id.movieRecyclerView,
-                MyMoviesSortedList.getInstance());
+        this.initRecyclerView();
 
         this.loadMyMovies();
 
         NewsService.start(this);
 
         this.launchNewMoviesActivity();
+    }
+
+    private void initRecyclerView()
+    {
+        this.myMovieRecyclerView = new MyMovieRecyclerView(this, R.id.movieRecyclerView,
+                MyMoviesSortedList.getInstance());
+        this.myMovieRecyclerView.setOnSwipeListener(
+                (v, d, lastRemovedMovie) -> this.handleOnSwiped(lastRemovedMovie)
+        );
     }
 
     private void findViewsById()
