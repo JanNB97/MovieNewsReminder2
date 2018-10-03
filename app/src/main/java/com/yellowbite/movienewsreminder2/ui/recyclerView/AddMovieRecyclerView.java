@@ -1,6 +1,5 @@
 package com.yellowbite.movienewsreminder2.ui.recyclerView;
 
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.yellowbite.movienewsreminder2.R;
@@ -9,7 +8,7 @@ import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles
 import com.yellowbite.movienewsreminder2.files.datatypes.otherDatastructures.SearchMovieList;
 import com.yellowbite.movienewsreminder2.model.Movie;
 import com.yellowbite.movienewsreminder2.tasks.mainActivity.GetMovieAsyncTask;
-import com.yellowbite.movienewsreminder2.ui.addMovie.AddMovieActivity;
+import com.yellowbite.movienewsreminder2.ui.activites.AddMovieActivity;
 import com.yellowbite.movienewsreminder2.ui.notifications.NotificationMan;
 
 public class AddMovieRecyclerView extends UnalterableRecyclerView

@@ -1,4 +1,4 @@
-package com.yellowbite.movienewsreminder2.ui;
+package com.yellowbite.movienewsreminder2.ui.activites;
 
 import android.os.Bundle;
 import android.os.PersistableBundle;

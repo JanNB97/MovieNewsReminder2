@@ -1,12 +1,12 @@
-package com.yellowbite.movienewsreminder2.ui;
+package com.yellowbite.movienewsreminder2.ui.activites;
 
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
-import android.view.Gravity;
 import android.view.MenuItem;
 
 import com.yellowbite.movienewsreminder2.R;
+import com.yellowbite.movienewsreminder2.ui.activites.ToolbarActivity;
 
 public abstract class NavigationDrawerActivity extends ToolbarActivity
 {

@@ -2,10 +2,8 @@ package com.yellowbite.movienewsreminder2;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.annotation.XmlRes;
 import android.support.design.widget.FloatingActionButton;
 import android.os.Bundle;
-import android.text.format.Time;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -17,11 +15,10 @@ import com.yellowbite.movienewsreminder2.model.Movie;
 import com.yellowbite.movienewsreminder2.newsService.NewsService;
 import com.yellowbite.movienewsreminder2.tasks.functionalInterfaces.LoadedMoviesEvent;
 import com.yellowbite.movienewsreminder2.tasks.mainActivity.LoadMyMoviesRetryExecutor;
-import com.yellowbite.movienewsreminder2.ui.MyMoviesToolbarActivity;
-import com.yellowbite.movienewsreminder2.ui.NavigationDrawerActivity;
-import com.yellowbite.movienewsreminder2.ui.addMovie.AddMovieActivity;
+import com.yellowbite.movienewsreminder2.ui.activites.MyMoviesToolbarActivity;
+import com.yellowbite.movienewsreminder2.ui.activites.AddMovieActivity;
 import com.yellowbite.movienewsreminder2.ui.recyclerView.MyMovieRecyclerView;
-import com.yellowbite.movienewsreminder2.ui.newMovies.NewMoviesActivity;
+import com.yellowbite.movienewsreminder2.ui.activites.NewMoviesActivity;
 
 import java.util.Collections;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.yellowbite.movienewsreminder2.ui.addMovie;
+package com.yellowbite.movienewsreminder2.ui.activites;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -15,7 +15,6 @@ import android.widget.TextView;
 import com.yellowbite.movienewsreminder2.R;
 import com.yellowbite.movienewsreminder2.files.datatypes.otherDatastructures.SearchMovieList;
 import com.yellowbite.movienewsreminder2.tasks.loadMovieList.LoadMovieListExecutor;
-import com.yellowbite.movienewsreminder2.ui.ToolbarActivity;
 import com.yellowbite.movienewsreminder2.ui.recyclerView.AddMovieRecyclerView;
 import com.yellowbite.movienewsreminder2.webscraping.WebscrapingHelper;
 

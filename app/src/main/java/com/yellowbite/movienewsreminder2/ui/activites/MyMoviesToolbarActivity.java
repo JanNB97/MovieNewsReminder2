@@ -1,10 +1,11 @@
-package com.yellowbite.movienewsreminder2.ui;
+package com.yellowbite.movienewsreminder2.ui.activites;
 
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.yellowbite.movienewsreminder2.R;
+import com.yellowbite.movienewsreminder2.ui.activites.NavigationDrawerActivity;
 
 public abstract class MyMoviesToolbarActivity extends NavigationDrawerActivity
 {
