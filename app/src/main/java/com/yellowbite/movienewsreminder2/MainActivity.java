@@ -65,6 +65,7 @@ public class MainActivity extends MyMoviesToolbarActivity implements LoadedMovie
     {
         this.myMovieRecyclerView = new MyMovieRecyclerView(this, R.id.movieRecyclerView,
                 MyMoviesSortedList.getInstance());
+
         this.myMovieRecyclerView.setOnSwipeListener(
                 (v, d, lastRemovedMovie) -> this.handleOnSwiped(lastRemovedMovie)
         );

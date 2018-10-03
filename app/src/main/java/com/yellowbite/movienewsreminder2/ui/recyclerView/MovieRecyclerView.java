@@ -15,8 +15,8 @@ import com.yellowbite.movienewsreminder2.ui.recyclerView.itemHolder.MovieAdapter
 import com.yellowbite.movienewsreminder2.ui.recyclerView.listener.ScrollListener;
 import com.yellowbite.movienewsreminder2.ui.recyclerView.listener.SwipeListener;
 import com.yellowbite.movienewsreminder2.ui.recyclerView.listener.TouchListener;
-import com.yellowbite.movienewsreminder2.ui.recyclerView.touchListeners.RecyclerTouchListener;
-import com.yellowbite.movienewsreminder2.ui.recyclerView.touchListeners.SwipeCallback;
+import com.yellowbite.movienewsreminder2.ui.recyclerView.listener.touchListeners.RecyclerTouchListener;
+import com.yellowbite.movienewsreminder2.ui.recyclerView.listener.touchListeners.SwipeCallback;
 
 import java.util.ArrayList;
 import java.util.List;
