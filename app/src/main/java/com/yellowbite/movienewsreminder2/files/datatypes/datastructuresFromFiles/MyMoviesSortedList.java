@@ -60,6 +60,21 @@ public class MyMoviesSortedList extends MovieListFromFile
         return true;
     }
 
+    public boolean contains(Context context, Movie movie)
+    {
+        this.getFromFileIfNecessary(context);
+
+        for(Movie m2 : super.movieList)
+        {
+            if(m2.getMediaBarcode() == movie.getMediaBarcode())
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     private void sort()
     {
         Collections.sort(super.movieList);

@@ -11,7 +11,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.yellowbite.movienewsreminder2.R;
+import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.MyMoviesSortedList;
 import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.NewMoviesQueue;
+import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.SortedBookedMoviesList;
 import com.yellowbite.movienewsreminder2.model.Movie;
 import com.yellowbite.movienewsreminder2.tasks.functionalInterfaces.LoadedMovieEvent;
 import com.yellowbite.movienewsreminder2.tasks.newMovies.DelLastAndAddAsyncTask;
@@ -129,6 +131,16 @@ public class NewMoviesActivity extends ToolbarActivity implements LoadedMovieEve
         {
             this.einheitstitelTextView.setText("");
         }
+
+        boolean movieBooked = SortedBookedMoviesList.getInstance(this).containsAndRemove(this, movie)
+                || MyMoviesSortedList.getInstance().contains(this, movie);
+        this.setMovieBooked(movieBooked);
+    }
+
+    private void setMovieBooked(boolean movieBooked)
+    {
+        this.addToMyMoviesButton.setEnabled(!movieBooked);
+        this.nextMovieButton.setText(movieBooked ? "OK" : "✓");
     }
 
     private void setButtonsEnabled(boolean b)
