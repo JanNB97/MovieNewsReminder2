@@ -34,9 +34,10 @@ public class NewMoviesActivity extends ToolbarActivity implements LoadedMovieEve
     private int displayedMovieId;
     private Movie displayedMovie;
 
-    private static String NEXT_MOVIE_LABEL;
+    private String nextMovieLabel;
+
     private static final String DECISION_DISABLED_LABEL = "OK";
-    private static final String IN_BEARBEITUNG_ARRIVED_LABEL = "war in " + Movie.Status.IN_BEARBEITUNG.getValue();
+    private static final String IN_BEARBEITUNG_ARRIVED_LABEL = "war " + Movie.Status.IN_BEARBEITUNG.getValue();
 
     // --- --- --- initialization --- --- ---
     @Override
@@ -51,7 +52,7 @@ public class NewMoviesActivity extends ToolbarActivity implements LoadedMovieEve
 
     public void initialize()
     {
-        NEXT_MOVIE_LABEL = this.nextMovieButton.getText().toString();
+        nextMovieLabel = this.nextMovieButton.getText().toString();
 
         this.displayedMovieId = NewMoviesQueue.size(this);
 
@@ -159,7 +160,7 @@ public class NewMoviesActivity extends ToolbarActivity implements LoadedMovieEve
     private void setDecisionEnabled(boolean movieBooked)
     {
         this.addToMyMoviesButton.setVisibility(movieBooked ? View.VISIBLE : View.GONE);
-        this.nextMovieButton.setText(movieBooked ? NEXT_MOVIE_LABEL : DECISION_DISABLED_LABEL);
+        this.nextMovieButton.setText(movieBooked ? nextMovieLabel : DECISION_DISABLED_LABEL);
     }
 
     private void setButtonsEnabled(boolean b)
