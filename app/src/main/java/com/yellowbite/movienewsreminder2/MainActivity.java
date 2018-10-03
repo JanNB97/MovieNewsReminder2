@@ -2,6 +2,7 @@ package com.yellowbite.movienewsreminder2;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.support.annotation.XmlRes;
 import android.support.design.widget.FloatingActionButton;
 import android.os.Bundle;
 import android.text.format.Time;
@@ -56,7 +57,7 @@ public class MainActivity extends MyMoviesToolbarActivity implements LoadedMovie
         this.loadingProgressBar = this.findViewById(R.id.loadingProgressBar);
         this.moviesUpdateTextView = this.findViewById(R.id.moviesUpdateTextView);
         this.addMovieFloatingButton = this.findViewById(R.id.addMovieFloatingButton);
-        this.initAddMovieFloatingButton();
+        this.addMovieFloatingButton.setEnabled(false);
         this.myMovieRecyclerView = new MyMovieRecyclerView(this, R.id.movieRecyclerView,
                 MyMoviesSortedList.getInstance());
 
@@ -67,14 +68,8 @@ public class MainActivity extends MyMoviesToolbarActivity implements LoadedMovie
         this.launchNewMoviesActivity();
     }
 
-    private void initAddMovieFloatingButton()
-    {
-        this.addMovieFloatingButton.setEnabled(false);
-        this.addMovieFloatingButton.setOnClickListener(this::handleOnAddMovieClicked);
-    }
-
     // --- --- --- User interaction with main components --- --- ---
-    private void handleOnAddMovieClicked(View view)
+    public void handleOnAddMovieClicked(View view)
     {
         AddMovieActivity.startForResult(this);
     }

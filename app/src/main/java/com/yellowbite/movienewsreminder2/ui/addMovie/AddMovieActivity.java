@@ -46,7 +46,6 @@ public class AddMovieActivity extends ToolbarActivity
         this.searchProgressIndicator.setVisibility(View.GONE);
 
         this.initSearchTextView();
-        this.initSearchMovieButton();
 
         this.addMovieRecyclerView = new AddMovieRecyclerView(this, R.id.movieRecyclerView,
                 SearchMovieList.getInstance());
@@ -55,26 +54,22 @@ public class AddMovieActivity extends ToolbarActivity
                 this::onSiteScraped, this::onScrapingFinished);
     }
 
-    private void initSearchMovieButton()
-    {
-        this.searchMovieButton.setOnClickListener(
-                v -> this.handleClickedOnSearchMovie(searchTextView.getText().toString()));
-    }
-
     private void initSearchTextView()
     {
-        this.searchTextView.setOnKeyListener((v1, key, v3) -> {
+        this.searchTextView.setOnKeyListener((view, key, v3) -> {
             if(key == 66)
             {
-                this.handleClickedOnSearchMovie(this.searchTextView.getText().toString());
+                this.handleClickedOnSearchMovie(view);
             }
             return false;
         });
     }
 
     // --- --- --- Handle user interaction --- --- ---
-    private void handleClickedOnSearchMovie(String searchText)
+    public void handleClickedOnSearchMovie(View v)
     {
+        String searchText = this.searchTextView.getText().toString();
+
         this.searchProgressIndicator.setVisibility(View.VISIBLE);
         this.setUserInteractionEnabled(false);
         SearchMovieList.getInstance().clear();

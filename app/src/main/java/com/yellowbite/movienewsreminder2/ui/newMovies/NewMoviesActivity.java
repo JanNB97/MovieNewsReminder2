@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -44,28 +45,23 @@ public class NewMoviesActivity extends ToolbarActivity implements LoadedMovieEve
 
     public void initialize()
     {
-        addToMyMoviesButton = this.findViewById(R.id.addToMyMoviesButton);
-        nextMovieButton = this.findViewById(R.id.nextMovieButton);
-        this.movieTitelTextView = this.findViewById(R.id.movieNameTextView);
+        this.addToMyMoviesButton    = this.findViewById(R.id.addToMyMoviesButton);
+        this.nextMovieButton        = this.findViewById(R.id.nextMovieButton);
+        this.movieTitelTextView     = this.findViewById(R.id.movieNameTextView);
+        this.movieImageView         = this.findViewById(R.id.movieImageView);
+        this.einheitstitelTextView  = this.findViewById(R.id.einheitstitelTextView);
+
         this.displayedMovieId = NewMoviesQueue.size(this);
-        this.movieImageView = this.findViewById(R.id.movieImageView);
-        this.einheitstitelTextView = this.findViewById(R.id.einheitstitelTextView);
 
         new LoadNewMoviesDescendingExecutor(this, this, NewMoviesQueue.getAll(this));
         this.movieIsLoaded = new boolean[NewMoviesQueue.size(this)];
 
         this.tryToShowNextMovie();
-
-        nextMovieButton.setOnClickListener(e -> this.handleClickOnNextMovie());
-        addToMyMoviesButton.setOnClickListener(e -> this.handleClickOnAddMovie());
-
-        movieTitelTextView.setOnClickListener(e -> this.handleClickOnTitel());
-        einheitstitelTextView.setOnClickListener(e -> this.handleClickOnTitel());
     }
 
     // --- --- --- handle clicks --- --- ---
 
-    private void handleClickOnAddMovie()
+    public void handleClickOnAddMovie(View v)
     {
         this.setButtonsEnabled(false);
 
@@ -74,13 +70,13 @@ public class NewMoviesActivity extends ToolbarActivity implements LoadedMovieEve
                 /* Executed after tasks finished: */this::tryToShowNextMovie);
     }
 
-    private void handleClickOnNextMovie()
+    public void handleClickOnNextMovie()
     {
         this.setButtonsEnabled(false);
         DelLastAndAddAsyncTask.delLast(this.getApplicationContext(), this::tryToShowNextMovie);
     }
 
-    private void handleClickOnTitel()
+    public void handleClickOnTitel()
     {
         String searchword = movieTitelTextView.getText().toString();
         String einheitssachtitel = einheitstitelTextView.getText().toString();
