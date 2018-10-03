@@ -47,17 +47,14 @@ public class MainActivity extends MyMoviesToolbarActivity implements LoadedMovie
         super.onCreate(savedInstanceState);
         setContentViewWithoutTitleBar(R.layout.activity_main);
 
+        this.findViewsById();
         this.initialize();
     }
 
-    public void initialize()
+    private void initialize()
     {
-        this.setTitle("Merkliste");
-
-        this.loadingProgressBar = this.findViewById(R.id.loadingProgressBar);
-        this.moviesUpdateTextView = this.findViewById(R.id.moviesUpdateTextView);
-        this.addMovieFloatingButton = this.findViewById(R.id.addMovieFloatingButton);
         this.addMovieFloatingButton.setEnabled(false);
+
         this.myMovieRecyclerView = new MyMovieRecyclerView(this, R.id.movieRecyclerView,
                 MyMoviesSortedList.getInstance());
 
@@ -66,6 +63,13 @@ public class MainActivity extends MyMoviesToolbarActivity implements LoadedMovie
         NewsService.start(this);
 
         this.launchNewMoviesActivity();
+    }
+
+    private void findViewsById()
+    {
+        this.loadingProgressBar     = this.findViewById(R.id.loadingProgressBar);
+        this.moviesUpdateTextView   = this.findViewById(R.id.moviesUpdateTextView);
+        this.addMovieFloatingButton = this.findViewById(R.id.addMovieFloatingButton);
     }
 
     // --- --- --- User interaction with main components --- --- ---

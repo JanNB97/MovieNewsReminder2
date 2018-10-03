@@ -36,11 +36,13 @@ public class AddMovieActivity extends ToolbarActivity
         super.onCreate(savedInstanceState);
         setContentViewWithoutTitleBar(R.layout.activity_add_movie);
 
-        this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        this.findViewsById();
+        this.initialize();
+    }
 
-        this.searchTextView             = this.findViewById(R.id.searchTextView);
-        this.searchMovieButton          = this.findViewById(R.id.searchMovieButton);
-        this.searchProgressIndicator    = this.findViewById(R.id.searchProgressIndicator);
+    private void initialize()
+    {
+        this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         this.initSearchTextView();
 
@@ -49,6 +51,13 @@ public class AddMovieActivity extends ToolbarActivity
 
         this.searchExecutor = new LoadMovieListExecutor(this,
                 this::onSiteScraped, this::onScrapingFinished);
+    }
+    
+    private void findViewsById()
+    {
+        this.searchTextView             = this.findViewById(R.id.searchTextView);
+        this.searchMovieButton          = this.findViewById(R.id.searchMovieButton);
+        this.searchProgressIndicator    = this.findViewById(R.id.searchProgressIndicator);
     }
 
     private void initSearchTextView()
