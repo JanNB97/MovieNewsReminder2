@@ -4,7 +4,6 @@ import android.view.View;
 
 import com.yellowbite.movienewsreminder2.R;
 import com.yellowbite.movienewsreminder2.files.datatypes.MovieList;
-import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.MyMoviesSortedList;
 import com.yellowbite.movienewsreminder2.files.datatypes.otherDatastructures.SearchMovieList;
 import com.yellowbite.movienewsreminder2.model.Movie;
 import com.yellowbite.movienewsreminder2.tasks.mainActivity.GetMovieAsyncTask;
@@ -14,11 +13,14 @@ import com.yellowbite.movienewsreminder2.ui.notifications.NotificationMan;
 public class AddMovieRecyclerView extends UnalterableRecyclerView
 {
     private AddMovieActivity addMovieActivity;
+    private MovieList movieListToAdd;
 
-    public AddMovieRecyclerView(AddMovieActivity addMovieActivity, int id, MovieList movieList)
+    public AddMovieRecyclerView(AddMovieActivity addMovieActivity, int id, MovieList movieList,
+                                MovieList movieListToAdd)
     {
         super(addMovieActivity, id, movieList, R.layout.simple_movie_list_row);
         this.addMovieActivity = addMovieActivity;
+        this.movieListToAdd = movieListToAdd;
     }
 
     @Override
@@ -37,8 +39,8 @@ public class AddMovieRecyclerView extends UnalterableRecyclerView
                 }
                 else
                 {
-                    MyMoviesSortedList.getInstance().add(this.addMovieActivity, movie);
-                    MyMoviesSortedList.getInstance().save(this.addMovieActivity);
+                    this.movieListToAdd.add(this.addMovieActivity, movie);
+                    this.movieListToAdd.save(this.addMovieActivity);
                     this.addMovieActivity.openMainActivity();
                 }
         });

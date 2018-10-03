@@ -13,6 +13,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.yellowbite.movienewsreminder2.R;
+import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.MyMoviesSortedList;
 import com.yellowbite.movienewsreminder2.files.datatypes.otherDatastructures.SearchMovieList;
 import com.yellowbite.movienewsreminder2.tasks.loadMovieList.LoadMovieListExecutor;
 import com.yellowbite.movienewsreminder2.ui.recyclerView.AddMovieRecyclerView;
@@ -49,7 +50,8 @@ public class AddMovieActivity extends ToolbarActivity
         this.initSearchTextView();
 
         this.addMovieRecyclerView = new AddMovieRecyclerView(this,
-                R.id.movieRecyclerView, SearchMovieList.getInstance());
+                R.id.movieRecyclerView, SearchMovieList.getInstance(),
+                MyMoviesSortedList.getInstance());
 
         this.searchExecutor = new LoadMovieListExecutor(this,
                 this::onSiteScraped, this::onScrapingFinished);
