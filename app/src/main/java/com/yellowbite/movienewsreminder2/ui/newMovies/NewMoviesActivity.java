@@ -70,13 +70,13 @@ public class NewMoviesActivity extends ToolbarActivity implements LoadedMovieEve
                 /* Executed after tasks finished: */this::tryToShowNextMovie);
     }
 
-    public void handleClickOnNextMovie()
+    public void handleClickOnNextMovie(View v)
     {
         this.setButtonsEnabled(false);
         DelLastAndAddAsyncTask.delLast(this.getApplicationContext(), this::tryToShowNextMovie);
     }
 
-    public void handleClickOnTitel()
+    public void handleClickOnTitel(View v)
     {
         String searchword = movieTitelTextView.getText().toString();
         String einheitssachtitel = einheitstitelTextView.getText().toString();
