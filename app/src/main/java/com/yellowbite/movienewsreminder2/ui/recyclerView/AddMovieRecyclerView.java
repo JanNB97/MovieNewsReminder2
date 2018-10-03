@@ -41,7 +41,8 @@ public class AddMovieRecyclerView extends UnalterableRecyclerView
                 {
                     this.movieListToAdd.add(this.addMovieActivity, movie);
                     this.movieListToAdd.save(this.addMovieActivity);
-                    this.addMovieActivity.openMainActivity();
+
+                    super.handleClickedOnMovieItem(view, position);
                 }
         });
     }

@@ -30,6 +30,7 @@ public class AddMovieActivity extends ToolbarActivity
 
     private ProgressBar searchProgressIndicator;
 
+    // --- --- --- Initialization --- --- ---
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState)
     {
@@ -42,16 +43,10 @@ public class AddMovieActivity extends ToolbarActivity
 
     private void initialize()
     {
-        if(this.getSupportActionBar() != null)
-        {
-            this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
+        this.showBackArrow();
 
         this.initSearchTextView();
-
-        this.addMovieRecyclerView = new AddMovieRecyclerView(this,
-                R.id.movieRecyclerView, SearchMovieList.getInstance(),
-                MyMoviesSortedList.getInstance());
+        this.initRecyclerView();
 
         this.searchExecutor = new LoadMovieListExecutor(this,
                 this::onSiteScraped, this::onScrapingFinished);
@@ -64,6 +59,14 @@ public class AddMovieActivity extends ToolbarActivity
         this.searchProgressIndicator    = this.findViewById(R.id.searchProgressIndicator);
     }
 
+    private void initRecyclerView()
+    {
+        this.addMovieRecyclerView = new AddMovieRecyclerView(this,
+                R.id.movieRecyclerView, SearchMovieList.getInstance(),
+                MyMoviesSortedList.getInstance());
+        this.addMovieRecyclerView.setOnClickedListener((v, position) -> this.openMainActivity());
+    }
+
     private void initSearchTextView()
     {
         this.searchTextView.setOnKeyListener((view, key, v3) -> {
@@ -73,6 +76,14 @@ public class AddMovieActivity extends ToolbarActivity
             }
             return false;
         });
+    }
+
+    private void showBackArrow()
+    {
+        if(this.getSupportActionBar() != null)
+        {
+            this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     // --- --- --- Handle user interaction --- --- ---
@@ -109,7 +120,7 @@ public class AddMovieActivity extends ToolbarActivity
         this.searchTextView.setEnabled(enabled);
     }
 
-    // --- --- --- on finished --- --- ---
+    // --- --- --- On finished --- --- ---
     public void openMainActivity()
     {
         Intent resultIntent = new Intent();
@@ -117,7 +128,7 @@ public class AddMovieActivity extends ToolbarActivity
         finish();
     }
 
-    // --- --- --- toolbar interaction --- --- ---
+    // --- --- --- Toolbar interaction --- --- ---
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
@@ -131,7 +142,7 @@ public class AddMovieActivity extends ToolbarActivity
         return super.onOptionsItemSelected(item);
     }
 
-    // --- --- --- start me from another activity --- --- ---
+    // --- --- --- Start me from another activity --- --- ---
     public static final int REQUEST_CODE = 2;
 
     public static void startForResult(AppCompatActivity app)
