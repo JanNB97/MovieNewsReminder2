@@ -36,14 +36,11 @@ public class AddMovieActivity extends ToolbarActivity
         super.onCreate(savedInstanceState);
         setContentViewWithoutTitleBar(R.layout.activity_add_movie);
 
-        this.setTitle("Filme hinzufügen");
-
         this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        this.searchTextView = this.findViewById(R.id.searchTextView);
-        this.searchMovieButton = this.findViewById(R.id.searchMovieButton);
-        this.searchProgressIndicator = this.findViewById(R.id.searchProgressIndicator);
-        this.searchProgressIndicator.setVisibility(View.GONE);
+        this.searchTextView             = this.findViewById(R.id.searchTextView);
+        this.searchMovieButton          = this.findViewById(R.id.searchMovieButton);
+        this.searchProgressIndicator    = this.findViewById(R.id.searchProgressIndicator);
 
         this.initSearchTextView();
 

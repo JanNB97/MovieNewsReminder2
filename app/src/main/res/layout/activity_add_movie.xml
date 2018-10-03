@@ -66,6 +66,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginBottom="8dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/movieRecyclerView"
         app:layout_constraintEnd_toEndOf="@+id/movieRecyclerView"
         app:layout_constraintStart_toStartOf="@+id/movieRecyclerView" />

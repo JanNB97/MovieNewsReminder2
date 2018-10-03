@@ -22,7 +22,7 @@
 
         <activity
             android:name="com.yellowbite.movienewsreminder2.ui.addMovie.AddMovieActivity"
-
+            android:label="Filme hinzufügen"
             android:parentActivityName="com.yellowbite.movienewsreminder2.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
