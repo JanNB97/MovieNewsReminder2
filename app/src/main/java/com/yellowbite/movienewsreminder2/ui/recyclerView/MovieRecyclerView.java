@@ -12,6 +12,7 @@ import com.yellowbite.movienewsreminder2.files.datatypes.MovieList;
 import com.yellowbite.movienewsreminder2.model.Movie;
 import com.yellowbite.movienewsreminder2.ui.notifications.NotificationMan;
 import com.yellowbite.movienewsreminder2.ui.recyclerView.itemHolder.MovieAdapter;
+import com.yellowbite.movienewsreminder2.ui.recyclerView.listener.ScrollListener;
 import com.yellowbite.movienewsreminder2.ui.recyclerView.listener.SwipeListener;
 import com.yellowbite.movienewsreminder2.ui.recyclerView.listener.TouchListener;
 import com.yellowbite.movienewsreminder2.ui.recyclerView.touchListeners.RecyclerTouchListener;
@@ -37,6 +38,7 @@ public abstract class MovieRecyclerView extends SwipeCallback
     private List<SwipeListener> swipeListeners;
     private List<TouchListener> itemClickedListeners;
     private List<TouchListener> itemLongClickedListeners;
+    private List<ScrollListener> scollListeners;
 
     // --- --- --- Initialization --- --- ---
     public MovieRecyclerView(AppCompatActivity activity, @IdRes int id, MovieList movieList,
@@ -47,6 +49,7 @@ public abstract class MovieRecyclerView extends SwipeCallback
         this.swipeListeners = new ArrayList<>();
         this.itemClickedListeners = new ArrayList<>();
         this.itemLongClickedListeners = new ArrayList<>();
+        this.scollListeners = new ArrayList<>();
 
         this.recyclerView = activity.findViewById(id);
         this.recyclerView.setHasFixedSize(true);
@@ -140,7 +143,10 @@ public abstract class MovieRecyclerView extends SwipeCallback
         this.callAllTouchedListeners(this.itemLongClickedListeners, view, position);
     }
 
-    protected void handleOnScrolled(RecyclerView recyclerView, int dx, int dy){}
+    protected void handleOnScrolled(RecyclerView recyclerView, int dx, int dy)
+    {
+        this.callAllScrollListeners(recyclerView, dx, dy);
+    }
 
     protected void handleOnScrollStateChanged(RecyclerView recyclerView, int newState){}
 
@@ -173,6 +179,19 @@ public abstract class MovieRecyclerView extends SwipeCallback
         for(TouchListener touchListener : this.itemClickedListeners)
         {
             touchListener.onTouch(view, position);
+        }
+    }
+
+    public void setOnScrollListener(ScrollListener scrollListener)
+    {
+        this.scollListeners.add(scrollListener);
+    }
+
+    private void callAllScrollListeners(RecyclerView recyclerView, int dx, int dy)
+    {
+        for(ScrollListener scrollListener : this.scollListeners)
+        {
+            scrollListener.handleScroll(recyclerView, dx, dy);
         }
     }
 

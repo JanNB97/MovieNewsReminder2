@@ -68,6 +68,17 @@ public class MainActivity extends MyMoviesToolbarActivity implements LoadedMovie
         this.myMovieRecyclerView.setOnSwipeListener(
                 (v, d, lastRemovedMovie) -> this.handleOnSwiped(lastRemovedMovie)
         );
+        this.myMovieRecyclerView.setOnScrollListener((r, dx, dy) -> {
+                if(dy > 0)
+                {
+                    this.handleScrolledDown();
+                }
+                else
+                {
+                    this.handleScrolledUp();
+                }
+        }
+        );
     }
 
     private void findViewsById()
