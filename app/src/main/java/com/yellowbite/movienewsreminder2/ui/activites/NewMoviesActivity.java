@@ -139,8 +139,8 @@ public class NewMoviesActivity extends ToolbarActivity implements LoadedMovieEve
 
     private void setMovieBooked(boolean movieBooked)
     {
-        this.addToMyMoviesButton.setEnabled(!movieBooked);
-        this.nextMovieButton.setText(movieBooked ? "OK" : "✓");
+        this.addToMyMoviesButton.setVisibility(movieBooked ? View.GONE : View.VISIBLE);
+        this.nextMovieButton.setText(movieBooked ? "OK" : "X");
     }
 
     private void setButtonsEnabled(boolean b)
