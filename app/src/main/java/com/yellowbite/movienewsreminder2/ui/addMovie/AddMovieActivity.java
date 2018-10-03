@@ -42,17 +42,20 @@ public class AddMovieActivity extends ToolbarActivity
 
     private void initialize()
     {
-        this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if(this.getSupportActionBar() != null)
+        {
+            this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         this.initSearchTextView();
 
-        this.addMovieRecyclerView = new AddMovieRecyclerView(this, R.id.movieRecyclerView,
-                SearchMovieList.getInstance());
+        this.addMovieRecyclerView = new AddMovieRecyclerView(this,
+                R.id.movieRecyclerView, SearchMovieList.getInstance());
 
         this.searchExecutor = new LoadMovieListExecutor(this,
                 this::onSiteScraped, this::onScrapingFinished);
     }
-    
+
     private void findViewsById()
     {
         this.searchTextView             = this.findViewById(R.id.searchTextView);
