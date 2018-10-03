@@ -39,23 +39,27 @@ public class NewMoviesActivity extends ToolbarActivity implements LoadedMovieEve
         super.onCreate(savedInstanceState);
         setContentViewWithoutTitleBar(R.layout.activity_new_movies);
 
+        this.findViewsById();
         this.initialize();
     }
 
     public void initialize()
     {
-        this.addToMyMoviesButton    = this.findViewById(R.id.addToMyMoviesButton);
-        this.nextMovieButton        = this.findViewById(R.id.nextMovieButton);
-        this.movieTitelTextView     = this.findViewById(R.id.movieNameTextView);
-        this.movieImageView         = this.findViewById(R.id.movieImageView);
-        this.einheitstitelTextView  = this.findViewById(R.id.einheitstitelTextView);
-
         this.displayedMovieId = NewMoviesQueue.size(this);
 
         new LoadNewMoviesDescendingExecutor(this, this, NewMoviesQueue.getAll(this));
         this.movieIsLoaded = new boolean[NewMoviesQueue.size(this)];
 
         this.tryToShowNextMovie();
+    }
+
+    private void findViewsById()
+    {
+        this.addToMyMoviesButton    = this.findViewById(R.id.addToMyMoviesButton);
+        this.nextMovieButton        = this.findViewById(R.id.nextMovieButton);
+        this.movieTitelTextView     = this.findViewById(R.id.movieNameTextView);
+        this.movieImageView         = this.findViewById(R.id.movieImageView);
+        this.einheitstitelTextView  = this.findViewById(R.id.einheitstitelTextView);
     }
 
     // --- --- --- handle clicks --- --- ---
