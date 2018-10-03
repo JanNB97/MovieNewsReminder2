@@ -46,11 +46,6 @@ public abstract class MovieRecyclerView extends SwipeCallback
     {
         this.activity = activity;
 
-        this.swipeListeners = new ArrayList<>();
-        this.itemClickedListeners = new ArrayList<>();
-        this.itemLongClickedListeners = new ArrayList<>();
-        this.scollListeners = new ArrayList<>();
-
         this.recyclerView = activity.findViewById(id);
         this.recyclerView.setHasFixedSize(true);
 
@@ -71,6 +66,11 @@ public abstract class MovieRecyclerView extends SwipeCallback
 
     private void initTouchSwipeScrollListener(boolean isSwipeable)
     {
+        this.swipeListeners = new ArrayList<>();
+        this.itemClickedListeners = new ArrayList<>();
+        this.itemLongClickedListeners = new ArrayList<>();
+        this.scollListeners = new ArrayList<>();
+
         this.recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener()
         {
             @Override
