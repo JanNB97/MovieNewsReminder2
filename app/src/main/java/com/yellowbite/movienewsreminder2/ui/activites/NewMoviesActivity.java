@@ -34,6 +34,10 @@ public class NewMoviesActivity extends ToolbarActivity implements LoadedMovieEve
     private int displayedMovieId;
     private Movie displayedMovie;
 
+    private static String NEXT_MOVIE_LABEL;
+    private static final String DECISION_DISABLED_LABEL = "OK";
+    private static final String IN_BEARBEITUNG_ARRIVED_LABEL = "war in " + Movie.Status.IN_BEARBEITUNG.getValue();
+
     // --- --- --- initialization --- --- ---
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -47,6 +51,8 @@ public class NewMoviesActivity extends ToolbarActivity implements LoadedMovieEve
 
     public void initialize()
     {
+        NEXT_MOVIE_LABEL = this.nextMovieButton.getText().toString();
+
         this.displayedMovieId = NewMoviesQueue.size(this);
 
         new LoadNewMoviesDescendingExecutor(this, this, NewMoviesQueue.getAll(this));
@@ -132,15 +138,28 @@ public class NewMoviesActivity extends ToolbarActivity implements LoadedMovieEve
             this.einheitstitelTextView.setText("");
         }
 
-        boolean movieBooked = SortedBookedMoviesList.getInstance(this).containsAndRemove(this, movie)
-                || MyMoviesSortedList.getInstance().contains(this, movie);
-        this.setMovieBooked(movieBooked);
+        boolean movieAlreadyInMyMovies = MyMoviesSortedList.getInstance().contains(this, movie);
+
+        if(movie.getStatus() == Movie.Status.IN_BEARBEITUNG)
+        {
+            this.movieTitelTextView.append(" (" + Movie.Status.IN_BEARBEITUNG.getValue() + ")");
+            this.setDecisionEnabled(!movieAlreadyInMyMovies);
+        }
+        else
+        {
+            boolean bookedMovieArrived = SortedBookedMoviesList.getInstance(this).containsAndRemove(this, movie);
+            this.setDecisionEnabled(!bookedMovieArrived && !movieAlreadyInMyMovies);
+            if(bookedMovieArrived)
+            {
+                this.movieTitelTextView.append(" (" + IN_BEARBEITUNG_ARRIVED_LABEL + ")");
+            }
+        }
     }
 
-    private void setMovieBooked(boolean movieBooked)
+    private void setDecisionEnabled(boolean movieBooked)
     {
-        this.addToMyMoviesButton.setVisibility(movieBooked ? View.GONE : View.VISIBLE);
-        this.nextMovieButton.setText(movieBooked ? "OK" : "X");
+        this.addToMyMoviesButton.setVisibility(movieBooked ? View.VISIBLE : View.GONE);
+        this.nextMovieButton.setText(movieBooked ? NEXT_MOVIE_LABEL : DECISION_DISABLED_LABEL);
     }
 
     private void setButtonsEnabled(boolean b)
