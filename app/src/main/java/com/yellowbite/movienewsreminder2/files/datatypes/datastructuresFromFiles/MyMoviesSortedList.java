@@ -11,17 +11,17 @@ public class MyMoviesSortedList extends MovieListFromFile
 {
     private static MyMoviesSortedList instance;
 
-    private MyMoviesSortedList()
+    private MyMoviesSortedList(Context context)
     {
-        super("myMovies.txt");
+        super(context, "myMovies.txt");
     }
 
     // --- --- --- get Instance --- --- ---
-    public static MyMoviesSortedList getInstance()
+    public static MyMoviesSortedList getInstance(Context context)
     {
         if(instance == null)
         {
-            instance = new MyMoviesSortedList();
+            instance = new MyMoviesSortedList(context);
         }
 
         return instance;
@@ -31,8 +31,6 @@ public class MyMoviesSortedList extends MovieListFromFile
     @Override
     public void addAll(Context context, List<Movie> movies)
     {
-        this.getFromFileIfNecessary(context);
-
         for(Movie movie : movies)
         {
             if(this.isNew(movie))
@@ -47,8 +45,6 @@ public class MyMoviesSortedList extends MovieListFromFile
     @Override
     public boolean add(Context context, Movie movie)
     {
-        this.getFromFileIfNecessary(context);
-
         if(!this.isNew(movie))
         {
             return false;
@@ -62,8 +58,6 @@ public class MyMoviesSortedList extends MovieListFromFile
 
     public boolean contains(Context context, Movie movie)
     {
-        this.getFromFileIfNecessary(context);
-
         for(Movie m2 : super.movieList)
         {
             if(m2.getMediaBarcode() == movie.getMediaBarcode())
@@ -78,5 +72,16 @@ public class MyMoviesSortedList extends MovieListFromFile
     private void sort()
     {
         Collections.sort(super.movieList);
+    }
+
+    public void loadHotMovies(Context context)
+    {
+        if(HotMoviesSortedList.getInstance(context).size(context) <= 0)
+        {
+            return;
+        }
+
+        HotMoviesSortedList.getInstance(context)
+                .setAllHot(context, super.movieList);
     }
 }

@@ -139,7 +139,7 @@ public class NewMoviesActivity extends ToolbarActivity implements LoadedMovieEve
             this.einheitstitelTextView.setText("");
         }
 
-        boolean movieAlreadyInMyMovies = MyMoviesSortedList.getInstance().contains(this, movie);
+        boolean movieAlreadyInMyMovies = MyMoviesSortedList.getInstance(this).contains(this, movie);
 
         if(movie.getStatus() == Movie.Status.IN_BEARBEITUNG)
         {

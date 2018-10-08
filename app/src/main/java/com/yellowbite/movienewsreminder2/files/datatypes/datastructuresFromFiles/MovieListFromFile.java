@@ -16,9 +16,10 @@ public abstract class MovieListFromFile implements MovieList
     private final String FILE_NAME;
     protected List<Movie> movieList;
 
-    protected MovieListFromFile(String fileName)
+    protected MovieListFromFile(Context context, String fileName)
     {
         this.FILE_NAME = fileName;
+        this.getFromFile(context);
     }
 
     // --- --- --- data operations --- --- ---
@@ -26,14 +27,12 @@ public abstract class MovieListFromFile implements MovieList
     @Override
     public Movie get(Context context, int i)
     {
-        this.getFromFileIfNecessary(context);
         return this.movieList.get(i);
     }
 
     @Override
     public List<Movie> getAll(Context context)
     {
-        this.getFromFileIfNecessary(context);
         return this.movieList;
     }
 
@@ -41,7 +40,6 @@ public abstract class MovieListFromFile implements MovieList
     @Override
     public int size(Context context)
     {
-        this.getFromFileIfNecessary(context);
         return this.movieList.size();
     }
 
@@ -49,8 +47,6 @@ public abstract class MovieListFromFile implements MovieList
     @Override
     public void addAll(Context context, List<Movie> movies)
     {
-        this.getFromFileIfNecessary(context);
-
         for(Movie movie : movies)
         {
             if(this.isNew(movie))
@@ -63,8 +59,6 @@ public abstract class MovieListFromFile implements MovieList
     @Override
     public boolean add(Context context, Movie movie)
     {
-        this.getFromFileIfNecessary(context);
-
         if(!this.isNew(movie))
         {
             return false;
@@ -79,7 +73,6 @@ public abstract class MovieListFromFile implements MovieList
     @Override
     public void remove(Context context, int i)
     {
-        this.getFromFileIfNecessary(context);
         this.movieList.remove(i);
     }
 
@@ -94,18 +87,11 @@ public abstract class MovieListFromFile implements MovieList
     }
 
     // file helper operations
-    protected final void getFromFileIfNecessary(Context context)
-    {
-        if(this.movieList == null)
-        {
-            this.movieList = this.getFromFile(context);
-        }
-    }
 
-    protected final List<Movie> getFromFile(Context context)
+    protected final void getFromFile(Context context)
     {
         List<String> lines = FileManager.readAll(context, this.FILE_NAME);
-        return MovieFileHelper.toMovies(lines, Collections.synchronizedList(new ArrayList<>()));
+        this.movieList = MovieFileHelper.toMovies(lines, Collections.synchronizedList(new ArrayList<>()));
     }
 
     protected final void saveToFile(Context context)

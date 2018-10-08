@@ -63,7 +63,7 @@ public class AddMovieActivity extends ToolbarActivity
     {
         this.addMovieRecyclerView = new AddMovieRecyclerView(this,
                 R.id.movieRecyclerView, SearchMovieList.getInstance(),
-                MyMoviesSortedList.getInstance());
+                MyMoviesSortedList.getInstance(this));
         this.addMovieRecyclerView.setOnClickedListener((v, position) -> this.openMainActivity());
     }
 

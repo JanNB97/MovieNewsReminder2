@@ -64,7 +64,7 @@ public class MainActivity extends MyMoviesToolbarActivity implements LoadedMovie
     private void initRecyclerView()
     {
         this.myMovieRecyclerView = new MyMovieRecyclerView(this, R.id.movieRecyclerView,
-                MyMoviesSortedList.getInstance());
+                MyMoviesSortedList.getInstance(this));
 
         this.myMovieRecyclerView.setOnSwipeListener(
                 (v, d, lastRemovedMovie) -> this.handleOnSwiped(lastRemovedMovie)
@@ -152,20 +152,25 @@ public class MainActivity extends MyMoviesToolbarActivity implements LoadedMovie
 
         if(lastSwipedMovie != null)
         {
-            MyMoviesSortedList.getInstance().add(this, this.lastSwipedMovie);
-            MyMoviesSortedList.getInstance().save(this);
+            MyMoviesSortedList.getInstance(this).add(this, this.lastSwipedMovie);
+            MyMoviesSortedList.getInstance(this).save(this);
             this.myMovieRecyclerView.dataSetChanged(false);
+
+            if(this.lastSwipedMovie.isHot())
+            {
+                HotMoviesSortedList.getInstance(this).add(this, this.lastSwipedMovie);
+            }
         }
     }
 
     // --- --- --- Load movies --- --- ---
     private void loadMyMovies()
     {
-        List<Movie> myMovies = MyMoviesSortedList.getInstance().getAll(this);
+        List<Movie> myMovies = MyMoviesSortedList.getInstance(this).getAll(this);
 
         if(!myMovies.isEmpty())
         {
-            this.loadingProgressBar.setMax(MyMoviesSortedList.getInstance().size(this));
+            this.loadingProgressBar.setMax(MyMoviesSortedList.getInstance(this).size(this));
 
             // download status
             new LoadMyMoviesRetryExecutor(this, this, myMovies, this::onLoadingFinished);
@@ -184,9 +189,9 @@ public class MainActivity extends MyMoviesToolbarActivity implements LoadedMovie
 
     private void onLoadingFinished()
     {
-        Collections.sort(MyMoviesSortedList.getInstance().getAll(this));
+        Collections.sort(MyMoviesSortedList.getInstance(this).getAll(this));
 
-        HotMoviesSortedList.getMyHotMovies(this);
+        MyMoviesSortedList.getInstance(this).loadHotMovies(this);
 
         this.loadingProgressBar.setVisibility(View.GONE);
         this.moviesUpdateTextView.setVisibility(View.GONE);

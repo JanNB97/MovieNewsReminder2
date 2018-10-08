@@ -142,7 +142,7 @@ public class MedZenHandler extends WebscrapingHandler
 
     private void getVerfuegbarHotMovies(Context context, List<Movie> verfuegbarHotMovies, List<Movie> shownMovies)
     {
-        List<Movie> hotMovies = HotMoviesSortedList.get(context);
+        List<Movie> hotMovies = HotMoviesSortedList.getInstance(context).getAll(context);
         for (int i = 0; i < hotMovies.size(); i++)
         {
             Movie hotMovie = hotMovies.get(i);
@@ -154,7 +154,7 @@ public class MedZenHandler extends WebscrapingHandler
                     if(!hotMovie.notificationWasShown())
                     {
                         verfuegbarHotMovies.add(hotMovie);
-                        HotMoviesSortedList.setNotificationWasShownSave(context, i, true);
+                        HotMoviesSortedList.getInstance(context).setNotificationWasShownSave(context, i, true);
                     }
                     else
                     {
@@ -164,7 +164,7 @@ public class MedZenHandler extends WebscrapingHandler
                 else if (hotMovie.notificationWasShown())
                 {
                     // again unavailable
-                    HotMoviesSortedList.setNotificationWasShownSave(context, i, false);
+                    HotMoviesSortedList.getInstance(context).setNotificationWasShownSave(context, i, false);
                 }
             } catch (IOException ignored) {}
         }

@@ -7,20 +7,46 @@ import com.yellowbite.movienewsreminder2.files.helper.MovieFileHelper;
 import com.yellowbite.movienewsreminder2.model.Movie;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
-public final class HotMoviesSortedList
+public final class HotMoviesSortedList extends MovieListFromFile
 {
-    private static final String FILE_NAME = "hotMovies.txt";
+    private static HotMoviesSortedList instance;
 
-    private static List<Movie> hotMovies;
-
-    public static boolean addSave(Context context, Movie movie)
+    protected HotMoviesSortedList(Context context)
     {
-        getFromFileIfNecessary(context);
+        super(context, "hotMovies.txt");
+    }
+
+    public static HotMoviesSortedList getInstance(Context context)
+    {
+        if(instance == null)
+        {
+            instance = new HotMoviesSortedList(context);
+        }
+
+        return instance;
+    }
+
+    public void setAllHot(Context context, Collection<Movie> movies)
+    {
+        for(Movie movie : movies)
+        {
+            if(HotMoviesSortedList.getInstance(context).getIdInList(movie) != -1)
+            {
+                movie.setHot(true);
+            }
+        }
+    }
+
+    @Override
+    public boolean add(Context context, Movie movie)
+    {
         movie.setHot(true);
 
-        boolean success = addSorted(movie);
+        boolean success = this.addSorted(movie);
         if(success)
         {
             saveToFile(context);
@@ -28,7 +54,7 @@ public final class HotMoviesSortedList
         return success;
     }
 
-    public static boolean switchSave(Context context, Movie movie)
+    public boolean switchSave(Context context, Movie movie)
     {
         if(movie.isHot())
         {
@@ -36,61 +62,34 @@ public final class HotMoviesSortedList
         }
         else
         {
-            return addSave(context, movie);
+            return this.add(context, movie);
         }
     }
 
-    public static boolean deleteSave(Context context, Movie movie)
+    public boolean deleteSave(Context context, Movie movie)
     {
-        getFromFileIfNecessary(context);
-        movie.setHot(false);
-        boolean success = delSorted(movie);
+        boolean success = this.delSorted(movie);
         if(success)
         {
-            saveToFile(context);
+            super.saveToFile(context);
         }
         return success;
     }
 
-    public static void getMyHotMovies(Context context)
+    public void setNotificationWasShownSave(Context context, int id, boolean b)
     {
-        getFromFileIfNecessary(context);
-        if(hotMovies.isEmpty())
-        {
-            return;
-        }
-        List<Movie> myMovies = MyMoviesSortedList.getInstance().getAll(context);
-
-        for(Movie movie : myMovies)
-        {
-            if(getIdInList(movie) != -1)
-            {
-                movie.setHot(true);
-            }
-        }
-    }
-
-    public static List<Movie> get(Context context)
-    {
-        getFromFileIfNecessary(context);
-        return hotMovies;
-    }
-
-    public static void setNotificationWasShownSave(Context context, int id, boolean b)
-    {
-        getFromFileIfNecessary(context);
-        hotMovies.get(id).setNotificationWasShown(b);
-        saveToFile(context);
+        super.movieList.get(id).setNotificationWasShown(b);
+        super.saveToFile(context);
     }
 
     // --- --- --- data type operations --- --- ---
 
-    private static int getIdInList(Movie movie)
+    private int getIdInList(Movie movie)
     {
         int movieBarcode = movie.getMediaBarcode();
 
         int i = 0;
-        for(Movie m2 : hotMovies)
+        for(Movie m2 : super.movieList)
         {
             int b2 = m2.getMediaBarcode();
 
@@ -110,12 +109,12 @@ public final class HotMoviesSortedList
         return -1;
     }
 
-    private static boolean addSorted(Movie movie)
+    private boolean addSorted(Movie movie)
     {
         int movieBarcode = movie.getMediaBarcode();
 
         int i = 0;
-        for(Movie m2 : hotMovies)
+        for(Movie m2 : super.movieList)
         {
             int barcode2 = m2.getMediaBarcode();
 
@@ -126,53 +125,25 @@ public final class HotMoviesSortedList
 
             if(barcode2 > movieBarcode)
             {
-                hotMovies.add(i, movie);
+                super.movieList.add(i, movie);
                 return true;
             }
 
             i++;
         }
-        hotMovies.add(movie);
+        super.movieList.add(movie);
         return true;
     }
 
-    private static boolean delSorted(Movie movie)
+    private boolean delSorted(Movie movie)
     {
-        int i = getIdInList(movie);
+        int i = this.getIdInList(movie);
         boolean success = i != -1;
 
         if(success)
         {
-            hotMovies.remove(i);
+            super.movieList.remove(i);
         }
         return success;
-    }
-
-    // --- --- --- file operations --- --- ---
-
-    private static void getFromFileIfNecessary(Context context)
-    {
-        hotMovies = MovieFileHelper.toMovies(FileManager.readAll(context, FILE_NAME), new ArrayList<>());
-    }
-
-    private static void saveToFile(Context context)
-    {
-        FileManager.write(context, FILE_NAME, toLines(hotMovies));
-    }
-
-    private static List<String> toLines(List<Movie> movies)
-    {
-        List<String> lines = new ArrayList<>();
-        for(Movie movie : movies)
-        {
-            lines.add(toLine(movie));
-        }
-        return lines;
-    }
-
-    private static String toLine(Movie movie)
-    {
-        return movie.getMediaBarcode() + ";" + movie.getURL() + ";;;"
-                + movie.getTitel() + ";" + movie.notificationWasShown();
     }
 }

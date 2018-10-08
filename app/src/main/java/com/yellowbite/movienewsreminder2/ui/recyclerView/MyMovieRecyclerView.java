@@ -29,7 +29,7 @@ public class MyMovieRecyclerView extends MovieRecyclerView
         }
 
         Movie movie = super.movieList.get(super.activity, position);
-        if(HotMoviesSortedList.switchSave(super.activity, movie))
+        if(HotMoviesSortedList.getInstance(super.activity).switchSave(super.activity, movie))
         {
             this.dataSetChanged(false);
         }
