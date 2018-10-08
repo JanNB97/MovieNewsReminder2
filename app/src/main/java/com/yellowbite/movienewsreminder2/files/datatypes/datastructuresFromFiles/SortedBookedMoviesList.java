@@ -81,7 +81,7 @@ public class SortedBookedMoviesList
         int position = 0;
         for(Integer mc : this.bookedMovies)
         {
-            if(movieCode > mc)
+            if(mc > movieCode)
             {
                 return false;
             }
