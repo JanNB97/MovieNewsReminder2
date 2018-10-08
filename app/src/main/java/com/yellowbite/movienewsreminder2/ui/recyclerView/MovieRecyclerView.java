@@ -115,7 +115,7 @@ public abstract class MovieRecyclerView extends SwipeCallback
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction)
     {
         int position = viewHolder.getAdapterPosition();
-        this.lastSwipedMovie = movieList.get(this.activity, position);
+        this.lastSwipedMovie = movieList.get(position);
         this.removeItem(position);
 
         recentlySwiped = true;
@@ -203,13 +203,13 @@ public abstract class MovieRecyclerView extends SwipeCallback
 
     public void addItems(List<Movie> movies, boolean saveInFile)
     {
-        this.movieList.addAll(this.activity, movies);
+        this.movieList.addAll(movies);
         this.dataSetChanged(saveInFile);
     }
 
     public void addItem(Movie movie, boolean saveInFile)
     {
-        if(!this.movieList.add(activity, movie))
+        if(!this.movieList.add(movie))
         {
             NotificationMan.showShortToast(this.activity, movie.getTitel() + " is already in the database");
         }
@@ -221,13 +221,13 @@ public abstract class MovieRecyclerView extends SwipeCallback
 
     public void removeItem(int position)
     {
-        Movie movieToRemove = this.movieList.get(this.activity, position);
+        Movie movieToRemove = this.movieList.get(position);
         if(movieToRemove.isHot())
         {
-            HotMoviesSortedList.getInstance(this.activity).deleteSave(this.activity, movieToRemove);
+            HotMoviesSortedList.getInstance(this.activity).deleteSave(movieToRemove);
         }
 
-        this.movieList.remove(this.activity, position);
+        this.movieList.remove(position);
         this.notifyItemRemoved(true, position);
     }
 
@@ -253,7 +253,7 @@ public abstract class MovieRecyclerView extends SwipeCallback
 
     private void saveInNewThread()
     {
-        new Thread(() -> this.movieList.save(this.activity))
+        new Thread(() -> this.movieList.save())
                 .start();
     }
 }

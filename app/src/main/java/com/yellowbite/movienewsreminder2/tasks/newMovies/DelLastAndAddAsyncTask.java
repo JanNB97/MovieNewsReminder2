@@ -36,12 +36,12 @@ public class DelLastAndAddAsyncTask extends AsyncTask<Movie, Void, Void>
             throw new IllegalArgumentException();
         }
 
-        NewMoviesQueue.getInstance(this.context).deleteLast(context);
+        NewMoviesQueue.getInstance(this.context).deleteLast();
 
         if(movies.length != 0 && movies[0] != null)
         {
-            MyMoviesSortedList.getInstance(context).add(this.context, movies[0]);
-            MyMoviesSortedList.getInstance(context).save(this.context);
+            MyMoviesSortedList.getInstance(this.context).add(movies[0]);
+            MyMoviesSortedList.getInstance(this.context).save();
         }
 
         return null;

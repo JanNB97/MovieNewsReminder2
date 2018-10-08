@@ -78,7 +78,7 @@ public class MedZenHandler extends WebscrapingHandler
         List<Movie> newBookedMovies = SortedBookedMoviesList.getInstance(context)
                 .getAndAddDifference(context, bookedMovies);
 
-        NewMoviesQueue.getInstance(context).addAll(context, newBookedMovies);
+        NewMoviesQueue.getInstance(context).addAll(newBookedMovies);
 
         if(newBookedMovies.size() == 0)
         {
@@ -142,7 +142,7 @@ public class MedZenHandler extends WebscrapingHandler
 
     private void getVerfuegbarHotMovies(Context context, List<Movie> verfuegbarHotMovies, List<Movie> shownMovies)
     {
-        List<Movie> hotMovies = HotMoviesSortedList.getInstance(context).getAll(context);
+        List<Movie> hotMovies = HotMoviesSortedList.getInstance(context).getAll();
         for (int i = 0; i < hotMovies.size(); i++)
         {
             Movie hotMovie = hotMovies.get(i);
@@ -154,7 +154,7 @@ public class MedZenHandler extends WebscrapingHandler
                     if(!hotMovie.notificationWasShown())
                     {
                         verfuegbarHotMovies.add(hotMovie);
-                        HotMoviesSortedList.getInstance(context).setNotificationWasShownSave(context, i, true);
+                        HotMoviesSortedList.getInstance(context).setNotificationWasShownSave(i, true);
                     }
                     else
                     {
@@ -164,7 +164,7 @@ public class MedZenHandler extends WebscrapingHandler
                 else if (hotMovie.notificationWasShown())
                 {
                     // again unavailable
-                    HotMoviesSortedList.getInstance(context).setNotificationWasShownSave(context, i, false);
+                    HotMoviesSortedList.getInstance(context).setNotificationWasShownSave(i, false);
                 }
             } catch (IOException ignored) {}
         }
@@ -201,7 +201,7 @@ public class MedZenHandler extends WebscrapingHandler
             }
         }
 
-        NewMoviesQueue.getInstance(context).addAll(context, newMovies);
+        NewMoviesQueue.getInstance(context).addAll(newMovies);
         return newMovies.size();
     }
 }

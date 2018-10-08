@@ -34,13 +34,13 @@ public class SearchMovieList implements MovieList
 
     // --- --- --- get --- --- ---
     @Override
-    public Movie get(Context context, int i)
+    public Movie get(int i)
     {
         return this.movies.get(i);
     }
 
     @Override
-    public List<Movie> getAll(Context context)
+    public List<Movie> getAll()
     {
         return this.movies;
     }
@@ -48,17 +48,17 @@ public class SearchMovieList implements MovieList
     // --- --- --- add --- --- ---
     public void addMovieSite(MedZenMovieListScraper listScraper)
     {
-        this.addAll(null, listScraper.getAllMovie());
+        this.addAll(listScraper.getAllMovie());
     }
 
     @Override
-    public void addAll(Context context, List<Movie> movies)
+    public void addAll(List<Movie> movies)
     {
         this.movies.addAll(movies);
     }
 
     @Override
-    public boolean add(Context context, Movie movie)
+    public boolean add(Movie movie)
     {
         this.movies.add(movie);
         return true;
@@ -66,7 +66,7 @@ public class SearchMovieList implements MovieList
 
     // --- --- --- remove -- --- ---
     @Override
-    public void remove(Context context, int i)
+    public void remove(int i)
     {
         this.movies.remove(i);
     }
@@ -78,12 +78,12 @@ public class SearchMovieList implements MovieList
 
     // --- --- --- get info --- --- ---
     @Override
-    public int size(Context context)
+    public int size()
     {
         return this.movies.size();
     }
 
     // --- --- --- unnecessary --- --- ---
     @Override
-    public void save(Context context) {}
+    public void save() {}
 }

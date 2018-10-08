@@ -54,10 +54,10 @@ public class NewMoviesActivity extends ToolbarActivity implements LoadedMovieEve
     {
         nextMovieLabel = this.nextMovieButton.getText().toString();
 
-        this.displayedMovieId = NewMoviesQueue.getInstance(this).size(this);
+        this.displayedMovieId = NewMoviesQueue.getInstance(this).size();
 
-        new LoadNewMoviesDescendingExecutor(this, this, NewMoviesQueue.getInstance(this).getAll(this));
-        this.movieIsLoaded = new boolean[NewMoviesQueue.getInstance(this).size(this)];
+        new LoadNewMoviesDescendingExecutor(this, this, NewMoviesQueue.getInstance(this).getAll());
+        this.movieIsLoaded = new boolean[NewMoviesQueue.getInstance(this).size()];
 
         this.tryToShowNextMovie();
     }
@@ -118,7 +118,7 @@ public class NewMoviesActivity extends ToolbarActivity implements LoadedMovieEve
 
     private void showNextMovie()
     {
-        this.displayedMovie = NewMoviesQueue.getInstance(this).get(this, this.displayedMovieId);
+        this.displayedMovie = NewMoviesQueue.getInstance(this).get(this.displayedMovieId);
 
         showMovie(this.displayedMovie);
         setButtonsEnabled(true);
@@ -139,7 +139,7 @@ public class NewMoviesActivity extends ToolbarActivity implements LoadedMovieEve
             this.einheitstitelTextView.setText("");
         }
 
-        boolean movieAlreadyInMyMovies = MyMoviesSortedList.getInstance(this).contains(this, movie);
+        boolean movieAlreadyInMyMovies = MyMoviesSortedList.getInstance(this).contains(movie);
 
         if(movie.getStatus() == Movie.Status.IN_BEARBEITUNG)
         {

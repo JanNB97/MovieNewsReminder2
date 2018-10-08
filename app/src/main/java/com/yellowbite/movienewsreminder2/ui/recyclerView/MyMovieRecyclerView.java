@@ -28,8 +28,8 @@ public class MyMovieRecyclerView extends MovieRecyclerView
             return;
         }
 
-        Movie movie = super.movieList.get(super.activity, position);
-        if(HotMoviesSortedList.getInstance(super.activity).switchSave(super.activity, movie))
+        Movie movie = super.movieList.get(position);
+        if(HotMoviesSortedList.getInstance(super.activity).switchSave(movie))
         {
             this.dataSetChanged(false);
         }

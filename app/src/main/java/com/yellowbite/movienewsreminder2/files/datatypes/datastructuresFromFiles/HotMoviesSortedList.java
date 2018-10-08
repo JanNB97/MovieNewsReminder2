@@ -30,11 +30,11 @@ public final class HotMoviesSortedList extends MovieListFromFile
         return instance;
     }
 
-    public void setAllHot(Context context, Collection<Movie> movies)
+    public void setIfHot(Collection<Movie> movies)
     {
         for(Movie movie : movies)
         {
-            if(HotMoviesSortedList.getInstance(context).getIdInList(movie) != -1)
+            if(HotMoviesSortedList.getInstance(super.context).getIdInList(movie) != -1)
             {
                 movie.setHot(true);
             }
@@ -42,43 +42,43 @@ public final class HotMoviesSortedList extends MovieListFromFile
     }
 
     @Override
-    public boolean add(Context context, Movie movie)
+    public boolean add(Movie movie)
     {
         boolean success = this.addSorted(movie);
         if(success)
         {
-            saveToFile(context);
+            super.saveToFile();
         }
         return success;
     }
 
-    public boolean switchSave(Context context, Movie movie)
+    public boolean switchSave(Movie movie)
     {
         movie.setHot(!movie.isHot());
         if(!movie.isHot())
         {
-            return deleteSave(context, movie);
+            return deleteSave(movie);
         }
         else
         {
-            return this.add(context, movie);
+            return this.add(movie);
         }
     }
 
-    public boolean deleteSave(Context context, Movie movie)
+    public boolean deleteSave(Movie movie)
     {
         boolean success = this.delSorted(movie);
         if(success)
         {
-            super.saveToFile(context);
+            super.saveToFile();
         }
         return success;
     }
 
-    public void setNotificationWasShownSave(Context context, int id, boolean b)
+    public void setNotificationWasShownSave(int id, boolean b)
     {
         super.movieList.get(id).setNotificationWasShown(b);
-        super.saveToFile(context);
+        super.saveToFile();
     }
 
     // --- --- --- data type operations --- --- ---

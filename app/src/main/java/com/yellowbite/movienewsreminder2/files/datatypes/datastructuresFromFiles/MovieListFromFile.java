@@ -15,37 +15,39 @@ public abstract class MovieListFromFile implements MovieList
 {
     protected final String FILE_NAME;
     protected List<Movie> movieList;
+    protected Context context;
 
     protected MovieListFromFile(Context context, String fileName)
     {
         this.FILE_NAME = fileName;
+        this.context = context;
         this.getFromFile(context);
     }
 
     // --- --- --- data operations --- --- ---
     // getAll
     @Override
-    public Movie get(Context context, int i)
+    public Movie get(int i)
     {
         return this.movieList.get(i);
     }
 
     @Override
-    public List<Movie> getAll(Context context)
+    public List<Movie> getAll()
     {
         return this.movieList;
     }
 
     // others
     @Override
-    public int size(Context context)
+    public int size()
     {
         return this.movieList.size();
     }
 
     // add
     @Override
-    public void addAll(Context context, List<Movie> movies)
+    public void addAll(List<Movie> movies)
     {
         for(Movie movie : movies)
         {
@@ -57,7 +59,7 @@ public abstract class MovieListFromFile implements MovieList
     }
 
     @Override
-    public boolean add(Context context, Movie movie)
+    public boolean add(Movie movie)
     {
         if(!this.isNew(movie))
         {
@@ -71,18 +73,18 @@ public abstract class MovieListFromFile implements MovieList
 
     // remove
     @Override
-    public void remove(Context context, int i)
+    public void remove(int i)
     {
         this.movieList.remove(i);
     }
 
     // --- --- --- file operations --- --- ---
     @Override
-    public void save(Context context)
+    public void save()
     {
         if(movieList != null)
         {
-            this.saveToFile(context);
+            this.saveToFile();
         }
     }
 
@@ -94,9 +96,9 @@ public abstract class MovieListFromFile implements MovieList
         this.movieList = MovieFileHelper.toMovies(lines, Collections.synchronizedList(new ArrayList<>()));
     }
 
-    protected final void saveToFile(Context context)
+    protected final void saveToFile()
     {
-        FileManager.write(context, this.FILE_NAME, MovieFileHelper.toLines(this.movieList));
+        FileManager.write(this.context, this.FILE_NAME, MovieFileHelper.toLines(this.movieList));
     }
 
     // --- --- --- helper methods --- --- ---

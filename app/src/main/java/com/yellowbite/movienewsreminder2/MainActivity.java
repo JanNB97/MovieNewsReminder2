@@ -152,13 +152,13 @@ public class MainActivity extends MyMoviesToolbarActivity implements LoadedMovie
 
         if(lastSwipedMovie != null)
         {
-            MyMoviesSortedList.getInstance(this).add(this, this.lastSwipedMovie);
-            MyMoviesSortedList.getInstance(this).save(this);
+            MyMoviesSortedList.getInstance(this).add(this.lastSwipedMovie);
+            MyMoviesSortedList.getInstance(this).save();
             this.myMovieRecyclerView.dataSetChanged(false);
 
             if(this.lastSwipedMovie.isHot())
             {
-                HotMoviesSortedList.getInstance(this).add(this, this.lastSwipedMovie);
+                HotMoviesSortedList.getInstance(this).add(this.lastSwipedMovie);
             }
         }
     }
@@ -166,11 +166,11 @@ public class MainActivity extends MyMoviesToolbarActivity implements LoadedMovie
     // --- --- --- Load movies --- --- ---
     private void loadMyMovies()
     {
-        List<Movie> myMovies = MyMoviesSortedList.getInstance(this).getAll(this);
+        List<Movie> myMovies = MyMoviesSortedList.getInstance(this).getAll();
 
         if(!myMovies.isEmpty())
         {
-            this.loadingProgressBar.setMax(MyMoviesSortedList.getInstance(this).size(this));
+            this.loadingProgressBar.setMax(MyMoviesSortedList.getInstance(this).size());
 
             // download status
             new LoadMyMoviesRetryExecutor(this, this, myMovies, this::onLoadingFinished);
@@ -189,9 +189,9 @@ public class MainActivity extends MyMoviesToolbarActivity implements LoadedMovie
 
     private void onLoadingFinished()
     {
-        Collections.sort(MyMoviesSortedList.getInstance(this).getAll(this));
+        Collections.sort(MyMoviesSortedList.getInstance(this).getAll());
 
-        MyMoviesSortedList.getInstance(this).loadHotMovies(this);
+        MyMoviesSortedList.getInstance(this).loadHotMovies();
 
         this.loadingProgressBar.setVisibility(View.GONE);
         this.moviesUpdateTextView.setVisibility(View.GONE);
@@ -203,7 +203,7 @@ public class MainActivity extends MyMoviesToolbarActivity implements LoadedMovie
     // --- --- --- launch and handle NewMoviesActivity --- --- ---
     private void launchNewMoviesActivity()
     {
-        if(!NewMoviesQueue.getInstance(this).isEmpty(this))
+        if(!NewMoviesQueue.getInstance(this).isEmpty())
         {
             NewMoviesActivity.startForResult(this);
         }

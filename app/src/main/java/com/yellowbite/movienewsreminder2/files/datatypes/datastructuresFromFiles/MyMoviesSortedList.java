@@ -29,7 +29,7 @@ public class MyMoviesSortedList extends MovieListFromFile
 
     // --- --- --- data operations --- --- ---
     @Override
-    public void addAll(Context context, List<Movie> movies)
+    public void addAll(List<Movie> movies)
     {
         for(Movie movie : movies)
         {
@@ -43,7 +43,7 @@ public class MyMoviesSortedList extends MovieListFromFile
     }
 
     @Override
-    public boolean add(Context context, Movie movie)
+    public boolean add(Movie movie)
     {
         if(!this.isNew(movie))
         {
@@ -56,7 +56,7 @@ public class MyMoviesSortedList extends MovieListFromFile
         return true;
     }
 
-    public boolean contains(Context context, Movie movie)
+    public boolean contains(Movie movie)
     {
         for(Movie m2 : super.movieList)
         {
@@ -74,14 +74,14 @@ public class MyMoviesSortedList extends MovieListFromFile
         Collections.sort(super.movieList);
     }
 
-    public void loadHotMovies(Context context)
+    public void loadHotMovies()
     {
-        if(HotMoviesSortedList.getInstance(context).size(context) <= 0)
+        if(HotMoviesSortedList.getInstance(super.context).size() <= 0)
         {
             return;
         }
 
-        HotMoviesSortedList.getInstance(context)
-                .setAllHot(context, super.movieList);
+        HotMoviesSortedList.getInstance(super.context)
+                .setIfHot(super.movieList);
     }
 }

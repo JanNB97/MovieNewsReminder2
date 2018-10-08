@@ -8,15 +8,15 @@ import java.util.List;
 
 public interface MovieList
 {
-    Movie get(Context context, int i);
-    List<Movie> getAll(Context context);
+    Movie get(int i);
+    List<Movie> getAll();
 
-    void addAll(Context context, List<Movie> movies);
-    boolean add(Context context, Movie movie);
+    void addAll(List<Movie> movies);
+    boolean add(Movie movie);
 
-    void remove(Context context, int i);
+    void remove(int i);
 
-    void save(Context context);
+    void save();
 
-    int size(Context context);
+    int size();
 }

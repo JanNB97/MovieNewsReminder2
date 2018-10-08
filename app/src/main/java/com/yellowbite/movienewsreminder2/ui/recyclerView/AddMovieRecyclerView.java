@@ -28,7 +28,7 @@ public class AddMovieRecyclerView extends UnalterableRecyclerView
     {
         this.recyclerView.setEnabled(false);
 
-        Movie movieToAdd = SearchMovieList.getInstance().get(this.addMovieActivity, position);
+        Movie movieToAdd = SearchMovieList.getInstance().get(position);
 
         GetMovieAsyncTask.getMovie(movieToAdd,
             (Movie movie) -> {
@@ -39,8 +39,8 @@ public class AddMovieRecyclerView extends UnalterableRecyclerView
                 }
                 else
                 {
-                    this.movieListToAdd.add(this.addMovieActivity, movie);
-                    this.movieListToAdd.save(this.addMovieActivity);
+                    this.movieListToAdd.add(movie);
+                    this.movieListToAdd.save();
 
                     super.handleClickedOnMovieItem(view, position);
                 }

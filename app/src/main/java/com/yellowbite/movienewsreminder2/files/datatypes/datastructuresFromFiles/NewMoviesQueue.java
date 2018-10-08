@@ -28,21 +28,21 @@ public final class NewMoviesQueue extends MovieListFromFile
         return instance;
     }
 
-    public boolean isEmpty(Context context)
+    public boolean isEmpty()
     {
-        return FileManager.isEmpty(context, super.FILE_NAME);
+        return FileManager.isEmpty(super.context, super.FILE_NAME);
     }
 
     // data changes -> autosave
-    public void addAll(Context context, List<Movie> movies)
+    public void addAll(List<Movie> movies)
     {
-        super.addAll(context, movies);
-        super.saveToFile(context);
+        super.addAll(movies);
+        super.saveToFile();
     }
 
-    public void deleteLast(Context context)
+    public void deleteLast()
     {
-        super.remove(context, super.size(context) - 1);
-        super.saveToFile(context);
+        super.remove(super.size() - 1);
+        super.saveToFile();
     }
 }
