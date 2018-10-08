@@ -44,8 +44,6 @@ public final class HotMoviesSortedList extends MovieListFromFile
     @Override
     public boolean add(Context context, Movie movie)
     {
-        movie.setHot(true);
-
         boolean success = this.addSorted(movie);
         if(success)
         {
@@ -56,7 +54,8 @@ public final class HotMoviesSortedList extends MovieListFromFile
 
     public boolean switchSave(Context context, Movie movie)
     {
-        if(movie.isHot())
+        movie.setHot(!movie.isHot());
+        if(!movie.isHot())
         {
             return deleteSave(context, movie);
         }
