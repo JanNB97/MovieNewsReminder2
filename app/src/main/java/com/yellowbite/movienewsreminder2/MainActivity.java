@@ -203,7 +203,7 @@ public class MainActivity extends MyMoviesToolbarActivity implements LoadedMovie
     // --- --- --- launch and handle NewMoviesActivity --- --- ---
     private void launchNewMoviesActivity()
     {
-        if(!NewMoviesQueue.isEmpty(this))
+        if(!NewMoviesQueue.getInstance(this).isEmpty(this))
         {
             NewMoviesActivity.startForResult(this);
         }

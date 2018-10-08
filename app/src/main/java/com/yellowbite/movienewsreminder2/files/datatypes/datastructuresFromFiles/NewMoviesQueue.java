@@ -10,68 +10,39 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public final class NewMoviesQueue
+public final class NewMoviesQueue extends MovieListFromFile
 {
-    private static final String NEW_MOVIES = "newMovies.txt";
+    private static NewMoviesQueue instance;
 
-    private static List<Movie> newMovies;
-
-    // data doesn't change
-    public static List<Movie> getAll(Context context)
+    protected NewMoviesQueue(Context context)
     {
-        getFromFileIfNecessary(context);
-        return newMovies;
+        super(context, "newMovies.txt");
     }
 
-    public static Movie get(Context context, int i)
+    public static NewMoviesQueue getInstance(Context context)
     {
-        getFromFileIfNecessary(context);
-        return newMovies.get(i);
+        if(instance == null)
+        {
+            instance = new NewMoviesQueue(context);
+        }
+        return instance;
     }
 
-    public static boolean isEmpty(Context context)
+    public boolean isEmpty(Context context)
     {
-        return FileManager.isEmpty(context, NEW_MOVIES);
-    }
-
-    public static int size(Context context)
-    {
-        getFromFileIfNecessary(context);
-        return newMovies.size();
+        return FileManager.isEmpty(context, super.FILE_NAME);
     }
 
     // data changes -> autosave
-    public static void addAll(Context context, Collection<Movie> movies)
+    public void addAll(Context context, List<Movie> movies)
     {
-        getFromFileIfNecessary(context);
-        newMovies.addAll(movies);
-        saveToFile(context);
+        super.addAll(context, movies);
+        super.saveToFile(context);
     }
 
-    public static void deleteLast(Context context)
+    public void deleteLast(Context context)
     {
-        getFromFileIfNecessary(context);
-        newMovies.remove(newMovies.size() - 1);
-        saveToFile(context);
-    }
-
-    // --- --- --- file operations --- --- ---
-
-    private static void getFromFileIfNecessary(Context context)
-    {
-        if(newMovies == null)
-        {
-            getNewMovies(context);
-        }
-    }
-
-    private static void getNewMovies(Context context)
-    {
-        newMovies = MovieFileHelper.toMovies(FileManager.readAll(context, NEW_MOVIES), new ArrayList<>());
-    }
-
-    private static void saveToFile(Context context)
-    {
-        FileManager.write(context, NEW_MOVIES, MovieFileHelper.toLines(newMovies));
+        super.remove(context, super.size(context) - 1);
+        super.saveToFile(context);
     }
 }

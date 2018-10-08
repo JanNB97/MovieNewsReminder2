@@ -13,7 +13,7 @@ import java.util.List;
 
 public abstract class MovieListFromFile implements MovieList
 {
-    private final String FILE_NAME;
+    protected final String FILE_NAME;
     protected List<Movie> movieList;
 
     protected MovieListFromFile(Context context, String fileName)

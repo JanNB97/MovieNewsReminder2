@@ -54,10 +54,10 @@ public class NewMoviesActivity extends ToolbarActivity implements LoadedMovieEve
     {
         nextMovieLabel = this.nextMovieButton.getText().toString();
 
-        this.displayedMovieId = NewMoviesQueue.size(this);
+        this.displayedMovieId = NewMoviesQueue.getInstance(this).size(this);
 
-        new LoadNewMoviesDescendingExecutor(this, this, NewMoviesQueue.getAll(this));
-        this.movieIsLoaded = new boolean[NewMoviesQueue.size(this)];
+        new LoadNewMoviesDescendingExecutor(this, this, NewMoviesQueue.getInstance(this).getAll(this));
+        this.movieIsLoaded = new boolean[NewMoviesQueue.getInstance(this).size(this)];
 
         this.tryToShowNextMovie();
     }
@@ -118,7 +118,7 @@ public class NewMoviesActivity extends ToolbarActivity implements LoadedMovieEve
 
     private void showNextMovie()
     {
-        this.displayedMovie = NewMoviesQueue.get(this, this.displayedMovieId);
+        this.displayedMovie = NewMoviesQueue.getInstance(this).get(this, this.displayedMovieId);
 
         showMovie(this.displayedMovie);
         setButtonsEnabled(true);
