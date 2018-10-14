@@ -35,13 +35,13 @@ public final class NewMoviesQueue extends MovieListFromFile
 
     // data changes -> autosave
     public void addAll(List<Movie> movies)
-    {
+    {   // TODO - make better
         super.addAll(movies);
         super.saveToFile();
     }
 
     public void deleteLast()
-    {
+    {   // TODO - make better
         super.remove(super.size() - 1);
         super.saveToFile();
     }

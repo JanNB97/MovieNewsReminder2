@@ -19,4 +19,6 @@ public interface MovieList
     void save();
 
     int size();
+
+    // TODO - add isEmpty
 }
