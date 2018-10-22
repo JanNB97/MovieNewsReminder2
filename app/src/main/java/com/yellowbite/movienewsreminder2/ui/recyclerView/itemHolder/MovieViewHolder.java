@@ -17,8 +17,8 @@ public class MovieViewHolder extends RecyclerView.ViewHolder
 
     private TextView titelTextView;
     private TextView standortTextView;
-    private TextView wocheTextView;
-    private TextView wochentagTextView;
+    private TextView ceilingTextView;
+    private TextView bottomTextView;
 
     // color
     private static final String RESET_COLOR = "#e5e5e5";
@@ -36,10 +36,10 @@ public class MovieViewHolder extends RecyclerView.ViewHolder
 
         this.titelTextView = view.findViewById(R.id.title);
         this.standortTextView = view.findViewById(R.id.standort);
-        this.wocheTextView = view.findViewById(R.id.woche);
-        this.wochentagTextView = view.findViewById(R.id.wochentag);
+        this.ceilingTextView = view.findViewById(R.id.woche);
+        this.bottomTextView = view.findViewById(R.id.wochentag);
 
-        this.isSimpleRow = this.wochentagTextView == null;
+        this.isSimpleRow = this.bottomTextView == null;
     }
 
     public void showMovie(Movie movie)
@@ -65,36 +65,33 @@ public class MovieViewHolder extends RecyclerView.ViewHolder
         switch (movie.getStatus())
         {
             case VERFUEGBAR:
-                wocheTextView.setText(movie.getStatus().getValue());
+                ceilingTextView.setText(movie.getStatus().getValue());
                 break;
             case ENTLIEHEN:
                 if(movie.getVorbestellungen() > 0)
                 {
-                    wocheTextView.setText(movie.getVorbestellungen() + " Vor.");
+                    ceilingTextView.setText(movie.getVorbestellungen() + " Vor.");
                 }
                 else
                 {
                     String[] message = DateHelper.getWeekdayAsMessage(movie.getEntliehenBis());
-                    wocheTextView.setText(message[0]);
+                    ceilingTextView.setText(message[0]);
                     if(message.length > 1)
                     {
-                        wochentagTextView.setText(message[1]);
+                        bottomTextView.setText(message[1]);
                     }
                 }
 
                 break;
             case VORBESTELLT:
-                wocheTextView.setText(movie.getVorbestellungen() + " Vor.");
+                ceilingTextView.setText(movie.getVorbestellungen() + " Vor.");
                 break;
             case IN_BEARBEITUNG:
-                if(movie.getVorbestellungen() == -1)
+                ceilingTextView.setText("in Bearb.");
+
+                if(movie.getVorbestellungen() >= 1)
                 {
-                    wochentagTextView.setText("in Bearb.");
-                }
-                else
-                {
-                    wocheTextView.setText("in Bearb.");
-                    wochentagTextView.setText("(" + movie.getVorbestellungen() + " Vor.)");
+                    bottomTextView.setText("(" + movie.getVorbestellungen() + " Vor.)");
                 }
         }
 
@@ -110,11 +107,11 @@ public class MovieViewHolder extends RecyclerView.ViewHolder
 
         if(!isSimpleRow)
         {
-            this.wocheTextView.setText("");
-            this.wochentagTextView.setText("");
+            this.ceilingTextView.setText("");
+            this.bottomTextView.setText("");
 
-            this.wochentagTextView.setTextColor(Color.parseColor(TEXT_RESET_COLOR));
-            this.wocheTextView.setTextColor(Color.parseColor(TEXT_RESET_COLOR));
+            this.bottomTextView.setTextColor(Color.parseColor(TEXT_RESET_COLOR));
+            this.ceilingTextView.setTextColor(Color.parseColor(TEXT_RESET_COLOR));
         }
 
         this.resetViewBg();
@@ -181,8 +178,8 @@ public class MovieViewHolder extends RecyclerView.ViewHolder
 
         this.titelTextView.setTextColor(Color.parseColor(bgColor));
         this.standortTextView.setTextColor(Color.parseColor(bgColor));
-        this.wochentagTextView.setTextColor(Color.parseColor(bgColor));
-        this.wocheTextView.setTextColor(Color.parseColor(bgColor));
+        this.bottomTextView.setTextColor(Color.parseColor(bgColor));
+        this.ceilingTextView.setTextColor(Color.parseColor(bgColor));
 
         this.view.setBackgroundColor(Color.parseColor(TEXT_RESET_COLOR));
     }

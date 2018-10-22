@@ -143,7 +143,6 @@ public class NewMoviesActivity extends ToolbarActivity implements LoadedMovieEve
 
         if(movie.getStatus() == Movie.Status.IN_BEARBEITUNG)
         {
-            this.movieTitelTextView.append(" (" + Movie.Status.IN_BEARBEITUNG.getValue() + ")");
             this.setDecisionEnabled(!movieAlreadyInMyMovies);
         }
         else
