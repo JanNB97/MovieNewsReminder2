@@ -23,7 +23,7 @@ public class MedZenHandler extends WebscrapingHandler
     public static final String MED_ZEN_NEW_MOVIES_5_URL = "https://opac.winbiap.net/mzhr/acquisitions.aspx?data=cFM9NSZhbXA7U29ydD1adWdhbmdzZGF0dW0gKEJpYmxpb3RoZWspJmFtcDtzQz1jXzA9MSUlbV8wPTElJWZfMD02MyUlb18wPTYlJXZfMD0yNS4wOC4yMDE2IDAwOjAwOjAwKytjXzE9MSUlbV8xPTElJWZfMT00MiUlb18xPTElJXZfMT00NlMtRFZEIChTcGllbGZpbG0pKytjXzI9MSUlbV8yPTElJWZfMj00OCUlb18yPTElJXZfMj1NZWRpZW56ZW50cnVtIEhlcnNmZWxkLVJvdGVuYnVyZyZhbXA7Y21kPTE=-vg8oXcbJ4nw=";
     public static final String MED_ZEN_NEW_MOVIES_50_URL = "https://opac.winbiap.net/mzhr/acquisitions.aspx?data=cFM9NTAmYW1wO1NvcnQ9WnVnYW5nc2RhdHVtIChCaWJsaW90aGVrKSZhbXA7c0M9Y18wPTElJW1fMD0xJSVmXzA9NjMlJW9fMD02JSV2XzA9MjUuMDguMjAxNiAwMDowMDowMCsrY18xPTElJW1fMT0xJSVmXzE9NDIlJW9fMT0xJSV2XzE9NDZTLURWRCAoU3BpZWxmaWxtKSsrY18yPTElJW1fMj0xJSVmXzI9NDglJW9fMj0xJSV2XzI9TWVkaWVuemVudHJ1bSBIZXJzZmVsZC1Sb3RlbmJ1cmcmYW1wO2NtZD0x-g98+BeyN9rU=";
 
-    public static final String MED_ZEN_ALL_BOOKED_MOVIES = "https://opac.winbiap.net/mzhr/search.aspx?data=cEk9MiZhbXA7ZkM9MyUlaW4gQmVhcmJlaXR1bmcmYW1wO1NvcnQ9RXJzY2hlaW51bmdzamFociZhbXA7c0M9Y18wPTElJW1fMD0xJSVmXzA9NDIlJW9fMD0xJSV2XzA9NDZTLURWRCAoU3BpZWxmaWxtKSZhbXA7Y21kPTUmYW1wO1Nob3dBbGw9MQ==-bt/MSq1H6Ks=";
+    public static final String MED_ZEN_ALL_BOOKED_MOVIES = "https://opac.winbiap.net/mzhr/search.aspx?data=cEk9MCZhbXA7Y21kPTEmYW1wO1NvcnQ9RXJzY2hlaW51bmdzamFociZhbXA7c0M9Y18wPTElJW1fMD0xJSVmXzA9NDIlJW9fMD0xJSV2XzA9NDZTLURWRCAoU3BpZWxmaWxtKSZhbXA7U2hvd0FsbD0xJmFtcDtmQz0zJSVpbiBCZWFyYmVpdHVuZyZhbXA7cFM9MTAw-b/sJwn4F20I=";
 
     public MedZenHandler()
     {
@@ -58,22 +58,15 @@ public class MedZenHandler extends WebscrapingHandler
 
     private WebScraperMessage checkForBookedMovies(Context context)
     {
-        MedZenMovieListScraper listScraper;
+        List<Movie> bookedMovies;
         try
         {
-            listScraper = new MedZenMovieListScraper(MED_ZEN_ALL_BOOKED_MOVIES);
+            bookedMovies = MedZenMovieListScraper.getAllEssentialMoviesAndNextPages(MED_ZEN_ALL_BOOKED_MOVIES);
         } catch (IOException e)
         {
             e.printStackTrace();
             return null;
         }
-
-        if(listScraper.isEmpty())
-        {
-            return null;
-        }
-
-        List<Movie> bookedMovies = listScraper.getAllEssentialMovies();
 
         List<Movie> newBookedMovies = SortedBookedMoviesList.getInstance(context)
                 .getAndAddDifference(context, bookedMovies);

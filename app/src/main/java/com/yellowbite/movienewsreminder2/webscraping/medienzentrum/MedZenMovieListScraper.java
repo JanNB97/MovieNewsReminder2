@@ -44,6 +44,26 @@ public class MedZenMovieListScraper
         return movies;
     }
 
+    public static List<Movie> getAllEssentialMoviesAndNextPages(String url) throws IOException
+    {
+        List<Movie> movies = new ArrayList<>();
+
+        MedZenMovieListScraper listScraper = new MedZenMovieListScraper(url);
+        String nextPage;
+        do
+        {
+            movies.addAll(listScraper.getAllEssentialMovies());
+            nextPage = listScraper.getURLToNextPage();
+            if(nextPage != null)
+            {
+                listScraper = new MedZenMovieListScraper(nextPage);
+            }
+        }
+        while (nextPage != null);
+
+        return movies;
+    }
+
     public List<Movie> getAllEssentialMovies()
     {
         List<Movie> movies = new ArrayList<>();

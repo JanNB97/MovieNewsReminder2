@@ -6,8 +6,6 @@ import com.yellowbite.movienewsreminder2.files.helper.FileManager;
 import com.yellowbite.movienewsreminder2.model.Movie;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 public class SortedBookedMoviesList
@@ -35,11 +33,11 @@ public class SortedBookedMoviesList
 
         boolean bookedListChanged = false;
 
-        for(Movie newStatus : bookedMovies)
+        for(Movie newMovie : bookedMovies)
         {
-            if(isNew(newStatus.getMediaBarcode()))
+            if(isNewAndAdd(newMovie.getMediaBarcode()))
             {
-                difference.add(newStatus);
+                difference.add(newMovie);
                 bookedListChanged = true;
             }
         }
@@ -52,25 +50,25 @@ public class SortedBookedMoviesList
         return difference;
     }
 
-    private boolean isNew(Integer newStatus)
+    private boolean isNewAndAdd(Integer newMovie)
     {
         for(int i = 0; i < this.bookedMovies.size(); i++)
         {
-            Integer oldStatus = this.bookedMovies.get(i);
+            Integer oldMovie = this.bookedMovies.get(i);
 
-            if(newStatus.equals(oldStatus))
+            if(newMovie.equals(oldMovie))
             {
                 return false;
             }
 
-            if(newStatus < oldStatus)
+            if(newMovie < oldMovie)
             {
-                this.bookedMovies.add(i, newStatus);
+                this.bookedMovies.add(i, newMovie);
                 return true;
             }
         }
 
-        this.bookedMovies.add(newStatus);
+        this.bookedMovies.add(newMovie);
         return true;
     }
 
