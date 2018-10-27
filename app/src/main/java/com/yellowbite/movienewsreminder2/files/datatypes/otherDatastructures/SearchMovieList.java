@@ -1,13 +1,9 @@
 package com.yellowbite.movienewsreminder2.files.datatypes.otherDatastructures;
 
-import android.content.Context;
-
 import com.yellowbite.movienewsreminder2.files.datatypes.MovieList;
 import com.yellowbite.movienewsreminder2.model.Movie;
-import com.yellowbite.movienewsreminder2.webscraping.WebscrapingHelper;
 import com.yellowbite.movienewsreminder2.webscraping.medienzentrum.MedZenMovieListScraper;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,9 +42,11 @@ public class SearchMovieList implements MovieList
     }
 
     // --- --- --- add --- --- ---
-    public void addMovieSite(MedZenMovieListScraper listScraper)
+    public boolean addMovieSite(MedZenMovieListScraper listScraper)
     {
-        this.addAll(listScraper.getAllMovie());
+        List<Movie> results = listScraper.getAllMovies();
+        this.addAll(results);
+        return !results.isEmpty();
     }
 
     @Override

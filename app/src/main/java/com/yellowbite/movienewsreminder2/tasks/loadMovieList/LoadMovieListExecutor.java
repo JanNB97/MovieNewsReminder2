@@ -16,12 +16,17 @@ public class LoadMovieListExecutor
     private AppCompatActivity activity;
     private ThreadPoolExecutor executor;
 
-    private Runnable onSiteLoaded;
+    private BoolRunnable onSiteLoaded;
     private Runnable onFinishedLoading;
 
     private String searchEntry;
 
-    public LoadMovieListExecutor(AppCompatActivity activity, Runnable onSiteLoaded, Runnable onFinishedLoading)
+    public interface BoolRunnable
+    {
+        void run(boolean gotResults);
+    }
+
+    public LoadMovieListExecutor(AppCompatActivity activity, BoolRunnable onSiteLoaded, Runnable onFinishedLoading)
     {
         this.activity = activity;
 
@@ -57,9 +62,9 @@ public class LoadMovieListExecutor
 
             this.scrapeNextPage(listScraper, page, maxPages);
 
-            SearchMovieList.getInstance().addMovieSite(listScraper);
+            boolean gotResult = SearchMovieList.getInstance().addMovieSite(listScraper);
 
-            this.notifyMovieLoaded(page, maxPages);
+            this.notifyMovieLoaded(page, maxPages, gotResult);
         } catch (IOException e)
         {
             this.handleExceptionWhileWebscraping(e);
@@ -79,10 +84,10 @@ public class LoadMovieListExecutor
         this.executor.execute(() -> this.loadMovieList(urlToNextPage, page + 1, finalMaxPages));
     }
 
-    private void notifyMovieLoaded(int page, int maxPages)
+    private void notifyMovieLoaded(int page, int maxPages, boolean gotResults)
     {
         this.activity.runOnUiThread(() -> {
-            this.onSiteLoaded.run();
+            this.onSiteLoaded.run(gotResults);
 
             if(page >= maxPages)
             {

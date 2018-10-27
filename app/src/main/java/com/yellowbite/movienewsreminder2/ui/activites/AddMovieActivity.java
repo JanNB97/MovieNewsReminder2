@@ -99,9 +99,12 @@ public class AddMovieActivity extends ToolbarActivity
         this.searchExecutor.startToLoadMovieList(searchText);
     }
 
-    private void onSiteScraped()
+    private void onSiteScraped(boolean gotResults)
     {
-        this.addMovieRecyclerView.dataSetChanged(false);
+        if(gotResults)
+        {
+            this.addMovieRecyclerView.dataSetChanged(false);
+        }
     }
 
     private void onScrapingFinished()

@@ -29,7 +29,7 @@ public class MedZenMovieListScraper
         this.listEntries = doc.select(movieCssQuery);
     }
 
-    public List<Movie> getAllMovie()
+    public List<Movie> getAllMovies()
     {
         List<Movie> movies = new ArrayList<>();
 
