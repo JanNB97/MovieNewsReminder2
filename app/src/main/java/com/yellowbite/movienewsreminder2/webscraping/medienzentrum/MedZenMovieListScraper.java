@@ -18,6 +18,7 @@ public class MedZenMovieListScraper
 {
     private Document doc;
     private Elements listEntries;
+    private String searchFilter;
     private static final String movieCssQuery = "tr.ResultItem";
 
     private static final String MOVIE_MEDIAGROUP = "46S-DVD (Spielfilm)";
@@ -96,7 +97,7 @@ public class MedZenMovieListScraper
         movie.setStandort(this.getBestStandort(index));
         movie.setTitel(this.getTitel(index));
 
-        return movie;
+        return this.fitsToSearchEntry(movie) ? movie : null;
     }
 
     public Movie getEssentialMovie(int index)
@@ -228,5 +229,31 @@ public class MedZenMovieListScraper
     public int getListEntrySize()
     {
         return listEntries.size();
+    }
+
+    // --- --- --- search filter --- --- ---
+    private boolean fitsToSearchEntry(Movie movie)
+    {
+        if(searchFilter == null)
+        {
+            return true;
+        }
+
+        if(movie.getTitel() == null)
+        {
+            return false;
+        }
+
+        return this.makeValidSearchString(movie.getTitel()).contains(this.searchFilter);
+    }
+
+    private String makeValidSearchString(String string)
+    {
+        return string.toLowerCase();
+    }
+
+    public void setSearchFilter(String searchFilter)
+    {
+        this.searchFilter = this.makeValidSearchString(searchFilter);
     }
 }

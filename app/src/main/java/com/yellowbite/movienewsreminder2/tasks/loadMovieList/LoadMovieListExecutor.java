@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.yellowbite.movienewsreminder2.files.datatypes.otherDatastructures.SearchMovieList;
 import com.yellowbite.movienewsreminder2.ui.notifications.NotificationMan;
+import com.yellowbite.movienewsreminder2.webscraping.WebscrapingHelper;
 import com.yellowbite.movienewsreminder2.webscraping.medienzentrum.MedZenMovieListScraper;
 
 import java.io.IOException;
@@ -18,6 +19,8 @@ public class LoadMovieListExecutor
     private Runnable onSiteLoaded;
     private Runnable onFinishedLoading;
 
+    private String searchEntry;
+
     public LoadMovieListExecutor(AppCompatActivity activity, Runnable onSiteLoaded, Runnable onFinishedLoading)
     {
         this.activity = activity;
@@ -28,9 +31,11 @@ public class LoadMovieListExecutor
         this.onFinishedLoading = onFinishedLoading;
     }
 
-    public void startToLoadMovieList(String urlToFirstPage)
+    public void startToLoadMovieList(String searchEntry)
     {
-        executor.execute(() -> this.loadMovieList(urlToFirstPage, 1, -1));
+        this.searchEntry = searchEntry;
+        String searchULR = WebscrapingHelper.getWideSearchURL(searchEntry);
+        executor.execute(() -> this.loadMovieList(searchULR, 1, -1));
     }
 
     private void loadMovieList(String siteURL, int page, int maxPages)
@@ -38,6 +43,7 @@ public class LoadMovieListExecutor
         try
         {
             MedZenMovieListScraper listScraper = new MedZenMovieListScraper(siteURL);
+            listScraper.setSearchFilter(this.searchEntry);
             if(listScraper.isEmpty())
             {
                 this.finishWithoutResults();

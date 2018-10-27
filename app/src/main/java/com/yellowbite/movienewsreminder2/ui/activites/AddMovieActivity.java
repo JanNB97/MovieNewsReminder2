@@ -96,8 +96,7 @@ public class AddMovieActivity extends ToolbarActivity
         SearchMovieList.getInstance().clear();
         this.addMovieRecyclerView.dataSetChanged(false);
 
-        String searchURL = WebscrapingHelper.getWideSearchURL(searchText);
-        this.searchExecutor.startToLoadMovieList(searchURL);
+        this.searchExecutor.startToLoadMovieList(searchText);
     }
 
     private void onSiteScraped()
