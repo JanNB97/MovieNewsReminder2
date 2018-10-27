@@ -107,13 +107,16 @@ public class AddMovieActivity extends ToolbarActivity
         }
     }
 
-    private void onScrapingFinished()
+    private void onScrapingFinished(boolean successSearch)
     {
-        this.addMovieRecyclerView.dataSetChanged(false);
+        if(successSearch)
+        {
+            this.addMovieRecyclerView.dataSetChanged(false);
+            this.searchTextView.setText("");
+        }
 
         this.setUserInteractionEnabled(true);
         this.searchProgressIndicator.setVisibility(View.GONE);
-        this.searchTextView.setText("");
     }
 
     private void setUserInteractionEnabled(boolean enabled)

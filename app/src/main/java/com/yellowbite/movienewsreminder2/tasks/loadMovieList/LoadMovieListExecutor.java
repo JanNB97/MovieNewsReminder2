@@ -17,16 +17,18 @@ public class LoadMovieListExecutor
     private ThreadPoolExecutor executor;
 
     private BoolRunnable onSiteLoaded;
-    private Runnable onFinishedLoading;
+    private BoolRunnable onFinishedLoading;
 
     private String searchEntry;
+
+    private boolean successSearch;
 
     public interface BoolRunnable
     {
         void run(boolean gotResults);
     }
 
-    public LoadMovieListExecutor(AppCompatActivity activity, BoolRunnable onSiteLoaded, Runnable onFinishedLoading)
+    public LoadMovieListExecutor(AppCompatActivity activity, BoolRunnable onSiteLoaded, BoolRunnable onFinishedLoading)
     {
         this.activity = activity;
 
@@ -39,6 +41,7 @@ public class LoadMovieListExecutor
     public void startToLoadMovieList(String searchEntry)
     {
         this.searchEntry = searchEntry;
+        this.successSearch = false;
         String searchULR = WebscrapingHelper.getWideSearchURL(searchEntry);
         executor.execute(() -> this.loadMovieList(searchULR, 1, -1));
     }
@@ -63,6 +66,10 @@ public class LoadMovieListExecutor
             this.scrapeNextPage(listScraper, page, maxPages);
 
             boolean gotResult = SearchMovieList.getInstance().addMovieSite(listScraper);
+            if(gotResult)
+            {
+                this.successSearch = true;
+            }
 
             this.notifyMovieLoaded(page, maxPages, gotResult);
         } catch (IOException e)
@@ -80,8 +87,7 @@ public class LoadMovieListExecutor
             return;
         }
 
-        int finalMaxPages = maxPages;
-        this.executor.execute(() -> this.loadMovieList(urlToNextPage, page + 1, finalMaxPages));
+        this.executor.execute(() -> this.loadMovieList(urlToNextPage, page + 1, maxPages));
     }
 
     private void notifyMovieLoaded(int page, int maxPages, boolean gotResults)
@@ -91,7 +97,12 @@ public class LoadMovieListExecutor
 
             if(page >= maxPages)
             {
-                this.onFinishedLoading.run();
+                if(!this.successSearch)
+                {
+                    this.showUnsuccessfulSearch();
+                }
+
+                this.onFinishedLoading.run(this.successSearch);
             }
         });
     }
@@ -99,9 +110,14 @@ public class LoadMovieListExecutor
     private void finishWithoutResults()
     {
         this.activity.runOnUiThread(() -> {
-            NotificationMan.showShortToast(this.activity, "Keine Treffer gefunden");
-            this.onFinishedLoading.run();
+            this.showUnsuccessfulSearch();
+            this.onFinishedLoading.run(false);
         });
+    }
+
+    private void showUnsuccessfulSearch()
+    {
+        NotificationMan.showShortToast(this.activity, "Keine Treffer gefunden");
     }
 
     private void handleExceptionWhileWebscraping(Exception e)
@@ -109,7 +125,7 @@ public class LoadMovieListExecutor
         e.printStackTrace();
         this.activity.runOnUiThread(() -> {
             NotificationMan.showShortToast(this.activity, "Es ist ein Fehler aufgetreten");
-            this.onFinishedLoading.run();
+            this.onFinishedLoading.run(false);
         });
     }
 }
