@@ -80,7 +80,7 @@ public class MovieFileHelper
     {
         return movie.getMediaBarcode() + ";" + movie.getURL() + ";"
                 + movie.getStandort() + ";" + DateHelper.toString(movie.getZugang()) + ";"
-                + movie.getTitel();
+                + movie.getTitel() + ";" + movie.notificationWasShown();
     }
 
     public static List<Movie> toMovies(Collection<String> strings, List<Movie> output)
