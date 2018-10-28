@@ -6,7 +6,7 @@ public class AddedMovieMessage extends WebScraperMessage
 {
     public AddedMovieMessage(int numNewMovies)
     {
-        super(getTitle(numNewMovies), "", R.drawable.addedmoviesicon, false);
+        super(Message.ADDED_MOVIE, getTitle(numNewMovies), "", R.drawable.addedmoviesicon, false);
     }
 
     private static String getTitle(int numNewMovies)

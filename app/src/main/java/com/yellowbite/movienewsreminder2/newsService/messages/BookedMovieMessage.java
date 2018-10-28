@@ -6,7 +6,7 @@ public class BookedMovieMessage extends WebScraperMessage
 {
     public BookedMovieMessage(int numNewMovies)
     {
-        super(getTitle(numNewMovies), "", R.drawable.addedmoviesicon, false);
+        super(Message.BOOKED_MOVIES, getTitle(numNewMovies), "", R.drawable.addedmoviesicon, false);
     }
 
     private static String getTitle(int numNewMovies)

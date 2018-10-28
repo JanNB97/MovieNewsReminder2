@@ -8,22 +8,23 @@ import android.support.v4.app.NotificationManagerCompat;
 import android.widget.Toast;
 
 import com.yellowbite.movienewsreminder2.MainActivity;
+import com.yellowbite.movienewsreminder2.newsService.messages.WebScraperMessage;
 
 public final class NotificationMan
 {
-    public static void showNotification(Context context, String title, String text, int icon, boolean multiLinedText)
+    public static void showNotification(Context context, WebScraperMessage message)
     {
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
-                .setSmallIcon(icon)
-                .setContentTitle(title)
-                .setContentText(text)
+                .setSmallIcon(message.getIcon())
+                .setContentTitle(message.getTitle())
+                .setContentText(message.getText())
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setAutoCancel(true);
 
-        if(multiLinedText)
+        if(message.isShowMultiLinedText())
         {
             mBuilder.setStyle(new NotificationCompat.BigTextStyle()
-                .bigText(text));
+                .bigText(message.getText()));
         }
 
         PendingIntent contentIntent = PendingIntent.getActivity(context, 0,
@@ -32,7 +33,7 @@ public final class NotificationMan
         mBuilder.setContentIntent(contentIntent);
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
-        notificationManager.notify(0, mBuilder.build());
+        notificationManager.notify(message.getId(), mBuilder.build());
     }
 
     public static void showShortToast(Context context, String text)

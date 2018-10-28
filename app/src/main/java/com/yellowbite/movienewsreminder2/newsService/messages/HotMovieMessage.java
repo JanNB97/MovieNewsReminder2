@@ -3,6 +3,7 @@ package com.yellowbite.movienewsreminder2.newsService.messages;
 import com.yellowbite.movienewsreminder2.R;
 import com.yellowbite.movienewsreminder2.model.Movie;
 
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -11,7 +12,7 @@ public class HotMovieMessage extends WebScraperMessage
 {
     public HotMovieMessage(List<Movie> hotVerfuegbarMovies, List<Movie> shownMovies)
     {
-        super(toTitel(hotVerfuegbarMovies, shownMovies),
+        super(Message.HOT_MOVIE_AVAILABLE, toTitel(hotVerfuegbarMovies, shownMovies),
                 toText(hotVerfuegbarMovies, shownMovies),
                 R.drawable.hotmovieicon, true);
     }
