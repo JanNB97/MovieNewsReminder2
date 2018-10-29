@@ -11,6 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+
         <activity android:name=".MainActivity"
             android:launchMode="singleTop">
             <intent-filter>
@@ -28,6 +29,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.yellowbite.movienewsreminder2.MainActivity" />
         </activity>
+
+        <activity android:name=".ui.activites.WishlistActivity"
+            android:label="Wunschliste"></activity>
 
         <service
             android:name=".newsService.NewsService"
