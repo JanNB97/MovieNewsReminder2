@@ -31,6 +31,7 @@ public abstract class NavigationDrawerActivity extends ToolbarActivity
 
         navigationView.setNavigationItemSelectedListener(item -> {
             drawerLayout.closeDrawers();
+            item.setChecked(true);
             return handleOnNavItemClicked(item);
         });
     }
