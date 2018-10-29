@@ -27,10 +27,9 @@ public abstract class NavigationDrawerActivity extends ToolbarActivity
 
     private void initNavigationView(NavigationView navigationView)
     {
-        navigationView.getMenu().getItem(0).setChecked(true);
+        //navigationView.getMenu().getItem(0).setChecked(true);
 
         navigationView.setNavigationItemSelectedListener(item -> {
-            item.setChecked(true);
             drawerLayout.closeDrawers();
             return handleOnNavItemClicked(item);
         });
@@ -41,14 +40,17 @@ public abstract class NavigationDrawerActivity extends ToolbarActivity
         switch (item.getItemId())
         {
             case R.id.home:
-                this.finish();
-                return true;
+                if(!(this instanceof MainActivity))
+                {
+                    this.finish();
+                    return true;
+                }
+                break;
             case R.id.wished_movies:
                 WishlistActivity.start(this);
                 return true;
-            default:
-                return false;
         }
+        return false;
     }
 
     @Override
