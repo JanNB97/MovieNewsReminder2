@@ -147,7 +147,7 @@ public class NewMoviesActivity extends ToolbarActivity implements LoadedMovieEve
         }
         else
         {
-            boolean bookedMovieArrived = SortedBookedMoviesList.getInstance(this).containsAndRemove(this, movie);
+            boolean bookedMovieArrived = SortedBookedMoviesList.getInstance(this).containsAndRemove(movie);
             this.setDecisionEnabled(!bookedMovieArrived && !movieAlreadyInMyMovies);
             if(bookedMovieArrived)
             {

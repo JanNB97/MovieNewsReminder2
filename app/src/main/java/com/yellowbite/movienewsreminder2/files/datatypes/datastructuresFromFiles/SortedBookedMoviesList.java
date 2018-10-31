@@ -12,22 +12,29 @@ public class SortedBookedMoviesList
 {
     private static final String FILE_NAME = "bookedMovies.txt";
 
+    private Context context;
+
     private static SortedBookedMoviesList instance;
 
     private List<Integer> bookedMovies;
+
+    private SortedBookedMoviesList(Context context)
+    {
+        this.context = context;
+        this.getFromFileIfNecessary();
+    }
 
     public static SortedBookedMoviesList getInstance(Context context)
     {
         if(instance == null)
         {
-            instance = new SortedBookedMoviesList();
-            instance.getFromFileIfNecessary(context);
+            instance = new SortedBookedMoviesList(context);
         }
 
         return instance;
     }
 
-    public List<Movie> getAndAddDifference(Context context, List<Movie> bookedMovies)
+    public List<Movie> getAndAddDifference(List<Movie> bookedMovies)
     {
         List<Movie> difference = new ArrayList<>();
 
@@ -44,7 +51,7 @@ public class SortedBookedMoviesList
 
         if(bookedListChanged)
         {
-            this.save(context);
+            this.save();
         }
 
         return difference;
@@ -72,7 +79,7 @@ public class SortedBookedMoviesList
         return true;
     }
 
-    public boolean containsAndRemove(Context context, Movie movie)
+    public boolean containsAndRemove(Movie movie)
     {
         int movieCode = movie.getMediaBarcode();
 
@@ -87,7 +94,7 @@ public class SortedBookedMoviesList
             if(mc == movieCode)
             {
                 this.bookedMovies.remove(position);
-                this.save(context);
+                this.save();
                 return true;
             }
 
@@ -98,7 +105,7 @@ public class SortedBookedMoviesList
     }
 
     // --- --- --- file helper methods --- --- ---
-    private void getFromFileIfNecessary(Context context)
+    private void getFromFileIfNecessary()
     {
         this.bookedMovies = new ArrayList<>();
         List<String> readLines = FileManager.readAll(context, FILE_NAME);
@@ -108,7 +115,7 @@ public class SortedBookedMoviesList
         }
     }
 
-    private void save(Context context)
+    public void save()
     {
         FileManager.write(context, FILE_NAME, this.toLines());
     }
