@@ -35,7 +35,7 @@ public abstract class ToolbarActivity extends AppCompatActivity
     @Override
     protected void onPause()
     {
-        MovieFileHelper.startSaveAllThread(this);
+        MovieFileHelper.startSaveAllThread();
         super.onPause();
     }
 }

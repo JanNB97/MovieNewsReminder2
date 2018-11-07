@@ -34,6 +34,14 @@ public class SortedBookedMoviesList
         return instance;
     }
 
+    public static void saveInstance()
+    {
+        if(instance != null)
+        {
+            instance.save();
+        }
+    }
+
     public List<Movie> getAndAddDifference(List<Movie> bookedMovies)
     {
         List<Movie> difference = new ArrayList<>();

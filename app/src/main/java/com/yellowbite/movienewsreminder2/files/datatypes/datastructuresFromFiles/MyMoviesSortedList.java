@@ -27,6 +27,14 @@ public class MyMoviesSortedList extends MovieListFromFile
         return instance;
     }
 
+    public static void saveInstance()
+    {
+        if(instance != null)
+        {
+            instance.save();
+        }
+    }
+
     // --- --- --- data operations --- --- ---
     @Override
     public void addAll(List<Movie> movies)

@@ -30,6 +30,14 @@ public final class HotMoviesSortedList extends MovieListFromFile
         return instance;
     }
 
+    public static void saveInstance()
+    {
+        if(instance != null)
+        {
+            instance.save();
+        }
+    }
+
     public void setIfHot(Collection<Movie> movies)
     {
         for(Movie movie : movies)

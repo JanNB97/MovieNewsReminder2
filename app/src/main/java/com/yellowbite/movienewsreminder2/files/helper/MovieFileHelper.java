@@ -105,13 +105,13 @@ public class MovieFileHelper
         return output;
     }
 
-    public static void startSaveAllThread(Context context)
+    public static void startSaveAllThread()
     {
         new Thread(() -> {
-            HotMoviesSortedList.getInstance(context).save();
-            MyMoviesSortedList.getInstance(context).save();
-            NewMoviesQueue.getInstance(context).save();
-            SortedBookedMoviesList.getInstance(context).save();
+            HotMoviesSortedList.saveInstance();
+            MyMoviesSortedList.saveInstance();
+            NewMoviesQueue.saveInstance();
+            SortedBookedMoviesList.saveInstance();
         }).start();
     }
 }

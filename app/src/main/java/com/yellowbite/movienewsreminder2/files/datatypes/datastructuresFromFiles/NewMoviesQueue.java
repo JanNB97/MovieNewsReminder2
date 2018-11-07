@@ -28,6 +28,14 @@ public final class NewMoviesQueue extends MovieListFromFile
         return instance;
     }
 
+    public static void saveInstance()
+    {
+        if(instance != null)
+        {
+            instance.save();
+        }
+    }
+
     public boolean isEmpty()
     {
         return FileManager.isEmpty(super.context, super.FILE_NAME);
