@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.HotMoviesSortedList;
 import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.MyMoviesSortedList;
 import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.NewMoviesQueue;
+import com.yellowbite.movienewsreminder2.files.helper.MovieFileHelper;
 import com.yellowbite.movienewsreminder2.model.Movie;
 import com.yellowbite.movienewsreminder2.newsService.NewsService;
 import com.yellowbite.movienewsreminder2.tasks.functionalInterfaces.LoadedMoviesEvent;
@@ -153,8 +154,7 @@ public class MainActivity extends MyMoviesToolbarActivity implements LoadedMovie
         if(lastSwipedMovie != null)
         {
             MyMoviesSortedList.getInstance(this).add(this.lastSwipedMovie);
-            MyMoviesSortedList.getInstance(this).save();
-            this.myMovieRecyclerView.dataSetChanged(false);
+            this.myMovieRecyclerView.dataSetChanged();
 
             if(this.lastSwipedMovie.isHot())
             {
@@ -227,7 +227,7 @@ public class MainActivity extends MyMoviesToolbarActivity implements LoadedMovie
     {
         if(resultCode == Activity.RESULT_OK)
         {
-            this.myMovieRecyclerView.dataSetChanged(false);
+            this.myMovieRecyclerView.dataSetChanged();
         }
         else if(resultCode == Activity.RESULT_CANCELED)
         {
@@ -237,6 +237,6 @@ public class MainActivity extends MyMoviesToolbarActivity implements LoadedMovie
 
     private void handleAddMovieResult()
     {
-        this.myMovieRecyclerView.dataSetChanged(false);
+        this.myMovieRecyclerView.dataSetChanged();
     }
 }

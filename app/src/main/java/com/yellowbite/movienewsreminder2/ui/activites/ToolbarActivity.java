@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.Window;
 
 import com.yellowbite.movienewsreminder2.R;
+import com.yellowbite.movienewsreminder2.files.helper.MovieFileHelper;
 
 public abstract class ToolbarActivity extends AppCompatActivity
 {
@@ -30,4 +31,11 @@ public abstract class ToolbarActivity extends AppCompatActivity
     }
 
     protected void modifyToolbar(){}
+
+    @Override
+    protected void onPause()
+    {
+        MovieFileHelper.startSaveAllThread(this);
+        super.onPause();
+    }
 }

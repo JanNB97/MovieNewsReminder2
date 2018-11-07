@@ -1,5 +1,12 @@
 package com.yellowbite.movienewsreminder2.files.helper;
 
+import android.content.Context;
+
+import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.HotMoviesSortedList;
+import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.MyMoviesSortedList;
+import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.NewMoviesQueue;
+import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.NewestMovie;
+import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.SortedBookedMoviesList;
 import com.yellowbite.movienewsreminder2.model.Movie;
 import com.yellowbite.movienewsreminder2.util.DateHelper;
 
@@ -96,5 +103,15 @@ public class MovieFileHelper
         }
 
         return output;
+    }
+
+    public static void startSaveAllThread(Context context)
+    {
+        new Thread(() -> {
+            HotMoviesSortedList.getInstance(context).save();
+            MyMoviesSortedList.getInstance(context).save();
+            NewMoviesQueue.getInstance(context).save();
+            SortedBookedMoviesList.getInstance(context).save();
+        }).start();
     }
 }

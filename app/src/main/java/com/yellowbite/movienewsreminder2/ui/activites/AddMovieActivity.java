@@ -94,7 +94,7 @@ public class AddMovieActivity extends ToolbarActivity
         this.searchProgressIndicator.setVisibility(View.VISIBLE);
         this.setUserInteractionEnabled(false);
         SearchMovieList.getInstance().clear();
-        this.addMovieRecyclerView.dataSetChanged(false);
+        this.addMovieRecyclerView.dataSetChanged();
 
         this.searchExecutor.startToLoadMovieList(searchText);
     }
@@ -103,7 +103,7 @@ public class AddMovieActivity extends ToolbarActivity
     {
         if(gotResults)
         {
-            this.addMovieRecyclerView.dataSetChanged(false);
+            this.addMovieRecyclerView.dataSetChanged();
         }
     }
 
@@ -111,7 +111,7 @@ public class AddMovieActivity extends ToolbarActivity
     {
         if(successSearch)
         {
-            this.addMovieRecyclerView.dataSetChanged(false);
+            this.addMovieRecyclerView.dataSetChanged();
             this.searchTextView.setText("");
         }
 

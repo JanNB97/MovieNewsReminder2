@@ -31,7 +31,7 @@ public class MyMovieRecyclerView extends MovieRecyclerView
         Movie movie = super.movieList.get(position);
         if(HotMoviesSortedList.getInstance(super.activity).switchSave(movie))
         {
-            this.dataSetChanged(false);
+            this.dataSetChanged();
         }
         super.handleClickedLongOnMovieItem(view, position);
     }

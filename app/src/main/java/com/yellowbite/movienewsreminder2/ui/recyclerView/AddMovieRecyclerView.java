@@ -40,7 +40,6 @@ public class AddMovieRecyclerView extends UnalterableRecyclerView
                 else
                 {
                     this.movieListToAdd.add(movie);
-                    this.movieListToAdd.save();
 
                     super.handleClickedOnMovieItem(view, position);
                 }
