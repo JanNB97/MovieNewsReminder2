@@ -16,7 +16,7 @@ public class MyMoviesSortedList extends MovieListFromFile
         super(context, "myMovies.txt");
     }
 
-    // --- --- --- get Instance --- --- ---
+    // --- --- --- Singleton methods --- --- ---
     public static MyMoviesSortedList getInstance(Context context)
     {
         if(instance == null)
@@ -35,7 +35,7 @@ public class MyMoviesSortedList extends MovieListFromFile
         }
     }
 
-    // --- --- --- data operations --- --- ---
+    // --- --- --- Dirty data methods --- --- ---
     @Override
     public void addAll(List<Movie> movies)
     {
@@ -66,6 +66,7 @@ public class MyMoviesSortedList extends MovieListFromFile
         return true;
     }
 
+    // --- --- --- Clean data methods --- --- ---
     public boolean contains(Movie movie)
     {
         for(Movie m2 : super.movieList)
@@ -79,11 +80,7 @@ public class MyMoviesSortedList extends MovieListFromFile
         return false;
     }
 
-    private void sort()
-    {
-        Collections.sort(super.movieList);
-    }
-
+    // --- --- --- Other methods --- --- ---
     public void loadHotMovies()
     {
         if(HotMoviesSortedList.getInstance(super.context).size() <= 0)
@@ -93,5 +90,11 @@ public class MyMoviesSortedList extends MovieListFromFile
 
         HotMoviesSortedList.getInstance(super.context)
                 .setIfHot(super.movieList);
+    }
+
+    // --- --- --- helper methods --- --- ---
+    private void sort()
+    {
+        Collections.sort(super.movieList);
     }
 }

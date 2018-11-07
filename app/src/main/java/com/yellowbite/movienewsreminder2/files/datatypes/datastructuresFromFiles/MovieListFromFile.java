@@ -25,8 +25,7 @@ public abstract class MovieListFromFile implements MovieList
         this.getFromFile(context);
     }
 
-    // --- --- --- data operations --- --- ---
-    // getAll
+    // --- --- --- clean data methods --- --- ---
     @Override
     public Movie get(int i)
     {
@@ -39,14 +38,19 @@ public abstract class MovieListFromFile implements MovieList
         return this.movieList;
     }
 
-    // others
     @Override
     public int size()
     {
         return this.movieList.size();
     }
 
-    // add
+    @Override
+    public boolean isDirty()
+    {
+        return this.dirty;
+    }
+
+    // --- --- --- dirty data methods --- --- ---
     @Override
     public void addAll(List<Movie> movies)
     {
@@ -74,7 +78,6 @@ public abstract class MovieListFromFile implements MovieList
         return true;
     }
 
-    // remove
     @Override
     public void remove(int i)
     {
@@ -82,13 +85,7 @@ public abstract class MovieListFromFile implements MovieList
         this.dirty = true;
     }
 
-    @Override
-    public boolean isDirty()
-    {
-        return this.dirty;
-    }
-
-    // --- --- --- file operations --- --- ---
+    // --- --- --- file methods --- --- ---
     @Override
     public void save()
     {
@@ -98,8 +95,6 @@ public abstract class MovieListFromFile implements MovieList
             this.dirty = false;
         }
     }
-
-    // file helper operations
 
     protected final void getFromFile(Context context)
     {
@@ -113,7 +108,6 @@ public abstract class MovieListFromFile implements MovieList
     }
 
     // --- --- --- helper methods --- --- ---
-
     protected boolean isNew(Movie movie)
     {
         for(Movie movieInDatabase : this.movieList)

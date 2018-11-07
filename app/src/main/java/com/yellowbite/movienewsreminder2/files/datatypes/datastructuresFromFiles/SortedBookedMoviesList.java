@@ -24,6 +24,7 @@ public class SortedBookedMoviesList
         this.getFromFileIfNecessary();
     }
 
+    // --- --- --- Singleton methods --- --- ---
     public static SortedBookedMoviesList getInstance(Context context)
     {
         if(instance == null)
@@ -42,6 +43,7 @@ public class SortedBookedMoviesList
         }
     }
 
+    // --- --- --- Dirty data methods --- --- ---
     public List<Movie> getAndAddDifference(List<Movie> bookedMovies)
     {
         List<Movie> difference = new ArrayList<>();
@@ -112,7 +114,7 @@ public class SortedBookedMoviesList
         return false;
     }
 
-    // --- --- --- file helper methods --- --- ---
+    // --- --- --- File helper methods --- --- ---
     private void getFromFileIfNecessary()
     {
         this.bookedMovies = new ArrayList<>();

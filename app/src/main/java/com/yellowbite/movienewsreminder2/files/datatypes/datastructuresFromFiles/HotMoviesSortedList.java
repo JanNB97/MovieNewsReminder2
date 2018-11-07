@@ -15,6 +15,7 @@ public final class HotMoviesSortedList extends MovieListFromFile
         super(context, "hotMovies.txt");
     }
 
+    // --- --- --- Singleton methods --- --- ---
     public static HotMoviesSortedList getInstance(Context context)
     {
         if(instance == null)
@@ -33,17 +34,7 @@ public final class HotMoviesSortedList extends MovieListFromFile
         }
     }
 
-    public void setIfHot(Collection<Movie> movies)
-    {
-        for(Movie movie : movies)
-        {
-            if(HotMoviesSortedList.getInstance(super.context).getIdInList(movie) != -1)
-            {
-                movie.setHot(true);
-            }
-        }
-    }
-
+    // --- --- --- Dirty data methods --- --- ---
     @Override
     public boolean add(Movie movie)
     {
@@ -82,11 +73,22 @@ public final class HotMoviesSortedList extends MovieListFromFile
     public void setNotificationWasShownSave(int id, boolean b)
     {
         super.movieList.get(id).setNotificationWasShown(b);
-        super.saveToFile();
+        super.dirty = true;
     }
 
-    // --- --- --- data type operations --- --- ---
+    // --- --- --- Clean methods --- --- ---
+    public void setIfHot(Collection<Movie> movies)
+    {
+        for(Movie movie : movies)
+        {
+            if(HotMoviesSortedList.getInstance(super.context).getIdInList(movie) != -1)
+            {
+                movie.setHot(true);
+            }
+        }
+    }
 
+    // --- --- --- Help methods --- --- ---
     private int getIdInList(Movie movie)
     {
         int movieBarcode = movie.getMediaBarcode();

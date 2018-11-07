@@ -19,6 +19,7 @@ public final class NewMoviesQueue extends MovieListFromFile
         super(context, "newMovies.txt");
     }
 
+    // --- --- --- Singleton methods --- --- ---
     public static NewMoviesQueue getInstance(Context context)
     {
         if(instance == null)
@@ -36,14 +37,16 @@ public final class NewMoviesQueue extends MovieListFromFile
         }
     }
 
-    public boolean isEmpty()
-    {
-        return FileManager.isEmpty(super.context, super.FILE_NAME);
-    }
-
+    // --- --- --- Dirty data methods --- --- ---
     public void deleteLast()
     {   // TODO - make better
         super.remove(super.size() - 1);
         super.dirty = true;
+    }
+
+    // --- --- --- Clean data methods --- --- ---
+    public boolean isEmpty()
+    {
+        return FileManager.isEmpty(super.context, super.FILE_NAME);
     }
 }
