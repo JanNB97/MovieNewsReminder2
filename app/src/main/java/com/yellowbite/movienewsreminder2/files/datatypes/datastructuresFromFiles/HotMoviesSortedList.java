@@ -70,7 +70,7 @@ public final class HotMoviesSortedList extends MovieListFromFile
         return success;
     }
 
-    public void setNotificationWasShownSave(int id, boolean b)
+    public void setNotificationWasShown(int id, boolean b)
     {
         super.movieList.get(id).setNotificationWasShown(b);
         super.dirty = true;

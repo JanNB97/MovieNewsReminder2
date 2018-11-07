@@ -147,7 +147,7 @@ public class MedZenHandler extends WebscrapingHandler
                     if(!hotMovie.notificationWasShown())
                     {
                         verfuegbarHotMovies.add(hotMovie);
-                        HotMoviesSortedList.getInstance(context).setNotificationWasShownSave(i, true);
+                        HotMoviesSortedList.getInstance(context).setNotificationWasShown(i, true);
                     }
                     else
                     {
@@ -157,7 +157,7 @@ public class MedZenHandler extends WebscrapingHandler
                 else if (hotMovie.notificationWasShown())
                 {
                     // again unavailable
-                    HotMoviesSortedList.getInstance(context).setNotificationWasShownSave(i, false);
+                    HotMoviesSortedList.getInstance(context).setNotificationWasShown(i, false);
                 }
             } catch (IOException ignored) {}
         }
