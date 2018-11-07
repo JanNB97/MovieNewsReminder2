@@ -16,11 +16,7 @@ public interface MovieList
 
     void remove(int i);
 
-    void save();
-
     int size();
-
-    boolean isDirty();
 
     // TODO - add isEmpty
 }

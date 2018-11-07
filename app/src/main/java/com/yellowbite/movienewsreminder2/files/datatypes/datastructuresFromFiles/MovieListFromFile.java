@@ -2,7 +2,7 @@ package com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFile
 
 import android.content.Context;
 
-import com.yellowbite.movienewsreminder2.files.datatypes.MovieList;
+import com.yellowbite.movienewsreminder2.files.datatypes.MovieListFromFileInterface;
 import com.yellowbite.movienewsreminder2.files.helper.FileManager;
 import com.yellowbite.movienewsreminder2.files.helper.MovieFileHelper;
 import com.yellowbite.movienewsreminder2.model.Movie;
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public abstract class MovieListFromFile implements MovieList
+public abstract class MovieListFromFile implements MovieListFromFileInterface
 {
     protected final String FILE_NAME;
     protected List<Movie> movieList;

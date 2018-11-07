@@ -80,18 +80,4 @@ public class SearchMovieList implements MovieList
     {
         return this.movies.size();
     }
-
-    // --- --- --- unnecessary --- --- ---
-    @Override
-    public void save()
-    {
-        // TODO - do something better
-    }
-
-    @Override
-    public boolean isDirty()
-    {
-        // TODO - do something better
-        return false;
-    }
 }
