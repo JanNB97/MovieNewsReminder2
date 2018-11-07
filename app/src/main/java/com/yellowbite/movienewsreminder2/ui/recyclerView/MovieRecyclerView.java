@@ -7,7 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 
-import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.HotMoviesSortedList;
+import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.SortedHotMovieList;
 import com.yellowbite.movienewsreminder2.files.datatypes.MovieList;
 import com.yellowbite.movienewsreminder2.model.Movie;
 import com.yellowbite.movienewsreminder2.ui.notifications.NotificationMan;
@@ -224,7 +224,7 @@ public abstract class MovieRecyclerView extends SwipeCallback
         Movie movieToRemove = this.movieList.get(position);
         if(movieToRemove.isHot())
         {
-            HotMoviesSortedList.getInstance(this.activity).delete(movieToRemove);
+            SortedHotMovieList.getInstance(this.activity).delete(movieToRemove);
         }
 
         this.movieList.remove(position);

@@ -6,21 +6,21 @@ import com.yellowbite.movienewsreminder2.model.Movie;
 
 import java.util.Collection;
 
-public final class HotMoviesSortedList extends MovieListFromFile
+public final class SortedHotMovieList extends MovieListFromFile
 {
-    private static HotMoviesSortedList instance;
+    private static SortedHotMovieList instance;
 
-    protected HotMoviesSortedList(Context context)
+    protected SortedHotMovieList(Context context)
     {
         super(context, "hotMovies.txt");
     }
 
     // --- --- --- Singleton methods --- --- ---
-    public static HotMoviesSortedList getInstance(Context context)
+    public static SortedHotMovieList getInstance(Context context)
     {
         if(instance == null)
         {
-            instance = new HotMoviesSortedList(context);
+            instance = new SortedHotMovieList(context);
         }
 
         return instance;
@@ -81,7 +81,7 @@ public final class HotMoviesSortedList extends MovieListFromFile
     {
         for(Movie movie : movies)
         {
-            if(HotMoviesSortedList.getInstance(super.context).getIdInList(movie) != -1)
+            if(SortedHotMovieList.getInstance(super.context).getIdInList(movie) != -1)
             {
                 movie.setHot(true);
             }

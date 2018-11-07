@@ -2,10 +2,10 @@ package com.yellowbite.movienewsreminder2.newsService;
 
 import android.content.Context;
 
-import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.HotMoviesSortedList;
-import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.NewMoviesQueue;
+import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.SortedHotMovieList;
+import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.NewMovieQueue;
 import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.NewestMovie;
-import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.SortedBookedMoviesList;
+import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.SortedBookedMovieList;
 import com.yellowbite.movienewsreminder2.model.Movie;
 import com.yellowbite.movienewsreminder2.newsService.messages.AddedMovieMessage;
 import com.yellowbite.movienewsreminder2.newsService.messages.BookedMovieMessage;
@@ -68,10 +68,10 @@ public class MedZenHandler extends WebscrapingHandler
             return null;
         }
 
-        List<Movie> newBookedMovies = SortedBookedMoviesList.getInstance(context)
+        List<Movie> newBookedMovies = SortedBookedMovieList.getInstance(context)
                 .getAndAddDifference(bookedMovies);
 
-        NewMoviesQueue.getInstance(context).addAll(newBookedMovies);
+        NewMovieQueue.getInstance(context).addAll(newBookedMovies);
 
         if(newBookedMovies.size() == 0)
         {
@@ -135,7 +135,7 @@ public class MedZenHandler extends WebscrapingHandler
 
     private void getVerfuegbarHotMovies(Context context, List<Movie> verfuegbarHotMovies, List<Movie> shownMovies)
     {
-        List<Movie> hotMovies = HotMoviesSortedList.getInstance(context).getAll();
+        List<Movie> hotMovies = SortedHotMovieList.getInstance(context).getAll();
         for (int i = 0; i < hotMovies.size(); i++)
         {
             Movie hotMovie = hotMovies.get(i);
@@ -147,7 +147,7 @@ public class MedZenHandler extends WebscrapingHandler
                     if(!hotMovie.notificationWasShown())
                     {
                         verfuegbarHotMovies.add(hotMovie);
-                        HotMoviesSortedList.getInstance(context).setNotificationWasShown(i, true);
+                        SortedHotMovieList.getInstance(context).setNotificationWasShown(i, true);
                     }
                     else
                     {
@@ -157,7 +157,7 @@ public class MedZenHandler extends WebscrapingHandler
                 else if (hotMovie.notificationWasShown())
                 {
                     // again unavailable
-                    HotMoviesSortedList.getInstance(context).setNotificationWasShown(i, false);
+                    SortedHotMovieList.getInstance(context).setNotificationWasShown(i, false);
                 }
             } catch (IOException ignored) {}
         }
@@ -194,7 +194,7 @@ public class MedZenHandler extends WebscrapingHandler
             }
         }
 
-        NewMoviesQueue.getInstance(context).addAll(newMovies);
+        NewMovieQueue.getInstance(context).addAll(newMovies);
         return newMovies.size();
     }
 }

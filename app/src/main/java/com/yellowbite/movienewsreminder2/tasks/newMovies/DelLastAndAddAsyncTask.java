@@ -3,8 +3,8 @@ package com.yellowbite.movienewsreminder2.tasks.newMovies;
 import android.content.Context;
 import android.os.AsyncTask;
 
-import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.MyMoviesSortedList;
-import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.NewMoviesQueue;
+import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.MySortedMovieList;
+import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.NewMovieQueue;
 import com.yellowbite.movienewsreminder2.model.Movie;
 
 public class DelLastAndAddAsyncTask extends AsyncTask<Movie, Void, Void>
@@ -36,11 +36,11 @@ public class DelLastAndAddAsyncTask extends AsyncTask<Movie, Void, Void>
             throw new IllegalArgumentException();
         }
 
-        NewMoviesQueue.getInstance(this.context).deleteLast();
+        NewMovieQueue.getInstance(this.context).deleteLast();
 
         if(movies.length != 0 && movies[0] != null)
         {
-            MyMoviesSortedList.getInstance(this.context).add(movies[0]);
+            MySortedMovieList.getInstance(this.context).add(movies[0]);
         }
 
         return null;

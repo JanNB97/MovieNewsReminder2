@@ -11,16 +11,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.yellowbite.movienewsreminder2.R;
-import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.MyMoviesSortedList;
-import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.NewMoviesQueue;
-import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.SortedBookedMoviesList;
-import com.yellowbite.movienewsreminder2.files.helper.MovieFileHelper;
+import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.MySortedMovieList;
+import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.NewMovieQueue;
+import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.SortedBookedMovieList;
 import com.yellowbite.movienewsreminder2.model.Movie;
 import com.yellowbite.movienewsreminder2.tasks.functionalInterfaces.LoadedMovieEvent;
 import com.yellowbite.movienewsreminder2.tasks.newMovies.DelLastAndAddAsyncTask;
 import com.yellowbite.movienewsreminder2.tasks.newMovies.LoadNewMoviesDescendingExecutor;
-
-import java.util.logging.FileHandler;
 
 public class NewMoviesActivity extends ToolbarActivity implements LoadedMovieEvent
 {
@@ -57,10 +54,10 @@ public class NewMoviesActivity extends ToolbarActivity implements LoadedMovieEve
     {
         nextMovieLabel = this.nextMovieButton.getText().toString();
 
-        this.displayedMovieId = NewMoviesQueue.getInstance(this).size();
+        this.displayedMovieId = NewMovieQueue.getInstance(this).size();
 
-        new LoadNewMoviesDescendingExecutor(this, this, NewMoviesQueue.getInstance(this).getAll());
-        this.movieIsLoaded = new boolean[NewMoviesQueue.getInstance(this).size()];
+        new LoadNewMoviesDescendingExecutor(this, this, NewMovieQueue.getInstance(this).getAll());
+        this.movieIsLoaded = new boolean[NewMovieQueue.getInstance(this).size()];
 
         this.tryToShowNextMovie();
     }
@@ -121,7 +118,7 @@ public class NewMoviesActivity extends ToolbarActivity implements LoadedMovieEve
 
     private void showNextMovie()
     {
-        this.displayedMovie = NewMoviesQueue.getInstance(this).get(this.displayedMovieId);
+        this.displayedMovie = NewMovieQueue.getInstance(this).get(this.displayedMovieId);
 
         showMovie(this.displayedMovie);
         setButtonsEnabled(true);
@@ -142,7 +139,7 @@ public class NewMoviesActivity extends ToolbarActivity implements LoadedMovieEve
             this.einheitstitelTextView.setText("");
         }
 
-        boolean movieAlreadyInMyMovies = MyMoviesSortedList.getInstance(this).contains(movie);
+        boolean movieAlreadyInMyMovies = MySortedMovieList.getInstance(this).contains(movie);
 
         if(movie.getStatus() == Movie.Status.IN_BEARBEITUNG)
         {
@@ -150,7 +147,7 @@ public class NewMoviesActivity extends ToolbarActivity implements LoadedMovieEve
         }
         else
         {
-            boolean bookedMovieArrived = SortedBookedMoviesList.getInstance(this).containsAndRemove(movie);
+            boolean bookedMovieArrived = SortedBookedMovieList.getInstance(this).containsAndRemove(movie);
             this.setDecisionEnabled(!bookedMovieArrived && !movieAlreadyInMyMovies);
             if(bookedMovieArrived)
             {

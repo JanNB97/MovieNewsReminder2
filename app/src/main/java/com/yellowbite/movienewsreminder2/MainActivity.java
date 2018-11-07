@@ -8,10 +8,9 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.HotMoviesSortedList;
-import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.MyMoviesSortedList;
-import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.NewMoviesQueue;
-import com.yellowbite.movienewsreminder2.files.helper.MovieFileHelper;
+import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.SortedHotMovieList;
+import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.MySortedMovieList;
+import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.NewMovieQueue;
 import com.yellowbite.movienewsreminder2.model.Movie;
 import com.yellowbite.movienewsreminder2.newsService.NewsService;
 import com.yellowbite.movienewsreminder2.tasks.functionalInterfaces.LoadedMoviesEvent;
@@ -65,7 +64,7 @@ public class MainActivity extends MyMoviesToolbarActivity implements LoadedMovie
     private void initRecyclerView()
     {
         this.myMovieRecyclerView = new MyMovieRecyclerView(this, R.id.movieRecyclerView,
-                MyMoviesSortedList.getInstance(this));
+                MySortedMovieList.getInstance(this));
 
         this.myMovieRecyclerView.setOnSwipeListener(
                 (v, d, lastRemovedMovie) -> this.handleOnSwiped(lastRemovedMovie)
@@ -153,12 +152,12 @@ public class MainActivity extends MyMoviesToolbarActivity implements LoadedMovie
 
         if(lastSwipedMovie != null)
         {
-            MyMoviesSortedList.getInstance(this).add(this.lastSwipedMovie);
+            MySortedMovieList.getInstance(this).add(this.lastSwipedMovie);
             this.myMovieRecyclerView.dataSetChanged();
 
             if(this.lastSwipedMovie.isHot())
             {
-                HotMoviesSortedList.getInstance(this).add(this.lastSwipedMovie);
+                SortedHotMovieList.getInstance(this).add(this.lastSwipedMovie);
             }
         }
     }
@@ -166,11 +165,11 @@ public class MainActivity extends MyMoviesToolbarActivity implements LoadedMovie
     // --- --- --- Load movies --- --- ---
     private void loadMyMovies()
     {
-        List<Movie> myMovies = MyMoviesSortedList.getInstance(this).getAll();
+        List<Movie> myMovies = MySortedMovieList.getInstance(this).getAll();
 
         if(!myMovies.isEmpty())
         {
-            this.loadingProgressBar.setMax(MyMoviesSortedList.getInstance(this).size());
+            this.loadingProgressBar.setMax(MySortedMovieList.getInstance(this).size());
 
             // download status
             new LoadMyMoviesRetryExecutor(this, this, myMovies, this::onLoadingFinished);
@@ -189,9 +188,9 @@ public class MainActivity extends MyMoviesToolbarActivity implements LoadedMovie
 
     private void onLoadingFinished()
     {
-        Collections.sort(MyMoviesSortedList.getInstance(this).getAll());
+        Collections.sort(MySortedMovieList.getInstance(this).getAll());
 
-        MyMoviesSortedList.getInstance(this).loadHotMovies();
+        MySortedMovieList.getInstance(this).loadHotMovies();
 
         this.loadingProgressBar.setVisibility(View.GONE);
         this.moviesUpdateTextView.setVisibility(View.GONE);
@@ -203,7 +202,7 @@ public class MainActivity extends MyMoviesToolbarActivity implements LoadedMovie
     // --- --- --- launch and handle NewMoviesActivity --- --- ---
     private void launchNewMoviesActivity()
     {
-        if(!NewMoviesQueue.getInstance(this).isEmpty())
+        if(!NewMovieQueue.getInstance(this).isEmpty())
         {
             NewMoviesActivity.startForResult(this);
         }

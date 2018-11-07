@@ -1,12 +1,9 @@
 package com.yellowbite.movienewsreminder2.files.helper;
 
-import android.content.Context;
-
-import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.HotMoviesSortedList;
-import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.MyMoviesSortedList;
-import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.NewMoviesQueue;
-import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.NewestMovie;
-import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.SortedBookedMoviesList;
+import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.SortedHotMovieList;
+import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.MySortedMovieList;
+import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.NewMovieQueue;
+import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.SortedBookedMovieList;
 import com.yellowbite.movienewsreminder2.model.Movie;
 import com.yellowbite.movienewsreminder2.util.DateHelper;
 
@@ -108,10 +105,10 @@ public class MovieFileHelper
     public static void startSaveAllThread()
     {
         new Thread(() -> {
-            HotMoviesSortedList.saveInstance();
-            MyMoviesSortedList.saveInstance();
-            NewMoviesQueue.saveInstance();
-            SortedBookedMoviesList.saveInstance();
+            SortedHotMovieList.saveInstance();
+            MySortedMovieList.saveInstance();
+            NewMovieQueue.saveInstance();
+            SortedBookedMovieList.saveInstance();
         }).start();
     }
 }

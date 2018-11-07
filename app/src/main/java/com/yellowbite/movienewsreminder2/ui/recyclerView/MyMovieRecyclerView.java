@@ -4,7 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.yellowbite.movienewsreminder2.R;
-import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.HotMoviesSortedList;
+import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.SortedHotMovieList;
 import com.yellowbite.movienewsreminder2.files.datatypes.MovieList;
 import com.yellowbite.movienewsreminder2.model.Movie;
 
@@ -24,7 +24,7 @@ public class MyMovieRecyclerView extends MovieRecyclerView
         }
 
         Movie movie = super.movieList.get(position);
-        if(HotMoviesSortedList.getInstance(super.activity).switchHot(movie))
+        if(SortedHotMovieList.getInstance(super.activity).switchHot(movie))
         {
             this.dataSetChanged();
         }

@@ -3,28 +3,22 @@ package com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFile
 import android.content.Context;
 
 import com.yellowbite.movienewsreminder2.files.helper.FileManager;
-import com.yellowbite.movienewsreminder2.files.helper.MovieFileHelper;
-import com.yellowbite.movienewsreminder2.model.Movie;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
-public final class NewMoviesQueue extends MovieListFromFile
+public final class NewMovieQueue extends MovieListFromFile
 {
-    private static NewMoviesQueue instance;
+    private static NewMovieQueue instance;
 
-    protected NewMoviesQueue(Context context)
+    protected NewMovieQueue(Context context)
     {
         super(context, "newMovies.txt");
     }
 
     // --- --- --- Singleton methods --- --- ---
-    public static NewMoviesQueue getInstance(Context context)
+    public static NewMovieQueue getInstance(Context context)
     {
         if(instance == null)
         {
-            instance = new NewMoviesQueue(context);
+            instance = new NewMovieQueue(context);
         }
         return instance;
     }

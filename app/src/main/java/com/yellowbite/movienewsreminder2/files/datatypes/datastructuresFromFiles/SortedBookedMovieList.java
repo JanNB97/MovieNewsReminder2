@@ -8,29 +8,29 @@ import com.yellowbite.movienewsreminder2.model.Movie;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SortedBookedMoviesList
+public class SortedBookedMovieList
 {
     private static final String FILE_NAME = "bookedMovies.txt";
 
     private Context context;
 
-    private static SortedBookedMoviesList instance;
+    private static SortedBookedMovieList instance;
     private boolean dirty;
 
     private List<Integer> bookedMovies;
 
-    private SortedBookedMoviesList(Context context)
+    private SortedBookedMovieList(Context context)
     {
         this.context = context;
         this.getFromFileIfNecessary();
     }
 
     // --- --- --- Singleton methods --- --- ---
-    public static SortedBookedMoviesList getInstance(Context context)
+    public static SortedBookedMovieList getInstance(Context context)
     {
         if(instance == null)
         {
-            instance = new SortedBookedMoviesList(context);
+            instance = new SortedBookedMovieList(context);
         }
 
         return instance;
