@@ -128,8 +128,8 @@ public class AddMovieActivity extends ToolbarActivity
     public void openMainActivity()
     {
         Intent resultIntent = new Intent();
-        setResult(Activity.RESULT_OK, resultIntent);
-        finish();
+        super.setResult(Activity.RESULT_OK, resultIntent);
+        super.finish();
     }
 
     // --- --- --- Toolbar interaction --- --- ---
