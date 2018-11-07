@@ -30,7 +30,7 @@ public final class NewMoviesQueue extends MovieListFromFile
 
     public static void saveInstance()
     {
-        if(instance != null)
+        if(instance != null && instance.isDirty())
         {
             instance.save();
         }
@@ -41,16 +41,9 @@ public final class NewMoviesQueue extends MovieListFromFile
         return FileManager.isEmpty(super.context, super.FILE_NAME);
     }
 
-    // data changes -> autosave
-    public void addAll(List<Movie> movies)
-    {   // TODO - make better
-        super.addAll(movies);
-        super.saveToFile();
-    }
-
     public void deleteLast()
     {   // TODO - make better
         super.remove(super.size() - 1);
-        super.saveToFile();
+        super.dirty = true;
     }
 }

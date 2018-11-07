@@ -16,6 +16,7 @@ public abstract class MovieListFromFile implements MovieList
     protected final String FILE_NAME;
     protected List<Movie> movieList;
     protected Context context;
+    protected boolean dirty;
 
     protected MovieListFromFile(Context context, String fileName)
     {
@@ -54,6 +55,7 @@ public abstract class MovieListFromFile implements MovieList
             if(this.isNew(movie))
             {
                 this.movieList.add(movie);
+                this.dirty = true;
             }
         }
     }
@@ -67,6 +69,7 @@ public abstract class MovieListFromFile implements MovieList
         }
 
         this.movieList.add(movie);
+        this.dirty = true;
 
         return true;
     }
@@ -76,6 +79,13 @@ public abstract class MovieListFromFile implements MovieList
     public void remove(int i)
     {
         this.movieList.remove(i);
+        this.dirty = true;
+    }
+
+    @Override
+    public boolean isDirty()
+    {
+        return this.dirty;
     }
 
     // --- --- --- file operations --- --- ---
@@ -85,6 +95,7 @@ public abstract class MovieListFromFile implements MovieList
         if(movieList != null)
         {
             this.saveToFile();
+            this.dirty = false;
         }
     }
 

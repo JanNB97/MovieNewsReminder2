@@ -83,5 +83,15 @@ public class SearchMovieList implements MovieList
 
     // --- --- --- unnecessary --- --- ---
     @Override
-    public void save() {}
+    public void save()
+    {
+        // TODO - do something better
+    }
+
+    @Override
+    public boolean isDirty()
+    {
+        // TODO - do something better
+        return false;
+    }
 }

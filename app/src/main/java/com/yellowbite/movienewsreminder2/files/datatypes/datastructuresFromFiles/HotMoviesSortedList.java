@@ -2,14 +2,9 @@ package com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFile
 
 import android.content.Context;
 
-import com.yellowbite.movienewsreminder2.files.helper.FileManager;
-import com.yellowbite.movienewsreminder2.files.helper.MovieFileHelper;
 import com.yellowbite.movienewsreminder2.model.Movie;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 
 public final class HotMoviesSortedList extends MovieListFromFile
 {
@@ -32,7 +27,7 @@ public final class HotMoviesSortedList extends MovieListFromFile
 
     public static void saveInstance()
     {
-        if(instance != null)
+        if(instance != null && instance.isDirty())
         {
             instance.save();
         }
@@ -45,6 +40,7 @@ public final class HotMoviesSortedList extends MovieListFromFile
             if(HotMoviesSortedList.getInstance(super.context).getIdInList(movie) != -1)
             {
                 movie.setHot(true);
+                super.dirty = true;
             }
         }
     }
@@ -55,17 +51,18 @@ public final class HotMoviesSortedList extends MovieListFromFile
         boolean success = this.addSorted(movie);
         if(success)
         {
-            super.saveToFile();
+            super.dirty = true;
         }
         return success;
     }
 
-    public boolean switchSave(Movie movie)
+    public boolean switchHot(Movie movie)
     {
         movie.setHot(!movie.isHot());
+        super.dirty = true;
         if(!movie.isHot())
         {
-            return deleteSave(movie);
+            return delete(movie);
         }
         else
         {
@@ -73,12 +70,12 @@ public final class HotMoviesSortedList extends MovieListFromFile
         }
     }
 
-    public boolean deleteSave(Movie movie)
+    public boolean delete(Movie movie)
     {
         boolean success = this.delSorted(movie);
         if(success)
         {
-            super.saveToFile();
+            super.dirty = true;
         }
         return success;
     }

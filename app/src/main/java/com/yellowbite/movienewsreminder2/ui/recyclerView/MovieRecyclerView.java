@@ -224,7 +224,7 @@ public abstract class MovieRecyclerView extends SwipeCallback
         Movie movieToRemove = this.movieList.get(position);
         if(movieToRemove.isHot())
         {
-            HotMoviesSortedList.getInstance(this.activity).deleteSave(movieToRemove);
+            HotMoviesSortedList.getInstance(this.activity).delete(movieToRemove);
         }
 
         this.movieList.remove(position);

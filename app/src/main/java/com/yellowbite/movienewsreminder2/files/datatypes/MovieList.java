@@ -20,5 +20,7 @@ public interface MovieList
 
     int size();
 
+    boolean isDirty();
+
     // TODO - add isEmpty
 }

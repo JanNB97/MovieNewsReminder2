@@ -29,7 +29,7 @@ public class MyMoviesSortedList extends MovieListFromFile
 
     public static void saveInstance()
     {
-        if(instance != null)
+        if(instance != null && instance.isDirty())
         {
             instance.save();
         }
@@ -44,6 +44,7 @@ public class MyMoviesSortedList extends MovieListFromFile
             if(this.isNew(movie))
             {
                 this.movieList.add(movie);
+                super.dirty = true;
             }
         }
 
@@ -60,6 +61,7 @@ public class MyMoviesSortedList extends MovieListFromFile
 
         this.movieList.add(movie);
         this.sort();
+        super.dirty = true;
 
         return true;
     }
