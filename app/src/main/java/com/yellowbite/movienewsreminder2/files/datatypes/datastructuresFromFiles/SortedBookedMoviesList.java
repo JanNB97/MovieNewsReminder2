@@ -15,6 +15,7 @@ public class SortedBookedMoviesList
     private Context context;
 
     private static SortedBookedMoviesList instance;
+    private boolean dirty;
 
     private List<Integer> bookedMovies;
 
@@ -37,7 +38,7 @@ public class SortedBookedMoviesList
 
     public static void saveInstance()
     {
-        if(instance != null)
+        if(instance != null && instance.isDirty())
         {
             instance.save();
         }
@@ -48,20 +49,12 @@ public class SortedBookedMoviesList
     {
         List<Movie> difference = new ArrayList<>();
 
-        boolean bookedListChanged = false;
-
         for(Movie newMovie : bookedMovies)
         {
             if(isNewAndAdd(newMovie.getMediaBarcode()))
             {
                 difference.add(newMovie);
-                bookedListChanged = true;
             }
-        }
-
-        if(bookedListChanged)
-        {
-            this.save();
         }
 
         return difference;
@@ -81,11 +74,13 @@ public class SortedBookedMoviesList
             if(newMovie < oldMovie)
             {
                 this.bookedMovies.add(i, newMovie);
+                this.dirty = true;
                 return true;
             }
         }
 
         this.bookedMovies.add(newMovie);
+        this.dirty = true;
         return true;
     }
 
@@ -104,7 +99,7 @@ public class SortedBookedMoviesList
             if(mc == movieCode)
             {
                 this.bookedMovies.remove(position);
-                this.save();
+                this.dirty = true;
                 return true;
             }
 
@@ -112,6 +107,12 @@ public class SortedBookedMoviesList
         }
 
         return false;
+    }
+
+    // --- --- --- Clean data methods --- --- ---
+    public boolean isDirty()
+    {
+        return this.dirty;
     }
 
     // --- --- --- File helper methods --- --- ---
@@ -128,6 +129,7 @@ public class SortedBookedMoviesList
     public void save()
     {
         FileManager.write(context, FILE_NAME, this.toLines());
+        this.dirty = false;
     }
 
     private List<String> toLines()
