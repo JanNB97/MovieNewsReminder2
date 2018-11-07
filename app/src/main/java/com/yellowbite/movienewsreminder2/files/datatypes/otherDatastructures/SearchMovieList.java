@@ -80,4 +80,10 @@ public class SearchMovieList implements MovieList
     {
         return this.movies.size();
     }
+
+    @Override
+    public boolean isEmpty()
+    {
+        return this.size() == 0;
+    }
 }

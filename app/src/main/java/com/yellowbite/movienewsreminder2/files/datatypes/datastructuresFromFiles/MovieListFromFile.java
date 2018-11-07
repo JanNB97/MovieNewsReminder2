@@ -45,6 +45,12 @@ public abstract class MovieListFromFile implements MovieListFromFileInterface
     }
 
     @Override
+    public boolean isEmpty()
+    {
+        return this.size() == 0;
+    }
+
+    @Override
     public boolean isDirty()
     {
         return this.dirty;

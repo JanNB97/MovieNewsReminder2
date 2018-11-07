@@ -84,7 +84,7 @@ public class WebscrapingHelper
 
         Elements elements = element.select(cssQuery);
 
-        if(elements.size() == 0)
+        if(elements.isEmpty())
         {
             return null;
         }
@@ -173,7 +173,7 @@ public class WebscrapingHelper
 
         Elements elements = element.select(cssQuery);
 
-        if(elements.size() == 0)
+        if(elements.isEmpty())
         {
             return null;
         }
@@ -190,7 +190,7 @@ public class WebscrapingHelper
 
         Elements elements = element.select(cssQuery);
 
-        if(elements.size() == 0)
+        if(elements.isEmpty())
         {
             return null;
         }

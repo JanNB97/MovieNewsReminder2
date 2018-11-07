@@ -73,7 +73,7 @@ public class MedZenHandler extends WebscrapingHandler
 
         NewMovieQueue.getInstance(context).addAll(newBookedMovies);
 
-        if(newBookedMovies.size() == 0)
+        if(newBookedMovies.isEmpty())
         {
             return null;
         }
