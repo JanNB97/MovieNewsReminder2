@@ -40,7 +40,6 @@ public final class HotMoviesSortedList extends MovieListFromFile
             if(HotMoviesSortedList.getInstance(super.context).getIdInList(movie) != -1)
             {
                 movie.setHot(true);
-                super.dirty = true;
             }
         }
     }
