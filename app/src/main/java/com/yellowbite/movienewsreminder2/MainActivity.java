@@ -2,6 +2,7 @@ package com.yellowbite.movienewsreminder2;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
 import com.yellowbite.movienewsreminder2.ui.activites.MyMoviesFragment;
@@ -21,21 +22,11 @@ public class MainActivity extends MyMoviesToolbarActivity
         this.myMoviesFragment = new MyMoviesFragment();
         this.myMoviesFragment.setUndoItem(super.undoItem);
 
-        FragmentTransaction transaction = super.getSupportFragmentManager().beginTransaction();
+        FragmentManager manager = super.getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
         transaction.replace(R.id.main_fragment, this.myMoviesFragment);
         transaction.addToBackStack(null);
         transaction.commit();
-
-        new Thread(() -> {
-            try
-            {
-                Thread.sleep(5000);
-            } catch (InterruptedException e)
-            {
-                e.printStackTrace();
-            }
-            super.runOnUiThread(() -> this.myMoviesFragment.start());
-        }).start();
     }
 
     @Override
