@@ -1,5 +1,6 @@
 package com.yellowbite.movienewsreminder2.ui.recyclerView;
 
+import android.app.Activity;
 import android.support.annotation.IdRes;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,7 +24,7 @@ import java.util.List;
 
 public abstract class MovieRecyclerView extends SwipeCallback
 {
-    protected AppCompatActivity activity;
+    protected Activity activity;
     protected RecyclerView recyclerView;
 
     protected MovieList movieList;
@@ -41,7 +42,7 @@ public abstract class MovieRecyclerView extends SwipeCallback
     private List<ScrollListener> scollListeners;
 
     // --- --- --- Initialization --- --- ---
-    public MovieRecyclerView(AppCompatActivity activity, @IdRes int id, MovieList movieList,
+    public MovieRecyclerView(Activity activity, @IdRes int id, MovieList movieList,
              boolean isSwipeable, int viewHolderLayout)
     {
         this.activity = activity;

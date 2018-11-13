@@ -1,6 +1,7 @@
 package com.yellowbite.movienewsreminder2.ui.activites;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
@@ -190,7 +191,7 @@ public class NewMoviesActivity extends ToolbarActivity implements LoadedMovieEve
 
     public static final int REQUEST_CODE = 1;
 
-    public static void startForResult(AppCompatActivity app)
+    public static void startForResult(Activity app)
     {
         Intent intent = new Intent(app, NewMoviesActivity.class);
         app.startActivityForResult(intent, REQUEST_CODE);

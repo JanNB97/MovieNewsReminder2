@@ -1,5 +1,6 @@
 package com.yellowbite.movienewsreminder2.ui.recyclerView;
 
+import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
@@ -10,7 +11,7 @@ import com.yellowbite.movienewsreminder2.model.Movie;
 
 public class MyMovieRecyclerView extends MovieRecyclerView
 {
-    public MyMovieRecyclerView(AppCompatActivity activity, int id, MovieList movieList)
+    public MyMovieRecyclerView(Activity activity, int id, MovieList movieList)
     {
         super(activity, id, movieList, true, R.layout.movie_list_row);
     }

@@ -25,7 +25,7 @@
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
-        <fragment
+        <fragment android:name="com.yellowbite.movienewsreminder2.ui.activites.MyMoviesFragment"
             android:id="@+id/main_fragment"
             android:layout_width="0dp"
             android:layout_height="0dp"

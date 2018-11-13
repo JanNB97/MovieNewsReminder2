@@ -1,5 +1,6 @@
 package com.yellowbite.movienewsreminder2.newsService;
 
+import android.app.Activity;
 import android.app.job.JobInfo;
 import android.app.job.JobParameters;
 import android.app.job.JobScheduler;
@@ -18,7 +19,7 @@ public class NewsService extends JobService
 {
     public static final int TIME_UNTIL_NEXT_UPDATE = 1000 * 60 * 30;
 
-    public static void start(AppCompatActivity app)
+    public static void start(Activity app)
     {
         ComponentName name = new ComponentName(app, NewsService.class);
         JobInfo job = (new JobInfo.Builder(0, name))

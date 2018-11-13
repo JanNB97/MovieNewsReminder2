@@ -149,7 +149,7 @@ public class AddMovieActivity extends ToolbarActivity
     // --- --- --- Start me from another activity --- --- ---
     public static final int REQUEST_CODE = 2;
 
-    public static void startForResult(AppCompatActivity app)
+    public static void startForResult(Activity app)
     {
         Intent intent = new Intent(app, AddMovieActivity.class);
         app.startActivityForResult(intent, REQUEST_CODE);
