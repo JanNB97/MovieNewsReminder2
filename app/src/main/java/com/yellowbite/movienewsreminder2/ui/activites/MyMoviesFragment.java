@@ -106,6 +106,7 @@ public class MyMoviesFragment extends Fragment implements LoadedMoviesEvent
         this.loadingProgressBar     = view.findViewById(R.id.loadingProgressBar);
         this.moviesUpdateTextView   = view.findViewById(R.id.moviesUpdateTextView);
         this.addMovieFloatingButton = view.findViewById(R.id.addMovieFloatingButton);
+        this.addMovieFloatingButton.setOnClickListener(this::handleOnAddMovieClicked);
     }
 
     // --- --- --- User interaction with main components --- --- ---
