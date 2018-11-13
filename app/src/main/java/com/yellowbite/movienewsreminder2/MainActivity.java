@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.Menu;
 
 import com.yellowbite.movienewsreminder2.ui.activites.MyMoviesFragment;
 import com.yellowbite.movienewsreminder2.ui.activites.MyMoviesToolbarActivity;
@@ -19,14 +20,16 @@ public class MainActivity extends MyMoviesToolbarActivity
         super.onCreate(savedInstanceState);
         setContentViewWithoutTitleBar(R.layout.activity_main);
 
-        this.myMoviesFragment = new MyMoviesFragment();
+        this.myMoviesFragment = (MyMoviesFragment)super.getSupportFragmentManager().findFragmentById(R.id.main_fragment);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        super.onCreateOptionsMenu(menu);
         this.myMoviesFragment.setUndoItem(super.undoItem);
 
-        FragmentManager manager = super.getSupportFragmentManager();
-        FragmentTransaction transaction = manager.beginTransaction();
-        transaction.replace(R.id.main_fragment, this.myMoviesFragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
+        return true;
     }
 
     @Override
