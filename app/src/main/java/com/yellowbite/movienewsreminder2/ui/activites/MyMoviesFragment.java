@@ -28,8 +28,6 @@ import java.util.List;
 
 public class MyMoviesFragment extends Fragment implements LoadedMoviesEvent
 {
-    private Activity activity;
-
     // main views
     private MyMovieRecyclerView myMovieRecyclerView;
     private FloatingActionButton addMovieFloatingButton;
@@ -69,40 +67,21 @@ public class MyMoviesFragment extends Fragment implements LoadedMoviesEvent
         super.onViewCreated(view, savedInstanceState);
     }
 
-    public void start(Activity activity)
+    public void start()
     {
-        if(this.readyRunnable == null)
-        {
-            this.readyRunnable = () -> {
-                this.activity = activity;
+        this.initRecyclerView();
 
-                this.initRecyclerView();
+        this.loadMyMovies();
 
-                this.loadMyMovies();
+        NewsService.start(super.getActivity());
 
-                NewsService.start(this.activity);
-
-                this.launchNewMoviesActivity();
-            };
-        }
-        else
-        {
-            this.activity = activity;
-
-            this.initRecyclerView();
-
-            this.loadMyMovies();
-
-            NewsService.start(this.activity);
-
-            this.launchNewMoviesActivity();
-        }
+        this.launchNewMoviesActivity();
     }
 
     private void initRecyclerView()
     {
-        this.myMovieRecyclerView = new MyMovieRecyclerView(this.activity, R.id.movieRecyclerView,
-                MySortedMovieList.getInstance(this.activity));
+        this.myMovieRecyclerView = new MyMovieRecyclerView(super.getActivity(), R.id.movieRecyclerView,
+                MySortedMovieList.getInstance(super.getContext()));
 
         this.myMovieRecyclerView.setOnSwipeListener(
                 (v, d, lastRemovedMovie) -> this.handleOnSwiped(lastRemovedMovie)
@@ -130,7 +109,7 @@ public class MyMoviesFragment extends Fragment implements LoadedMoviesEvent
     // --- --- --- User interaction with main components --- --- ---
     public void handleOnAddMovieClicked(View view)
     {
-        AddMovieActivity.startForResult(this.activity);
+        AddMovieActivity.startForResult(this.getActivity());
     }
 
     public void handleOnSwiped(Movie swipedMovie)
@@ -155,7 +134,7 @@ public class MyMoviesFragment extends Fragment implements LoadedMoviesEvent
                     }
                 }
 
-                this.activity.runOnUiThread(() -> this.undoItem.setVisible(false));
+                super.getActivity().runOnUiThread(() -> this.undoItem.setVisible(false));
             } catch (InterruptedException e)
             {
                 e.printStackTrace();
@@ -172,12 +151,12 @@ public class MyMoviesFragment extends Fragment implements LoadedMoviesEvent
 
         if(lastSwipedMovie != null)
         {
-            MySortedMovieList.getInstance(this.activity).add(this.lastSwipedMovie);
+            MySortedMovieList.getInstance(super.getContext()).add(this.lastSwipedMovie);
             this.myMovieRecyclerView.dataSetChanged();
 
             if(this.lastSwipedMovie.isHot())
             {
-                SortedHotMovieList.getInstance(this.activity).add(this.lastSwipedMovie);
+                SortedHotMovieList.getInstance(super.getContext()).add(this.lastSwipedMovie);
             }
         }
     }
@@ -202,14 +181,14 @@ public class MyMoviesFragment extends Fragment implements LoadedMoviesEvent
     // --- --- --- Load movies --- --- ---
     private void loadMyMovies()
     {
-        List<Movie> myMovies = MySortedMovieList.getInstance(this.activity).getAll();
+        List<Movie> myMovies = MySortedMovieList.getInstance(super.getContext()).getAll();
 
         if(!myMovies.isEmpty())
         {
-            this.loadingProgressBar.setMax(MySortedMovieList.getInstance(this.activity).size());
+            this.loadingProgressBar.setMax(MySortedMovieList.getInstance(super.getContext()).size());
 
             // download status
-            new LoadMyMoviesRetryExecutor(this.activity, this, myMovies, this::onLoadingFinished);
+            new LoadMyMoviesRetryExecutor(super.getActivity(), this, myMovies, this::onLoadingFinished);
         }
         else
         {
@@ -225,9 +204,9 @@ public class MyMoviesFragment extends Fragment implements LoadedMoviesEvent
 
     private void onLoadingFinished()
     {
-        Collections.sort(MySortedMovieList.getInstance(this.activity).getAll());
+        Collections.sort(MySortedMovieList.getInstance(super.getContext()).getAll());
 
-        MySortedMovieList.getInstance(this.activity).loadHotMovies();
+        MySortedMovieList.getInstance(super.getContext()).loadHotMovies();
 
         this.loadingProgressBar.setVisibility(View.GONE);
         this.moviesUpdateTextView.setVisibility(View.GONE);
@@ -239,9 +218,9 @@ public class MyMoviesFragment extends Fragment implements LoadedMoviesEvent
     // --- --- --- launch and handle NewMoviesActivity --- --- ---
     private void launchNewMoviesActivity()
     {
-        if(!NewMovieQueue.getInstance(this.activity).isEmpty())
+        if(!NewMovieQueue.getInstance(super.getContext()).isEmpty())
         {
-            NewMoviesActivity.startForResult(this.activity);
+            NewMoviesActivity.startForResult(super.getActivity());
         }
     }
 
