@@ -1,4 +1,4 @@
-package com.yellowbite.movienewsreminder2.ui.activites;
+package com.yellowbite.movienewsreminder2.ui.activites.toolbar_navigation_activites;
 
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -38,5 +38,14 @@ public abstract class ToolbarActivity extends AppCompatActivity
     {
         MovieFileHelper.startSaveAllThread();
         super.onPause();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        MenuInflater inflater = super.getMenuInflater();
+        inflater.inflate(R.menu.toolbar_items, menu);
+
+        return super.onCreateOptionsMenu(menu);
     }
 }

@@ -1,10 +1,8 @@
 package com.yellowbite.movienewsreminder2.ui.activites;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -19,6 +17,7 @@ import com.yellowbite.movienewsreminder2.model.Movie;
 import com.yellowbite.movienewsreminder2.tasks.functionalInterfaces.LoadedMovieEvent;
 import com.yellowbite.movienewsreminder2.tasks.newMovies.DelLastAndAddAsyncTask;
 import com.yellowbite.movienewsreminder2.tasks.newMovies.LoadNewMoviesDescendingExecutor;
+import com.yellowbite.movienewsreminder2.ui.activites.toolbar_navigation_activites.ToolbarActivity;
 
 public class NewMoviesActivity extends ToolbarActivity implements LoadedMovieEvent
 {

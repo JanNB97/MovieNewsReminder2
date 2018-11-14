@@ -27,7 +27,7 @@ import com.yellowbite.movienewsreminder2.ui.recyclerView.MyMovieRecyclerView;
 import java.util.Collections;
 import java.util.List;
 
-public class MyMoviesFragment extends Fragment implements LoadedMoviesEvent,ToolbarFragment
+public class MyMoviesFragment extends Fragment implements LoadedMoviesEvent, ToolbarFragment
 {
     // main views
     private MyMovieRecyclerView myMovieRecyclerView;
@@ -234,8 +234,22 @@ public class MyMoviesFragment extends Fragment implements LoadedMoviesEvent,Tool
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            case R.id.action_undo:
+                this.handleOnUndoClicked();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public void onCreateOptionsMenu(Menu menu)
     {
         this.undoItem = menu.findItem(R.id.action_undo);
+        this.undoItem.setVisible(false);
     }
 }
