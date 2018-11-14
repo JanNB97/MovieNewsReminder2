@@ -2,22 +2,24 @@ package com.yellowbite.movienewsreminder2;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.yellowbite.movienewsreminder2.fragments.AddMovieFragment;
 import com.yellowbite.movienewsreminder2.fragments.MyMoviesFragment;
+import com.yellowbite.movienewsreminder2.fragments.ToolbarFragment;
 import com.yellowbite.movienewsreminder2.fragments.toolbar_navigation_activites.NavigationDrawerActivity;
 
 public class MainActivity extends NavigationDrawerActivity
 {
-    FragmentManager fragmentManager;
+    public static final String SHOW_FRAGMENT_INTENT_NAME = "Show fragment";
 
-    MyMoviesFragment myMoviesFragment;
-    AddMovieFragment addMovieFragment;
+    private FragmentManager fragmentManager;
+
+    private Menu menu;
+
+    private ToolbarFragment startFragment;
 
     // --- --- --- Initialization --- --- ---
     @Override
@@ -37,39 +39,30 @@ public class MainActivity extends NavigationDrawerActivity
 
     private void startMainFragment()
     {
-        this.myMoviesFragment = new MyMoviesFragment();
-        this.showFragment(this.myMoviesFragment);
+        this.startFragment = ToolbarFragment.get(MyMoviesFragment.FRAGMENT_ID);
+        this.showFragment(startFragment);
     }
 
     // --- --- --- Interaction with fragments --- --- ---
     @Override
     protected void onNewIntent(Intent intent)
     {
-        // TODO
-        int message = intent.getIntExtra("fragment", -1);
-        switch (message)
+        final int DEFAULT_VALUE = -1;
+        int message = intent.getIntExtra(SHOW_FRAGMENT_INTENT_NAME, DEFAULT_VALUE);
+
+        if(message != DEFAULT_VALUE)
         {
-            case -1:
-                // default
-                break;
-            case 0:
-                // main
-                this.showFragment(this.myMoviesFragment);
-                break;
-            case 1:
-                // add
-                if(this.addMovieFragment == null)
-                {
-                    this.addMovieFragment = new AddMovieFragment();
-                }
-                this.showFragment(this.addMovieFragment);
-                break;
+            ToolbarFragment fragmentToShow = ToolbarFragment.get(message);
+            if(fragmentToShow != null)
+            {
+                this.showFragment(fragmentToShow);
+            }
         }
 
         super.onNewIntent(intent);
     }
 
-    private void showFragment(Fragment fragment)
+    private void showFragment(ToolbarFragment fragment)
     {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.fragment_layout, fragment);
@@ -77,6 +70,11 @@ public class MainActivity extends NavigationDrawerActivity
         // TODO - Set Animation
         // transaction.setTransition();
         transaction.commit();
+
+        if(this.menu != null)
+        {
+            fragment.modifyOptionsMenu(this, this.menu);
+        }
     }
 
     // --- --- --- Toolbar --- --- ---
@@ -84,14 +82,19 @@ public class MainActivity extends NavigationDrawerActivity
     public boolean onCreateOptionsMenu(Menu menu)
     {
         super.onCreateOptionsMenu(menu);
-        this.myMoviesFragment.onCreateOptionsMenu(menu);
+        this.menu = menu;
+        startFragment.modifyOptionsMenu(this, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        this.myMoviesFragment.onOptionsItemSelected(item);
+        for(ToolbarFragment toolbarFragment : ToolbarFragment.getAllFragments())
+        {
+            toolbarFragment.onOptionsItemSelected(item);
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -99,6 +102,7 @@ public class MainActivity extends NavigationDrawerActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
-        this.myMoviesFragment.getMyMovieRecyclerView().dataSetChanged();
+        // TODO
+        ((MyMoviesFragment)startFragment).getMyMovieRecyclerView().dataSetChanged();
     }
 }

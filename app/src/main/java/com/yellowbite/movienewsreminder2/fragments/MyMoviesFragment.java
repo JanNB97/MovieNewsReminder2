@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,8 +28,10 @@ import com.yellowbite.movienewsreminder2.fragments.ui.recyclerView.MyMovieRecycl
 import java.util.Collections;
 import java.util.List;
 
-public class MyMoviesFragment extends Fragment implements LoadedMoviesEvent, ToolbarFragment
+public class MyMoviesFragment extends ToolbarFragment implements LoadedMoviesEvent
 {
+    public final static int FRAGMENT_ID = 0;
+
     private boolean firstLaunch = true;
 
     // main views
@@ -46,6 +49,11 @@ public class MyMoviesFragment extends Fragment implements LoadedMoviesEvent, Too
     private MenuItem undoItem;
 
     // --- --- --- Initialization --- --- ---
+    public MyMoviesFragment()
+    {
+        super(FRAGMENT_ID);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState)
     {
@@ -112,7 +120,7 @@ public class MyMoviesFragment extends Fragment implements LoadedMoviesEvent, Too
 
     // --- --- --- Modify toolbar --- --- --
     @Override
-    public void onCreateOptionsMenu(Menu menu)
+    public void modifyOptionsMenu(AppCompatActivity appCompatActivity, Menu menu)
     {
         this.undoItem = menu.findItem(R.id.action_undo);
         this.undoItem.setVisible(false);
@@ -128,7 +136,7 @@ public class MyMoviesFragment extends Fragment implements LoadedMoviesEvent, Too
                 return true;
         }
 
-        return super.onOptionsItemSelected(item);
+        return false;
     }
 
     // --- --- --- Load movies --- --- ---
@@ -267,7 +275,7 @@ public class MyMoviesFragment extends Fragment implements LoadedMoviesEvent, Too
     {
         Intent resultIntent = new Intent(this.getActivity(), MainActivity.class);
 
-        resultIntent.putExtra("fragment", 1);
+        resultIntent.putExtra(MainActivity.SHOW_FRAGMENT_INTENT_NAME, 1);
 
         this.getActivity().startActivity(resultIntent);
     }

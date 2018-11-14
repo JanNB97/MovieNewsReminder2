@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.NavUtils;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,8 +26,10 @@ import com.yellowbite.movienewsreminder2.tasks.loadMovieList.LoadMovieListExecut
 import com.yellowbite.movienewsreminder2.fragments.toolbar_navigation_activites.ToolbarActivity;
 import com.yellowbite.movienewsreminder2.fragments.ui.recyclerView.AddMovieRecyclerView;
 
-public class AddMovieFragment extends Fragment implements ToolbarFragment
+public class AddMovieFragment extends ToolbarFragment
 {
+    protected static final int FRAGMENT_ID = 1;
+
     private TextView searchTextView;
     private Button searchMovieButton;
 
@@ -37,6 +40,11 @@ public class AddMovieFragment extends Fragment implements ToolbarFragment
     private ProgressBar searchProgressIndicator;
 
     // --- --- --- Initialization --- --- ---
+    public AddMovieFragment()
+    {
+        super(FRAGMENT_ID);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
@@ -68,23 +76,12 @@ public class AddMovieFragment extends Fragment implements ToolbarFragment
 
     private void initialize()
     {
-        this.showBackArrow();
-
         this.initSearchTextView();
         this.initSearchMovieButton();
         this.initRecyclerView();
 
         this.searchExecutor = new LoadMovieListExecutor(this.getActivity(),
                 this::onSiteScraped, this::onScrapingFinished);
-    }
-
-    private void showBackArrow()
-    {
-        // TODO
-        /*if(this.getSupportActionBar() != null)
-        {
-            this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }*/
     }
 
     private void initSearchTextView()
@@ -152,10 +149,12 @@ public class AddMovieFragment extends Fragment implements ToolbarFragment
 
     // --- --- --- Modify toolbar --- --- ---
     @Override
-    public void onCreateOptionsMenu(Menu menu)
+    public void modifyOptionsMenu(AppCompatActivity appCompatActivity, Menu menu)
     {
         MenuItem undoItem = menu.findItem(R.id.action_undo);
         undoItem.setVisible(false);
+
+        this.showBackArrow(appCompatActivity);
     }
 
     @Override
@@ -168,7 +167,15 @@ public class AddMovieFragment extends Fragment implements ToolbarFragment
                 return true;
         }
 
-        return super.onOptionsItemSelected(item);
+        return false;
+    }
+
+    private void showBackArrow(AppCompatActivity appCompatActivity)
+    {
+        if(appCompatActivity.getSupportActionBar() != null)
+        {
+            appCompatActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     // --- --- --- On finished --- --- ---
@@ -176,7 +183,7 @@ public class AddMovieFragment extends Fragment implements ToolbarFragment
     {
         Intent resultIntent = new Intent(this.getActivity(), MainActivity.class);
 
-        resultIntent.putExtra("fragment", 0);
+        resultIntent.putExtra(MainActivity.SHOW_FRAGMENT_INTENT_NAME, 0);
 
         this.getActivity().startActivity(resultIntent);
     }
