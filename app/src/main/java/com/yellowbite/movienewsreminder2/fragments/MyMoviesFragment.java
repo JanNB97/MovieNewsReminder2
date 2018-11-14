@@ -43,6 +43,7 @@ public class MyMoviesFragment extends Fragment implements LoadedMoviesEvent, Too
 
     private Runnable readyRunnable;
 
+    // --- --- --- Initialization --- --- ---
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState)
     {
@@ -108,76 +109,25 @@ public class MyMoviesFragment extends Fragment implements LoadedMoviesEvent, Too
         this.addMovieFloatingButton.setOnClickListener(this::handleOnAddMovieClicked);
     }
 
-    // --- --- --- User interaction with main components --- --- ---
-    public void handleOnAddMovieClicked(View view)
+    // --- --- --- Modify toolbar --- --- --
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
     {
-        AddMovieActivity.startForResult(this.getActivity());
-    }
-
-    public void handleOnSwiped(Movie swipedMovie)
-    {
-        this.lastSwipedMovie = swipedMovie;
-        this.undoItem.setVisible(true);
-
-        final int UNDO_TIME_PER_INTERVALL = 100;
-
-        if(this.showUndoButtonThread != null)
+        switch (item.getItemId())
         {
-            this.showUndoButtonThread.interrupt();
+            case R.id.action_undo:
+                this.handleOnUndoClicked();
+                return true;
         }
-        this.showUndoButtonThread = new Thread(() -> {
-            try
-            {
-                for(int i = 0; i <= UNDO_SHOW_TIME; i += UNDO_TIME_PER_INTERVALL)
-                {
-                    if(this.undoItem.isVisible())
-                    {
-                        Thread.sleep(UNDO_TIME_PER_INTERVALL);
-                    }
-                }
 
-                super.getActivity().runOnUiThread(() -> this.undoItem.setVisible(false));
-            } catch (InterruptedException e)
-            {
-                e.printStackTrace();
-            }
-        });
-
-        this.showUndoButtonThread.start();
+        return super.onOptionsItemSelected(item);
     }
 
-    // --- --- --- user interactions with toolbar --- --- ---
-    public void handleOnUndoClicked()
+    @Override
+    public void onCreateOptionsMenu(Menu menu)
     {
+        this.undoItem = menu.findItem(R.id.action_undo);
         this.undoItem.setVisible(false);
-
-        if(lastSwipedMovie != null)
-        {
-            MySortedMovieList.getInstance(super.getContext()).add(this.lastSwipedMovie);
-            this.myMovieRecyclerView.dataSetChanged();
-
-            if(this.lastSwipedMovie.isHot())
-            {
-                SortedHotMovieList.getInstance(super.getContext()).add(this.lastSwipedMovie);
-            }
-        }
-    }
-
-    // --- --- --- user interactions with recycler view --- --- ---
-    public void handleScrolledDown()
-    {
-        if(addMovieFloatingButton.getVisibility() == View.VISIBLE)
-        {
-            addMovieFloatingButton.hide();
-        }
-    }
-
-    public void handleScrolledUp()
-    {
-        if(addMovieFloatingButton.getVisibility() != View.VISIBLE)
-        {
-            addMovieFloatingButton.show();
-        }
     }
 
     // --- --- --- Load movies --- --- ---
@@ -217,7 +167,80 @@ public class MyMoviesFragment extends Fragment implements LoadedMoviesEvent, Too
         this.myMovieRecyclerView.showItems();
     }
 
-    // --- --- --- launch and handle NewMoviesActivity --- --- ---
+    // --- --- --- User interactions --- --- ---
+    // interactions with main components
+    public void handleOnAddMovieClicked(View view)
+    {
+        AddMovieActivity.startForResult(this.getActivity());
+    }
+
+    public void handleOnSwiped(Movie swipedMovie)
+    {
+        this.lastSwipedMovie = swipedMovie;
+        this.undoItem.setVisible(true);
+
+        final int UNDO_TIME_PER_INTERVALL = 100;
+
+        if(this.showUndoButtonThread != null)
+        {
+            this.showUndoButtonThread.interrupt();
+        }
+        this.showUndoButtonThread = new Thread(() -> {
+            try
+            {
+                for(int i = 0; i <= UNDO_SHOW_TIME; i += UNDO_TIME_PER_INTERVALL)
+                {
+                    if(this.undoItem.isVisible())
+                    {
+                        Thread.sleep(UNDO_TIME_PER_INTERVALL);
+                    }
+                }
+
+                super.getActivity().runOnUiThread(() -> this.undoItem.setVisible(false));
+            } catch (InterruptedException e)
+            {
+                e.printStackTrace();
+            }
+        });
+
+        this.showUndoButtonThread.start();
+    }
+
+    // interactions with recycler view
+    public void handleScrolledDown()
+    {
+        if(addMovieFloatingButton.getVisibility() == View.VISIBLE)
+        {
+            addMovieFloatingButton.hide();
+        }
+    }
+
+    public void handleScrolledUp()
+    {
+        if(addMovieFloatingButton.getVisibility() != View.VISIBLE)
+        {
+            addMovieFloatingButton.show();
+        }
+    }
+
+    // interactions with toolbar
+    public void handleOnUndoClicked()
+    {
+        this.undoItem.setVisible(false);
+
+        if(lastSwipedMovie != null)
+        {
+            MySortedMovieList.getInstance(super.getContext()).add(this.lastSwipedMovie);
+            this.myMovieRecyclerView.dataSetChanged();
+
+            if(this.lastSwipedMovie.isHot())
+            {
+                SortedHotMovieList.getInstance(super.getContext()).add(this.lastSwipedMovie);
+            }
+        }
+    }
+
+    // --- --- --- Launch and handle NewMoviesActivity --- --- ---
     private void launchNewMoviesActivity()
     {
         if(!NewMovieQueue.getInstance(super.getContext()).isEmpty())
@@ -226,28 +249,9 @@ public class MyMoviesFragment extends Fragment implements LoadedMoviesEvent, Too
         }
     }
 
+    // --- --- --- Getter and Setter --- --- ---
     public MyMovieRecyclerView getMyMovieRecyclerView()
     {
         return myMovieRecyclerView;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        switch (item.getItemId())
-        {
-            case R.id.action_undo:
-                this.handleOnUndoClicked();
-                return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu)
-    {
-        this.undoItem = menu.findItem(R.id.action_undo);
-        this.undoItem.setVisible(false);
     }
 }
