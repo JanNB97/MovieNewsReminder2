@@ -66,7 +66,7 @@ public class MyMoviesFragment extends Fragment implements LoadedMoviesEvent, Too
     }
 
     @Override
-    public void onStart()
+    public void onActivityCreated(@Nullable Bundle savedInstanceState)
     {
         this.initRecyclerView();
 
@@ -75,7 +75,7 @@ public class MyMoviesFragment extends Fragment implements LoadedMoviesEvent, Too
         NewsService.start(super.getActivity());
 
         this.launchNewMoviesActivity();
-        super.onStart();
+        super.onActivityCreated(savedInstanceState);
     }
 
     private void initRecyclerView()
