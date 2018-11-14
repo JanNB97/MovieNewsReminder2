@@ -41,8 +41,6 @@ public class MyMoviesFragment extends Fragment implements LoadedMoviesEvent, Too
 
     private MenuItem undoItem;
 
-    private Runnable readyRunnable;
-
     // --- --- --- Initialization --- --- ---
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState)
@@ -56,14 +54,6 @@ public class MyMoviesFragment extends Fragment implements LoadedMoviesEvent, Too
         this.findViewsById(view);
         this.addMovieFloatingButton.setEnabled(false);
 
-        if(this.readyRunnable != null)
-        {
-            this.readyRunnable.run();
-        }
-        else
-        {
-            this.readyRunnable = () -> {};
-        }
         super.onViewCreated(view, savedInstanceState);
     }
 
