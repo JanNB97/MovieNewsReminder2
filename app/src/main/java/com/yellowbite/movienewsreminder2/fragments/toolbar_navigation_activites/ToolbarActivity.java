@@ -1,17 +1,10 @@
-package com.yellowbite.movienewsreminder2.ui.activites.toolbar_navigation_activites;
+package com.yellowbite.movienewsreminder2.fragments.toolbar_navigation_activites;
 
-import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.LayoutRes;
-import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.Window;
 
 import com.yellowbite.movienewsreminder2.R;
 import com.yellowbite.movienewsreminder2.files.helper.MovieFileHelper;

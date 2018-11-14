@@ -3,7 +3,7 @@ package com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFile
 import android.content.Context;
 
 import com.yellowbite.movienewsreminder2.files.helper.FileManager;
-import com.yellowbite.movienewsreminder2.model.Movie;
+import com.yellowbite.movienewsreminder2.data.Movie;
 
 import java.util.ArrayList;
 import java.util.List;

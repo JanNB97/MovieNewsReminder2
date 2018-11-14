@@ -1,4 +1,4 @@
-package com.yellowbite.movienewsreminder2.ui.recyclerView.itemHolder;
+package com.yellowbite.movienewsreminder2.fragments.ui.recyclerView.itemHolder;
 
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.yellowbite.movienewsreminder2.R;
-import com.yellowbite.movienewsreminder2.model.Movie;
+import com.yellowbite.movienewsreminder2.data.Movie;
 import com.yellowbite.movienewsreminder2.util.DateHelper;
 
 public class MovieViewHolder extends RecyclerView.ViewHolder

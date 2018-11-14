@@ -1,4 +1,4 @@
-package com.yellowbite.movienewsreminder2.ui.activites;
+package com.yellowbite.movienewsreminder2.fragments;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -15,8 +15,8 @@ import com.yellowbite.movienewsreminder2.R;
 import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.MySortedMovieList;
 import com.yellowbite.movienewsreminder2.files.datatypes.otherDatastructures.SearchMovieList;
 import com.yellowbite.movienewsreminder2.tasks.loadMovieList.LoadMovieListExecutor;
-import com.yellowbite.movienewsreminder2.ui.activites.toolbar_navigation_activites.ToolbarActivity;
-import com.yellowbite.movienewsreminder2.ui.recyclerView.AddMovieRecyclerView;
+import com.yellowbite.movienewsreminder2.fragments.toolbar_navigation_activites.ToolbarActivity;
+import com.yellowbite.movienewsreminder2.fragments.ui.recyclerView.AddMovieRecyclerView;
 
 public class AddMovieActivity extends ToolbarActivity
 {

@@ -1,14 +1,14 @@
-package com.yellowbite.movienewsreminder2.ui.recyclerView;
+package com.yellowbite.movienewsreminder2.fragments.ui.recyclerView;
 
 import android.view.View;
 
 import com.yellowbite.movienewsreminder2.R;
 import com.yellowbite.movienewsreminder2.files.datatypes.MovieList;
 import com.yellowbite.movienewsreminder2.files.datatypes.otherDatastructures.SearchMovieList;
-import com.yellowbite.movienewsreminder2.model.Movie;
+import com.yellowbite.movienewsreminder2.data.Movie;
 import com.yellowbite.movienewsreminder2.tasks.mainActivity.GetMovieAsyncTask;
-import com.yellowbite.movienewsreminder2.ui.activites.AddMovieActivity;
-import com.yellowbite.movienewsreminder2.ui.notifications.NotificationMan;
+import com.yellowbite.movienewsreminder2.fragments.AddMovieActivity;
+import com.yellowbite.movienewsreminder2.notifications.NotificationMan;
 
 public class AddMovieRecyclerView extends UnalterableRecyclerView
 {

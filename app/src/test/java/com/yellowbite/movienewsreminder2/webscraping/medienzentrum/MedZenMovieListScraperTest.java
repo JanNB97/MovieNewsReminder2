@@ -1,6 +1,6 @@
 package com.yellowbite.movienewsreminder2.webscraping.medienzentrum;
 
-import com.yellowbite.movienewsreminder2.model.Movie;
+import com.yellowbite.movienewsreminder2.data.Movie;
 import com.yellowbite.movienewsreminder2.webscraping.WebscrapingTestHelper;
 
 import junit.framework.Assert;

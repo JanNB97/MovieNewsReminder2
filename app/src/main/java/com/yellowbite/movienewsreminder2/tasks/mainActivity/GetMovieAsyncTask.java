@@ -2,7 +2,7 @@ package com.yellowbite.movienewsreminder2.tasks.mainActivity;
 
 import android.os.AsyncTask;
 
-import com.yellowbite.movienewsreminder2.model.Movie;
+import com.yellowbite.movienewsreminder2.data.Movie;
 import com.yellowbite.movienewsreminder2.tasks.functionalInterfaces.MovieRunnable;
 import com.yellowbite.movienewsreminder2.webscraping.medienzentrum.MedZenMovieSiteScraper;
 

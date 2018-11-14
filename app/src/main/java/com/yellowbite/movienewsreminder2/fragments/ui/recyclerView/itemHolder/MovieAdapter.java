@@ -1,4 +1,4 @@
-package com.yellowbite.movienewsreminder2.ui.recyclerView.itemHolder;
+package com.yellowbite.movienewsreminder2.fragments.ui.recyclerView.itemHolder;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -6,9 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.yellowbite.movienewsreminder2.R;
 import com.yellowbite.movienewsreminder2.files.datatypes.MovieList;
-import com.yellowbite.movienewsreminder2.model.Movie;
+import com.yellowbite.movienewsreminder2.data.Movie;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder>
 {

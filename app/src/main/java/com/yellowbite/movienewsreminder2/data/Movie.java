@@ -1,4 +1,4 @@
-package com.yellowbite.movienewsreminder2.model;
+package com.yellowbite.movienewsreminder2.data;
 
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;

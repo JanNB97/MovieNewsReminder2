@@ -1,8 +1,7 @@
-package com.yellowbite.movienewsreminder2.ui.recyclerView;
+package com.yellowbite.movienewsreminder2.fragments.ui.recyclerView;
 
 import android.app.Activity;
 import android.support.annotation.IdRes;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -10,14 +9,14 @@ import android.view.View;
 
 import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.SortedHotMovieList;
 import com.yellowbite.movienewsreminder2.files.datatypes.MovieList;
-import com.yellowbite.movienewsreminder2.model.Movie;
-import com.yellowbite.movienewsreminder2.ui.notifications.NotificationMan;
-import com.yellowbite.movienewsreminder2.ui.recyclerView.itemHolder.MovieAdapter;
-import com.yellowbite.movienewsreminder2.ui.recyclerView.listener.ScrollListener;
-import com.yellowbite.movienewsreminder2.ui.recyclerView.listener.SwipeListener;
-import com.yellowbite.movienewsreminder2.ui.recyclerView.listener.TouchListener;
-import com.yellowbite.movienewsreminder2.ui.recyclerView.listener.touchListeners.RecyclerTouchListener;
-import com.yellowbite.movienewsreminder2.ui.recyclerView.listener.touchListeners.SwipeCallback;
+import com.yellowbite.movienewsreminder2.data.Movie;
+import com.yellowbite.movienewsreminder2.notifications.NotificationMan;
+import com.yellowbite.movienewsreminder2.fragments.ui.recyclerView.itemHolder.MovieAdapter;
+import com.yellowbite.movienewsreminder2.fragments.ui.recyclerView.listener.ScrollListener;
+import com.yellowbite.movienewsreminder2.fragments.ui.recyclerView.listener.SwipeListener;
+import com.yellowbite.movienewsreminder2.fragments.ui.recyclerView.listener.TouchListener;
+import com.yellowbite.movienewsreminder2.fragments.ui.recyclerView.listener.touchListeners.RecyclerTouchListener;
+import com.yellowbite.movienewsreminder2.fragments.ui.recyclerView.listener.touchListeners.SwipeCallback;
 
 import java.util.ArrayList;
 import java.util.List;

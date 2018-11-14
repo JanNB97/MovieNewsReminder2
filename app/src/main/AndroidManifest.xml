@@ -22,7 +22,7 @@
         </activity>
 
         <activity
-            android:name="com.yellowbite.movienewsreminder2.ui.activites.AddMovieActivity"
+            android:name=".fragments.AddMovieActivity"
             android:label="Filme hinzufügen"
             android:parentActivityName="com.yellowbite.movienewsreminder2.MainActivity" >
             <meta-data
@@ -30,7 +30,7 @@
                 android:value="com.yellowbite.movienewsreminder2.MainActivity" />
         </activity>
 
-        <activity android:name=".ui.activites.WishlistActivity"
+        <activity android:name=".fragments.WishlistActivity"
             android:label="Wunschliste"></activity>
 
         <service
@@ -38,7 +38,7 @@
             android:exported="true"
             android:permission="android.permission.BIND_JOB_SERVICE" />
 
-        <activity android:name=".ui.activites.NewMoviesActivity"></activity>
+        <activity android:name=".fragments.NewMoviesActivity"></activity>
     </application>
 
 </manifest>

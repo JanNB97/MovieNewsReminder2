@@ -1,4 +1,4 @@
-package com.yellowbite.movienewsreminder2.ui.activites;
+package com.yellowbite.movienewsreminder2.fragments;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,7 +7,7 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.yellowbite.movienewsreminder2.R;
-import com.yellowbite.movienewsreminder2.ui.activites.toolbar_navigation_activites.NavigationDrawerActivity;
+import com.yellowbite.movienewsreminder2.fragments.toolbar_navigation_activites.NavigationDrawerActivity;
 
 public class WishlistActivity extends NavigationDrawerActivity
 {

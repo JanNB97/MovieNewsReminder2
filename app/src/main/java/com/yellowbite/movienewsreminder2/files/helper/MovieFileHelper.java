@@ -4,7 +4,7 @@ import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles
 import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.MySortedMovieList;
 import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.NewMovieQueue;
 import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.SortedBookedMovieList;
-import com.yellowbite.movienewsreminder2.model.Movie;
+import com.yellowbite.movienewsreminder2.data.Movie;
 import com.yellowbite.movienewsreminder2.util.DateHelper;
 
 import java.util.ArrayList;

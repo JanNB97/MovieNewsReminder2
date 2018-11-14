@@ -1,9 +1,8 @@
 package com.yellowbite.movienewsreminder2.tasks.mainActivity;
 
 import android.app.Activity;
-import android.support.v7.app.AppCompatActivity;
 
-import com.yellowbite.movienewsreminder2.model.Movie;
+import com.yellowbite.movienewsreminder2.data.Movie;
 import com.yellowbite.movienewsreminder2.tasks.LoadMoviesRetryExecutor;
 import com.yellowbite.movienewsreminder2.tasks.functionalInterfaces.LoadedMoviesEvent;
 import com.yellowbite.movienewsreminder2.webscraping.medienzentrum.MedZenMovieSiteScraper;

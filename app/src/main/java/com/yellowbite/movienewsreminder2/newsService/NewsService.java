@@ -7,10 +7,9 @@ import android.app.job.JobScheduler;
 import android.app.job.JobService;
 import android.content.ComponentName;
 import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
 
 import com.yellowbite.movienewsreminder2.newsService.messages.WebScraperMessage;
-import com.yellowbite.movienewsreminder2.ui.notifications.NotificationMan;
+import com.yellowbite.movienewsreminder2.notifications.NotificationMan;
 
 import java.util.List;
 import java.util.logging.Logger;

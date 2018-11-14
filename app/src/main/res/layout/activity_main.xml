@@ -27,7 +27,7 @@
 
         <fragment
             android:id="@+id/main_fragment"
-            android:name="com.yellowbite.movienewsreminder2.ui.activites.MyMoviesFragment"
+            android:name="com.yellowbite.movienewsreminder2.fragments.MyMoviesFragment"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_weight="1"

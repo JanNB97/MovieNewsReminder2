@@ -1,4 +1,4 @@
-package com.yellowbite.movienewsreminder2.ui.activites;
+package com.yellowbite.movienewsreminder2.fragments;
 
 import android.view.Menu;
 import android.view.MenuItem;

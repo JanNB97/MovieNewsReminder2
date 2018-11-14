@@ -1,10 +1,8 @@
 package com.yellowbite.movienewsreminder2.newsService.messages;
 
 import com.yellowbite.movienewsreminder2.R;
-import com.yellowbite.movienewsreminder2.model.Movie;
+import com.yellowbite.movienewsreminder2.data.Movie;
 
-import java.util.Calendar;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 

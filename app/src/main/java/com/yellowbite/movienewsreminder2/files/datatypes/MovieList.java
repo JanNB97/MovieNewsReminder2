@@ -1,8 +1,6 @@
 package com.yellowbite.movienewsreminder2.files.datatypes;
 
-import android.content.Context;
-
-import com.yellowbite.movienewsreminder2.model.Movie;
+import com.yellowbite.movienewsreminder2.data.Movie;
 
 import java.util.List;
 

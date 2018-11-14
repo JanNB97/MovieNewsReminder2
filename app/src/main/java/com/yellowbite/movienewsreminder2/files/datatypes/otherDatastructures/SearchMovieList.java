@@ -1,7 +1,7 @@
 package com.yellowbite.movienewsreminder2.files.datatypes.otherDatastructures;
 
 import com.yellowbite.movienewsreminder2.files.datatypes.MovieList;
-import com.yellowbite.movienewsreminder2.model.Movie;
+import com.yellowbite.movienewsreminder2.data.Movie;
 import com.yellowbite.movienewsreminder2.webscraping.medienzentrum.MedZenMovieListScraper;
 
 import java.util.ArrayList;

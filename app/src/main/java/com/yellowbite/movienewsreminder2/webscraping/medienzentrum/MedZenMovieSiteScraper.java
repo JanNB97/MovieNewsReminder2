@@ -2,7 +2,7 @@ package com.yellowbite.movienewsreminder2.webscraping.medienzentrum;
 
 import android.graphics.Bitmap;
 
-import com.yellowbite.movienewsreminder2.model.Movie;
+import com.yellowbite.movienewsreminder2.data.Movie;
 import com.yellowbite.movienewsreminder2.webscraping.ImageDownloader;
 import com.yellowbite.movienewsreminder2.webscraping.WebscrapingHelper;
 
