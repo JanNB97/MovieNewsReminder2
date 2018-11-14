@@ -27,8 +27,7 @@ public class MainActivity extends MyMoviesToolbarActivity
     public boolean onCreateOptionsMenu(Menu menu)
     {
         super.onCreateOptionsMenu(menu);
-        this.myMoviesFragment.setUndoItem(super.undoItem);
-
+        this.myMoviesFragment.onCreateOptionsMenu(menu);
         return true;
     }
 

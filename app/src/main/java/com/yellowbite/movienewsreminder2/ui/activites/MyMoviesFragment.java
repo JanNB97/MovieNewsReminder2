@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +27,7 @@ import com.yellowbite.movienewsreminder2.ui.recyclerView.MyMovieRecyclerView;
 import java.util.Collections;
 import java.util.List;
 
-public class MyMoviesFragment extends Fragment implements LoadedMoviesEvent
+public class MyMoviesFragment extends Fragment implements LoadedMoviesEvent,ToolbarFragment
 {
     // main views
     private MyMovieRecyclerView myMovieRecyclerView;
@@ -232,8 +233,9 @@ public class MyMoviesFragment extends Fragment implements LoadedMoviesEvent
         return myMovieRecyclerView;
     }
 
-    public void setUndoItem(MenuItem undoItem)
+    @Override
+    public void onCreateOptionsMenu(Menu menu)
     {
-        this.undoItem = undoItem;
+        this.undoItem = menu.findItem(R.id.action_undo);
     }
 }
