@@ -74,6 +74,8 @@ public class MainActivity extends NavigationDrawerActivity
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.fragment_layout, fragment);
         transaction.addToBackStack(null);
+        // TODO - Set Animation
+        // transaction.setTransition();
         transaction.commit();
     }
 
