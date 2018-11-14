@@ -25,8 +25,18 @@ public class MainActivity extends NavigationDrawerActivity
     {
         super.onCreate(savedInstanceState);
         setContentViewWithoutTitleBar(R.layout.activity_main);
-        this.fragmentManager = super.getSupportFragmentManager();
+        this.initialize();
 
+        this.startMainFragment();
+    }
+
+    private void initialize()
+    {
+        this.fragmentManager = super.getSupportFragmentManager();
+    }
+
+    private void startMainFragment()
+    {
         this.myMoviesFragment = new MyMoviesFragment();
         this.showFragment(this.myMoviesFragment);
     }

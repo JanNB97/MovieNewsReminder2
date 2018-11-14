@@ -53,18 +53,17 @@ public class MyMoviesFragment extends Fragment implements LoadedMoviesEvent, Too
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState)
     {
-        this.findViewsById(view);
+        this.findViewsById();
         this.addMovieFloatingButton.setEnabled(false);
 
         super.onViewCreated(view, savedInstanceState);
     }
 
-    private void findViewsById(View view)
+    private void findViewsById()
     {
-        // TODO - use getView()
-        this.loadingProgressBar     = view.findViewById(R.id.loadingProgressBar);
-        this.moviesUpdateTextView   = view.findViewById(R.id.moviesUpdateTextView);
-        this.addMovieFloatingButton = view.findViewById(R.id.addMovieFloatingButton);
+        this.loadingProgressBar     = super.getView().findViewById(R.id.loadingProgressBar);
+        this.moviesUpdateTextView   = super.getView().findViewById(R.id.moviesUpdateTextView);
+        this.addMovieFloatingButton = super.getView().findViewById(R.id.addMovieFloatingButton);
         this.addMovieFloatingButton.setOnClickListener(this::handleOnAddMovieClicked);
     }
 

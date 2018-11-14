@@ -46,18 +46,17 @@ public class AddMovieFragment extends Fragment implements ToolbarFragment
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState)
     {
-        this.findViewsById(view);
+        this.findViewsById();
         this.initialize();
 
         super.onViewCreated(view, savedInstanceState);
     }
 
-    private void findViewsById(View view)
+    private void findViewsById()
     {
-        // TODO - use getView()
-        this.searchTextView             = view.findViewById(R.id.searchTextView);
-        this.searchMovieButton          = view.findViewById(R.id.searchMovieButton);
-        this.searchProgressIndicator    = view.findViewById(R.id.searchProgressIndicator);
+        this.searchTextView             = super.getView().findViewById(R.id.searchTextView);
+        this.searchMovieButton          = super.getView().findViewById(R.id.searchMovieButton);
+        this.searchProgressIndicator    = super.getView().findViewById(R.id.searchProgressIndicator);
     }
 
     @Override
