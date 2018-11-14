@@ -1,16 +1,23 @@
 package com.yellowbite.movienewsreminder2.fragments;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.NavUtils;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.yellowbite.movienewsreminder2.MainActivity;
 import com.yellowbite.movienewsreminder2.R;
 import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.MySortedMovieList;
 import com.yellowbite.movienewsreminder2.files.datatypes.otherDatastructures.SearchMovieList;
@@ -18,7 +25,7 @@ import com.yellowbite.movienewsreminder2.tasks.loadMovieList.LoadMovieListExecut
 import com.yellowbite.movienewsreminder2.fragments.toolbar_navigation_activites.ToolbarActivity;
 import com.yellowbite.movienewsreminder2.fragments.ui.recyclerView.AddMovieRecyclerView;
 
-public class AddMovieActivity extends ToolbarActivity
+public class AddMovieFragment extends Fragment implements ToolbarFragment
 {
     private TextView searchTextView;
     private Button searchMovieButton;
@@ -31,13 +38,33 @@ public class AddMovieActivity extends ToolbarActivity
 
     // --- --- --- Initialization --- --- ---
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState)
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
-        super.onCreate(savedInstanceState);
-        setContentViewWithoutTitleBar(R.layout.activity_add_movie);
+        return inflater.inflate(R.layout.activity_add_movie, container, false);
+    }
 
-        this.findViewsById();
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState)
+    {
+        this.findViewsById(view);
         this.initialize();
+
+        super.onViewCreated(view, savedInstanceState);
+    }
+
+    private void findViewsById(View view)
+    {
+        // TODO - use getView()
+        this.searchTextView             = view.findViewById(R.id.searchTextView);
+        this.searchMovieButton          = view.findViewById(R.id.searchMovieButton);
+        this.searchProgressIndicator    = view.findViewById(R.id.searchProgressIndicator);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState)
+    {
+        this.initialize();
+        super.onActivityCreated(savedInstanceState);
     }
 
     private void initialize()
@@ -45,25 +72,20 @@ public class AddMovieActivity extends ToolbarActivity
         this.showBackArrow();
 
         this.initSearchTextView();
+        this.initSearchMovieButton();
         this.initRecyclerView();
 
-        this.searchExecutor = new LoadMovieListExecutor(this,
+        this.searchExecutor = new LoadMovieListExecutor(this.getActivity(),
                 this::onSiteScraped, this::onScrapingFinished);
     }
 
-    private void findViewsById()
+    private void showBackArrow()
     {
-        this.searchTextView             = this.findViewById(R.id.searchTextView);
-        this.searchMovieButton          = this.findViewById(R.id.searchMovieButton);
-        this.searchProgressIndicator    = this.findViewById(R.id.searchProgressIndicator);
-    }
-
-    private void initRecyclerView()
-    {
-        this.addMovieRecyclerView = new AddMovieRecyclerView(this,
-                R.id.movieRecyclerView, SearchMovieList.getInstance(),
-                MySortedMovieList.getInstance(this));
-        this.addMovieRecyclerView.setOnClickedListener((v, position) -> this.openMainActivity());
+        // TODO
+        /*if(this.getSupportActionBar() != null)
+        {
+            this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }*/
     }
 
     private void initSearchTextView()
@@ -77,12 +99,17 @@ public class AddMovieActivity extends ToolbarActivity
         });
     }
 
-    private void showBackArrow()
+    private void initSearchMovieButton()
     {
-        if(this.getSupportActionBar() != null)
-        {
-            this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
+        this.searchMovieButton.setOnClickListener(this::handleClickedOnSearchMovie);
+    }
+
+    private void initRecyclerView()
+    {
+        this.addMovieRecyclerView = new AddMovieRecyclerView(this.getActivity(),
+                R.id.movieRecyclerView, SearchMovieList.getInstance(),
+                MySortedMovieList.getInstance(this.getContext()));
+        this.addMovieRecyclerView.setOnClickedListener((v, position) -> this.openMainActivity());
     }
 
     // --- --- --- Handle user interaction --- --- ---
@@ -124,34 +151,34 @@ public class AddMovieActivity extends ToolbarActivity
         this.searchTextView.setEnabled(enabled);
     }
 
-    // --- --- --- On finished --- --- ---
-    public void openMainActivity()
+    // --- --- --- Modify toolbar --- --- ---
+    @Override
+    public void onCreateOptionsMenu(Menu menu)
     {
-        Intent resultIntent = new Intent();
-        super.setResult(Activity.RESULT_OK, resultIntent);
-        super.finish();
+        MenuItem undoItem = menu.findItem(R.id.action_undo);
+        undoItem.setVisible(false);
     }
 
-    // --- --- --- Toolbar interaction --- --- ---
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
         switch (item.getItemId())
         {
             case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
+                NavUtils.navigateUpFromSameTask(super.getActivity());
                 return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    // --- --- --- Start me from another activity --- --- ---
-    public static final int REQUEST_CODE = 2;
-
-    public static void startForResult(Activity app)
+    // --- --- --- On finished --- --- ---
+    public void openMainActivity()
     {
-        Intent intent = new Intent(app, AddMovieActivity.class);
-        app.startActivityForResult(intent, REQUEST_CODE);
+        Intent resultIntent = new Intent(this.getActivity(), MainActivity.class);
+
+        resultIntent.putExtra("fragment", 0);
+
+        this.getActivity().startActivity(resultIntent);
     }
 }

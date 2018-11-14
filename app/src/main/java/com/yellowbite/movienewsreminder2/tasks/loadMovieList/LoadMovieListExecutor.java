@@ -1,5 +1,6 @@
 package com.yellowbite.movienewsreminder2.tasks.loadMovieList;
 
+import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 
 import com.yellowbite.movienewsreminder2.files.datatypes.otherDatastructures.SearchMovieList;
@@ -13,7 +14,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 
 public class LoadMovieListExecutor
 {
-    private AppCompatActivity activity;
+    private Activity activity;
     private ThreadPoolExecutor executor;
 
     private BoolRunnable onSiteLoaded;
@@ -28,7 +29,7 @@ public class LoadMovieListExecutor
         void run(boolean gotResults);
     }
 
-    public LoadMovieListExecutor(AppCompatActivity activity, BoolRunnable onSiteLoaded, BoolRunnable onFinishedLoading)
+    public LoadMovieListExecutor(Activity activity, BoolRunnable onSiteLoaded, BoolRunnable onFinishedLoading)
     {
         this.activity = activity;
 

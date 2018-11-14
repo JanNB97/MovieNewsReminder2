@@ -22,7 +22,7 @@
         </activity>
 
         <activity
-            android:name=".fragments.AddMovieActivity"
+            android:name=".fragments.AddMovieFragment"
             android:label="Filme hinzufügen"
             android:parentActivityName="com.yellowbite.movienewsreminder2.MainActivity" >
             <meta-data

@@ -1,5 +1,6 @@
 package com.yellowbite.movienewsreminder2.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.yellowbite.movienewsreminder2.MainActivity;
 import com.yellowbite.movienewsreminder2.R;
 import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.MySortedMovieList;
 import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.NewMovieQueue;
@@ -59,6 +61,7 @@ public class MyMoviesFragment extends Fragment implements LoadedMoviesEvent, Too
 
     private void findViewsById(View view)
     {
+        // TODO - use getView()
         this.loadingProgressBar     = view.findViewById(R.id.loadingProgressBar);
         this.moviesUpdateTextView   = view.findViewById(R.id.moviesUpdateTextView);
         this.addMovieFloatingButton = view.findViewById(R.id.addMovieFloatingButton);
@@ -178,7 +181,7 @@ public class MyMoviesFragment extends Fragment implements LoadedMoviesEvent, Too
     // interactions with main components
     public void handleOnAddMovieClicked(View view)
     {
-        AddMovieActivity.startForResult(this.getActivity());
+        this.openFragment();
     }
 
     public void handleOnSwiped(Movie swipedMovie)
@@ -244,5 +247,15 @@ public class MyMoviesFragment extends Fragment implements LoadedMoviesEvent, Too
     public MyMovieRecyclerView getMyMovieRecyclerView()
     {
         return myMovieRecyclerView;
+    }
+
+    // --- --- --- On finished --- --- ---
+    public void openFragment()
+    {
+        Intent resultIntent = new Intent(this.getActivity(), MainActivity.class);
+
+        resultIntent.putExtra("fragment", 1);
+
+        this.getActivity().startActivity(resultIntent);
     }
 }
