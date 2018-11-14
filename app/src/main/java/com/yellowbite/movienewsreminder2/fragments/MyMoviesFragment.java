@@ -67,6 +67,14 @@ public class MyMoviesFragment extends Fragment implements LoadedMoviesEvent, Too
         super.onViewCreated(view, savedInstanceState);
     }
 
+    private void findViewsById(View view)
+    {
+        this.loadingProgressBar     = view.findViewById(R.id.loadingProgressBar);
+        this.moviesUpdateTextView   = view.findViewById(R.id.moviesUpdateTextView);
+        this.addMovieFloatingButton = view.findViewById(R.id.addMovieFloatingButton);
+        this.addMovieFloatingButton.setOnClickListener(this::handleOnAddMovieClicked);
+    }
+
     @Override
     public void onStart()
     {
@@ -101,15 +109,14 @@ public class MyMoviesFragment extends Fragment implements LoadedMoviesEvent, Too
         );
     }
 
-    private void findViewsById(View view)
+    // --- --- --- Modify toolbar --- --- --
+    @Override
+    public void onCreateOptionsMenu(Menu menu)
     {
-        this.loadingProgressBar     = view.findViewById(R.id.loadingProgressBar);
-        this.moviesUpdateTextView   = view.findViewById(R.id.moviesUpdateTextView);
-        this.addMovieFloatingButton = view.findViewById(R.id.addMovieFloatingButton);
-        this.addMovieFloatingButton.setOnClickListener(this::handleOnAddMovieClicked);
+        this.undoItem = menu.findItem(R.id.action_undo);
+        this.undoItem.setVisible(false);
     }
 
-    // --- --- --- Modify toolbar --- --- --
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
@@ -121,13 +128,6 @@ public class MyMoviesFragment extends Fragment implements LoadedMoviesEvent, Too
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu)
-    {
-        this.undoItem = menu.findItem(R.id.action_undo);
-        this.undoItem.setVisible(false);
     }
 
     // --- --- --- Load movies --- --- ---
@@ -168,6 +168,23 @@ public class MyMoviesFragment extends Fragment implements LoadedMoviesEvent, Too
     }
 
     // --- --- --- User interactions --- --- ---
+    // interactions with toolbar
+    public void handleOnUndoClicked()
+    {
+        this.undoItem.setVisible(false);
+
+        if(lastSwipedMovie != null)
+        {
+            MySortedMovieList.getInstance(super.getContext()).add(this.lastSwipedMovie);
+            this.myMovieRecyclerView.dataSetChanged();
+
+            if(this.lastSwipedMovie.isHot())
+            {
+                SortedHotMovieList.getInstance(super.getContext()).add(this.lastSwipedMovie);
+            }
+        }
+    }
+
     // interactions with main components
     public void handleOnAddMovieClicked(View view)
     {
@@ -217,26 +234,10 @@ public class MyMoviesFragment extends Fragment implements LoadedMoviesEvent, Too
 
     public void handleScrolledUp()
     {
+
         if(addMovieFloatingButton.getVisibility() != View.VISIBLE)
         {
             addMovieFloatingButton.show();
-        }
-    }
-
-    // interactions with toolbar
-    public void handleOnUndoClicked()
-    {
-        this.undoItem.setVisible(false);
-
-        if(lastSwipedMovie != null)
-        {
-            MySortedMovieList.getInstance(super.getContext()).add(this.lastSwipedMovie);
-            this.myMovieRecyclerView.dataSetChanged();
-
-            if(this.lastSwipedMovie.isHot())
-            {
-                SortedHotMovieList.getInstance(super.getContext()).add(this.lastSwipedMovie);
-            }
         }
     }
 
