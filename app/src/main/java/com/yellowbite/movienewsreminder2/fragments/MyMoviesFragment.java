@@ -29,6 +29,8 @@ import java.util.List;
 
 public class MyMoviesFragment extends Fragment implements LoadedMoviesEvent, ToolbarFragment
 {
+    private boolean firstLaunch = true;
+
     // main views
     private MyMovieRecyclerView myMovieRecyclerView;
     private FloatingActionButton addMovieFloatingButton;
@@ -72,11 +74,18 @@ public class MyMoviesFragment extends Fragment implements LoadedMoviesEvent, Too
     {
         this.initRecyclerView();
 
-        this.loadMyMovies();
+        if(this.firstLaunch)
+        {
+            this.firstLaunch = false;
+            this.loadMyMovies();
+            NewsService.start(super.getActivity());
+            this.launchNewMoviesActivity();
+        }
+        else
+        {
+            this.setLoadedState();
+        }
 
-        NewsService.start(super.getActivity());
-
-        this.launchNewMoviesActivity();
         super.onActivityCreated(savedInstanceState);
     }
 
@@ -152,6 +161,11 @@ public class MyMoviesFragment extends Fragment implements LoadedMoviesEvent, Too
 
         MySortedMovieList.getInstance(super.getContext()).loadHotMovies();
 
+        this.setLoadedState();
+    }
+
+    private void setLoadedState()
+    {
         this.loadingProgressBar.setVisibility(View.GONE);
         this.moviesUpdateTextView.setVisibility(View.GONE);
         this.addMovieFloatingButton.setEnabled(true);
