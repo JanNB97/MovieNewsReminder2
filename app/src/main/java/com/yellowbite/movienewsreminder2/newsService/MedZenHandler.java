@@ -7,6 +7,7 @@ import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles
 import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.NewestMovie;
 import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.SortedBookedMovieList;
 import com.yellowbite.movienewsreminder2.data.Movie;
+import com.yellowbite.movienewsreminder2.files.helper.MovieFileHelper;
 import com.yellowbite.movienewsreminder2.newsService.messages.AddedMovieMessage;
 import com.yellowbite.movienewsreminder2.newsService.messages.BookedMovieMessage;
 import com.yellowbite.movienewsreminder2.newsService.messages.HotMovieMessage;
@@ -53,6 +54,7 @@ public class MedZenHandler extends WebscrapingHandler
             messages.add(hotMovieMessage);
         }
 
+        MovieFileHelper.startSaveAllThread();
         return messages;
     }
 
