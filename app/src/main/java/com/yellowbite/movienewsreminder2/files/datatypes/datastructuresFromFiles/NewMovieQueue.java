@@ -39,6 +39,7 @@ public final class NewMovieQueue extends MovieListFromFile
     }
 
     // --- --- --- Clean data methods --- --- ---
+    @Override
     public boolean isEmpty()
     {
         return FileManager.isEmpty(super.context, super.FILE_NAME);
