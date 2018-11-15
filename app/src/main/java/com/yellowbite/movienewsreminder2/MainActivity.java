@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import com.yellowbite.movienewsreminder2.fragments.MyMoviesFragment;
 import com.yellowbite.movienewsreminder2.fragments.ToolbarFragment;
 import com.yellowbite.movienewsreminder2.fragments.toolbar_navigation_activites.NavigationDrawerActivity;
+import com.yellowbite.movienewsreminder2.newsService.NewsService;
 
 public class MainActivity extends NavigationDrawerActivity
 {
@@ -104,5 +105,6 @@ public class MainActivity extends NavigationDrawerActivity
     {
         // TODO
         ((MyMoviesFragment)startFragment).getMyMovieRecyclerView().dataSetChanged();
+        NewsService.start(this);
     }
 }

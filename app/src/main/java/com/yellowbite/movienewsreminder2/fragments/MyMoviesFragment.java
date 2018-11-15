@@ -86,7 +86,6 @@ public class MyMoviesFragment extends ToolbarFragment implements LoadedMoviesEve
         {
             this.firstLaunch = false;
             this.loadMyMovies();
-            NewsService.start(super.getActivity());
             this.launchNewMoviesActivity();
         }
         else
@@ -261,6 +260,10 @@ public class MyMoviesFragment extends ToolbarFragment implements LoadedMoviesEve
         if(!NewMovieQueue.getInstance(super.getContext()).isEmpty())
         {
             NewMoviesActivity.startForResult(super.getActivity());
+        }
+        else
+        {
+            NewsService.start(super.getActivity());
         }
     }
 
