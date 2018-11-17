@@ -108,9 +108,9 @@ public class MyMoviesFragment extends ToolbarFragment implements LoadedMoviesEve
 
     // --- --- --- Modify toolbar --- --- ---
     @Override
-    protected void modifyOptionsMenu(AppCompatActivity app, Menu menu)
+    protected void modifyOptionsMenu()
     {
-        super.modifyOptionsMenu(app, menu);
+        super.modifyOptionsMenu();
         this.homeItem.setVisible(false);
     }
 

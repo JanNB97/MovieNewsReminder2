@@ -90,25 +90,30 @@ public abstract class ToolbarFragment extends Fragment
     {
         if(this.createOptionMenu)
         {
-            this.initOptionsMenu(app, menu);
-            this.modifyOptionsMenu(app, menu);
+            this.initOptionsMenu(menu);
+            this.modifyAndSetTitleOfOptionsMenu(app);
             this.createOptionMenu = false;
         }
         else
         {
-            this.modifyOptionsMenu(app, menu);
+            this.modifyAndSetTitleOfOptionsMenu(app);
         }
     }
 
-    private void initOptionsMenu(AppCompatActivity app, Menu menu)
+    private void initOptionsMenu(Menu menu)
     {
         this.undoItem = menu.findItem(R.id.action_undo);
         this.homeItem = menu.findItem(R.id.action_home);
     }
 
-    protected void modifyOptionsMenu(AppCompatActivity app, Menu menu)
+    private void modifyAndSetTitleOfOptionsMenu(AppCompatActivity app)
     {
         app.getSupportActionBar().setTitle(this.nameInToolbar);
+        this.modifyOptionsMenu();
+    }
+
+    protected void modifyOptionsMenu()
+    {
         this.homeItem.setVisible(true);
         this.undoItem.setVisible(false);
     }

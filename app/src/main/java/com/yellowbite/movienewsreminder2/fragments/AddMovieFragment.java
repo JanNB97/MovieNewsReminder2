@@ -137,17 +137,14 @@ public class AddMovieFragment extends ToolbarFragment
 
     // --- --- --- Modify toolbar --- --- ---
     @Override
-    public void modifyOptionsMenu(AppCompatActivity app, Menu menu)
+    public void modifyOptionsMenu()
     {
-        super.modifyOptionsMenu(app, menu);
-        this.showBackArrow(app);
+        super.modifyOptionsMenu();
+        this.showBackArrow();
     }
 
-    private void showBackArrow(AppCompatActivity appCompatActivity)
+    private void showBackArrow()
     {
-        if(appCompatActivity.getSupportActionBar() != null)
-        {
-            appCompatActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
+        // TODO
     }
 }
