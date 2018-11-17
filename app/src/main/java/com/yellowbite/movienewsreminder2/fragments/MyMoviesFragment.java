@@ -17,6 +17,7 @@ import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles
 import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.NewMovieQueue;
 import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.SortedHotMovieList;
 import com.yellowbite.movienewsreminder2.data.Movie;
+import com.yellowbite.movienewsreminder2.fragments.threads.CountDownThread;
 import com.yellowbite.movienewsreminder2.newsService.NewsService;
 import com.yellowbite.movienewsreminder2.tasks.functionalInterfaces.LoadedMoviesEvent;
 import com.yellowbite.movienewsreminder2.tasks.mainActivity.LoadMyMoviesRetryExecutor;
@@ -198,26 +199,10 @@ public class MyMoviesFragment extends ToolbarFragment implements LoadedMoviesEve
         this.lastSwipedMovie = swipedMovie;
         super.undoItem.setVisible(true);
 
-        final int UNDO_TIME_PER_INTERVALL = 100;
-
-        if(this.showUndoButtonThread != null)
-        {
-            this.showUndoButtonThread.interrupt();
-        }
-        this.showUndoButtonThread = new Thread(() -> {
-            try
-            {
-                for(int i = 0; i <= UNDO_SHOW_TIME; i += UNDO_TIME_PER_INTERVALL)
-                {
-                    if(super.undoItem.isVisible())
-                    {
-                        Thread.sleep(UNDO_TIME_PER_INTERVALL);
-                    }
-                }
-
-                super.getActivity().runOnUiThread(() -> super.undoItem.setVisible(false));
-            } catch (InterruptedException ignored) {}
-        });
+        this.showUndoButtonThread = new CountDownThread(UNDO_SHOW_TIME,
+                () -> !super.undoItem.isVisible(),
+                () -> super.getActivity().runOnUiThread(() -> super.undoItem.setVisible(false))
+        );
 
         this.showUndoButtonThread.start();
     }
