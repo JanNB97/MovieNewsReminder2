@@ -48,19 +48,26 @@ public class MainActivity extends NavigationDrawerActivity
     @Override
     protected void onNewIntent(Intent intent)
     {
-        final int DEFAULT_VALUE = -1;
-        int message = intent.getIntExtra(SHOW_FRAGMENT_INTENT_NAME, DEFAULT_VALUE);
-
-        if(message != DEFAULT_VALUE)
+        if(intent.hasExtra(SHOW_FRAGMENT_INTENT_NAME))
         {
-            ToolbarFragment fragmentToShow = ToolbarFragment.get(message);
+            this.handleShowFragmentIntent(intent);
+        }
+        super.onNewIntent(intent);
+    }
+
+    private void handleShowFragmentIntent(Intent intent)
+    {
+        final int DEFAULT_VALUE = -1;
+        int fragmentId = intent.getIntExtra(SHOW_FRAGMENT_INTENT_NAME, DEFAULT_VALUE);
+
+        if(fragmentId != DEFAULT_VALUE)
+        {
+            ToolbarFragment fragmentToShow = ToolbarFragment.get(fragmentId);
             if(fragmentToShow != null)
             {
                 this.showFragment(fragmentToShow);
             }
         }
-
-        super.onNewIntent(intent);
     }
 
     private void showFragment(ToolbarFragment fragment)
