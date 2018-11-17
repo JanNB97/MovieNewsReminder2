@@ -104,7 +104,10 @@ public class MainActivity extends NavigationDrawerActivity
         {
             if(toolbarFragment.isAdded())
             {
-                toolbarFragment.onOptionsItemSelected(item);
+                if(toolbarFragment.onOptionsItemSelected(item))
+                {
+                    return true;
+                }
             }
         }
 
