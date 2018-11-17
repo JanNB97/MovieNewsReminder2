@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GravityCompat;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -119,7 +120,10 @@ public class MainActivity extends NavigationDrawerActivity
         ToolbarFragment currentFragment = ToolbarFragment.getAddedFragment();
         if(currentFragment != null)
         {
-            return currentFragment.onOptionsItemSelected(item);
+            if(currentFragment.onOptionsItemSelected(item))
+            {
+                return true;
+            }
         }
 
         return super.onOptionsItemSelected(item);

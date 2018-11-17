@@ -139,9 +139,9 @@ public abstract class ToolbarFragment extends Fragment
             case R.id.action_home:
                 this.sendShowFragmentRequest(MainActivity.START_FRAGMENT_ID);
                 return true;
-            default:
-                return super.onOptionsItemSelected(item);
         }
+
+        return false;
     }
 
     protected void sendShowFragmentRequest(int fragmentId)
