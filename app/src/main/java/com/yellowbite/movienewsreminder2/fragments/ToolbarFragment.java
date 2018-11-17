@@ -2,20 +2,18 @@ package com.yellowbite.movienewsreminder2.fragments;
 
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Logger;
 
 public abstract class ToolbarFragment extends Fragment
 {
     private final int fragmentId;
     private static final List<ToolbarFragment> allFragments = new ArrayList<>();
+    private boolean createOptionMenu = true;
 
     public ToolbarFragment(int fragmentId)
     {
@@ -63,7 +61,22 @@ public abstract class ToolbarFragment extends Fragment
         return allFragments;
     }
 
-    public abstract void modifyOptionsMenu(AppCompatActivity appCompatActivity, Menu menu);
+    public final void showOptionMenu(AppCompatActivity appCompatActivity, Menu menu)
+    {
+        if(this.createOptionMenu)
+        {
+            this.createOptionMenu(appCompatActivity, menu);
+            this.createOptionMenu = false;
+        }
+        else
+        {
+            this.modifyOptionsMenu(appCompatActivity, menu);
+        }
+    }
+
+    protected abstract void createOptionMenu(AppCompatActivity appCompatActivity, Menu menu);
+
+    protected abstract void modifyOptionsMenu(AppCompatActivity appCompatActivity, Menu menu);
 
     public abstract boolean onOptionsItemSelected(MenuItem item);
 }

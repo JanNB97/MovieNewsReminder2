@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -119,9 +120,15 @@ public class MyMoviesFragment extends ToolbarFragment implements LoadedMoviesEve
 
     // --- --- --- Modify toolbar --- --- --
     @Override
-    public void modifyOptionsMenu(AppCompatActivity appCompatActivity, Menu menu)
+    public void createOptionMenu(AppCompatActivity appCompatActivity, Menu menu)
     {
         this.undoItem = menu.findItem(R.id.action_undo);
+        this.modifyOptionsMenu(appCompatActivity, menu);
+    }
+
+    @Override
+    public void modifyOptionsMenu(AppCompatActivity appCompatActivity, Menu menu)
+    {
         this.undoItem.setVisible(false);
     }
 
