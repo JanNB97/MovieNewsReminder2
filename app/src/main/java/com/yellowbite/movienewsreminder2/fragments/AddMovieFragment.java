@@ -109,6 +109,7 @@ public class AddMovieFragment extends ToolbarFragment
         this.searchExecutor.startToLoadMovieList(searchText);
     }
 
+    // --- --- --- Site scraping callbacks --- --- ---
     private void onSiteScraped(boolean gotResults)
     {
         if(gotResults)
@@ -129,6 +130,7 @@ public class AddMovieFragment extends ToolbarFragment
         this.searchProgressIndicator.setVisibility(View.GONE);
     }
 
+    // --- --- --- Ui modification --- --- ---
     private void setUserInteractionEnabled(boolean enabled)
     {
         this.searchMovieButton.setEnabled(enabled);
