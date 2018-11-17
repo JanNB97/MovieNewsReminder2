@@ -28,6 +28,7 @@ public abstract class ToolbarFragment extends Fragment
 
     // toolbar items
     protected MenuItem undoItem;
+    protected MenuItem homeItem;
 
     public ToolbarFragment(int fragmentId, @LayoutRes int resource)
     {
@@ -96,9 +97,10 @@ public abstract class ToolbarFragment extends Fragment
         }
     }
 
-    protected void initOptionsMenu(AppCompatActivity app, Menu menu)
+    private void initOptionsMenu(AppCompatActivity app, Menu menu)
     {
         this.undoItem = menu.findItem(R.id.action_undo);
+        this.homeItem = menu.findItem(R.id.action_home);
     }
 
     protected void modifyOptionsMenu(AppCompatActivity app, Menu menu)
