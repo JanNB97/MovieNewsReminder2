@@ -103,7 +103,11 @@ public abstract class ToolbarFragment extends Fragment
         this.homeItem = menu.findItem(R.id.action_home);
     }
 
-    protected void modifyOptionsMenu(AppCompatActivity app, Menu menu) {}
+    protected void modifyOptionsMenu(AppCompatActivity app, Menu menu)
+    {
+        this.homeItem.setVisible(true);
+        this.undoItem.setVisible(false);
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
