@@ -134,17 +134,4 @@ public class AddMovieFragment extends ToolbarFragment
         this.searchMovieButton.setEnabled(enabled);
         this.searchTextView.setEnabled(enabled);
     }
-
-    // --- --- --- Modify toolbar --- --- ---
-    @Override
-    public void modifyOptionsMenu()
-    {
-        super.modifyOptionsMenu();
-        this.showBackArrow();
-    }
-
-    private void showBackArrow()
-    {
-        // TODO
-    }
 }
