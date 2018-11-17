@@ -1,21 +1,17 @@
 package com.yellowbite.movienewsreminder2.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.yellowbite.movienewsreminder2.MainActivity;
 import com.yellowbite.movienewsreminder2.R;
 import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.MySortedMovieList;
 import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.NewMovieQueue;
@@ -207,7 +203,7 @@ public class MyMoviesFragment extends ToolbarFragment implements LoadedMoviesEve
     // interactions with main components
     public void handleOnAddMovieClicked(View view)
     {
-        this.openFragment();
+        super.sendShowFragmentRequest(AddMovieFragment.FRAGMENT_ID);
     }
 
     public void handleOnSwiped(Movie swipedMovie)
@@ -277,15 +273,5 @@ public class MyMoviesFragment extends ToolbarFragment implements LoadedMoviesEve
     public MyMovieRecyclerView getMyMovieRecyclerView()
     {
         return myMovieRecyclerView;
-    }
-
-    // --- --- --- On finished --- --- ---
-    public void openFragment()
-    {
-        Intent resultIntent = new Intent(this.getActivity(), MainActivity.class);
-
-        resultIntent.putExtra(MainActivity.SHOW_FRAGMENT_INTENT_NAME, 1);
-
-        this.getActivity().startActivity(resultIntent);
     }
 }

@@ -1,16 +1,11 @@
 package com.yellowbite.movienewsreminder2.fragments;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,12 +13,10 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.yellowbite.movienewsreminder2.MainActivity;
 import com.yellowbite.movienewsreminder2.R;
 import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.MySortedMovieList;
 import com.yellowbite.movienewsreminder2.files.datatypes.otherDatastructures.SearchMovieList;
 import com.yellowbite.movienewsreminder2.tasks.loadMovieList.LoadMovieListExecutor;
-import com.yellowbite.movienewsreminder2.fragments.toolbar_navigation_activites.ToolbarActivity;
 import com.yellowbite.movienewsreminder2.fragments.ui.recyclerView.AddMovieRecyclerView;
 
 public class AddMovieFragment extends ToolbarFragment
@@ -107,7 +100,7 @@ public class AddMovieFragment extends ToolbarFragment
         this.addMovieRecyclerView = new AddMovieRecyclerView(this.getActivity(),
                 R.id.movieRecyclerView, SearchMovieList.getInstance(),
                 MySortedMovieList.getInstance(this.getContext()));
-        this.addMovieRecyclerView.setOnClickedListener((v, position) -> this.openMainActivity());
+        this.addMovieRecyclerView.setOnClickedListener((v, position) -> super.sendShowFragmentRequest(MyMoviesFragment.FRAGMENT_ID));
     }
 
     // --- --- --- Handle user interaction --- --- ---
@@ -182,15 +175,5 @@ public class AddMovieFragment extends ToolbarFragment
         {
             appCompatActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-    }
-
-    // --- --- --- On finished --- --- ---
-    public void openMainActivity()
-    {
-        Intent resultIntent = new Intent(this.getActivity(), MainActivity.class);
-
-        resultIntent.putExtra(MainActivity.SHOW_FRAGMENT_INTENT_NAME, 0);
-
-        this.getActivity().startActivity(resultIntent);
     }
 }

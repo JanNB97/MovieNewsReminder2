@@ -1,9 +1,12 @@
 package com.yellowbite.movienewsreminder2.fragments;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.yellowbite.movienewsreminder2.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,4 +83,13 @@ public abstract class ToolbarFragment extends Fragment
     protected abstract void modifyOptionsMenu(AppCompatActivity app, Menu menu);
 
     public abstract boolean onOptionsItemSelected(MenuItem item);
+
+    protected void sendShowFragmentRequest(int fragmentId)
+    {
+        Intent resultIntent = new Intent(this.getActivity(), MainActivity.class);
+
+        resultIntent.putExtra(MainActivity.SHOW_FRAGMENT_INTENT_NAME, fragmentId);
+
+        this.getActivity().startActivity(resultIntent);
+    }
 }
