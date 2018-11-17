@@ -23,7 +23,7 @@ public abstract class ToolbarFragment extends Fragment
 {
     private final int resource;
     private final int fragmentId;
-    private final String nameInToolbar;
+    private final String titleInToolbar;
 
     private static final List<ToolbarFragment> allFragments = new ArrayList<>();
     private boolean createOptionMenu = true;
@@ -32,11 +32,11 @@ public abstract class ToolbarFragment extends Fragment
     protected MenuItem undoItem;
     protected MenuItem homeItem;
 
-    public ToolbarFragment(int fragmentId, @LayoutRes int resource, String nameInToolbar)
+    public ToolbarFragment(int fragmentId, @LayoutRes int resource, String titleInToolbar)
     {
         this.fragmentId = fragmentId;
         this.resource = resource;
-        this.nameInToolbar = nameInToolbar;
+        this.titleInToolbar = titleInToolbar;
     }
 
     public static ToolbarFragment get(int id)
@@ -91,12 +91,12 @@ public abstract class ToolbarFragment extends Fragment
         if(this.createOptionMenu)
         {
             this.initOptionsMenu(menu);
-            this.setTitleAndModifyOptionsMenu(app);
+            this.showTitleAndModifyOptionsMenu(app);
             this.createOptionMenu = false;
         }
         else
         {
-            this.setTitleAndModifyOptionsMenu(app);
+            this.showTitleAndModifyOptionsMenu(app);
         }
     }
 
@@ -106,9 +106,9 @@ public abstract class ToolbarFragment extends Fragment
         this.homeItem = menu.findItem(R.id.action_home);
     }
 
-    public final void setTitleAndModifyOptionsMenu(AppCompatActivity app)
+    public final void showTitleAndModifyOptionsMenu(AppCompatActivity app)
     {
-        app.getSupportActionBar().setTitle(this.nameInToolbar);
+        app.getSupportActionBar().setTitle(this.titleInToolbar);
         this.modifyOptionsMenu();
     }
 
