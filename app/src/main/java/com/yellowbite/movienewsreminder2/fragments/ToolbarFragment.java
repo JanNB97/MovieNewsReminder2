@@ -91,12 +91,12 @@ public abstract class ToolbarFragment extends Fragment
         if(this.createOptionMenu)
         {
             this.initOptionsMenu(menu);
-            this.modifyAndSetTitleOfOptionsMenu(app);
+            this.setTitleAndModifyOptionsMenu(app);
             this.createOptionMenu = false;
         }
         else
         {
-            this.modifyAndSetTitleOfOptionsMenu(app);
+            this.setTitleAndModifyOptionsMenu(app);
         }
     }
 
@@ -106,7 +106,7 @@ public abstract class ToolbarFragment extends Fragment
         this.homeItem = menu.findItem(R.id.action_home);
     }
 
-    private void modifyAndSetTitleOfOptionsMenu(AppCompatActivity app)
+    public final void setTitleAndModifyOptionsMenu(AppCompatActivity app)
     {
         app.getSupportActionBar().setTitle(this.nameInToolbar);
         this.modifyOptionsMenu();
