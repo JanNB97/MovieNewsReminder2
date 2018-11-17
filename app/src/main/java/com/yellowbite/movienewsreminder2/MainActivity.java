@@ -75,10 +75,9 @@ public class MainActivity extends NavigationDrawerActivity
     private void showFragment(ToolbarFragment fragment)
     {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
         transaction.replace(R.id.fragment_layout, fragment);
         transaction.addToBackStack(null);
-        // TODO - Set Animation
-        // transaction.setTransition();
         transaction.commit();
 
         if(this.menu != null)
