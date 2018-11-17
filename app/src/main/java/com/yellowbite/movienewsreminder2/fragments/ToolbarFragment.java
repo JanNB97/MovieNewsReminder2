@@ -1,12 +1,19 @@
 package com.yellowbite.movienewsreminder2.fragments;
 
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.LayoutRes;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.yellowbite.movienewsreminder2.MainActivity;
+import com.yellowbite.movienewsreminder2.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,13 +21,15 @@ import java.util.logging.Logger;
 
 public abstract class ToolbarFragment extends Fragment
 {
+    private final int resource;
     private final int fragmentId;
     private static final List<ToolbarFragment> allFragments = new ArrayList<>();
     private boolean createOptionMenu = true;
 
-    public ToolbarFragment(int fragmentId)
+    public ToolbarFragment(int fragmentId, @LayoutRes int resource)
     {
         this.fragmentId = fragmentId;
+        this.resource = resource;
     }
 
     public static ToolbarFragment get(int id)
@@ -59,6 +68,12 @@ public abstract class ToolbarFragment extends Fragment
         return result;
     }
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
+    {
+        return inflater.inflate(this.resource, container, false);
+    }
+
     public static List<ToolbarFragment> getAllFragments()
     {
         return allFragments;
@@ -82,7 +97,18 @@ public abstract class ToolbarFragment extends Fragment
 
     protected abstract void modifyOptionsMenu(AppCompatActivity app, Menu menu);
 
-    public abstract boolean onOptionsItemSelected(MenuItem item);
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            case R.id.action_home:
+                this.sendShowFragmentRequest(MainActivity.START_FRAGMENT_ID);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
     protected void sendShowFragmentRequest(int fragmentId)
     {

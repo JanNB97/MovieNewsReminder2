@@ -16,6 +16,8 @@ public class MainActivity extends NavigationDrawerActivity
 {
     public static final String SHOW_FRAGMENT_INTENT_NAME = "Show fragment";
 
+    public static final int START_FRAGMENT_ID = MyMoviesFragment.FRAGMENT_ID;
+
     private FragmentManager fragmentManager;
 
     private Menu menu;
@@ -40,7 +42,7 @@ public class MainActivity extends NavigationDrawerActivity
 
     private void startMainFragment()
     {
-        this.startFragment = ToolbarFragment.get(MyMoviesFragment.FRAGMENT_ID);
+        this.startFragment = ToolbarFragment.get(START_FRAGMENT_ID);
         this.showFragment(startFragment);
     }
 
@@ -100,7 +102,10 @@ public class MainActivity extends NavigationDrawerActivity
     {
         for(ToolbarFragment toolbarFragment : ToolbarFragment.getAllFragments())
         {
-            toolbarFragment.onOptionsItemSelected(item);
+            if(toolbarFragment.isAdded())
+            {
+                toolbarFragment.onOptionsItemSelected(item);
+            }
         }
 
         return super.onOptionsItemSelected(item);

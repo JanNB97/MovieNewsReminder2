@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.yellowbite.movienewsreminder2.MainActivity;
 import com.yellowbite.movienewsreminder2.R;
 import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.MySortedMovieList;
 import com.yellowbite.movienewsreminder2.files.datatypes.otherDatastructures.SearchMovieList;
@@ -37,13 +38,7 @@ public class AddMovieFragment extends ToolbarFragment
     // --- --- --- Initialization --- --- ---
     public AddMovieFragment()
     {
-        super(FRAGMENT_ID);
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
-    {
-        return inflater.inflate(R.layout.activity_add_movie, container, false);
+        super(FRAGMENT_ID, R.layout.activity_add_movie);
     }
 
     @Override
@@ -154,19 +149,6 @@ public class AddMovieFragment extends ToolbarFragment
     {
         this.undoItem.setVisible(false);
         this.showBackArrow(app);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        switch (item.getItemId())
-        {
-            case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(super.getActivity());
-                return true;
-        }
-
-        return false;
     }
 
     private void showBackArrow(AppCompatActivity appCompatActivity)

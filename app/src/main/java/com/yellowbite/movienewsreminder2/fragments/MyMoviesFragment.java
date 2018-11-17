@@ -48,13 +48,7 @@ public class MyMoviesFragment extends ToolbarFragment implements LoadedMoviesEve
     // --- --- --- Initialization --- --- ---
     public MyMoviesFragment()
     {
-        super(FRAGMENT_ID);
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState)
-    {
-        return inflater.inflate(R.layout.activity_my_movies, container, false);
+        super(FRAGMENT_ID, R.layout.activity_my_movies);
     }
 
     @Override
@@ -137,7 +131,7 @@ public class MyMoviesFragment extends ToolbarFragment implements LoadedMoviesEve
                 return true;
         }
 
-        return false;
+        return super.onOptionsItemSelected(item);
     }
 
     // --- --- --- Load movies --- --- ---

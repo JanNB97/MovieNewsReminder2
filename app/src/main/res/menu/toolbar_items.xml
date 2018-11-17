@@ -7,4 +7,10 @@
         android:title="Löschen rückgängig machen"
         app:showAsAction="ifRoom"/>
 
+    <item
+        android:id="@+id/action_home"
+        android:icon="@drawable/ic_home"
+        android:title="Zu Merkliste wechseln"
+        app:showAsAction="ifRoom" />
+
 </menu>
