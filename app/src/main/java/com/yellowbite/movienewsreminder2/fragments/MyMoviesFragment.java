@@ -216,10 +216,7 @@ public class MyMoviesFragment extends ToolbarFragment implements LoadedMoviesEve
                 }
 
                 super.getActivity().runOnUiThread(() -> super.undoItem.setVisible(false));
-            } catch (InterruptedException e)
-            {
-                e.printStackTrace();
-            }
+            } catch (InterruptedException ignored) {}
         });
 
         this.showUndoButtonThread.start();
@@ -260,5 +257,12 @@ public class MyMoviesFragment extends ToolbarFragment implements LoadedMoviesEve
     public MyMovieRecyclerView getMyMovieRecyclerView()
     {
         return myMovieRecyclerView;
+    }
+
+    @Override
+    protected void sendShowFragmentRequest(int fragmentId)
+    {
+        this.showUndoButtonThread.interrupt();
+        super.sendShowFragmentRequest(fragmentId);
     }
 }
