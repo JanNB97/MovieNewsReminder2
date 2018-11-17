@@ -93,7 +93,7 @@ public class MainActivity extends NavigationDrawerActivity
     {
         super.onCreateOptionsMenu(menu);
         this.menu = menu;
-        startFragment.showOptionsMenu(this, menu);
+        this.startFragment.showOptionsMenu(this, menu);
         return true;
     }
 
