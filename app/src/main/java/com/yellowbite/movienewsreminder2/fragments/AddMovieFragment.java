@@ -139,6 +139,7 @@ public class AddMovieFragment extends ToolbarFragment
     @Override
     public void modifyOptionsMenu(AppCompatActivity app, Menu menu)
     {
+        super.modifyOptionsMenu(app, menu);
         this.showBackArrow(app);
     }
 
