@@ -31,7 +31,7 @@ public abstract class MovieRecyclerView extends SwipeCallback
     protected MovieAdapter movieAdapter;
 
     protected boolean recentlySwiped = false;
-    protected final static int SWIPE_COOLDOWN = 1000;
+    protected final static int SWIPE_COOLDOWN = 2000;
 
     protected Movie lastSwipedMovie;
 
