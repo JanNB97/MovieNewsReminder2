@@ -151,17 +151,16 @@ public class AddMovieFragment extends ToolbarFragment
 
     // --- --- --- Modify toolbar --- --- ---
     @Override
-    protected void createOptionMenu(AppCompatActivity appCompatActivity, Menu menu)
+    protected void initOptionsMenu(AppCompatActivity app, Menu menu)
     {
         this.undoItem = menu.findItem(R.id.action_undo);
-        this.modifyOptionsMenu(appCompatActivity, menu);
     }
 
     @Override
-    public void modifyOptionsMenu(AppCompatActivity appCompatActivity, Menu menu)
+    public void modifyOptionsMenu(AppCompatActivity app, Menu menu)
     {
         this.undoItem.setVisible(false);
-        this.showBackArrow(appCompatActivity);
+        this.showBackArrow(app);
     }
 
     @Override

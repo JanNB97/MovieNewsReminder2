@@ -61,22 +61,23 @@ public abstract class ToolbarFragment extends Fragment
         return allFragments;
     }
 
-    public final void showOptionMenu(AppCompatActivity appCompatActivity, Menu menu)
+    public final void showOptionsMenu(AppCompatActivity app, Menu menu)
     {
         if(this.createOptionMenu)
         {
-            this.createOptionMenu(appCompatActivity, menu);
+            this.initOptionsMenu(app, menu);
+            this.modifyOptionsMenu(app, menu);
             this.createOptionMenu = false;
         }
         else
         {
-            this.modifyOptionsMenu(appCompatActivity, menu);
+            this.modifyOptionsMenu(app, menu);
         }
     }
 
-    protected abstract void createOptionMenu(AppCompatActivity appCompatActivity, Menu menu);
+    protected abstract void initOptionsMenu(AppCompatActivity app, Menu menu);
 
-    protected abstract void modifyOptionsMenu(AppCompatActivity appCompatActivity, Menu menu);
+    protected abstract void modifyOptionsMenu(AppCompatActivity app, Menu menu);
 
     public abstract boolean onOptionsItemSelected(MenuItem item);
 }

@@ -81,7 +81,7 @@ public class MainActivity extends NavigationDrawerActivity
 
         if(this.menu != null)
         {
-            fragment.showOptionMenu(this, this.menu);
+            fragment.showOptionsMenu(this, this.menu);
         }
     }
 
@@ -91,7 +91,7 @@ public class MainActivity extends NavigationDrawerActivity
     {
         super.onCreateOptionsMenu(menu);
         this.menu = menu;
-        startFragment.showOptionMenu(this, menu);
+        startFragment.showOptionsMenu(this, menu);
         return true;
     }
 

@@ -120,14 +120,13 @@ public class MyMoviesFragment extends ToolbarFragment implements LoadedMoviesEve
 
     // --- --- --- Modify toolbar --- --- --
     @Override
-    public void createOptionMenu(AppCompatActivity appCompatActivity, Menu menu)
+    public void initOptionsMenu(AppCompatActivity app, Menu menu)
     {
         this.undoItem = menu.findItem(R.id.action_undo);
-        this.modifyOptionsMenu(appCompatActivity, menu);
     }
 
     @Override
-    public void modifyOptionsMenu(AppCompatActivity appCompatActivity, Menu menu)
+    public void modifyOptionsMenu(AppCompatActivity app, Menu menu)
     {
         this.undoItem.setVisible(false);
     }
