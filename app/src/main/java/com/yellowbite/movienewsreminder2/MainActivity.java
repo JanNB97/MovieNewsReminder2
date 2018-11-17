@@ -75,7 +75,7 @@ public class MainActivity extends NavigationDrawerActivity
     private void showFragment(ToolbarFragment fragment)
     {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
+        this.setAnimation(transaction, fragment);
         transaction.replace(R.id.fragment_layout, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
@@ -84,6 +84,23 @@ public class MainActivity extends NavigationDrawerActivity
         {
             fragment.showOptionsMenu(this, this.menu);
         }
+    }
+
+    private void setAnimation(FragmentTransaction transaction, ToolbarFragment toolbarFragment)
+    {
+        int enterAnim, exitAnim;
+        if(toolbarFragment.getFragmentId() == START_FRAGMENT_ID)
+        {
+            enterAnim = R.anim.slide_in_right;
+            exitAnim = R.anim.slide_out_left;
+        }
+        else
+        {
+            enterAnim = R.anim.slide_in_left;
+            exitAnim = R.anim.slide_out_right;
+        }
+
+        transaction.setCustomAnimations(enterAnim, exitAnim);
     }
 
     // --- --- --- Toolbar --- --- ---

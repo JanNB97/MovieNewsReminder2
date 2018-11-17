@@ -152,4 +152,9 @@ public abstract class ToolbarFragment extends Fragment
 
         this.getActivity().startActivity(resultIntent);
     }
+
+    public int getFragmentId()
+    {
+        return this.fragmentId;
+    }
 }
