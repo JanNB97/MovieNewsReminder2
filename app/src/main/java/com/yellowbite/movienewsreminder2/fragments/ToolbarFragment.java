@@ -86,6 +86,19 @@ public abstract class ToolbarFragment extends Fragment
         return allFragments;
     }
 
+    public static ToolbarFragment getAddedFragment()
+    {
+        for(ToolbarFragment toolbarFragment : allFragments)
+        {
+            if(toolbarFragment.isAdded())
+            {
+                return toolbarFragment;
+            }
+        }
+
+        return null;
+    }
+
     public final void showOptionsMenu(AppCompatActivity app, Menu menu)
     {
         if(this.createOptionMenu)

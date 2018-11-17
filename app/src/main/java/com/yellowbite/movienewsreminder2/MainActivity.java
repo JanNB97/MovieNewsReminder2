@@ -100,18 +100,25 @@ public class MainActivity extends NavigationDrawerActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        for(ToolbarFragment toolbarFragment : ToolbarFragment.getAllFragments())
+        ToolbarFragment currentFragment = ToolbarFragment.getAddedFragment();
+        if(currentFragment != null)
         {
-            if(toolbarFragment.isAdded())
-            {
-                if(toolbarFragment.onOptionsItemSelected(item))
-                {
-                    return true;
-                }
-            }
+            return currentFragment.onOptionsItemSelected(item);
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        super.onBackPressed();
+
+        ToolbarFragment currentFragment = ToolbarFragment.getAddedFragment();
+        if(currentFragment != null)
+        {
+            currentFragment.showTitleAndModifyOptionsMenu(this);
+        }
     }
 
     // --- --- --- Results --- --- ---
