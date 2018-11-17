@@ -36,7 +36,7 @@ public class AddMovieFragment extends ToolbarFragment
     // --- --- --- Initialization --- --- ---
     public AddMovieFragment()
     {
-        super(FRAGMENT_ID, R.layout.activity_add_movie);
+        super(FRAGMENT_ID, R.layout.activity_add_movie, "Film hinzufügen");
     }
 
     @Override

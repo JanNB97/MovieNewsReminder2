@@ -23,6 +23,8 @@ public abstract class ToolbarFragment extends Fragment
 {
     private final int resource;
     private final int fragmentId;
+    private final String nameInToolbar;
+
     private static final List<ToolbarFragment> allFragments = new ArrayList<>();
     private boolean createOptionMenu = true;
 
@@ -30,10 +32,11 @@ public abstract class ToolbarFragment extends Fragment
     protected MenuItem undoItem;
     protected MenuItem homeItem;
 
-    public ToolbarFragment(int fragmentId, @LayoutRes int resource)
+    public ToolbarFragment(int fragmentId, @LayoutRes int resource, String nameInToolbar)
     {
         this.fragmentId = fragmentId;
         this.resource = resource;
+        this.nameInToolbar = nameInToolbar;
     }
 
     public static ToolbarFragment get(int id)
@@ -105,6 +108,7 @@ public abstract class ToolbarFragment extends Fragment
 
     protected void modifyOptionsMenu(AppCompatActivity app, Menu menu)
     {
+        app.getSupportActionBar().setTitle(this.nameInToolbar);
         this.homeItem.setVisible(true);
         this.undoItem.setVisible(false);
     }
