@@ -33,8 +33,6 @@ public class AddMovieFragment extends ToolbarFragment
 
     private ProgressBar searchProgressIndicator;
 
-    private MenuItem undoItem;
-
     // --- --- --- Initialization --- --- ---
     public AddMovieFragment()
     {
@@ -139,15 +137,8 @@ public class AddMovieFragment extends ToolbarFragment
 
     // --- --- --- Modify toolbar --- --- ---
     @Override
-    protected void initOptionsMenu(AppCompatActivity app, Menu menu)
-    {
-        this.undoItem = menu.findItem(R.id.action_undo);
-    }
-
-    @Override
     public void modifyOptionsMenu(AppCompatActivity app, Menu menu)
     {
-        this.undoItem.setVisible(false);
         this.showBackArrow(app);
     }
 

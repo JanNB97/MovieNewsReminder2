@@ -26,6 +26,9 @@ public abstract class ToolbarFragment extends Fragment
     private static final List<ToolbarFragment> allFragments = new ArrayList<>();
     private boolean createOptionMenu = true;
 
+    // toolbar items
+    protected MenuItem undoItem;
+
     public ToolbarFragment(int fragmentId, @LayoutRes int resource)
     {
         this.fragmentId = fragmentId;
@@ -93,9 +96,15 @@ public abstract class ToolbarFragment extends Fragment
         }
     }
 
-    protected abstract void initOptionsMenu(AppCompatActivity app, Menu menu);
+    protected void initOptionsMenu(AppCompatActivity app, Menu menu)
+    {
+        this.undoItem = menu.findItem(R.id.action_undo);
+    }
 
-    protected abstract void modifyOptionsMenu(AppCompatActivity app, Menu menu);
+    protected void modifyOptionsMenu(AppCompatActivity app, Menu menu)
+    {
+        this.undoItem.setVisible(false);
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item)

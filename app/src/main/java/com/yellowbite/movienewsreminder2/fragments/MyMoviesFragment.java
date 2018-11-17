@@ -43,8 +43,6 @@ public class MyMoviesFragment extends ToolbarFragment implements LoadedMoviesEve
     private Movie lastSwipedMovie;
     private Thread showUndoButtonThread;
 
-    private MenuItem undoItem;
-
     // --- --- --- Initialization --- --- ---
     public MyMoviesFragment()
     {
@@ -108,19 +106,7 @@ public class MyMoviesFragment extends ToolbarFragment implements LoadedMoviesEve
         );
     }
 
-    // --- --- --- Modify toolbar --- --- --
-    @Override
-    public void initOptionsMenu(AppCompatActivity app, Menu menu)
-    {
-        this.undoItem = menu.findItem(R.id.action_undo);
-    }
-
-    @Override
-    public void modifyOptionsMenu(AppCompatActivity app, Menu menu)
-    {
-        this.undoItem.setVisible(false);
-    }
-
+    // --- --- --- Modify toolbar --- --- ---
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
@@ -180,7 +166,7 @@ public class MyMoviesFragment extends ToolbarFragment implements LoadedMoviesEve
     // interactions with toolbar
     public void handleOnUndoClicked()
     {
-        this.undoItem.setVisible(false);
+        super.undoItem.setVisible(false);
 
         if(lastSwipedMovie != null)
         {
@@ -203,7 +189,7 @@ public class MyMoviesFragment extends ToolbarFragment implements LoadedMoviesEve
     public void handleOnSwiped(Movie swipedMovie)
     {
         this.lastSwipedMovie = swipedMovie;
-        this.undoItem.setVisible(true);
+        super.undoItem.setVisible(true);
 
         final int UNDO_TIME_PER_INTERVALL = 100;
 
@@ -216,13 +202,13 @@ public class MyMoviesFragment extends ToolbarFragment implements LoadedMoviesEve
             {
                 for(int i = 0; i <= UNDO_SHOW_TIME; i += UNDO_TIME_PER_INTERVALL)
                 {
-                    if(this.undoItem.isVisible())
+                    if(super.undoItem.isVisible())
                     {
                         Thread.sleep(UNDO_TIME_PER_INTERVALL);
                     }
                 }
 
-                super.getActivity().runOnUiThread(() -> this.undoItem.setVisible(false));
+                super.getActivity().runOnUiThread(() -> super.undoItem.setVisible(false));
             } catch (InterruptedException e)
             {
                 e.printStackTrace();

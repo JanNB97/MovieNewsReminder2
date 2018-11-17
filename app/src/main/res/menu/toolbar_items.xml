@@ -5,7 +5,7 @@
         android:id="@+id/action_undo"
         android:icon="@drawable/ic_undo"
         android:title="Löschen rückgängig machen"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/action_home"
