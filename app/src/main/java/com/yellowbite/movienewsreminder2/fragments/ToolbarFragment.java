@@ -43,13 +43,40 @@ public abstract class ToolbarFragment extends Fragment
     {
         ToolbarFragment result = null;
 
+        // FIXME
         switch (id)
         {
+            case NewMoviesFragment.FRAGMENT_ID:
+                if(id >= allFragments.size() || allFragments.get(id) == null)
+                {
+                    result = new NewMoviesFragment();
+                    if(allFragments.size() <= 1)
+                    {
+                        if(allFragments.size() == 0)
+                        {
+                            allFragments.add(null);
+                        }
+                        allFragments.add(null);
+                    }
+                    allFragments.add(id, result);
+                }
+                else
+                {
+                    result = allFragments.get(id);
+                }
+                break;
             case MyMoviesFragment.FRAGMENT_ID:
                 if(id >= allFragments.size() || allFragments.get(id) == null)
                 {
                     result = new MyMoviesFragment();
-                    allFragments.add(id, result);
+                    if(allFragments.size() == 0)
+                    {
+                        allFragments.add(id, result);
+                    }
+                    else
+                    {
+                        allFragments.set(id, result);
+                    }
                 }
                 else
                 {
@@ -60,7 +87,7 @@ public abstract class ToolbarFragment extends Fragment
                 if(id >= allFragments.size() || allFragments.get(id) == null)
                 {
                     result = new AddMovieFragment();
-                    allFragments.add(id, result);
+                    allFragments.set(id, result);
                 }
                 else
                 {
