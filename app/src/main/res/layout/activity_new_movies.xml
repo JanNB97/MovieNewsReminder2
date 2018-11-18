@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".fragments.NewMoviesActivity">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:id="@+id/LinearLayout02"
@@ -25,7 +24,6 @@
             android:layout_weight="1"
             android:background="#ff4081"
             android:enabled="false"
-            android:onClick="handleClickOnAddMovie"
             android:text="✓"
             android:textSize="100sp"></Button>
 
@@ -36,7 +34,6 @@
             android:layout_weight="1"
             android:background="?android:attr/colorForeground"
             android:enabled="false"
-            android:onClick="handleClickOnNextMovie"
             android:text="X"
             android:textColor="#ff4081"
             android:textSize="100sp"></Button>
@@ -50,7 +47,6 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="8dp"
-        android:onClick="handleClickOnTitel"
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textSize="30sp"
@@ -67,7 +63,6 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:onClick="handleClickOnTitel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -79,7 +74,6 @@
         android:layout_marginStart="30dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="30dp"
-        android:onClick="handleClickOnTitel"
         android:textAlignment="center"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"

@@ -1,5 +1,6 @@
 package com.yellowbite.movienewsreminder2.tasks.newMovies;
 
+import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 
 import com.yellowbite.movienewsreminder2.data.Movie;
@@ -13,10 +14,10 @@ import java.util.concurrent.ThreadPoolExecutor;
 
 public class LoadNewMoviesDescendingExecutor extends LoadMoviesRetryExecutor
 {
-    private AppCompatActivity activity;
+    private Activity activity;
     private LoadedMovieEvent event;
 
-    public LoadNewMoviesDescendingExecutor(AppCompatActivity activity, LoadedMovieEvent event, List<Movie> movies)
+    public LoadNewMoviesDescendingExecutor(Activity activity, LoadedMovieEvent event, List<Movie> movies)
     {
         super((ThreadPoolExecutor) Executors.newFixedThreadPool(2), movies,
                 MedZenMovieSiteScraper::getMovieWithDetails,false);

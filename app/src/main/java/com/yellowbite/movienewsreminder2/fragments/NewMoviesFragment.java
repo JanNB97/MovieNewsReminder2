@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -19,8 +20,10 @@ import com.yellowbite.movienewsreminder2.tasks.newMovies.DelLastAndAddAsyncTask;
 import com.yellowbite.movienewsreminder2.tasks.newMovies.LoadNewMoviesDescendingExecutor;
 import com.yellowbite.movienewsreminder2.fragments.toolbar_navigation_activites.ToolbarActivity;
 
-public class NewMoviesActivity extends ToolbarActivity implements LoadedMovieEvent
+public class NewMoviesFragment extends ToolbarFragment implements LoadedMovieEvent
 {
+    public static final int FRAGMENT_ID = 2;
+
     private TextView movieTitelTextView;
     private TextView einheitstitelTextView;
 
@@ -40,44 +43,64 @@ public class NewMoviesActivity extends ToolbarActivity implements LoadedMovieEve
     private static final String IN_BEARBEITUNG_ARRIVED_LABEL = "war " + Movie.Status.IN_BEARBEITUNG.getValue();
 
     // --- --- --- initialization --- --- ---
-    @Override
-    protected void onCreate(Bundle savedInstanceState)
+    public NewMoviesFragment()
     {
-        super.onCreate(savedInstanceState);
-        setContentViewWithoutTitleBar(R.layout.activity_new_movies);
-
-        this.findViewsById();
-        this.initialize();
+        super(FRAGMENT_ID, R.layout.activity_new_movies, "Neue Filme");
     }
 
-    public void initialize()
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState)
     {
-        nextMovieLabel = this.nextMovieButton.getText().toString();
-
-        this.displayedMovieId = NewMovieQueue.getInstance(this).size();
-
-        new LoadNewMoviesDescendingExecutor(this, this, NewMovieQueue.getInstance(this).getAll());
-        this.movieIsLoaded = new boolean[NewMovieQueue.getInstance(this).size()];
-
-        this.tryToShowNextMovie();
+        this.findViewsById();
+        super.onViewCreated(view, savedInstanceState);
     }
 
     private void findViewsById()
     {
-        this.addToMyMoviesButton    = this.findViewById(R.id.addToMyMoviesButton);
-        this.nextMovieButton        = this.findViewById(R.id.nextMovieButton);
-        this.movieTitelTextView     = this.findViewById(R.id.movieNameTextView);
-        this.movieImageView         = this.findViewById(R.id.movieImageView);
-        this.einheitstitelTextView  = this.findViewById(R.id.einheitstitelTextView);
+        this.addToMyMoviesButton    = this.getView().findViewById(R.id.addToMyMoviesButton);
+        this.nextMovieButton        = this.getView().findViewById(R.id.nextMovieButton);
+        this.movieTitelTextView     = this.getView().findViewById(R.id.movieNameTextView);
+        this.movieImageView         = this.getView().findViewById(R.id.movieImageView);
+        this.einheitstitelTextView  = this.getView().findViewById(R.id.einheitstitelTextView);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState)
+    {
+        this.initialize();
+        super.onActivityCreated(savedInstanceState);
+    }
+
+    private void initialize()
+    {
+        this.nextMovieLabel = this.nextMovieButton.getText().toString();
+
+        this.displayedMovieId = NewMovieQueue.getInstance(this.getContext()).size();
+
+        new LoadNewMoviesDescendingExecutor(this.getActivity(), this, NewMovieQueue.getInstance(this.getContext()).getAll());
+        this.movieIsLoaded = new boolean[NewMovieQueue.getInstance(this.getContext()).size()];
+
+        this.tryToShowNextMovie();
+
+        this.initUiListeners();
+    }
+
+    private void initUiListeners()
+    {
+        this.movieTitelTextView.setOnClickListener(this::handleClickOnTitel);
+        this.movieImageView.setOnClickListener(this::handleClickOnTitel);
+        this.einheitstitelTextView.setOnClickListener(this::handleClickOnTitel);
+
+        this.addToMyMoviesButton.setOnClickListener(this::handleClickOnAddMovie);
+        this.nextMovieButton.setOnClickListener(this::handleClickOnNextMovie);
     }
 
     // --- --- --- handle clicks --- --- ---
-
     public void handleClickOnAddMovie(View v)
     {
         this.setButtonsEnabled(false);
 
-        DelLastAndAddAsyncTask.delLastAndAdd(this.getApplicationContext(),
+        DelLastAndAddAsyncTask.delLastAndAdd(this.getContext(),
                 /* Movie to add: */ this.displayedMovie,
                 /* Executed after tasks finished: */this::tryToShowNextMovie);
     }
@@ -85,7 +108,7 @@ public class NewMoviesActivity extends ToolbarActivity implements LoadedMovieEve
     public void handleClickOnNextMovie(View v)
     {
         this.setButtonsEnabled(false);
-        DelLastAndAddAsyncTask.delLast(this.getApplicationContext(), this::tryToShowNextMovie);
+        DelLastAndAddAsyncTask.delLast(this.getContext(), this::tryToShowNextMovie);
     }
 
     public void handleClickOnTitel(View v)
@@ -101,12 +124,13 @@ public class NewMoviesActivity extends ToolbarActivity implements LoadedMovieEve
         this.startActivity(intent);
     }
 
+    // --- --- --- Show next movie --- --- ---
     private void tryToShowNextMovie()
     {
         this.displayedMovieId--;
         if(this.displayedMovieId < 0)
         {
-            this.showMainActivity();
+            this.sendShowFragmentRequest(MyMoviesFragment.FRAGMENT_ID);
             return;
         }
 
@@ -118,7 +142,7 @@ public class NewMoviesActivity extends ToolbarActivity implements LoadedMovieEve
 
     private void showNextMovie()
     {
-        this.displayedMovie = NewMovieQueue.getInstance(this).get(this.displayedMovieId);
+        this.displayedMovie = NewMovieQueue.getInstance(this.getContext()).get(this.displayedMovieId);
 
         showMovie(this.displayedMovie);
         setButtonsEnabled(true);
@@ -139,7 +163,7 @@ public class NewMoviesActivity extends ToolbarActivity implements LoadedMovieEve
             this.einheitstitelTextView.setText("");
         }
 
-        boolean movieAlreadyInMyMovies = MySortedMovieList.getInstance(this).contains(movie);
+        boolean movieAlreadyInMyMovies = MySortedMovieList.getInstance(this.getContext()).contains(movie);
 
         if(movie.getStatus() == Movie.Status.IN_BEARBEITUNG)
         {
@@ -147,7 +171,7 @@ public class NewMoviesActivity extends ToolbarActivity implements LoadedMovieEve
         }
         else
         {
-            boolean bookedMovieArrived = SortedBookedMovieList.getInstance(this).containsAndRemove(movie);
+            boolean bookedMovieArrived = SortedBookedMovieList.getInstance(this.getContext()).containsAndRemove(movie);
             this.setDecisionEnabled(!bookedMovieArrived && !movieAlreadyInMyMovies);
             if(bookedMovieArrived)
             {
@@ -177,22 +201,5 @@ public class NewMoviesActivity extends ToolbarActivity implements LoadedMovieEve
         {
             this.showNextMovie();
         }
-    }
-
-    // --- --- --- switching between activities --- --- ---
-    private void showMainActivity()
-    {
-        Intent returnIntent = new Intent();
-        this.setResult(Activity.RESULT_OK, returnIntent);
-
-        this.finish();
-    }
-
-    public static final int REQUEST_CODE = 1;
-
-    public static void startForResult(Activity app)
-    {
-        Intent intent = new Intent(app, NewMoviesActivity.class);
-        app.startActivityForResult(intent, REQUEST_CODE);
     }
 }
