@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.yellowbite.movienewsreminder2.fragments.FragmentMaster;
 import com.yellowbite.movienewsreminder2.fragments.MyMoviesFragment;
 import com.yellowbite.movienewsreminder2.fragments.ToolbarFragment;
 import com.yellowbite.movienewsreminder2.fragments.WishlistFragment;
@@ -37,7 +38,7 @@ public class MainActivity extends NavigationDrawerActivity
     private void initialize()
     {
         this.fragmentManager = super.getSupportFragmentManager();
-        this.startFragment = com.yellowbite.movienewsreminder2.fragments.FragmentManager.get(START_FRAGMENT_ID);
+        this.startFragment = FragmentMaster.get(START_FRAGMENT_ID);
     }
 
     // --- --- --- Interaction with fragments --- --- ---
@@ -58,7 +59,7 @@ public class MainActivity extends NavigationDrawerActivity
 
         if(fragmentId != DEFAULT_VALUE)
         {
-            ToolbarFragment fragmentToShow = com.yellowbite.movienewsreminder2.fragments.FragmentManager.get(fragmentId);
+            ToolbarFragment fragmentToShow = FragmentMaster.get(fragmentId);
             if(fragmentToShow != null)
             {
                 this.showFragment(fragmentToShow);
@@ -110,7 +111,7 @@ public class MainActivity extends NavigationDrawerActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        ToolbarFragment currentFragment = com.yellowbite.movienewsreminder2.fragments.FragmentManager.getAddedFragment();
+        ToolbarFragment currentFragment = FragmentMaster.getAddedFragment();
         if(currentFragment != null)
         {
             if(currentFragment.onOptionsItemSelected(item))
@@ -127,7 +128,7 @@ public class MainActivity extends NavigationDrawerActivity
     {
         super.onBackPressed();
 
-        ToolbarFragment currentFragment = com.yellowbite.movienewsreminder2.fragments.FragmentManager.getAddedFragment();
+        ToolbarFragment currentFragment = FragmentMaster.getAddedFragment();
         if(currentFragment != null)
         {
             currentFragment.showTitleAndModifyOptionsMenu(this);
@@ -141,10 +142,10 @@ public class MainActivity extends NavigationDrawerActivity
         switch (item.getItemId())
         {
             case R.id.home:
-                this.showFragment(com.yellowbite.movienewsreminder2.fragments.FragmentManager.get(START_FRAGMENT_ID));
+                this.showFragment(FragmentMaster.get(START_FRAGMENT_ID));
                 return true;
             case R.id.wished_movies:
-                this.showFragment(com.yellowbite.movienewsreminder2.fragments.FragmentManager.get(WishlistFragment.FRAGMENT_ID));
+                this.showFragment(FragmentMaster.get(WishlistFragment.FRAGMENT_ID));
                 return true;
         }
 

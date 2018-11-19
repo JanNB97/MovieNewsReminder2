@@ -1,6 +1,5 @@
 package com.yellowbite.movienewsreminder2.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
@@ -14,9 +13,6 @@ import android.view.ViewGroup;
 
 import com.yellowbite.movienewsreminder2.MainActivity;
 import com.yellowbite.movienewsreminder2.R;
-import com.yellowbite.movienewsreminder2.util.UnremovableSparseArray;
-
-import java.util.Collection;
 
 public abstract class ToolbarFragment extends Fragment
 {
@@ -83,7 +79,7 @@ public abstract class ToolbarFragment extends Fragment
         switch (item.getItemId())
         {
             case R.id.action_home:
-                FragmentManager.sendShowFragmentRequest(this.getContext(), MainActivity.START_FRAGMENT_ID);
+                FragmentMaster.sendShowFragmentRequest(this.getContext(), MainActivity.START_FRAGMENT_ID);
                 return true;
         }
 

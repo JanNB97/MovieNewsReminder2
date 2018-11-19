@@ -226,7 +226,7 @@ public class MyMoviesFragment extends ToolbarFragment implements LoadedMoviesEve
     {
         if(!NewMovieQueue.getInstance(super.getContext()).isEmpty())
         {
-            FragmentManager.sendShowFragmentRequest(this.getContext(), NewMoviesFragment.FRAGMENT_ID);
+            FragmentMaster.sendShowFragmentRequest(this.getContext(), NewMoviesFragment.FRAGMENT_ID);
         }
         else
         {
@@ -243,6 +243,6 @@ public class MyMoviesFragment extends ToolbarFragment implements LoadedMoviesEve
     protected void sendShowFragmentRequest(int fragmentId)
     {
         this.showUndoButtonThread.interrupt();
-        FragmentManager.sendShowFragmentRequest(this.getContext(), fragmentId);
+        FragmentMaster.sendShowFragmentRequest(this.getContext(), fragmentId);
     }
 }

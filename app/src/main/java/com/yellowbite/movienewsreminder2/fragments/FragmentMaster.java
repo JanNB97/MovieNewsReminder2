@@ -9,7 +9,7 @@ import com.yellowbite.movienewsreminder2.util.UnremovableSparseArray;
 
 import java.util.Collection;
 
-public class FragmentManager
+public class FragmentMaster
 {
     private static final Class MAIN_ACTIVITY = MainActivity.class;
 
