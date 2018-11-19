@@ -12,27 +12,35 @@ import com.yellowbite.movienewsreminder2.R;
 public abstract class NavigationDrawerActivity extends ToolbarActivity
 {
     private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
 
     @Override
     protected void modifyToolbar()
     {
         this.drawerLayout = this.findViewById(R.id.drawer_layout);
-        this.initNavigationView(this.findViewById(R.id.nav_view));
+        this.navigationView = this.findViewById(R.id.nav_view);
+
+        this.initNavigationView();
 
         ActionBar actionBar = this.getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
     }
 
-    private void initNavigationView(NavigationView navigationView)
+    private void initNavigationView()
     {
-        navigationView.getMenu().getItem(0).setChecked(true);
+        this.setItemChecked(0);
 
-        navigationView.setNavigationItemSelectedListener(item -> {
+        this.navigationView.setNavigationItemSelectedListener(item -> {
             drawerLayout.closeDrawers();
             item.setChecked(true);
             return handleOnNavItemClicked(item);
         });
+    }
+
+    protected void setItemChecked(int i)
+    {
+        this.navigationView.getMenu().getItem(i).setChecked(true);
     }
 
     abstract protected boolean handleOnNavItemClicked(@NonNull MenuItem item);
