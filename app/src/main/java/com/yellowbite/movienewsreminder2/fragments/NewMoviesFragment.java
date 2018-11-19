@@ -1,6 +1,5 @@
 package com.yellowbite.movienewsreminder2.fragments;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -18,7 +17,6 @@ import com.yellowbite.movienewsreminder2.data.Movie;
 import com.yellowbite.movienewsreminder2.tasks.functionalInterfaces.LoadedMovieEvent;
 import com.yellowbite.movienewsreminder2.tasks.newMovies.DelLastAndAddAsyncTask;
 import com.yellowbite.movienewsreminder2.tasks.newMovies.LoadNewMoviesDescendingExecutor;
-import com.yellowbite.movienewsreminder2.fragments.toolbar_navigation_activites.ToolbarActivity;
 
 public class NewMoviesFragment extends ToolbarFragment implements LoadedMovieEvent
 {
@@ -115,10 +113,17 @@ public class NewMoviesFragment extends ToolbarFragment implements LoadedMovieEve
     {
         String searchword = movieTitelTextView.getText().toString();
         String einheitssachtitel = einheitstitelTextView.getText().toString();
+
         if(!einheitssachtitel.isEmpty())
         {
             searchword = einheitssachtitel;
         }
+
+        this.openInternetBrowserToSearch(searchword);
+    }
+
+    private void openInternetBrowserToSearch(String searchword)
+    {
         Uri uri = Uri.parse("https://www.google.com/#q=" + searchword + " wikipedia english");
         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
         this.startActivity(intent);
