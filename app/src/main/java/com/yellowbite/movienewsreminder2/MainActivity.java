@@ -32,8 +32,6 @@ public class MainActivity extends NavigationDrawerActivity
         super.onCreate(savedInstanceState);
         setContentViewWithoutTitleBar(R.layout.activity_main);
         this.initialize();
-
-        this.startMainFragment();
     }
 
     private void initialize()
@@ -110,7 +108,7 @@ public class MainActivity extends NavigationDrawerActivity
     {
         super.onCreateOptionsMenu(menu);
         this.menu = menu;
-        this.startFragment.showOptionsMenu(this, menu);
+        this.startMainFragment();
         return true;
     }
 
