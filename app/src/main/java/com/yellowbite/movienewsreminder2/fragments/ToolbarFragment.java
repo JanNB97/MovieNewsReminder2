@@ -6,7 +6,6 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,20 +14,13 @@ import android.view.ViewGroup;
 
 import com.yellowbite.movienewsreminder2.MainActivity;
 import com.yellowbite.movienewsreminder2.R;
+import com.yellowbite.movienewsreminder2.util.UnremovableSparseArray;
 
-import java.util.AbstractCollection;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.logging.Logger;
 
 public abstract class ToolbarFragment extends Fragment
 {
-    private static SparseArray<ToolbarFragment> allFragments;
-    private static List<ToolbarFragment> allFragmentsList;
+    private static UnremovableSparseArray<ToolbarFragment> allFragments;
 
     private final int resource;
     private final int fragmentId;
@@ -50,8 +42,7 @@ public abstract class ToolbarFragment extends Fragment
     // --- --- --- Static fragment management --- --- ---
     private static void registerFragments()
     {
-        allFragments = new SparseArray<>();
-        allFragmentsList = new ArrayList<>();
+        allFragments = new UnremovableSparseArray<>();
 
         // Register fragments here
         registerFragment(new MyMoviesFragment());
@@ -62,7 +53,6 @@ public abstract class ToolbarFragment extends Fragment
     private static void registerFragment(ToolbarFragment toolbarFragment)
     {
         allFragments.put(toolbarFragment.getFragmentId(), toolbarFragment);
-        allFragmentsList.add(toolbarFragment);
     }
 
     public static ToolbarFragment get(int id)
@@ -75,9 +65,9 @@ public abstract class ToolbarFragment extends Fragment
         return allFragments.get(id);
     }
 
-    public static List<ToolbarFragment> getAllFragments()
+    public static Collection<ToolbarFragment> getAllFragments()
     {
-        return allFragmentsList;
+        return allFragments.values();
     }
 
     public static ToolbarFragment getAddedFragment()
