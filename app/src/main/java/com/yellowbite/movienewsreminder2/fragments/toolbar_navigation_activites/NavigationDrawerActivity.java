@@ -7,9 +7,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 
-import com.yellowbite.movienewsreminder2.MainActivity;
 import com.yellowbite.movienewsreminder2.R;
-import com.yellowbite.movienewsreminder2.fragments.WishlistActivity;
 
 public abstract class NavigationDrawerActivity extends ToolbarActivity
 {
@@ -28,7 +26,7 @@ public abstract class NavigationDrawerActivity extends ToolbarActivity
 
     private void initNavigationView(NavigationView navigationView)
     {
-        //navigationView.getMenu().getItem(0).setChecked(true);
+        navigationView.getMenu().getItem(0).setChecked(true);
 
         navigationView.setNavigationItemSelectedListener(item -> {
             drawerLayout.closeDrawers();
@@ -37,23 +35,7 @@ public abstract class NavigationDrawerActivity extends ToolbarActivity
         });
     }
 
-    private boolean handleOnNavItemClicked(@NonNull MenuItem item)
-    {
-        switch (item.getItemId())
-        {
-            case R.id.home:
-                if(!(this instanceof MainActivity))
-                {
-                    this.finish();
-                    return true;
-                }
-                break;
-            case R.id.wished_movies:
-                WishlistActivity.start(this);
-                return true;
-        }
-        return false;
-    }
+    abstract protected boolean handleOnNavItemClicked(@NonNull MenuItem item);
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item)

@@ -21,7 +21,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".fragments.WishlistActivity"
+        <activity android:name=".fragments.WishlistFragment"
             android:label="Wunschliste"></activity>
 
         <service

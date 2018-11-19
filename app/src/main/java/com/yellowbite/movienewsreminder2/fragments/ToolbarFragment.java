@@ -48,6 +48,7 @@ public abstract class ToolbarFragment extends Fragment
         registerFragment(new MyMoviesFragment());
         registerFragment(new AddMovieFragment());
         registerFragment(new NewMoviesFragment());
+        registerFragment(new WishlistFragment());
     }
 
     private static void registerFragment(ToolbarFragment toolbarFragment)
@@ -62,7 +63,15 @@ public abstract class ToolbarFragment extends Fragment
             registerFragments();
         }
 
-        return allFragments.get(id);
+        ToolbarFragment result = allFragments.get(id);
+
+        if(result == null)
+        {
+            // You forgot to register your fragment
+            throw new NullPointerException();
+        }
+
+        return result;
     }
 
     public static Collection<ToolbarFragment> getAllFragments()

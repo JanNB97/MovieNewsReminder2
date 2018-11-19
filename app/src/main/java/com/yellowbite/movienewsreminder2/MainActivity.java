@@ -2,16 +2,16 @@ package com.yellowbite.movienewsreminder2;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.GravityCompat;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.yellowbite.movienewsreminder2.fragments.MyMoviesFragment;
 import com.yellowbite.movienewsreminder2.fragments.ToolbarFragment;
+import com.yellowbite.movienewsreminder2.fragments.WishlistFragment;
 import com.yellowbite.movienewsreminder2.fragments.toolbar_navigation_activites.NavigationDrawerActivity;
-import com.yellowbite.movienewsreminder2.newsService.NewsService;
 
 public class MainActivity extends NavigationDrawerActivity
 {
@@ -134,12 +134,20 @@ public class MainActivity extends NavigationDrawerActivity
         }
     }
 
-    // --- --- --- Results --- --- ---
+    // --- --- --- Navigation drawer --- --- ---
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    protected boolean handleOnNavItemClicked(@NonNull MenuItem item)
     {
-        // TODO
-        ((MyMoviesFragment)startFragment).getMyMovieRecyclerView().dataSetChanged();
-        NewsService.start(this);
+        switch (item.getItemId())
+        {
+            case R.id.home:
+                this.showFragment(ToolbarFragment.get(START_FRAGMENT_ID));
+                return true;
+            case R.id.wished_movies:
+                this.showFragment(ToolbarFragment.get(WishlistFragment.FRAGMENT_ID));
+                return true;
+        }
+
+        return false;
     }
 }
