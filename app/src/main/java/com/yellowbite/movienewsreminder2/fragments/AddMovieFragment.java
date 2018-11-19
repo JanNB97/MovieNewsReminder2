@@ -86,7 +86,8 @@ public class AddMovieFragment extends ToolbarFragment
         this.addMovieRecyclerView = new AddMovieRecyclerView(this.getActivity(),
                 R.id.movieRecyclerView, SearchMovieList.getInstance(),
                 MySortedMovieList.getInstance(this.getContext()));
-        this.addMovieRecyclerView.setOnClickedListener((v, position) -> super.sendShowFragmentRequest(MyMoviesFragment.FRAGMENT_ID));
+        this.addMovieRecyclerView.setOnClickedListener((v, position)
+                -> FragmentManager.sendShowFragmentRequest(this.getContext(), MyMoviesFragment.FRAGMENT_ID));
     }
 
     // --- --- --- Handle user interaction --- --- ---

@@ -20,8 +20,6 @@ import java.util.Collection;
 
 public abstract class ToolbarFragment extends Fragment
 {
-    private static UnremovableSparseArray<ToolbarFragment> allFragments;
-
     private final int resource;
     private final int fragmentId;
     private final String titleInToolbar;
@@ -37,59 +35,6 @@ public abstract class ToolbarFragment extends Fragment
         this.fragmentId = fragmentId;
         this.resource = resource;
         this.titleInToolbar = titleInToolbar;
-    }
-
-    // --- --- --- Static fragment management --- --- ---
-    private static void registerFragments()
-    {
-        allFragments = new UnremovableSparseArray<>();
-
-        // Register fragments here
-        registerFragment(new MyMoviesFragment());
-        registerFragment(new AddMovieFragment());
-        registerFragment(new NewMoviesFragment());
-        registerFragment(new WishlistFragment());
-    }
-
-    private static void registerFragment(ToolbarFragment toolbarFragment)
-    {
-        allFragments.put(toolbarFragment.getFragmentId(), toolbarFragment);
-    }
-
-    public static ToolbarFragment get(int id)
-    {
-        if(allFragments == null)
-        {
-            registerFragments();
-        }
-
-        ToolbarFragment result = allFragments.get(id);
-
-        if(result == null)
-        {
-            // You forgot to register your fragment
-            throw new NullPointerException();
-        }
-
-        return result;
-    }
-
-    public static Collection<ToolbarFragment> getAllFragments()
-    {
-        return allFragments.values();
-    }
-
-    public static ToolbarFragment getAddedFragment()
-    {
-        for(ToolbarFragment toolbarFragment : getAllFragments())
-        {
-            if(toolbarFragment.isAdded())
-            {
-                return toolbarFragment;
-            }
-        }
-
-        return null;
     }
 
     // --- --- --- Initialization --- --- ---
@@ -138,21 +83,11 @@ public abstract class ToolbarFragment extends Fragment
         switch (item.getItemId())
         {
             case R.id.action_home:
-                this.sendShowFragmentRequest(MainActivity.START_FRAGMENT_ID);
+                FragmentManager.sendShowFragmentRequest(this.getContext(), MainActivity.START_FRAGMENT_ID);
                 return true;
         }
 
         return false;
-    }
-
-    // --- --- --- Change fragments --- --- ---
-    protected void sendShowFragmentRequest(int fragmentId)
-    {
-        Intent resultIntent = new Intent(this.getActivity(), MainActivity.class);
-
-        resultIntent.putExtra(MainActivity.SHOW_FRAGMENT_INTENT_NAME, fragmentId);
-
-        this.getActivity().startActivity(resultIntent);
     }
 
     // --- --- --- Getter and Setter --- --- ---
