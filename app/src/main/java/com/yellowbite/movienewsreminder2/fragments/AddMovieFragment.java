@@ -8,11 +8,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.yellowbite.movienewsreminder2.R;
-import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.MySortedMovieList;
-import com.yellowbite.movienewsreminder2.files.datatypes.otherDatastructures.SearchMovieList;
-import com.yellowbite.movienewsreminder2.fragments.toolbar_navigation_activites.NavigationDrawerActivity;
-import com.yellowbite.movienewsreminder2.tasks.loadMovieList.LoadMovieListExecutor;
-import com.yellowbite.movienewsreminder2.fragments.ui.recyclerView.AddMovieRecyclerView;
+import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresfromfiles.MySortedMovieList;
+import com.yellowbite.movienewsreminder2.files.datatypes.otherdatastructures.SearchMovieList;
+import com.yellowbite.movienewsreminder2.fragments.toolbarnavigationactivites.NavigationDrawerActivity;
+import com.yellowbite.movienewsreminder2.tasks.loadmovielist.LoadMovieListExecutor;
+import com.yellowbite.movienewsreminder2.fragments.ui.recyclerview.AddMovieRecyclerView;
 
 public class AddMovieFragment extends ToolbarFragment
 {

@@ -8,7 +8,7 @@ import android.support.v4.app.NotificationManagerCompat;
 import android.widget.Toast;
 
 import com.yellowbite.movienewsreminder2.MainActivity;
-import com.yellowbite.movienewsreminder2.newsService.messages.WebScraperMessage;
+import com.yellowbite.movienewsreminder2.newsservice.messages.WebScraperMessage;
 
 public final class NotificationMan
 {

@@ -12,7 +12,7 @@ import com.yellowbite.movienewsreminder2.fragments.FragmentMaster;
 import com.yellowbite.movienewsreminder2.fragments.MyMoviesFragment;
 import com.yellowbite.movienewsreminder2.fragments.ToolbarFragment;
 import com.yellowbite.movienewsreminder2.fragments.WishlistFragment;
-import com.yellowbite.movienewsreminder2.fragments.toolbar_navigation_activites.NavigationDrawerActivity;
+import com.yellowbite.movienewsreminder2.fragments.toolbarnavigationactivites.NavigationDrawerActivity;
 
 public class MainActivity extends NavigationDrawerActivity
 {

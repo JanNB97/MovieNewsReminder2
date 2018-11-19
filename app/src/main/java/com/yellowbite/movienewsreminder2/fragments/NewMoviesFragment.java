@@ -10,13 +10,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.yellowbite.movienewsreminder2.R;
-import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.MySortedMovieList;
-import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.NewMovieQueue;
-import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.SortedBookedMovieList;
+import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresfromfiles.MySortedMovieList;
+import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresfromfiles.NewMovieQueue;
+import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresfromfiles.SortedBookedMovieList;
 import com.yellowbite.movienewsreminder2.data.Movie;
-import com.yellowbite.movienewsreminder2.tasks.functionalInterfaces.LoadedMovieEvent;
-import com.yellowbite.movienewsreminder2.tasks.newMovies.DelLastAndAddAsyncTask;
-import com.yellowbite.movienewsreminder2.tasks.newMovies.LoadNewMoviesDescendingExecutor;
+import com.yellowbite.movienewsreminder2.tasks.functionalinterfaces.LoadedMovieEvent;
+import com.yellowbite.movienewsreminder2.tasks.newmovies.DelLastAndAddAsyncTask;
+import com.yellowbite.movienewsreminder2.tasks.newmovies.LoadNewMoviesDescendingExecutor;
 
 public class NewMoviesFragment extends ToolbarFragment implements LoadedMovieEvent
 {

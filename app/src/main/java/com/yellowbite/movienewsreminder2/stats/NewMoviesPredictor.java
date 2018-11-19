@@ -1,13 +1,11 @@
 package com.yellowbite.movienewsreminder2.stats;
 
-import com.yellowbite.movienewsreminder2.newsService.MedZenHandler;
-import com.yellowbite.movienewsreminder2.newsService.NewsService;
+import com.yellowbite.movienewsreminder2.newsservice.MedZenHandler;
 import com.yellowbite.movienewsreminder2.util.DateHelper;
 import com.yellowbite.movienewsreminder2.webscraping.medienzentrum.MedZenMovieListScraper;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 
 public class NewMoviesPredictor

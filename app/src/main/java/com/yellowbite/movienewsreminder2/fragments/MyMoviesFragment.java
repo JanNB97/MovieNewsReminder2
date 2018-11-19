@@ -9,15 +9,15 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.yellowbite.movienewsreminder2.R;
-import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.MySortedMovieList;
-import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.NewMovieQueue;
-import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.SortedHotMovieList;
+import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresfromfiles.MySortedMovieList;
+import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresfromfiles.NewMovieQueue;
+import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresfromfiles.SortedHotMovieList;
 import com.yellowbite.movienewsreminder2.data.Movie;
 import com.yellowbite.movienewsreminder2.fragments.threads.CountDownThread;
-import com.yellowbite.movienewsreminder2.newsService.NewsService;
-import com.yellowbite.movienewsreminder2.tasks.functionalInterfaces.LoadedMoviesEvent;
-import com.yellowbite.movienewsreminder2.tasks.mainActivity.LoadMyMoviesRetryExecutor;
-import com.yellowbite.movienewsreminder2.fragments.ui.recyclerView.MyMovieRecyclerView;
+import com.yellowbite.movienewsreminder2.newsservice.NewsService;
+import com.yellowbite.movienewsreminder2.tasks.functionalinterfaces.LoadedMoviesEvent;
+import com.yellowbite.movienewsreminder2.tasks.mainactivity.LoadMyMoviesRetryExecutor;
+import com.yellowbite.movienewsreminder2.fragments.ui.recyclerview.MyMovieRecyclerView;
 
 import java.util.Collections;
 import java.util.List;
