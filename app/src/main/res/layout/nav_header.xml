@@ -8,7 +8,4 @@
     android:orientation="vertical"
     android:gravity="bottom"
     android:layout_marginTop="30dp">
-
-
-
 </LinearLayout>
