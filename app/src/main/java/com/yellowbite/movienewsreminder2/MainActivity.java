@@ -75,6 +75,8 @@ public class MainActivity extends NavigationDrawerActivity
         transaction.addToBackStack(null);
         transaction.commit();
 
+        super.setNavDrawerItemChecked(fragment.getDrawerItemId());
+
         if(this.menu != null)
         {
             fragment.showOptionsMenu(this, this.menu);

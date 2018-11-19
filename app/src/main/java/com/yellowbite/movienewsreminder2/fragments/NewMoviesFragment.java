@@ -43,7 +43,7 @@ public class NewMoviesFragment extends ToolbarFragment implements LoadedMovieEve
     // --- --- --- Initialization --- --- ---
     public NewMoviesFragment()
     {
-        super(FRAGMENT_ID, R.layout.fragment_new_movies, "Neue Filme");
+        super(FRAGMENT_ID, R.layout.fragment_new_movies, -1, "Neue Filme");
     }
 
     @Override

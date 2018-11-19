@@ -12,7 +12,7 @@ public class WishlistFragment extends ToolbarFragment
 
     public WishlistFragment()
     {
-        super(FRAGMENT_ID, R.layout.fragment_wishlist, "Wunschliste");
+        super(FRAGMENT_ID, R.layout.fragment_wishlist, 1, "Wunschliste");
     }
 
     @Override

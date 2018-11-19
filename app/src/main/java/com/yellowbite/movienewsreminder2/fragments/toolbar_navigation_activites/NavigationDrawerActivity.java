@@ -29,7 +29,7 @@ public abstract class NavigationDrawerActivity extends ToolbarActivity
 
     private void initNavigationView()
     {
-        this.setItemChecked(0);
+        this.setNavDrawerItemChecked(0);
 
         this.navigationView.setNavigationItemSelectedListener(item -> {
             drawerLayout.closeDrawers();
@@ -38,8 +38,13 @@ public abstract class NavigationDrawerActivity extends ToolbarActivity
         });
     }
 
-    protected void setItemChecked(int i)
+    protected void setNavDrawerItemChecked(int i)
     {
+        if(i == -1)
+        {
+            return;
+        }
+
         this.navigationView.getMenu().getItem(i).setChecked(true);
     }
 

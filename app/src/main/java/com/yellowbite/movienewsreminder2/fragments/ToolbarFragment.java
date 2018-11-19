@@ -18,6 +18,7 @@ public abstract class ToolbarFragment extends Fragment
 {
     private final int resource;
     private final int fragmentId;
+    private int drawerItemId;
     private final String titleInToolbar;
 
     private boolean createOptionMenu = true;
@@ -26,10 +27,11 @@ public abstract class ToolbarFragment extends Fragment
     protected MenuItem undoItem;
     protected MenuItem homeItem;
 
-    public ToolbarFragment(int fragmentId, @LayoutRes int resource, String titleInToolbar)
+    public ToolbarFragment(int fragmentId, @LayoutRes int resource, int drawerItemId, String titleInToolbar)
     {
         this.fragmentId = fragmentId;
         this.resource = resource;
+        this.drawerItemId = drawerItemId;
         this.titleInToolbar = titleInToolbar;
     }
 
@@ -90,5 +92,10 @@ public abstract class ToolbarFragment extends Fragment
     public int getFragmentId()
     {
         return this.fragmentId;
+    }
+
+    public int getDrawerItemId()
+    {
+        return drawerItemId;
     }
 }
