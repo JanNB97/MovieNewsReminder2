@@ -242,7 +242,10 @@ public class MyMoviesFragment extends ToolbarFragment implements LoadedMoviesEve
 
     protected void sendShowFragmentRequest(int fragmentId)
     {
-        this.showUndoButtonThread.interrupt();
+        if(this.showUndoButtonThread != null)
+        {
+            this.showUndoButtonThread.interrupt();
+        }
         FragmentMaster.sendShowFragmentRequest(this.getContext(), fragmentId);
     }
 }
