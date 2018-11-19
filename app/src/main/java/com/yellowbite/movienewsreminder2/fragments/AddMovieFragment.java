@@ -2,18 +2,11 @@ package com.yellowbite.movienewsreminder2.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.NavUtils;
-import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.yellowbite.movienewsreminder2.MainActivity;
 import com.yellowbite.movienewsreminder2.R;
 import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.MySortedMovieList;
 import com.yellowbite.movienewsreminder2.files.datatypes.otherDatastructures.SearchMovieList;
@@ -36,7 +29,7 @@ public class AddMovieFragment extends ToolbarFragment
     // --- --- --- Initialization --- --- ---
     public AddMovieFragment()
     {
-        super(FRAGMENT_ID, R.layout.activity_add_movie, "Film hinzufügen");
+        super(FRAGMENT_ID, R.layout.fragment_add_movie, "Film hinzufügen");
     }
 
     @Override
