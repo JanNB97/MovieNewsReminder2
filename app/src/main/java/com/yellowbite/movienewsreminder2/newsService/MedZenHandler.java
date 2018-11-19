@@ -70,8 +70,8 @@ public class MedZenHandler extends WebscrapingHandler
             return null;
         }
 
-        List<Movie> newBookedMovies = /*SortedBookedMovieList.getInstance(context)
-                .getAndAddDifference*/(bookedMovies);
+        List<Movie> newBookedMovies = SortedBookedMovieList.getInstance(context)
+                .getAndAddDifference(bookedMovies);
 
         NewMovieQueue.getInstance(context).addAll(newBookedMovies);
 

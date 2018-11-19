@@ -62,7 +62,7 @@ public abstract class MovieListFromFile implements MovieListFromFileInterface
     {
         for(Movie movie : movies)
         {
-            //if(this.isNew(movie))
+            if(this.isNew(movie))
             {
                 this.movieList.add(movie);
                 this.dirty = true;
