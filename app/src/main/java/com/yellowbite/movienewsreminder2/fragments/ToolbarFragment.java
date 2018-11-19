@@ -25,7 +25,7 @@ public abstract class ToolbarFragment extends Fragment
     private final int fragmentId;
     private final String titleInToolbar;
 
-    private static final List<ToolbarFragment> allFragments = new ArrayList<>();
+    private static List<ToolbarFragment> allFragments;
     private boolean createOptionMenu = true;
 
     // toolbar items
@@ -39,73 +39,25 @@ public abstract class ToolbarFragment extends Fragment
         this.titleInToolbar = titleInToolbar;
     }
 
-    public static ToolbarFragment get(int id)
+    // --- --- --- Static fragment management --- --- ---
+    private static void registerFragments()
     {
-        ToolbarFragment result = null;
+        allFragments = new ArrayList<>();
 
-        // FIXME
-        switch (id)
-        {
-            case NewMoviesFragment.FRAGMENT_ID:
-                if(id >= allFragments.size() || allFragments.get(id) == null)
-                {
-                    result = new NewMoviesFragment();
-                    if(allFragments.size() <= 1)
-                    {
-                        if(allFragments.size() == 0)
-                        {
-                            allFragments.add(null);
-                        }
-                        allFragments.add(null);
-                    }
-                    allFragments.add(id, result);
-                }
-                else
-                {
-                    result = allFragments.get(id);
-                }
-                break;
-            case MyMoviesFragment.FRAGMENT_ID:
-                if(id >= allFragments.size() || allFragments.get(id) == null)
-                {
-                    result = new MyMoviesFragment();
-                    if(allFragments.size() == 0)
-                    {
-                        allFragments.add(id, result);
-                    }
-                    else
-                    {
-                        allFragments.set(id, result);
-                    }
-                }
-                else
-                {
-                    result = allFragments.get(id);
-                }
-                break;
-            case AddMovieFragment.FRAGMENT_ID:
-                if(id >= allFragments.size() || allFragments.get(id) == null)
-                {
-                    result = new AddMovieFragment();
-                    allFragments.set(id, result);
-                }
-                else
-                {
-                    result = allFragments.get(id);
-                }
-                break;
-            default:
-                Logger.getGlobal().severe("No fragment with id " + id + " found");
-                break;
-        }
-
-        return result;
+        // Register fragments here
+        allFragments.add(new MyMoviesFragment());
+        allFragments.add(new AddMovieFragment());
+        allFragments.add(new NewMoviesFragment());
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
+    public static ToolbarFragment get(int id)
     {
-        return inflater.inflate(this.resource, container, false);
+        if(allFragments == null)
+        {
+            registerFragments();
+        }
+
+        return allFragments.get(id);
     }
 
     public static List<ToolbarFragment> getAllFragments()
@@ -126,6 +78,14 @@ public abstract class ToolbarFragment extends Fragment
         return null;
     }
 
+    // --- --- --- Initialization --- --- ---
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
+    {
+        return inflater.inflate(this.resource, container, false);
+    }
+
+    // --- --- --- Toolbar --- --- ---
     public final void showOptionsMenu(AppCompatActivity app, Menu menu)
     {
         if(this.createOptionMenu)
@@ -171,6 +131,7 @@ public abstract class ToolbarFragment extends Fragment
         return false;
     }
 
+    // --- --- --- Change fragments --- --- ---
     protected void sendShowFragmentRequest(int fragmentId)
     {
         Intent resultIntent = new Intent(this.getActivity(), MainActivity.class);
@@ -180,6 +141,7 @@ public abstract class ToolbarFragment extends Fragment
         this.getActivity().startActivity(resultIntent);
     }
 
+    // --- --- --- Getter and Setter --- --- ---
     public int getFragmentId()
     {
         return this.fragmentId;
