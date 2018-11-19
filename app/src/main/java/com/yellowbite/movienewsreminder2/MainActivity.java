@@ -142,10 +142,10 @@ public class MainActivity extends NavigationDrawerActivity
         switch (item.getItemId())
         {
             case R.id.home:
-                this.showFragment(FragmentMaster.get(START_FRAGMENT_ID));
+                FragmentMaster.sendShowFragmentRequest(this, START_FRAGMENT_ID);
                 return true;
             case R.id.wished_movies:
-                this.showFragment(FragmentMaster.get(WishlistFragment.FRAGMENT_ID));
+                FragmentMaster.sendShowFragmentRequest(this, WishlistFragment.FRAGMENT_ID);
                 return true;
         }
 
