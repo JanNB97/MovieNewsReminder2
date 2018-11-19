@@ -30,19 +30,14 @@ public class MainActivity extends NavigationDrawerActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentViewWithoutTitleBar(R.layout.activity_main);
+        super.setContentViewWithoutTitleBar(R.layout.activity_main);
         this.initialize();
     }
 
     private void initialize()
     {
         this.fragmentManager = super.getSupportFragmentManager();
-    }
-
-    private void startMainFragment()
-    {
         this.startFragment = ToolbarFragment.get(START_FRAGMENT_ID);
-        this.showFragment(startFragment);
     }
 
     // --- --- --- Interaction with fragments --- --- ---
@@ -108,7 +103,7 @@ public class MainActivity extends NavigationDrawerActivity
     {
         super.onCreateOptionsMenu(menu);
         this.menu = menu;
-        this.startMainFragment();
+        this.showFragment(startFragment);
         return true;
     }
 
