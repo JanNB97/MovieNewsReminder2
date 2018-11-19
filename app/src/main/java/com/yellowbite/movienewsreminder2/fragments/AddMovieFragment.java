@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.yellowbite.movienewsreminder2.R;
 import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresFromFiles.MySortedMovieList;
 import com.yellowbite.movienewsreminder2.files.datatypes.otherDatastructures.SearchMovieList;
+import com.yellowbite.movienewsreminder2.fragments.toolbar_navigation_activites.NavigationDrawerActivity;
 import com.yellowbite.movienewsreminder2.tasks.loadMovieList.LoadMovieListExecutor;
 import com.yellowbite.movienewsreminder2.fragments.ui.recyclerView.AddMovieRecyclerView;
 
@@ -29,7 +30,10 @@ public class AddMovieFragment extends ToolbarFragment
     // --- --- --- Initialization --- --- ---
     public AddMovieFragment()
     {
-        super(FRAGMENT_ID, R.layout.fragment_add_movie, -1,"Film hinzufügen");
+        super(FRAGMENT_ID,
+                R.layout.fragment_add_movie,
+                NavigationDrawerActivity.NO_ID,
+                "Film hinzufügen");
     }
 
     @Override

@@ -11,6 +11,8 @@ import com.yellowbite.movienewsreminder2.R;
 
 public abstract class NavigationDrawerActivity extends ToolbarActivity
 {
+    public static final int NO_ID = -1;
+
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
 
@@ -40,8 +42,9 @@ public abstract class NavigationDrawerActivity extends ToolbarActivity
 
     protected void setNavDrawerItemChecked(int i)
     {
-        if(i == -1)
+        if(i == NO_ID)
         {
+            // do nothing
             return;
         }
 
