@@ -42,7 +42,7 @@ public class NewMoviesFragment extends ToolbarFragment implements LoadedMovieEve
     private static final String DECISION_DISABLED_LABEL = "OK";
     private static final String IN_BEARBEITUNG_ARRIVED_LABEL = "war " + Movie.Status.IN_BEARBEITUNG.getValue();
 
-    // --- --- --- initialization --- --- ---
+    // --- --- --- Initialization --- --- ---
     public NewMoviesFragment()
     {
         super(FRAGMENT_ID, R.layout.activity_new_movies, "Neue Filme");
