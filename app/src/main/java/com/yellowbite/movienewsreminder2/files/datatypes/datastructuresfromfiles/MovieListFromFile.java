@@ -1,6 +1,7 @@
 package com.yellowbite.movienewsreminder2.files.datatypes.datastructuresfromfiles;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import com.yellowbite.movienewsreminder2.files.datatypes.MovieListFromFileInterface;
 import com.yellowbite.movienewsreminder2.files.helper.FileManager;
@@ -76,11 +77,7 @@ public abstract class MovieListFromFile implements MovieListFromFileInterface
     {
         for(Movie movie : movies)
         {
-            if(!this.contains(movie))
-            {
-                this.movieList.add(movie);
-                this.dirty = true;
-            }
+            this.add(movie);
         }
     }
 
