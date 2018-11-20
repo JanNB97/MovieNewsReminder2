@@ -5,7 +5,7 @@ import android.content.Context;
 import com.yellowbite.movienewsreminder2.datastructures.fromfile.sorted.SortedMyMoviesList;
 import com.yellowbite.movienewsreminder2.datastructures.fromfile.unsorted.NewMovieQueue;
 import com.yellowbite.movienewsreminder2.datastructures.fromfile.singlevalue.NewestMovie;
-import com.yellowbite.movienewsreminder2.datastructures.fromfile.SortedBookedMovieList;
+import com.yellowbite.movienewsreminder2.datastructures.fromfile.sorted.SortedBookedMovieList;
 import com.yellowbite.movienewsreminder2.data.Movie;
 import com.yellowbite.movienewsreminder2.files.MovieFileHelper;
 import com.yellowbite.movienewsreminder2.newsservice.messages.AddedMovieMessage;

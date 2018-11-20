@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.yellowbite.movienewsreminder2.R;
 import com.yellowbite.movienewsreminder2.datastructures.fromfile.sorted.SortedMyMoviesList;
 import com.yellowbite.movienewsreminder2.datastructures.fromfile.unsorted.NewMovieQueue;
-import com.yellowbite.movienewsreminder2.datastructures.fromfile.SortedBookedMovieList;
+import com.yellowbite.movienewsreminder2.datastructures.fromfile.sorted.SortedBookedMovieList;
 import com.yellowbite.movienewsreminder2.data.Movie;
 import com.yellowbite.movienewsreminder2.tasks.functionalinterfaces.LoadedMovieEvent;
 import com.yellowbite.movienewsreminder2.tasks.newmovies.DelLastAndAddAsyncTask;
