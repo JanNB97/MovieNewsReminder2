@@ -11,6 +11,7 @@ import java.util.Date;
 public class Movie implements Comparable<Movie>
 {
     public static final Comparator<Movie> STANDARD_COMPARATOR = new MovieComparator();
+    public static final Comparator<Movie> SIMPLE_COMPARATOR = new SimpleMovieComparator();
 
     private Bitmap imageBitmap;
     private boolean isHot;
