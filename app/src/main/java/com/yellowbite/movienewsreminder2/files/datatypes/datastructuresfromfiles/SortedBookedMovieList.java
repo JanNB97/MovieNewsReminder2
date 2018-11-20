@@ -8,7 +8,7 @@ import com.yellowbite.movienewsreminder2.data.Movie;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SortedBookedMovieList
+public final class SortedBookedMovieList
 {
     private static final String FILE_NAME = "bookedMovies.txt";
 
