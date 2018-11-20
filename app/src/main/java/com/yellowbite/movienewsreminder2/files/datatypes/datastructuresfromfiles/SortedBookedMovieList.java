@@ -8,21 +8,13 @@ import com.yellowbite.movienewsreminder2.data.Movie;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class SortedBookedMovieList
+public final class SortedBookedMovieList extends MovieListFromFile
 {
-    private static final String FILE_NAME = "bookedMovies.txt";
-
-    private Context context;
-
     private static SortedBookedMovieList instance;
-    private boolean dirty;
-
-    private List<Integer> bookedMovies;
 
     private SortedBookedMovieList(Context context)
     {
-        this.context = context;
-        this.getFromFileIfNecessary();
+        super(context, "bookedMovies.txt");
     }
 
     // --- --- --- Singleton methods --- --- ---
@@ -51,7 +43,7 @@ public final class SortedBookedMovieList
 
         for(Movie newMovie : bookedMovies)
         {
-            if(isNewAndAdd(newMovie.getMediaBarcode()))
+            if(isNewAndAdd(newMovie))
             {
                 difference.add(newMovie);
             }
@@ -60,87 +52,50 @@ public final class SortedBookedMovieList
         return difference;
     }
 
-    private boolean isNewAndAdd(Integer newMovie)
+    private boolean isNewAndAdd(Movie newMovie)
     {
-        for(int i = 0; i < this.bookedMovies.size(); i++)
+        int i = 0;
+        for(Movie oldMovie : super.movieList)
         {
-            Integer oldMovie = this.bookedMovies.get(i);
-
             if(newMovie.equals(oldMovie))
             {
                 return false;
             }
 
-            if(newMovie < oldMovie)
+            if(newMovie.getMediaBarcode() < oldMovie.getMediaBarcode())
             {
-                this.bookedMovies.add(i, newMovie);
+                super.movieList.add(i, newMovie);
                 this.dirty = true;
                 return true;
             }
+
+            i++;
         }
 
-        this.bookedMovies.add(newMovie);
+        super.movieList.add(newMovie);
         this.dirty = true;
         return true;
     }
 
     public boolean containsAndRemove(Movie movie)
     {
-        int movieCode = movie.getMediaBarcode();
-
-        int position = 0;
-        for(Integer mc : this.bookedMovies)
+        int i = 0;
+        for(Movie otherMovie : super.movieList)
         {
-            if(mc > movieCode)
+            if(otherMovie.getMediaBarcode() > movie.getMediaBarcode())
             {
                 return false;
             }
 
-            if(mc == movieCode)
+            if(otherMovie.equals(movie))
             {
-                this.bookedMovies.remove(position);
-                this.dirty = true;
+                super.remove(i);
                 return true;
             }
 
-            position++;
+            i++;
         }
 
         return false;
-    }
-
-    // --- --- --- Clean data methods --- --- ---
-    public boolean isDirty()
-    {
-        return this.dirty;
-    }
-
-    // --- --- --- File helper methods --- --- ---
-    private void getFromFileIfNecessary()
-    {
-        this.bookedMovies = new ArrayList<>();
-        List<String> readLines = FileManager.readAll(context, FILE_NAME);
-        for(String s : readLines)
-        {
-            this.bookedMovies.add(Integer.parseInt(s));
-        }
-    }
-
-    public void save()
-    {
-        FileManager.write(context, FILE_NAME, this.toLines());
-        this.dirty = false;
-    }
-
-    private List<String> toLines()
-    {
-        List<String> lines = new ArrayList<>();
-
-        for (Integer i : this.bookedMovies)
-        {
-            lines.add(i.toString());
-        }
-
-        return lines;
     }
 }
