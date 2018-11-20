@@ -15,6 +15,8 @@ public interface MovieList
     void remove(int i);
     void removeLast();
 
+    boolean contains(Movie movie);
+
     int size();
 
     boolean isEmpty();

@@ -69,6 +69,12 @@ public class SearchMovieList implements MovieList
         this.movies.remove(i);
     }
 
+    @Override
+    public void removeLast()
+    {
+        this.remove(this.size() - 1);
+    }
+
     public void clear()
     {
         this.movies.clear();
@@ -79,6 +85,20 @@ public class SearchMovieList implements MovieList
     public int size()
     {
         return this.movies.size();
+    }
+
+    @Override
+    public boolean contains(Movie movie)
+    {
+        for(Movie m : movies)
+        {
+            if(m.equals(movie))
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     @Override

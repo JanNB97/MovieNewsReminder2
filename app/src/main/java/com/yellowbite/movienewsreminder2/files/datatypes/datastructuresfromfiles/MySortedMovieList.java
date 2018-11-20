@@ -39,45 +39,23 @@ public final class MySortedMovieList extends MovieListFromFile
     @Override
     public void addAll(List<Movie> movies)
     {
-        for(Movie movie : movies)
-        {
-            if(this.isNew(movie))
-            {
-                this.movieList.add(movie);
-                super.dirty = true;
-            }
-        }
-
+        super.addAll(movies);
         this.sort();
     }
 
     @Override
     public boolean add(Movie movie)
     {
-        if(!this.isNew(movie))
+        if(super.contains(movie))
         {
             return false;
         }
 
-        this.movieList.add(movie);
+        super.movieList.add(movie);
         this.sort();
         super.dirty = true;
 
         return true;
-    }
-
-    // --- --- --- Clean data methods --- --- ---
-    public boolean contains(Movie movie)
-    {
-        for(Movie m2 : super.movieList)
-        {
-            if(m2.getMediaBarcode() == movie.getMediaBarcode())
-            {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     // --- --- --- Other methods --- --- ---
@@ -90,11 +68,5 @@ public final class MySortedMovieList extends MovieListFromFile
 
         SortedHotMovieList.getInstance(super.context)
                 .setIfHot(super.movieList);
-    }
-
-    // --- --- --- helper methods --- --- ---
-    private void sort()
-    {
-        Collections.sort(super.movieList);
     }
 }

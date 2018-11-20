@@ -56,13 +56,27 @@ public abstract class MovieListFromFile implements MovieListFromFileInterface
         return this.dirty;
     }
 
+    @Override
+    public boolean contains(Movie movie)
+    {
+        for(Movie m2 : this.movieList)
+        {
+            if(m2.equals(movie))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     // --- --- --- dirty data methods --- --- ---
     @Override
     public void addAll(List<Movie> movies)
     {
         for(Movie movie : movies)
         {
-            if(this.isNew(movie))
+            if(!this.contains(movie))
             {
                 this.movieList.add(movie);
                 this.dirty = true;
@@ -73,7 +87,7 @@ public abstract class MovieListFromFile implements MovieListFromFileInterface
     @Override
     public boolean add(Movie movie)
     {
-        if(!this.isNew(movie))
+        if(this.contains(movie))
         {
             return false;
         }
@@ -120,16 +134,8 @@ public abstract class MovieListFromFile implements MovieListFromFileInterface
     }
 
     // --- --- --- helper methods --- --- ---
-    protected boolean isNew(Movie movie)
+    protected void sort()
     {
-        for(Movie movieInDatabase : this.movieList)
-        {
-            if(movieInDatabase.getMediaBarcode() == movie.getMediaBarcode())
-            {
-                return false;
-            }
-        }
-
-        return true;
+        Collections.sort(this.movieList);
     }
 }

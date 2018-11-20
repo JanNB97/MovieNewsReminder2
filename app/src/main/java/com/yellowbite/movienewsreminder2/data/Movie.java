@@ -167,17 +167,7 @@ public class Movie implements Comparable<Movie>
         {
             Movie o = (Movie)obj;
 
-            return this.mediaBarcode == o.getMediaBarcode()
-                    && this.url.equals(o.getURL())
-
-                    && equalsAndNotNull(this.status, o.getStatus())
-                    && equalsAndNotNull(this.vorbestellungen, o.getVorbestellungen())
-                    && equalsAndNotNull(this.entliehenBis, o.getEntliehenBis())
-
-                    && equalsAndNotNull(this.standort, o.getStandort())
-                    && equalsAndNotNull(this.zugang, o.getZugang())
-
-                    && equalsAndNotNull(this.titel, o.getTitel());
+            return this.mediaBarcode == o.getMediaBarcode();
         }
 
         return false;
