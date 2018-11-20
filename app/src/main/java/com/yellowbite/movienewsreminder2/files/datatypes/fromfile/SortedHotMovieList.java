@@ -76,18 +76,6 @@ public final class SortedHotMovieList extends UnsortedMovieListFromFile
         super.dirty = true;
     }
 
-    // --- --- --- Clean methods --- --- ---
-    public void setIfHot(Collection<Movie> movies)
-    {
-        for(Movie movie : movies)
-        {
-            if(SortedHotMovieList.getInstance(super.context).getIdInList(movie) != -1)
-            {
-                movie.setHot(true);
-            }
-        }
-    }
-
     // --- --- --- Help methods --- --- ---
     private int getIdInList(Movie movie)
     {

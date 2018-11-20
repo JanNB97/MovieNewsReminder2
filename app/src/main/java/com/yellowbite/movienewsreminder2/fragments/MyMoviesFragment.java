@@ -151,9 +151,6 @@ public class MyMoviesFragment extends ToolbarFragment implements LoadedMoviesEve
     private void onLoadingFinished()
     {
         Collections.sort(MySortedMovieList.getInstance(super.getContext()).getAll());
-
-        MySortedMovieList.getInstance(super.getContext()).loadHotMovies();
-
         this.setLoadedState();
     }
 

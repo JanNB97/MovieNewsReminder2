@@ -112,7 +112,6 @@ public class MovieFileHelper
     public static void startSaveAllThread()
     {
         new Thread(() -> {
-            SortedHotMovieList.saveInstance();
             MySortedMovieList.saveInstance();
             NewMovieQueue.saveInstance();
             SortedBookedMovieList.saveInstance();

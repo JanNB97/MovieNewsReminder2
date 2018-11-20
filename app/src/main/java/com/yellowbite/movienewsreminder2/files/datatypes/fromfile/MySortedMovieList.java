@@ -31,16 +31,4 @@ public final class MySortedMovieList extends SortedMovieListFromFile
             instance.save();
         }
     }
-
-    // --- --- --- Other methods --- --- ---
-    public void loadHotMovies()
-    {
-        if(SortedHotMovieList.getInstance(super.context).isEmpty())
-        {
-            return;
-        }
-
-        SortedHotMovieList.getInstance(super.context)
-                .setIfHot(super.movieList);
-    }
 }
