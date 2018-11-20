@@ -52,9 +52,14 @@ public abstract class SortedMovieListFromFile extends MovieListFromFile
         return true;
     }
 
-    private void sort()
+    protected void sort(List<Movie> movies)
     {
-        Collections.sort(super.movieList, this.comparator);
+        Collections.sort(movies, this.comparator);
+    }
+
+    protected void sort()
+    {
+        this.sort(super.movieList);
     }
 
     protected int compareWithComparator(Movie m1, Movie m2)

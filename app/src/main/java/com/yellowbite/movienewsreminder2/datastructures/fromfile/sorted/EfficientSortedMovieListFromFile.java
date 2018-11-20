@@ -18,29 +18,54 @@ public class EfficientSortedMovieListFromFile extends SortedMovieListFromFile
     @Override
     public boolean add(Movie newMovie)
     {
-        int insertPos = this.getInsertPositionIfNew(newMovie);
+        return this.addAndGetPosition(0, newMovie) != -1;
+    }
+
+    public int addAndGetPosition(int start, Movie newMovie)
+    {
+        int insertPos = this.getInsertPositionIfNew(start, newMovie);
 
         if(insertPos == -1)
         {
             // not new
-            return false;
+            return -1;
         }
 
         super.movieList.add(insertPos, newMovie);
         this.dirty = true;
-        return true;
+        return insertPos;
+    }
+
+    @Override
+    public void addAll(List<Movie> movies)
+    {
+        this.getAndAddDifference(movies);
     }
 
     public List<Movie> getAndAddDifference(List<Movie> bookedMovies)
     {
         List<Movie> difference = new ArrayList<>();
 
+        super.sort(bookedMovies);
+
+        int pos = 0;
         for(Movie newMovie : bookedMovies)
         {
-            if(this.add(newMovie))
+            if(pos >= super.size())
+            {
+                // rest is new
+                super.movieList.add(newMovie);
+                difference.add(newMovie);
+                continue;
+            }
+
+            pos = this.addAndGetPosition(pos, newMovie);
+
+            if(pos != -1)
             {
                 difference.add(newMovie);
             }
+            pos++;
         }
 
         return difference;
@@ -87,11 +112,13 @@ public class EfficientSortedMovieListFromFile extends SortedMovieListFromFile
         return -1;
     }
 
-    protected int getInsertPositionIfNew(Movie newMovie)
+    protected int getInsertPositionIfNew(int start, Movie newMovie)
     {
-        int i = 0;
-        for(Movie oldMovie : super.movieList)
+        int i;
+        for(i = start; i < super.size(); i++)
         {
+            Movie oldMovie = super.movieList.get(i);
+
             if(newMovie.equals(oldMovie))
             {
                 return -1;
