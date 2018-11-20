@@ -1,11 +1,10 @@
-package com.yellowbite.movienewsreminder2.files.datatypes.fromfile;
+package com.yellowbite.movienewsreminder2.datastructures.fromfile;
 
 import android.content.Context;
 
 import com.yellowbite.movienewsreminder2.data.Movie;
-import com.yellowbite.movienewsreminder2.files.datatypes.MovieListFromFileInterface;
-import com.yellowbite.movienewsreminder2.files.helper.FileManager;
-import com.yellowbite.movienewsreminder2.files.helper.MovieFileHelper;
+import com.yellowbite.movienewsreminder2.files.FileManager;
+import com.yellowbite.movienewsreminder2.files.MovieFileHelper;
 
 import java.util.ArrayList;
 import java.util.Collections;

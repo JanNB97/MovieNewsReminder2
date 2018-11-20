@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.view.View;
 
 import com.yellowbite.movienewsreminder2.R;
-import com.yellowbite.movienewsreminder2.files.datatypes.MovieList;
+import com.yellowbite.movienewsreminder2.datastructures.MovieList;
 import com.yellowbite.movienewsreminder2.data.Movie;
 
 public class MyMovieRecyclerView extends MovieRecyclerView

@@ -1,6 +1,6 @@
-package com.yellowbite.movienewsreminder2.files.datatypes.other;
+package com.yellowbite.movienewsreminder2.datastructures.other;
 
-import com.yellowbite.movienewsreminder2.files.datatypes.MovieList;
+import com.yellowbite.movienewsreminder2.datastructures.MovieList;
 import com.yellowbite.movienewsreminder2.data.Movie;
 import com.yellowbite.movienewsreminder2.webscraping.medienzentrum.MedZenMovieListScraper;
 

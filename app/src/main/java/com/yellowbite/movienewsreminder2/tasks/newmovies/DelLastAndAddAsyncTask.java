@@ -3,8 +3,8 @@ package com.yellowbite.movienewsreminder2.tasks.newmovies;
 import android.content.Context;
 import android.os.AsyncTask;
 
-import com.yellowbite.movienewsreminder2.files.datatypes.fromfile.MySortedMovieList;
-import com.yellowbite.movienewsreminder2.files.datatypes.fromfile.NewMovieQueue;
+import com.yellowbite.movienewsreminder2.datastructures.fromfile.sorted.SortedMyMoviesList;
+import com.yellowbite.movienewsreminder2.datastructures.fromfile.unsorted.NewMovieQueue;
 import com.yellowbite.movienewsreminder2.data.Movie;
 
 public class DelLastAndAddAsyncTask extends AsyncTask<Movie, Void, Void>
@@ -40,7 +40,7 @@ public class DelLastAndAddAsyncTask extends AsyncTask<Movie, Void, Void>
 
         if(movies.length != 0 && movies[0] != null)
         {
-            MySortedMovieList.getInstance(this.context).add(movies[0]);
+            SortedMyMoviesList.getInstance(this.context).add(movies[0]);
         }
 
         return null;

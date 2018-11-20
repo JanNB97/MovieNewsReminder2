@@ -1,26 +1,24 @@
-package com.yellowbite.movienewsreminder2.files.datatypes.fromfile;
+package com.yellowbite.movienewsreminder2.datastructures.fromfile.sorted;
 
 import android.content.Context;
 
 import com.yellowbite.movienewsreminder2.data.Movie;
 
-import java.util.List;
-
-public final class MySortedMovieList extends SortedMovieListFromFile
+public final class SortedMyMoviesList extends SortedMovieListFromFile
 {
-    private static MySortedMovieList instance;
+    private static SortedMyMoviesList instance;
 
-    private MySortedMovieList(Context context)
+    private SortedMyMoviesList(Context context)
     {
         super(context, "myMovies.txt", Movie.STANDARD_COMPARATOR);
     }
 
     // --- --- --- Singleton methods --- --- ---
-    public static MySortedMovieList getInstance(Context context)
+    public static SortedMyMoviesList getInstance(Context context)
     {
         if(instance == null)
         {
-            instance = new MySortedMovieList(context);
+            instance = new SortedMyMoviesList(context);
         }
 
         return instance;

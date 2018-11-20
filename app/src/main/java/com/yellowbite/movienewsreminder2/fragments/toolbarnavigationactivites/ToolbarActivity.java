@@ -7,7 +7,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 
 import com.yellowbite.movienewsreminder2.R;
-import com.yellowbite.movienewsreminder2.files.helper.MovieFileHelper;
+import com.yellowbite.movienewsreminder2.files.MovieFileHelper;
 
 public abstract class ToolbarActivity extends AppCompatActivity
 {

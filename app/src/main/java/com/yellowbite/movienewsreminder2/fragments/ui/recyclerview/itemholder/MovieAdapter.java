@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.yellowbite.movienewsreminder2.files.datatypes.MovieList;
+import com.yellowbite.movienewsreminder2.datastructures.MovieList;
 import com.yellowbite.movienewsreminder2.data.Movie;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder>

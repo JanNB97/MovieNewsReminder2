@@ -4,7 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 
-import com.yellowbite.movienewsreminder2.files.datatypes.fromfile.MySortedMovieList;
+import com.yellowbite.movienewsreminder2.datastructures.fromfile.sorted.SortedMyMoviesList;
 import com.yellowbite.movienewsreminder2.util.DateHelper;
 
 import java.util.Comparator;
@@ -229,7 +229,7 @@ public class Movie implements Comparable<Movie>
     public void setHot(Context context, boolean hot)
     {
         this.isHot = hot;
-        MySortedMovieList.getInstance(context).setDirty(true);
+        SortedMyMoviesList.getInstance(context).setDirty(true);
     }
 
     public boolean notificationWasShown()
@@ -240,7 +240,7 @@ public class Movie implements Comparable<Movie>
     public void setNotificationWasShown(Context context, boolean notificationWasShown)
     {
         this.notificationWasShown = notificationWasShown;
-        MySortedMovieList.getInstance(context).setDirty(true);
+        SortedMyMoviesList.getInstance(context).setDirty(true);
     }
 
     public Bitmap getImageBitmap()

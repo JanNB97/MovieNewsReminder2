@@ -1,8 +1,8 @@
-package com.yellowbite.movienewsreminder2.files.datatypes.fromfile;
+package com.yellowbite.movienewsreminder2.datastructures.fromfile.unsorted;
 
 import android.content.Context;
 
-import com.yellowbite.movienewsreminder2.files.helper.FileManager;
+import com.yellowbite.movienewsreminder2.files.FileManager;
 
 public final class NewMovieQueue extends UnsortedMovieListFromFile
 {

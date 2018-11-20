@@ -2,7 +2,7 @@ package com.yellowbite.movienewsreminder2.tasks.loadmovielist;
 
 import android.app.Activity;
 
-import com.yellowbite.movienewsreminder2.files.datatypes.other.SearchMovieList;
+import com.yellowbite.movienewsreminder2.datastructures.other.SearchMovieList;
 import com.yellowbite.movienewsreminder2.notifications.NotificationMan;
 import com.yellowbite.movienewsreminder2.webscraping.WebscrapingHelper;
 import com.yellowbite.movienewsreminder2.webscraping.medienzentrum.MedZenMovieListScraper;

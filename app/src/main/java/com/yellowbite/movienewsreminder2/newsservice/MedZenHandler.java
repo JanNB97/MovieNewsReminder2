@@ -2,12 +2,12 @@ package com.yellowbite.movienewsreminder2.newsservice;
 
 import android.content.Context;
 
-import com.yellowbite.movienewsreminder2.files.datatypes.fromfile.MySortedMovieList;
-import com.yellowbite.movienewsreminder2.files.datatypes.fromfile.NewMovieQueue;
-import com.yellowbite.movienewsreminder2.files.datatypes.fromfile.NewestMovie;
-import com.yellowbite.movienewsreminder2.files.datatypes.fromfile.SortedBookedMovieList;
+import com.yellowbite.movienewsreminder2.datastructures.fromfile.sorted.SortedMyMoviesList;
+import com.yellowbite.movienewsreminder2.datastructures.fromfile.unsorted.NewMovieQueue;
+import com.yellowbite.movienewsreminder2.datastructures.fromfile.singlevalue.NewestMovie;
+import com.yellowbite.movienewsreminder2.datastructures.fromfile.SortedBookedMovieList;
 import com.yellowbite.movienewsreminder2.data.Movie;
-import com.yellowbite.movienewsreminder2.files.helper.MovieFileHelper;
+import com.yellowbite.movienewsreminder2.files.MovieFileHelper;
 import com.yellowbite.movienewsreminder2.newsservice.messages.AddedMovieMessage;
 import com.yellowbite.movienewsreminder2.newsservice.messages.BookedMovieMessage;
 import com.yellowbite.movienewsreminder2.newsservice.messages.HotMovieMessage;
@@ -18,7 +18,6 @@ import com.yellowbite.movienewsreminder2.webscraping.medienzentrum.MedZenMovieSi
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class MedZenHandler extends WebscrapingHandler
 {
@@ -138,7 +137,7 @@ public class MedZenHandler extends WebscrapingHandler
 
     private void getVerfuegbarHotMovies(Context context, List<Movie> verfuegbarHotMovies, List<Movie> shownMovies)
     {
-        for (Movie hotMovie : MySortedMovieList.getInstance(context).getAll())
+        for (Movie hotMovie : SortedMyMoviesList.getInstance(context).getAll())
         {
             if(!hotMovie.isHot())
             {

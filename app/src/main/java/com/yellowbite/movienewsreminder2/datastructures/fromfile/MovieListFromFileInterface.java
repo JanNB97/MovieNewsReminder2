@@ -1,4 +1,6 @@
-package com.yellowbite.movienewsreminder2.files.datatypes;
+package com.yellowbite.movienewsreminder2.datastructures.fromfile;
+
+import com.yellowbite.movienewsreminder2.datastructures.MovieList;
 
 public interface MovieListFromFileInterface extends MovieList
 {

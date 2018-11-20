@@ -1,8 +1,8 @@
-package com.yellowbite.movienewsreminder2.files.helper;
+package com.yellowbite.movienewsreminder2.files;
 
-import com.yellowbite.movienewsreminder2.files.datatypes.fromfile.MySortedMovieList;
-import com.yellowbite.movienewsreminder2.files.datatypes.fromfile.NewMovieQueue;
-import com.yellowbite.movienewsreminder2.files.datatypes.fromfile.SortedBookedMovieList;
+import com.yellowbite.movienewsreminder2.datastructures.fromfile.sorted.SortedMyMoviesList;
+import com.yellowbite.movienewsreminder2.datastructures.fromfile.unsorted.NewMovieQueue;
+import com.yellowbite.movienewsreminder2.datastructures.fromfile.SortedBookedMovieList;
 import com.yellowbite.movienewsreminder2.data.Movie;
 import com.yellowbite.movienewsreminder2.util.DateHelper;
 
@@ -105,7 +105,7 @@ public class MovieFileHelper
     public static void startSaveAllThread()
     {
         new Thread(() -> {
-            MySortedMovieList.saveInstance();
+            SortedMyMoviesList.saveInstance();
             NewMovieQueue.saveInstance();
             SortedBookedMovieList.saveInstance();
         }).start();
