@@ -77,22 +77,23 @@ public abstract class MovieListFromFile  implements MovieListFromFileInterface
 
     // --- --- --- dirty data methods --- --- ---
     @Override
-    public void remove(int i)
+    public boolean remove(int i)
     {
         this.movieList.remove(i);
         this.dirty = true;
+        return true;
     }
 
     @Override
-    public void remove(Movie movie)
+    public boolean remove(Movie movie)
     {
-        this.movieList.remove(movie);
+        return this.movieList.remove(movie);
     }
 
     @Override
-    public void removeLast()
+    public boolean removeLast()
     {
-        this.remove(this.size() - 1);
+        return this.remove(this.size() - 1);
     }
 
     // --- --- --- file methods --- --- ---

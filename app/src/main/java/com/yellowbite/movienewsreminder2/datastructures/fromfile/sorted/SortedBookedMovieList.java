@@ -3,12 +3,11 @@ package com.yellowbite.movienewsreminder2.datastructures.fromfile.sorted;
 import android.content.Context;
 
 import com.yellowbite.movienewsreminder2.data.Movie;
-import com.yellowbite.movienewsreminder2.datastructures.fromfile.unsorted.UnsortedMovieListFromFile;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public final class SortedBookedMovieList extends UnsortedMovieListFromFile
+public final class SortedBookedMovieList extends EfficientSortedMovieListFromFile
 {
     private static SortedBookedMovieList instance;
 
@@ -34,68 +33,5 @@ public final class SortedBookedMovieList extends UnsortedMovieListFromFile
         {
             instance.save();
         }
-    }
-
-    // --- --- --- Dirty data methods --- --- ---
-    public List<Movie> getAndAddDifference(List<Movie> bookedMovies)
-    {
-        List<Movie> difference = new ArrayList<>();
-
-        for(Movie newMovie : bookedMovies)
-        {
-            if(isNewAndAdd(newMovie))
-            {
-                difference.add(newMovie);
-            }
-        }
-
-        return difference;
-    }
-
-    private boolean isNewAndAdd(Movie newMovie)
-    {
-        int i = 0;
-        for(Movie oldMovie : super.movieList)
-        {
-            if(newMovie.equals(oldMovie))
-            {
-                return false;
-            }
-
-            if(newMovie.getMediaBarcode() < oldMovie.getMediaBarcode())
-            {
-                super.movieList.add(i, newMovie);
-                this.dirty = true;
-                return true;
-            }
-
-            i++;
-        }
-
-        super.movieList.add(newMovie);
-        this.dirty = true;
-        return true;
-    }
-
-    public boolean containsAndRemove(Movie movie)
-    {
-        int i = 0;
-        for(Movie otherMovie : super.movieList)
-        {
-            if(otherMovie.getMediaBarcode() > movie.getMediaBarcode())
-            {
-                return false;
-            }
-
-            if(otherMovie.equals(movie))
-            {
-                super.remove(i);
-                return true;
-            }
-
-            i++;
-        }
-
-        return false;
     }
 }

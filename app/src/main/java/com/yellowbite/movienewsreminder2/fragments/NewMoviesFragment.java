@@ -176,7 +176,7 @@ public class NewMoviesFragment extends ToolbarFragment implements LoadedMovieEve
         }
         else
         {
-            boolean bookedMovieArrived = SortedBookedMovieList.getInstance(this.getContext()).containsAndRemove(movie);
+            boolean bookedMovieArrived = SortedBookedMovieList.getInstance(this.getContext()).remove(movie);
             this.setDecisionEnabled(!bookedMovieArrived && !movieAlreadyInMyMovies);
             if(bookedMovieArrived)
             {

@@ -64,21 +64,22 @@ public class SearchMovieList implements MovieList
 
     // --- --- --- remove -- --- ---
     @Override
-    public void remove(int i)
+    public boolean remove(int i)
     {
         this.movies.remove(i);
+        return true;
     }
 
     @Override
-    public void remove(Movie movie)
+    public boolean remove(Movie movie)
     {
-        this.movies.remove(movie);
+        return this.movies.remove(movie);
     }
 
     @Override
-    public void removeLast()
+    public boolean removeLast()
     {
-        this.remove(this.size() - 1);
+        return this.remove(this.size() - 1);
     }
 
     public void clear()

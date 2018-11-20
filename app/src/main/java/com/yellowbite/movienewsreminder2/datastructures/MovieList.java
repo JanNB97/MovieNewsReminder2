@@ -12,9 +12,9 @@ public interface MovieList
     void addAll(List<Movie> movies);
     boolean add(Movie movie);
 
-    void remove(int i);
-    void remove(Movie movie);
-    void removeLast();
+    boolean remove(int i);
+    boolean remove(Movie movie);
+    boolean removeLast();
 
     boolean contains(Movie movie);
 
