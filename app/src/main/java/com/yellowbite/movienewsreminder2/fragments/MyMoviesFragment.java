@@ -9,7 +9,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.yellowbite.movienewsreminder2.R;
-import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresfromfiles.MySortedMovieList;
+import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresfromfiles.MyMoviesList;
 import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresfromfiles.NewMovieQueue;
 import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresfromfiles.SortedHotMovieList;
 import com.yellowbite.movienewsreminder2.data.Movie;
@@ -85,7 +85,7 @@ public class MyMoviesFragment extends ToolbarFragment implements LoadedMoviesEve
     private void initRecyclerView()
     {
         this.myMovieRecyclerView = new MyMovieRecyclerView(super.getActivity(), R.id.movieRecyclerView,
-                MySortedMovieList.getInstance(super.getContext()));
+                MyMoviesList.getInstance(super.getContext()));
 
         this.myMovieRecyclerView.setOnSwipeListener(
                 (v, d, lastRemovedMovie) -> this.handleOnSwiped(lastRemovedMovie)
@@ -127,11 +127,11 @@ public class MyMoviesFragment extends ToolbarFragment implements LoadedMoviesEve
     // --- --- --- Load movies --- --- ---
     private void loadMyMovies()
     {
-        List<Movie> myMovies = MySortedMovieList.getInstance(super.getContext()).getAll();
+        List<Movie> myMovies = MyMoviesList.getInstance(super.getContext()).getAll();
 
         if(!myMovies.isEmpty())
         {
-            this.loadingProgressBar.setMax(MySortedMovieList.getInstance(super.getContext()).size());
+            this.loadingProgressBar.setMax(MyMoviesList.getInstance(super.getContext()).size());
 
             // download status
             new LoadMyMoviesRetryExecutor(super.getActivity(), this, myMovies, this::onLoadingFinished);
@@ -150,9 +150,9 @@ public class MyMoviesFragment extends ToolbarFragment implements LoadedMoviesEve
 
     private void onLoadingFinished()
     {
-        Collections.sort(MySortedMovieList.getInstance(super.getContext()).getAll());
+        Collections.sort(MyMoviesList.getInstance(super.getContext()).getAll());
 
-        MySortedMovieList.getInstance(super.getContext()).loadHotMovies();
+        MyMoviesList.getInstance(super.getContext()).loadHotMovies();
 
         this.setLoadedState();
     }
@@ -174,7 +174,7 @@ public class MyMoviesFragment extends ToolbarFragment implements LoadedMoviesEve
 
         if(lastSwipedMovie != null)
         {
-            MySortedMovieList.getInstance(super.getContext()).add(this.lastSwipedMovie);
+            MyMoviesList.getInstance(super.getContext()).add(this.lastSwipedMovie);
             this.myMovieRecyclerView.dataSetChanged();
 
             if(this.lastSwipedMovie.isHot())
