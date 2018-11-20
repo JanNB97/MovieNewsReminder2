@@ -13,6 +13,7 @@ public interface MovieList
     boolean add(Movie movie);
 
     void remove(int i);
+    void remove(Movie movie);
     void removeLast();
 
     boolean contains(Movie movie);

@@ -51,13 +51,6 @@ public abstract class SortedMovieListFromFile extends MovieListFromFile
         return true;
     }
 
-    @Override
-    public void remove(int i)
-    {
-        this.movieList.remove(i);
-        this.dirty = true;
-    }
-
     private void sort()
     {
         Collections.sort(super.movieList, this.comparator);
