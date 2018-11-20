@@ -31,13 +31,6 @@ public final class NewMovieQueue extends MovieListFromFile
         }
     }
 
-    // --- --- --- Dirty data methods --- --- ---
-    public void deleteLast()
-    {   // TODO - make better
-        super.remove(super.size() - 1);
-        super.dirty = true;
-    }
-
     // --- --- --- Clean data methods --- --- ---
     @Override
     public boolean isEmpty()

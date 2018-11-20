@@ -91,6 +91,12 @@ public abstract class MovieListFromFile implements MovieListFromFileInterface
         this.dirty = true;
     }
 
+    @Override
+    public void removeLast()
+    {
+        this.remove(this.size() - 1);
+    }
+
     // --- --- --- file methods --- --- ---
     @Override
     public void save()
