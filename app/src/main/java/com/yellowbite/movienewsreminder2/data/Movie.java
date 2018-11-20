@@ -1,8 +1,10 @@
 package com.yellowbite.movienewsreminder2.data;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 
+import com.yellowbite.movienewsreminder2.files.datatypes.fromfile.MySortedMovieList;
 import com.yellowbite.movienewsreminder2.util.DateHelper;
 
 import java.util.Comparator;
@@ -45,7 +47,11 @@ public class Movie implements Comparable<Movie>
         this.url = url;
     }
 
-    public Movie(int mediaBarcode, String url, Status status, int vorbestellungen, Date entliehenBis, String standort, Date zugang, String titel)
+    public Movie(int mediaBarcode, String url,
+                 Status status,
+                 int vorbestellungen, Date entliehenBis,
+                 String standort, Date zugang, String titel,
+                 boolean notificationWasShown, boolean isHot)
     {
         this.mediaBarcode = mediaBarcode;
         this.url = url;
@@ -55,6 +61,8 @@ public class Movie implements Comparable<Movie>
         this.standort = standort;
         this.zugang = zugang;
         this.titel = titel;
+        this.notificationWasShown = notificationWasShown;
+        this.isHot = isHot;
     }
 
     // --- --- --- Overritten methods --- --- ---
@@ -218,9 +226,10 @@ public class Movie implements Comparable<Movie>
         return isHot;
     }
 
-    public void setHot(boolean hot)
+    public void setHot(Context context, boolean hot)
     {
-        isHot = hot;
+        this.isHot = hot;
+        MySortedMovieList.getInstance(context).setDirty(true);
     }
 
     public boolean notificationWasShown()

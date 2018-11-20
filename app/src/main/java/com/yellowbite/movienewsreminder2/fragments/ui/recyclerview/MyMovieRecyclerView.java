@@ -24,7 +24,7 @@ public class MyMovieRecyclerView extends MovieRecyclerView
         }
 
         Movie movie = super.movieList.get(position);
-        movie.setHot(!movie.isHot());
+        movie.setHot(super.activity, !movie.isHot());
         this.dataSetChanged();
 
         super.handleClickedLongOnMovieItem(view, position);

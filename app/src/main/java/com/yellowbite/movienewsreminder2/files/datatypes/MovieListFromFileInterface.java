@@ -4,4 +4,5 @@ public interface MovieListFromFileInterface extends MovieList
 {
     void save();
     boolean isDirty();
+    void setDirty(boolean isDirty);
 }

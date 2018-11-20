@@ -46,60 +46,10 @@ public final class SortedHotMovieList extends UnsortedMovieListFromFile
         return success;
     }
 
-    public boolean switchHot(Movie movie)
-    {
-        movie.setHot(!movie.isHot());
-        super.dirty = true;
-        if(!movie.isHot())
-        {
-            return delete(movie);
-        }
-        else
-        {
-            return this.add(movie);
-        }
-    }
-
-    public boolean delete(Movie movie)
-    {
-        boolean success = this.delSorted(movie);
-        if(success)
-        {
-            super.dirty = true;
-        }
-        return success;
-    }
-
     public void setNotificationWasShown(int id, boolean b)
     {
         super.movieList.get(id).setNotificationWasShown(b);
         super.dirty = true;
-    }
-
-    // --- --- --- Help methods --- --- ---
-    private int getIdInList(Movie movie)
-    {
-        int movieBarcode = movie.getMediaBarcode();
-
-        int i = 0;
-        for(Movie m2 : super.movieList)
-        {
-            int b2 = m2.getMediaBarcode();
-
-            if(b2 == movieBarcode)
-            {
-                return i;
-            }
-
-            if(b2 > movieBarcode)
-            {
-                return -1;
-            }
-
-            i++;
-        }
-
-        return -1;
     }
 
     private boolean addSorted(Movie movie)
@@ -126,17 +76,5 @@ public final class SortedHotMovieList extends UnsortedMovieListFromFile
         }
         super.movieList.add(movie);
         return true;
-    }
-
-    private boolean delSorted(Movie movie)
-    {
-        int i = this.getIdInList(movie);
-        boolean success = i != -1;
-
-        if(success)
-        {
-            super.movieList.remove(i);
-        }
-        return success;
     }
 }

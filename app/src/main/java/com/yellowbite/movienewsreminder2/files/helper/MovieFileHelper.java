@@ -54,24 +54,19 @@ public class MovieFileHelper
             titel = null;
         }
 
-        Movie movie = new Movie(
-                barcode, url,
-                null, -1, null,
-                standort, zugang,
-                titel);
+        boolean notificationWasShown = split[5].equals("true");
 
-        movie.setNotificationWasShown(split[5].equals("true"));
-
+        boolean isHot = false;
         if(split.length == 7)
         {
-            movie.setHot(split[6].equals("true"));
-        }
-        else
-        {
-            movie.setHot(false);
+            isHot = split[6].equals("true");
         }
 
-        return movie;
+        return new Movie(
+            barcode, url,
+            null, -1, null,
+            standort, zugang,
+            titel, notificationWasShown, isHot);
     }
 
     public static List<String> toLines(Collection<Movie> movies)

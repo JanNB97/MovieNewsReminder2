@@ -57,6 +57,12 @@ public abstract class MovieListFromFile  implements MovieListFromFileInterface
     }
 
     @Override
+    public void setDirty(boolean dirty)
+    {
+        this.dirty = dirty;
+    }
+
+    @Override
     public boolean contains(Movie movie)
     {
         for(Movie m2 : this.movieList)
