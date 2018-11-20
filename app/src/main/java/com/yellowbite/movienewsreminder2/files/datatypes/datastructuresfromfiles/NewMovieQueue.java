@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.yellowbite.movienewsreminder2.files.helper.FileManager;
 
-public final class NewMovieQueue extends MovieListFromFile
+public final class NewMovieQueue extends UnsortedMovieListFromFile
 {
     private static NewMovieQueue instance;
 

@@ -5,12 +5,13 @@ import android.support.annotation.NonNull;
 
 import com.yellowbite.movienewsreminder2.util.DateHelper;
 
+import java.util.Comparator;
 import java.util.Date;
-import java.util.concurrent.Callable;
-import java.util.logging.Logger;
 
 public class Movie implements Comparable<Movie>
 {
+    public static final Comparator<Movie> STANDARD_COMPARATOR = new MovieComparator();
+
     private Bitmap imageBitmap;
     private boolean isHot;
     private boolean notificationWasShown;
@@ -55,6 +56,94 @@ public class Movie implements Comparable<Movie>
         this.titel = titel;
     }
 
+    // --- --- --- Overritten methods --- --- ---
+    @Override
+    public boolean equals(Object obj)
+    {
+        if(obj instanceof Movie)
+        {
+            Movie o = (Movie)obj;
+
+            return this.mediaBarcode == o.getMediaBarcode();
+        }
+
+        return false;
+    }
+
+    @Override
+    public String toString()
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.append(mediaBarcode);
+
+        if(this.titel != null)
+        {
+            builder.append(": " + this.titel);
+        }
+
+        if(this.status != null)
+        {
+            builder.append(" - " + this.status.getValue());
+        }
+
+        if(this.entliehenBis != null)
+        {
+            builder.append(", entliehen bis " + DateHelper.toString(this.entliehenBis));
+        }
+
+        if(this.vorbestellungen != -1)
+        {
+            builder.append(" (" + this.vorbestellungen + " Vorbest.)");
+        }
+
+        return builder.toString();
+    }
+
+    public String toLongString()
+    {
+        StringBuilder builder = new StringBuilder(this.toString());
+
+        if(this.standort != null)
+        {
+            builder.append("\n\tStandort: " + this.standort);
+        }
+
+        if(this.zugang != null)
+        {
+            builder.append("\n\tZugang: " + DateHelper.toString(this.zugang));
+        }
+
+        builder.append("\n\tURL: " + this.url);
+
+        return builder.toString();
+    }
+
+    @Override
+    public int compareTo(@NonNull Movie movie)
+    {
+        return STANDARD_COMPARATOR.compare(this, movie);
+    }
+
+    // --- --- --- Subclasses --- --- ---
+    public enum Status {
+        VERFUEGBAR("verfügbar"),
+        ENTLIEHEN("entliehen"),
+        VORBESTELLT("vorbestellt"),
+        IN_BEARBEITUNG("in Bearbeitung");
+
+        private String value;
+
+        Status(String value)
+        {
+            this.value = value;
+        }
+
+        public String getValue() {
+            return value;
+        }
+    }
+
+    // --- --- --- Getter and setter --- --- ---
     public void setMediaBarcode(int mediaBarcode)
     {
         this.mediaBarcode = mediaBarcode;
@@ -156,254 +245,5 @@ public class Movie implements Comparable<Movie>
     public void setEinheitstitel(String einheitstitel)
     {
         this.einheitstitel = einheitstitel;
-    }
-
-    // --- --- --- Overritten methods --- --- ---
-
-    @Override
-    public boolean equals(Object obj)
-    {
-        if(obj instanceof Movie)
-        {
-            Movie o = (Movie)obj;
-
-            return this.mediaBarcode == o.getMediaBarcode();
-        }
-
-        return false;
-    }
-
-    private boolean equalsAndNotNull(Object a, Object b)
-    {
-        if(a == null && b == null)
-        {
-            return true;
-        }
-
-        if(a == null)
-        {
-            return false;
-        }
-
-        return a.equals(b);
-    }
-
-    @Override
-    public String toString()
-    {
-        StringBuilder builder = new StringBuilder();
-        builder.append(mediaBarcode);
-
-        if(this.titel != null)
-        {
-            builder.append(": " + this.titel);
-        }
-
-        if(this.status != null)
-        {
-            builder.append(" - " + this.status.getValue());
-        }
-
-        if(this.entliehenBis != null)
-        {
-            builder.append(", entliehen bis " + DateHelper.toString(this.entliehenBis));
-        }
-
-        if(this.vorbestellungen != -1)
-        {
-            builder.append(" (" + this.vorbestellungen + " Vorbest.)");
-        }
-
-        return builder.toString();
-    }
-
-    public String toLongString()
-    {
-        StringBuilder builder = new StringBuilder(this.toString());
-
-        if(this.standort != null)
-        {
-            builder.append("\n\tStandort: " + this.standort);
-        }
-
-        if(this.zugang != null)
-        {
-            builder.append("\n\tZugang: " + DateHelper.toString(this.zugang));
-        }
-
-        builder.append("\n\tURL: " + this.url);
-
-        return builder.toString();
-    }
-
-    @Override
-    public int compareTo(@NonNull Movie movie)
-    {
-        final int THIS_EARLIER = -1;     // >
-        final int THIS_LATER = 1;    // <
-        final int EQUAL = 0;
-
-        if(this.status == null && movie.status == null)
-        {
-            Logger.getGlobal().severe(movie.getTitel() + " and " + this.titel + ": status is null");
-            return EQUAL;
-        }
-
-        if(this.status == null)
-        {
-            Logger.getGlobal().severe(this.getTitel() + ": status is null");
-            return THIS_LATER;
-        }
-
-        if(movie.status == null)
-        {
-            Logger.getGlobal().severe(movie.getTitel() + ": status is null");
-            return THIS_EARLIER;
-        }
-
-        Callable<Integer> compareEntliehenBis = () -> this.entliehenBis.compareTo(movie.getEntliehenBis());
-        Callable<Integer> compareVorbestellungen = () -> this.vorbestellungen - movie.getVorbestellungen();
-        Callable<Integer> compareZugang = () -> {
-            if(this.zugang == null && movie.zugang == null)
-            {
-                return EQUAL;
-            }
-
-            if(this.zugang == null)
-            {
-                return THIS_LATER;
-            }
-
-            if(movie.zugang == null)
-            {
-                return THIS_EARLIER;
-            }
-
-            return this.zugang.compareTo(movie.getZugang()) * -1;
-        };
-        Callable<Integer> compareTitel = () -> {
-            if(titel == null && movie.titel == null)
-            {
-                return EQUAL;
-            }
-
-            if(titel == null)
-            {
-                return THIS_LATER;
-            }
-
-            if(movie.titel == null)
-            {
-                return THIS_EARLIER;
-            }
-
-            return this.titel.compareTo(movie.getTitel());
-        };
-
-        switch (this.status)
-        {
-            case VERFUEGBAR:
-                if(movie.getStatus() == Status.VERFUEGBAR)
-                {
-                    try
-                    {
-                        return this.compareTo(/* Last */ compareTitel,
-                                /* First checked */ compareZugang);
-                    } catch (Exception e)
-                    {
-                        Logger.getGlobal().severe("Something went wrong");
-                        return EQUAL;
-                    }
-                }
-                return THIS_EARLIER;
-
-            case ENTLIEHEN:
-                switch (movie.status)
-                {
-                    case VERFUEGBAR:
-                        return THIS_LATER;
-                    case ENTLIEHEN:
-                        return this.compareTo(/* Last */ compareTitel,
-                                /* First checked */ compareVorbestellungen, compareEntliehenBis, compareZugang);
-                    case VORBESTELLT:
-                        return this.compareTo(/* Last */ () -> THIS_EARLIER,
-                                /* First checked */ compareVorbestellungen);
-                    case IN_BEARBEITUNG:
-                        return THIS_EARLIER;
-                }
-
-            case VORBESTELLT:
-                switch (movie.status)
-                {
-                    case VERFUEGBAR:
-                        return THIS_LATER;
-                    case ENTLIEHEN:
-                        return this.compareTo(/* Last */ () -> THIS_LATER,
-                                /* First checked */ compareVorbestellungen);
-                    case VORBESTELLT:
-                        return this.compareTo(/* Last */ compareTitel,
-                                /* First checked */ compareVorbestellungen, compareZugang);
-                    case IN_BEARBEITUNG:
-                        return THIS_EARLIER;
-                }
-
-            case IN_BEARBEITUNG:
-                if(movie.status != Status.IN_BEARBEITUNG)
-                {
-                    return THIS_LATER;
-                }
-
-                return this.compareTo(/* Last */ compareTitel,
-                        /* first checked */ compareVorbestellungen);
-        }
-
-        Logger.getGlobal().severe("Something went wrong: Reached unreachable statement");
-        return EQUAL;
-    }
-
-    private int compareTo(Callable<Integer> lastCompare, Callable<Integer> ... compares)
-    {
-        for(Callable<Integer> callable : compares)
-        {
-            try
-            {
-                int i = callable.call();
-
-                if(i != 0)
-                {
-                    return i;
-                }
-            } catch (Exception e)
-            {
-                e.printStackTrace();
-            }
-        }
-
-        try
-        {
-            return lastCompare.call();
-        } catch (Exception e)
-        {
-            Logger.getGlobal().severe("Something went wrong");
-            return 0;
-        }
-    }
-
-    public enum Status {
-        VERFUEGBAR("verfügbar"),
-        ENTLIEHEN("entliehen"),
-        VORBESTELLT("vorbestellt"),
-        IN_BEARBEITUNG("in Bearbeitung");
-
-        private String value;
-
-        Status(String value)
-        {
-            this.value = value;
-        }
-
-        public String getValue() {
-            return value;
-        }
     }
 }

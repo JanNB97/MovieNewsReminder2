@@ -4,16 +4,13 @@ import android.content.Context;
 
 import com.yellowbite.movienewsreminder2.data.Movie;
 
-import java.util.Collections;
-import java.util.List;
-
-public final class MySortedMovieList extends MovieListFromFile
+public final class MySortedMovieList extends SortedMovieListFromFile
 {
     private static MySortedMovieList instance;
 
     private MySortedMovieList(Context context)
     {
-        super(context, "myMovies.txt");
+        super(context, "myMovies.txt", Movie.STANDARD_COMPARATOR);
     }
 
     // --- --- --- Singleton methods --- --- ---
@@ -35,33 +32,10 @@ public final class MySortedMovieList extends MovieListFromFile
         }
     }
 
-    // --- --- --- Dirty data methods --- --- ---
-    @Override
-    public void addAll(List<Movie> movies)
-    {
-        super.addAll(movies);
-        this.sort();
-    }
-
-    @Override
-    public boolean add(Movie movie)
-    {
-        if(super.contains(movie))
-        {
-            return false;
-        }
-
-        super.movieList.add(movie);
-        this.sort();
-        super.dirty = true;
-
-        return true;
-    }
-
     // --- --- --- Other methods --- --- ---
     public void loadHotMovies()
     {
-        if(SortedHotMovieList.getInstance(super.context).size() <= 0)
+        if(SortedHotMovieList.getInstance(super.context).isEmpty())
         {
             return;
         }

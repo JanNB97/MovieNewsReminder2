@@ -2,13 +2,12 @@ package com.yellowbite.movienewsreminder2.files.datatypes.datastructuresfromfile
 
 import android.content.Context;
 
-import com.yellowbite.movienewsreminder2.files.helper.FileManager;
 import com.yellowbite.movienewsreminder2.data.Movie;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public final class SortedBookedMovieList extends MovieListFromFile
+public final class SortedBookedMovieList extends UnsortedMovieListFromFile
 {
     private static SortedBookedMovieList instance;
 

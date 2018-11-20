@@ -6,7 +6,7 @@ import com.yellowbite.movienewsreminder2.data.Movie;
 
 import java.util.Collection;
 
-public final class SortedHotMovieList extends MovieListFromFile
+public final class SortedHotMovieList extends UnsortedMovieListFromFile
 {
     private static SortedHotMovieList instance;
 
