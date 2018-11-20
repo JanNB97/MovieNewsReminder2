@@ -2,7 +2,7 @@ package com.yellowbite.movienewsreminder2.newsservice;
 
 import android.content.Context;
 
-import com.yellowbite.movienewsreminder2.files.datatypes.fromfile.SortedHotMovieList;
+import com.yellowbite.movienewsreminder2.files.datatypes.fromfile.MySortedMovieList;
 import com.yellowbite.movienewsreminder2.files.datatypes.fromfile.NewMovieQueue;
 import com.yellowbite.movienewsreminder2.files.datatypes.fromfile.NewestMovie;
 import com.yellowbite.movienewsreminder2.files.datatypes.fromfile.SortedBookedMovieList;
@@ -18,6 +18,7 @@ import com.yellowbite.movienewsreminder2.webscraping.medienzentrum.MedZenMovieSi
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class MedZenHandler extends WebscrapingHandler
 {
@@ -137,11 +138,12 @@ public class MedZenHandler extends WebscrapingHandler
 
     private void getVerfuegbarHotMovies(Context context, List<Movie> verfuegbarHotMovies, List<Movie> shownMovies)
     {
-        List<Movie> hotMovies = SortedHotMovieList.getInstance(context).getAll();
-        for (int i = 0; i < hotMovies.size(); i++)
+        for (Movie hotMovie : MySortedMovieList.getInstance(context).getAll())
         {
-            Movie hotMovie = hotMovies.get(i);
-
+            if(!hotMovie.isHot())
+            {
+                continue;
+            }
             try
             {
                 if(MedZenMovieSiteScraper.isVerfuegbar(hotMovie))
@@ -149,7 +151,7 @@ public class MedZenHandler extends WebscrapingHandler
                     if(!hotMovie.notificationWasShown())
                     {
                         verfuegbarHotMovies.add(hotMovie);
-                        SortedHotMovieList.getInstance(context).setNotificationWasShown(i, true);
+                        hotMovie.setNotificationWasShown(context, true);
                     }
                     else
                     {
@@ -159,7 +161,7 @@ public class MedZenHandler extends WebscrapingHandler
                 else if (hotMovie.notificationWasShown())
                 {
                     // again unavailable
-                    SortedHotMovieList.getInstance(context).setNotificationWasShown(i, false);
+                    hotMovie.setNotificationWasShown(context, false);
                 }
             } catch (IOException ignored) {}
         }

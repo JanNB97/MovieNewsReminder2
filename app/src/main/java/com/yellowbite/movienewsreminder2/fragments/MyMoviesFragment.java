@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.yellowbite.movienewsreminder2.R;
 import com.yellowbite.movienewsreminder2.files.datatypes.fromfile.MySortedMovieList;
 import com.yellowbite.movienewsreminder2.files.datatypes.fromfile.NewMovieQueue;
-import com.yellowbite.movienewsreminder2.files.datatypes.fromfile.SortedHotMovieList;
 import com.yellowbite.movienewsreminder2.data.Movie;
 import com.yellowbite.movienewsreminder2.fragments.threads.CountDownThread;
 import com.yellowbite.movienewsreminder2.newsservice.NewsService;
@@ -173,11 +172,6 @@ public class MyMoviesFragment extends ToolbarFragment implements LoadedMoviesEve
         {
             MySortedMovieList.getInstance(super.getContext()).add(this.lastSwipedMovie);
             this.myMovieRecyclerView.dataSetChanged();
-
-            if(this.lastSwipedMovie.isHot())
-            {
-                SortedHotMovieList.getInstance(super.getContext()).add(this.lastSwipedMovie);
-            }
         }
     }
 

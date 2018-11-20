@@ -4,6 +4,8 @@ import android.content.Context;
 
 import com.yellowbite.movienewsreminder2.data.Movie;
 
+import java.util.List;
+
 public final class MySortedMovieList extends SortedMovieListFromFile
 {
     private static MySortedMovieList instance;

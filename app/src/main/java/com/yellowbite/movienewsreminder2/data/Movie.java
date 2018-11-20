@@ -237,9 +237,10 @@ public class Movie implements Comparable<Movie>
         return notificationWasShown;
     }
 
-    public void setNotificationWasShown(boolean notificationWasShown)
+    public void setNotificationWasShown(Context context, boolean notificationWasShown)
     {
         this.notificationWasShown = notificationWasShown;
+        MySortedMovieList.getInstance(context).setDirty(true);
     }
 
     public Bitmap getImageBitmap()

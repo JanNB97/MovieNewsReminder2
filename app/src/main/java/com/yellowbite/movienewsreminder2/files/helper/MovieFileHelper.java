@@ -1,6 +1,5 @@
 package com.yellowbite.movienewsreminder2.files.helper;
 
-import com.yellowbite.movienewsreminder2.files.datatypes.fromfile.SortedHotMovieList;
 import com.yellowbite.movienewsreminder2.files.datatypes.fromfile.MySortedMovieList;
 import com.yellowbite.movienewsreminder2.files.datatypes.fromfile.NewMovieQueue;
 import com.yellowbite.movienewsreminder2.files.datatypes.fromfile.SortedBookedMovieList;
@@ -15,8 +14,42 @@ import java.util.List;
 public class MovieFileHelper
 {
     // --- --- --- Movie file parsing --- --- ---
-    //barcode;url;standort;zugang;titel
-    public static Movie toMovie(String string)
+    public static List<String> toLines(Collection<Movie> movies)
+    {
+        List<String> strings = new ArrayList<>();
+
+        for(Movie movie : movies)
+        {
+            strings.add(toLine(movie));
+        }
+
+        return strings;
+    }
+
+    private static String toLine(Movie movie)
+    {
+        return movie.getMediaBarcode() + ";" + movie.getURL() + ";"
+                + movie.getStandort() + ";" + DateHelper.toString(movie.getZugang()) + ";"
+                + movie.getTitel() + ";" + movie.notificationWasShown() + ";"
+                + movie.isHot();
+    }
+
+    public static List<Movie> toMovies(Collection<String> strings, List<Movie> output)
+    {
+        for(String s : strings)
+        {
+            Movie movie = toMovie(s);
+
+            if(movie != null)
+            {
+                output.add(movie);
+            }
+        }
+
+        return output;
+    }
+
+    private static Movie toMovie(String string)
     {
         if(string == null)
         {
@@ -63,45 +96,10 @@ public class MovieFileHelper
         }
 
         return new Movie(
-            barcode, url,
-            null, -1, null,
-            standort, zugang,
-            titel, notificationWasShown, isHot);
-    }
-
-    public static List<String> toLines(Collection<Movie> movies)
-    {
-        List<String> strings = new ArrayList<>();
-
-        for(Movie movie : movies)
-        {
-            strings.add(toLine(movie));
-        }
-
-        return strings;
-    }
-
-    private static String toLine(Movie movie)
-    {
-        return movie.getMediaBarcode() + ";" + movie.getURL() + ";"
-                + movie.getStandort() + ";" + DateHelper.toString(movie.getZugang()) + ";"
-                + movie.getTitel() + ";" + movie.notificationWasShown() + ";"
-                + movie.isHot();
-    }
-
-    public static List<Movie> toMovies(Collection<String> strings, List<Movie> output)
-    {
-        for(String s : strings)
-        {
-            Movie movie = toMovie(s);
-
-            if(movie != null)
-            {
-                output.add(movie);
-            }
-        }
-
-        return output;
+                barcode, url,
+                null, -1, null,
+                standort, zugang,
+                titel, notificationWasShown, isHot);
     }
 
     public static void startSaveAllThread()
