@@ -125,6 +125,11 @@ public class Movie implements Comparable<Movie>
         return STANDARD_COMPARATOR.compare(this, movie);
     }
 
+    public int simpleCompareTo(@NonNull Movie movie)
+    {
+        return SIMPLE_COMPARATOR.compare(this, movie);
+    }
+
     // --- --- --- Subclasses --- --- ---
     public enum Status {
         VERFUEGBAR("verfügbar"),
