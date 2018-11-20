@@ -8,7 +8,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.yellowbite.movienewsreminder2.R;
-import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresfromfiles.MyMoviesList;
+import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresfromfiles.MySortedMovieList;
 import com.yellowbite.movienewsreminder2.files.datatypes.otherdatastructures.SearchMovieList;
 import com.yellowbite.movienewsreminder2.fragments.toolbarnavigationactivites.NavigationDrawerActivity;
 import com.yellowbite.movienewsreminder2.tasks.loadmovielist.LoadMovieListExecutor;
@@ -89,7 +89,7 @@ public class AddMovieFragment extends ToolbarFragment
     {
         this.addMovieRecyclerView = new AddMovieRecyclerView(this.getActivity(),
                 R.id.movieRecyclerView, SearchMovieList.getInstance(),
-                MyMoviesList.getInstance(this.getContext()));
+                MySortedMovieList.getInstance(this.getContext()));
         this.addMovieRecyclerView.setOnClickedListener((v, position)
                 -> FragmentMaster.sendShowFragmentRequest(this.getContext(), MyMoviesFragment.FRAGMENT_ID));
     }

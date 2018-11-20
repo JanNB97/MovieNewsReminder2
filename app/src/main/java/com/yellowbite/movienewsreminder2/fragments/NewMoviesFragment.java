@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.yellowbite.movienewsreminder2.R;
-import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresfromfiles.MyMoviesList;
+import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresfromfiles.MySortedMovieList;
 import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresfromfiles.NewMovieQueue;
 import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresfromfiles.SortedBookedMovieList;
 import com.yellowbite.movienewsreminder2.data.Movie;
@@ -168,7 +168,7 @@ public class NewMoviesFragment extends ToolbarFragment implements LoadedMovieEve
             this.einheitstitelTextView.setText("");
         }
 
-        boolean movieAlreadyInMyMovies = MyMoviesList.getInstance(this.getContext()).contains(movie);
+        boolean movieAlreadyInMyMovies = MySortedMovieList.getInstance(this.getContext()).contains(movie);
 
         if(movie.getStatus() == Movie.Status.IN_BEARBEITUNG)
         {

@@ -1,7 +1,7 @@
 package com.yellowbite.movienewsreminder2.files.helper;
 
 import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresfromfiles.SortedHotMovieList;
-import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresfromfiles.MyMoviesList;
+import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresfromfiles.MySortedMovieList;
 import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresfromfiles.NewMovieQueue;
 import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresfromfiles.SortedBookedMovieList;
 import com.yellowbite.movienewsreminder2.data.Movie;
@@ -106,7 +106,7 @@ public class MovieFileHelper
     {
         new Thread(() -> {
             SortedHotMovieList.saveInstance();
-            MyMoviesList.saveInstance();
+            MySortedMovieList.saveInstance();
             NewMovieQueue.saveInstance();
             SortedBookedMovieList.saveInstance();
         }).start();
