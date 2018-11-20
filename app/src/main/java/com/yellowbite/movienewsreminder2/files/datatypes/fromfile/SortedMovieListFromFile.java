@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class SortedMovieListFromFile extends MovieListFromFile
+public abstract class SortedMovieListFromFile extends MovieListFromFile
 {
     private Comparator<Movie> comparator;
 
