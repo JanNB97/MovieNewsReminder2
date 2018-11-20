@@ -48,24 +48,28 @@ public class EfficientSortedMovieListFromFile extends SortedMovieListFromFile
 
         super.sort(bookedMovies);
 
-        int pos = 0;
+        int posInList = 0;
+        int insertPos;
+
         for(Movie newMovie : bookedMovies)
         {
-            if(pos >= super.size())
+            if(posInList >= super.size())
             {
                 // rest is new
                 super.movieList.add(newMovie);
                 difference.add(newMovie);
+                posInList++;
                 continue;
             }
 
-            pos = this.addAndGetPosition(pos, newMovie);
+            insertPos = this.addAndGetPosition(posInList, newMovie);
 
-            if(pos != -1)
+            if(insertPos != -1)
             {
                 difference.add(newMovie);
+                posInList = insertPos;
             }
-            pos++;
+            posInList++;
         }
 
         return difference;
@@ -128,8 +132,6 @@ public class EfficientSortedMovieListFromFile extends SortedMovieListFromFile
             {
                 return i;
             }
-
-            i++;
         }
 
         return i;
