@@ -25,7 +25,7 @@ public class MovieFileHelper
 
         String[] split = string.split(";");
 
-        if(split.length != 5 && split.length != 6)
+        if(split.length != 6 && split.length != 7)
         {
             return null;
         }
@@ -60,9 +60,15 @@ public class MovieFileHelper
                 standort, zugang,
                 titel);
 
-        if(split.length == 6)
+        movie.setNotificationWasShown(split[5].equals("true"));
+
+        if(split.length == 7)
         {
-            movie.setNotificationWasShown(split[5].equals("true"));
+            movie.setHot(split[6].equals("true"));
+        }
+        else
+        {
+            movie.setHot(false);
         }
 
         return movie;
@@ -80,11 +86,12 @@ public class MovieFileHelper
         return strings;
     }
 
-    public static String toLine(Movie movie)
+    private static String toLine(Movie movie)
     {
         return movie.getMediaBarcode() + ";" + movie.getURL() + ";"
                 + movie.getStandort() + ";" + DateHelper.toString(movie.getZugang()) + ";"
-                + movie.getTitel() + ";" + movie.notificationWasShown();
+                + movie.getTitel() + ";" + movie.notificationWasShown() + ";"
+                + movie.isHot();
     }
 
     public static List<Movie> toMovies(Collection<String> strings, List<Movie> output)

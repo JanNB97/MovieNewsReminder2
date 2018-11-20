@@ -81,13 +81,7 @@ public abstract class MovieListFromFile  implements MovieListFromFileInterface
     @Override
     public void remove(Movie movie)
     {
-        for(Movie m : this.movieList)
-        {
-            if(m.equals(movie))
-            {
-                return;
-            }
-        }
+        this.movieList.remove(movie);
     }
 
     @Override

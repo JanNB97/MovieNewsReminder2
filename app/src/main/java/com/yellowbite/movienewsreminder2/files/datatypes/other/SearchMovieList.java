@@ -70,6 +70,12 @@ public class SearchMovieList implements MovieList
     }
 
     @Override
+    public void remove(Movie movie)
+    {
+        this.movies.remove(movie);
+    }
+
+    @Override
     public void removeLast()
     {
         this.remove(this.size() - 1);
