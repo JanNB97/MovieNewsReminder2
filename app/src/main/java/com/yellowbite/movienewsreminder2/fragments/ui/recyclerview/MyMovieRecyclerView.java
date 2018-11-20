@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.view.View;
 
 import com.yellowbite.movienewsreminder2.R;
-import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresfromfiles.SortedHotMovieList;
+import com.yellowbite.movienewsreminder2.files.datatypes.fromfile.SortedHotMovieList;
 import com.yellowbite.movienewsreminder2.files.datatypes.MovieList;
 import com.yellowbite.movienewsreminder2.data.Movie;
 

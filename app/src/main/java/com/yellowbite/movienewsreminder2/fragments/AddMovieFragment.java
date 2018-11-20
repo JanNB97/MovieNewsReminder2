@@ -8,8 +8,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.yellowbite.movienewsreminder2.R;
-import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresfromfiles.MySortedMovieList;
-import com.yellowbite.movienewsreminder2.files.datatypes.otherdatastructures.SearchMovieList;
+import com.yellowbite.movienewsreminder2.files.datatypes.fromfile.MySortedMovieList;
+import com.yellowbite.movienewsreminder2.files.datatypes.other.SearchMovieList;
 import com.yellowbite.movienewsreminder2.fragments.toolbarnavigationactivites.NavigationDrawerActivity;
 import com.yellowbite.movienewsreminder2.tasks.loadmovielist.LoadMovieListExecutor;
 import com.yellowbite.movienewsreminder2.fragments.ui.recyclerview.AddMovieRecyclerView;

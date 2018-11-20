@@ -5,7 +5,7 @@ import android.view.View;
 
 import com.yellowbite.movienewsreminder2.R;
 import com.yellowbite.movienewsreminder2.files.datatypes.MovieList;
-import com.yellowbite.movienewsreminder2.files.datatypes.otherdatastructures.SearchMovieList;
+import com.yellowbite.movienewsreminder2.files.datatypes.other.SearchMovieList;
 import com.yellowbite.movienewsreminder2.data.Movie;
 import com.yellowbite.movienewsreminder2.tasks.mainactivity.GetMovieAsyncTask;
 import com.yellowbite.movienewsreminder2.notifications.NotificationMan;

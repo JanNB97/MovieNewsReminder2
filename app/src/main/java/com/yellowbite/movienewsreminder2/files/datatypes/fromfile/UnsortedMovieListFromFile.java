@@ -1,15 +1,9 @@
-package com.yellowbite.movienewsreminder2.files.datatypes.datastructuresfromfiles;
+package com.yellowbite.movienewsreminder2.files.datatypes.fromfile;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 
-import com.yellowbite.movienewsreminder2.files.datatypes.MovieListFromFileInterface;
-import com.yellowbite.movienewsreminder2.files.helper.FileManager;
-import com.yellowbite.movienewsreminder2.files.helper.MovieFileHelper;
 import com.yellowbite.movienewsreminder2.data.Movie;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public abstract class UnsortedMovieListFromFile extends MovieListFromFile

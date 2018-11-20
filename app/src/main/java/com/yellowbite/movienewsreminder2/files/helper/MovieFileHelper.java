@@ -1,9 +1,9 @@
 package com.yellowbite.movienewsreminder2.files.helper;
 
-import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresfromfiles.SortedHotMovieList;
-import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresfromfiles.MySortedMovieList;
-import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresfromfiles.NewMovieQueue;
-import com.yellowbite.movienewsreminder2.files.datatypes.datastructuresfromfiles.SortedBookedMovieList;
+import com.yellowbite.movienewsreminder2.files.datatypes.fromfile.SortedHotMovieList;
+import com.yellowbite.movienewsreminder2.files.datatypes.fromfile.MySortedMovieList;
+import com.yellowbite.movienewsreminder2.files.datatypes.fromfile.NewMovieQueue;
+import com.yellowbite.movienewsreminder2.files.datatypes.fromfile.SortedBookedMovieList;
 import com.yellowbite.movienewsreminder2.data.Movie;
 import com.yellowbite.movienewsreminder2.util.DateHelper;
 
