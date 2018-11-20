@@ -10,7 +10,7 @@ public final class SortedHotMovieList extends MovieListFromFile
 {
     private static SortedHotMovieList instance;
 
-    protected SortedHotMovieList(Context context)
+    private SortedHotMovieList(Context context)
     {
         super(context, "hotMovies.txt");
     }

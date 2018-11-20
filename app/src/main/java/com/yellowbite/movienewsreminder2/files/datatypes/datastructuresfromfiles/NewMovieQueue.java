@@ -8,7 +8,7 @@ public final class NewMovieQueue extends MovieListFromFile
 {
     private static NewMovieQueue instance;
 
-    protected NewMovieQueue(Context context)
+    private NewMovieQueue(Context context)
     {
         super(context, "newMovies.txt");
     }
