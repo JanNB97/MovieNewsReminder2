@@ -43,10 +43,4 @@ public abstract class UnsortedMovieListFromFile extends MovieListFromFile
         this.movieList.remove(i);
         this.dirty = true;
     }
-
-    @Override
-    public void removeLast()
-    {
-        this.remove(this.size() - 1);
-    }
 }

@@ -54,13 +54,8 @@ public abstract class SortedMovieListFromFile extends MovieListFromFile
     @Override
     public void remove(int i)
     {
-        // TODO
-    }
-
-    @Override
-    public void removeLast()
-    {
-        // TODO
+        this.movieList.remove(i);
+        this.dirty = true;
     }
 
     private void sort()
