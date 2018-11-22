@@ -8,9 +8,10 @@ import android.view.View;
 import com.yellowbite.movienewsreminder2.R;
 import com.yellowbite.movienewsreminder2.data.Movie;
 import com.yellowbite.movienewsreminder2.datastructures.fromfile.unsorted.WishedMoviesList;
+import com.yellowbite.movienewsreminder2.fragments.ui.dialogs.TextDialogFragment;
 import com.yellowbite.movienewsreminder2.fragments.ui.recyclerviews.ShowInstantlyRecyclerView;
 
-public class WishlistFragment extends ToolbarFragment
+public class WishlistFragment extends ToolbarFragment implements TextDialogFragment.DialogClickListener
 {
     public static final int FRAGMENT_ID = 3;
 
@@ -62,8 +63,15 @@ public class WishlistFragment extends ToolbarFragment
     public void handleOnAddMovieClicked(View view)
     {
         // TODO
+        TextDialogFragment textDialogFragment = TextDialogFragment.newInstance(this);
+        textDialogFragment.show(super.getFragmentManager(), "tag");
+    }
+
+    @Override
+    public void onDialogPositiveClicked(String movieName)
+    {
         Movie movie = new Movie(32423, "");
-        movie.setTitel("Test");
+        movie.setTitel(movieName);
         this.wishedMovieRecyclerView.addItem(movie);
     }
 }
