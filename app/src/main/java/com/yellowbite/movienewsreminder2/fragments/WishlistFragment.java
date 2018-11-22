@@ -10,12 +10,13 @@ import com.yellowbite.movienewsreminder2.R;
 import com.yellowbite.movienewsreminder2.data.Movie;
 import com.yellowbite.movienewsreminder2.datastructures.fromfile.unsorted.WishedMoviesList;
 import com.yellowbite.movienewsreminder2.fragments.ui.recyclerview.MovieRecyclerView;
+import com.yellowbite.movienewsreminder2.fragments.ui.recyclerview.ShowInstantlyRecyclerView;
 
 public class WishlistFragment extends ToolbarFragment
 {
     public static final int FRAGMENT_ID = 3;
 
-    private MovieRecyclerView wishedMovieRecyclerView;
+    private ShowInstantlyRecyclerView wishedMovieRecyclerView;
     private FloatingActionButton addWishedMovieButton;
 
     public WishlistFragment()
@@ -50,10 +51,9 @@ public class WishlistFragment extends ToolbarFragment
 
     private void initRecyclerView()
     {
-        this.wishedMovieRecyclerView = new MovieRecyclerView(this.getActivity(),
+        this.wishedMovieRecyclerView = new ShowInstantlyRecyclerView(this.getActivity(),
                 R.id.wishedMoviesRecyclerView, WishedMoviesList.getInstance(this.getContext()),
                 true, R.layout.simple_movie_list_row);
-        this.wishedMovieRecyclerView.showItems();
     }
 
     private void initFloatingButton()

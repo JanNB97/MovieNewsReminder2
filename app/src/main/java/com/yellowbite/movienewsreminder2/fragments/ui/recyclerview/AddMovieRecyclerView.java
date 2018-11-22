@@ -10,14 +10,14 @@ import com.yellowbite.movienewsreminder2.data.Movie;
 import com.yellowbite.movienewsreminder2.tasks.mainactivity.GetMovieAsyncTask;
 import com.yellowbite.movienewsreminder2.notifications.NotificationMan;
 
-public class AddMovieRecyclerView extends UnalterableRecyclerView
+public class AddMovieRecyclerView extends ShowInstantlyRecyclerView
 {
     private MovieList movieListToAdd;
 
     public AddMovieRecyclerView(Activity activity, int id, MovieList movieList,
                                 MovieList movieListToAdd)
     {
-        super(activity, id, movieList, R.layout.simple_movie_list_row);
+        super(activity, id, movieList, false, R.layout.simple_movie_list_row);
         this.movieListToAdd = movieListToAdd;
     }
 
