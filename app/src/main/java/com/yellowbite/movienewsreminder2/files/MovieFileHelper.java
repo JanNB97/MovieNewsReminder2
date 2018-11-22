@@ -4,6 +4,7 @@ import com.yellowbite.movienewsreminder2.datastructures.fromfile.sorted.SortedMy
 import com.yellowbite.movienewsreminder2.datastructures.fromfile.unsorted.NewMovieQueue;
 import com.yellowbite.movienewsreminder2.datastructures.fromfile.sorted.SortedBookedMovieList;
 import com.yellowbite.movienewsreminder2.data.Movie;
+import com.yellowbite.movienewsreminder2.datastructures.fromfile.unsorted.WishedMoviesList;
 import com.yellowbite.movienewsreminder2.util.DateHelper;
 
 import java.util.ArrayList;
@@ -108,6 +109,7 @@ public class MovieFileHelper
             SortedMyMoviesList.saveInstance();
             NewMovieQueue.saveInstance();
             SortedBookedMovieList.saveInstance();
+            WishedMoviesList.saveInstance();
         }).start();
     }
 }
