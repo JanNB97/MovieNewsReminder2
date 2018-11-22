@@ -7,7 +7,7 @@
     tools:context=".MainActivity">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/movieRecyclerView"
+        android:id="@+id/wishedMoviesRecyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
@@ -17,10 +17,10 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/my_toolbar" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/addMovieFloatingButton"
+        android:id="@+id/addWishedMovieFloatingButton"
         android:layout_width="70dp"
         android:layout_height="72dp"
         android:layout_gravity="bottom|end"
@@ -28,7 +28,7 @@
         android:layout_marginBottom="24dp"
         android:src="@drawable/ic_add"
         app:backgroundTint="@color/colorPrimary"
-        app:layout_constraintBottom_toBottomOf="@+id/movieRecyclerView"
+        app:layout_constraintBottom_toBottomOf="@+id/wishedMoviesRecyclerView"
         app:layout_constraintEnd_toEndOf="parent"
         app:rippleColor="@color/colorPrimaryDark" />
 
