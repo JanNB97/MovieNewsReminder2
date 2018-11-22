@@ -12,13 +12,15 @@ import com.yellowbite.movienewsreminder2.notifications.NotificationMan;
 
 public class AddMovieRecyclerView extends ShowInstantlyRecyclerView
 {
-    private MovieList movieListToAdd;
+    private MovieList destinationList;
+    private MovieList selectableList;
 
-    public AddMovieRecyclerView(Activity activity, int id, MovieList movieList,
-                                MovieList movieListToAdd)
+    public AddMovieRecyclerView(Activity activity, int id, MovieList selectableList,
+                                MovieList destinationList)
     {
-        super(activity, id, movieList, false, R.layout.simple_movie_list_row);
-        this.movieListToAdd = movieListToAdd;
+        super(activity, id, selectableList, false, R.layout.simple_movie_list_row);
+        this.destinationList = destinationList;
+        this.selectableList = selectableList;
     }
 
     @Override
@@ -26,7 +28,7 @@ public class AddMovieRecyclerView extends ShowInstantlyRecyclerView
     {
         this.recyclerView.setEnabled(false);
 
-        Movie movieToAdd = SearchMovieList.getInstance().get(position);
+        Movie movieToAdd = selectableList.get(position);
 
         GetMovieAsyncTask.getMovie(movieToAdd,
             (Movie movie) -> {
@@ -37,7 +39,7 @@ public class AddMovieRecyclerView extends ShowInstantlyRecyclerView
                 }
                 else
                 {
-                    this.movieListToAdd.add(movie);
+                    this.destinationList.add(movie);
 
                     super.handleClickedOnMovieItem(view, position);
                 }
