@@ -7,7 +7,7 @@ import com.yellowbite.movienewsreminder2.data.Movie;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EfficientSortedMovieListFromFile extends SortedMovieListFromFile
+public abstract class EfficientSortedMovieListFromFile extends SortedMovieListFromFile
 {
     protected EfficientSortedMovieListFromFile(Context context, String fileName)
     {
