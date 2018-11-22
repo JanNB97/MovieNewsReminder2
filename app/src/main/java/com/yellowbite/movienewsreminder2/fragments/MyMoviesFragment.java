@@ -12,11 +12,11 @@ import com.yellowbite.movienewsreminder2.R;
 import com.yellowbite.movienewsreminder2.datastructures.fromfile.sorted.SortedMyMoviesList;
 import com.yellowbite.movienewsreminder2.datastructures.fromfile.unsorted.NewMovieQueue;
 import com.yellowbite.movienewsreminder2.data.Movie;
-import com.yellowbite.movienewsreminder2.fragments.threads.CountDownThread;
+import com.yellowbite.movienewsreminder2.util.CountDownThread;
 import com.yellowbite.movienewsreminder2.newsservice.NewsService;
 import com.yellowbite.movienewsreminder2.tasks.functionalinterfaces.LoadedMoviesEvent;
 import com.yellowbite.movienewsreminder2.tasks.mainactivity.LoadMyMoviesRetryExecutor;
-import com.yellowbite.movienewsreminder2.fragments.ui.recyclerview.MyMovieRecyclerView;
+import com.yellowbite.movienewsreminder2.fragments.ui.recyclerviews.MyMovieRecyclerView;
 
 import java.util.Collections;
 import java.util.List;

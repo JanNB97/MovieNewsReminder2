@@ -1,4 +1,4 @@
-package com.yellowbite.movienewsreminder2.fragments.toolbarnavigationactivites;
+package com.yellowbite.movienewsreminder2.fragments.ui.toolbar;
 
 import android.support.annotation.LayoutRes;
 import android.support.v7.app.AppCompatActivity;

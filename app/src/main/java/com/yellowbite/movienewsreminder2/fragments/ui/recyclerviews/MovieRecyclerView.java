@@ -1,4 +1,4 @@
-package com.yellowbite.movienewsreminder2.fragments.ui.recyclerview;
+package com.yellowbite.movienewsreminder2.fragments.ui.recyclerviews;
 
 import android.app.Activity;
 import android.support.annotation.IdRes;
@@ -10,12 +10,12 @@ import android.view.View;
 import com.yellowbite.movienewsreminder2.datastructures.MovieList;
 import com.yellowbite.movienewsreminder2.data.Movie;
 import com.yellowbite.movienewsreminder2.notifications.NotificationMan;
-import com.yellowbite.movienewsreminder2.fragments.ui.recyclerview.itemholder.MovieAdapter;
-import com.yellowbite.movienewsreminder2.fragments.ui.recyclerview.listener.ScrollListener;
-import com.yellowbite.movienewsreminder2.fragments.ui.recyclerview.listener.SwipeListener;
-import com.yellowbite.movienewsreminder2.fragments.ui.recyclerview.listener.TouchListener;
-import com.yellowbite.movienewsreminder2.fragments.ui.recyclerview.listener.touchlisteners.RecyclerTouchListener;
-import com.yellowbite.movienewsreminder2.fragments.ui.recyclerview.listener.touchlisteners.SwipeCallback;
+import com.yellowbite.movienewsreminder2.fragments.ui.recyclerviews.itemholder.MovieAdapter;
+import com.yellowbite.movienewsreminder2.fragments.ui.recyclerviews.listener.ScrollListener;
+import com.yellowbite.movienewsreminder2.fragments.ui.recyclerviews.listener.SwipeListener;
+import com.yellowbite.movienewsreminder2.fragments.ui.recyclerviews.listener.TouchListener;
+import com.yellowbite.movienewsreminder2.fragments.ui.recyclerviews.listener.touchlisteners.RecyclerTouchListener;
+import com.yellowbite.movienewsreminder2.fragments.ui.recyclerviews.listener.touchlisteners.SwipeCallback;
 
 import java.util.ArrayList;
 import java.util.List;

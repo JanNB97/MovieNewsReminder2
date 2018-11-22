@@ -1,4 +1,4 @@
-package com.yellowbite.movienewsreminder2.fragments.threads;
+package com.yellowbite.movienewsreminder2.util;
 
 public class CountDownThread extends Thread
 {

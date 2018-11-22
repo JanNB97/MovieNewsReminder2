@@ -3,14 +3,12 @@ package com.yellowbite.movienewsreminder2.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.yellowbite.movienewsreminder2.R;
 import com.yellowbite.movienewsreminder2.data.Movie;
 import com.yellowbite.movienewsreminder2.datastructures.fromfile.unsorted.WishedMoviesList;
-import com.yellowbite.movienewsreminder2.fragments.ui.recyclerview.MovieRecyclerView;
-import com.yellowbite.movienewsreminder2.fragments.ui.recyclerview.ShowInstantlyRecyclerView;
+import com.yellowbite.movienewsreminder2.fragments.ui.recyclerviews.ShowInstantlyRecyclerView;
 
 public class WishlistFragment extends ToolbarFragment
 {

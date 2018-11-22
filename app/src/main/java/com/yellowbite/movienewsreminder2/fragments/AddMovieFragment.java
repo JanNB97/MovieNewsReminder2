@@ -10,9 +10,9 @@ import android.widget.TextView;
 import com.yellowbite.movienewsreminder2.R;
 import com.yellowbite.movienewsreminder2.datastructures.fromfile.sorted.SortedMyMoviesList;
 import com.yellowbite.movienewsreminder2.datastructures.other.SearchMovieList;
-import com.yellowbite.movienewsreminder2.fragments.toolbarnavigationactivites.NavigationDrawerActivity;
+import com.yellowbite.movienewsreminder2.fragments.ui.toolbar.NavigationDrawerActivity;
 import com.yellowbite.movienewsreminder2.tasks.loadmovielist.LoadMovieListExecutor;
-import com.yellowbite.movienewsreminder2.fragments.ui.recyclerview.AddMovieRecyclerView;
+import com.yellowbite.movienewsreminder2.fragments.ui.recyclerviews.AddMovieRecyclerView;
 
 public class AddMovieFragment extends ToolbarFragment
 {
