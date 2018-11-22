@@ -20,7 +20,7 @@ import com.yellowbite.movienewsreminder2.fragments.ui.recyclerview.listener.touc
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class MovieRecyclerView extends SwipeCallback
+public class MovieRecyclerView extends SwipeCallback
 {
     protected Activity activity;
     protected RecyclerView recyclerView;
