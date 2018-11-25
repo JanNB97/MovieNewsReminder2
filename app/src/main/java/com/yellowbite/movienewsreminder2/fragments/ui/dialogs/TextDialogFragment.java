@@ -34,8 +34,7 @@ public class TextDialogFragment extends DialogFragment
         builder.setView(view);
         this.movieTextView = view.findViewById(R.id.wishedMoviesDialogEditText);
 
-        builder.setMessage("Film hinzufügen")
-                .setPositiveButton("OK", (dialogInterface, i) -> {
+        builder.setPositiveButton("Hinzufügen", (dialogInterface, i) -> {
                     try
                     {
                         this.dialogClickListener.onDialogPositiveClicked(movieTextView.getText().toString());
@@ -43,8 +42,7 @@ public class TextDialogFragment extends DialogFragment
                     {
                         e.printStackTrace();
                     }
-                })
-                .setNegativeButton("Negative", (dialogInterface, i) -> {});
+                });
 
         return builder.create();
     }
