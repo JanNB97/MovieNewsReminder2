@@ -9,9 +9,12 @@ import java.util.List;
 
 public abstract class UnsortedMovieListFromFile extends MovieListFromFile
 {
-    protected UnsortedMovieListFromFile(Context context, String fileName)
+    protected boolean allowDuplicates;
+
+    protected UnsortedMovieListFromFile(Context context, String fileName, boolean allowDuplicates)
     {
         super(context, fileName);
+        this.allowDuplicates = allowDuplicates;
     }
 
     // --- --- --- dirty data methods --- --- ---
@@ -27,7 +30,7 @@ public abstract class UnsortedMovieListFromFile extends MovieListFromFile
     @Override
     public boolean add(Movie movie)
     {
-        if(this.contains(movie))
+        if(!allowDuplicates && this.contains(movie))
         {
             return false;
         }

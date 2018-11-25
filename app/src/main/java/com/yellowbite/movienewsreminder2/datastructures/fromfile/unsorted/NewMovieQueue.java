@@ -10,7 +10,7 @@ public final class NewMovieQueue extends UnsortedMovieListFromFile
 
     private NewMovieQueue(Context context)
     {
-        super(context, "newMovies.txt");
+        super(context, "newMovies.txt", false);
     }
 
     // --- --- --- Singleton methods --- --- ---

@@ -8,7 +8,7 @@ public final class WishedMoviesList extends UnsortedMovieListFromFile
 
     private WishedMoviesList(Context context)
     {
-        super(context, "wishedMovieList.txt");
+        super(context, "wishedMovieList.txt", true);
     }
 
     // --- --- --- Singleton methods --- --- ---
