@@ -1,41 +1,34 @@
 package com.yellowbite.movienewsreminder2.data;
 
 import java.util.Comparator;
-import java.util.concurrent.Callable;
 import java.util.logging.Logger;
 
 import com.yellowbite.movienewsreminder2.data.Movie.Status;
 
 public class MovieComparator implements Comparator<Movie>
 {
-    @Override
-    public int compare(Movie m1, Movie m2)
+    private final static int THIS_EARLIER = -1;     // >
+    private final static int THIS_LATER = 1;    // <
+    private final static int EQUAL = 0;
+
+    public interface MovieComparable
     {
-        final int THIS_EARLIER = -1;     // >
-        final int THIS_LATER = 1;    // <
-        final int EQUAL = 0;
+        int compareTo(Movie m1, Movie m2);
+    }
 
-        if(m1.getStatus() == null && m2.getStatus() == null)
-        {
-            Logger.getGlobal().severe(m2.getTitel() + " and " + m1.getTitel() + ": status is null");
-            return EQUAL;
-        }
+    private static final MovieComparable compareEntliehenBis;
+    private static final MovieComparable compareVorbestellungen;
+    private static final MovieComparable compareZugang;
+    private static final MovieComparable compareTitel;
 
-        if(m1.getStatus() == null)
-        {
-            Logger.getGlobal().severe(m1.getTitel() + ": status is null");
-            return THIS_LATER;
-        }
+    private static final MovieComparable thisLater;
+    private static final MovieComparable thisEarlier;
 
-        if(m2.getStatus() == null)
-        {
-            Logger.getGlobal().severe(m2.getTitel() + ": status is null");
-            return THIS_EARLIER;
-        }
-
-        Callable<Integer> compareEntliehenBis = () -> m1.getEntliehenBis().compareTo(m2.getEntliehenBis());
-        Callable<Integer> compareVorbestellungen = () -> m1.getVorbestellungen() - m2.getVorbestellungen();
-        Callable<Integer> compareZugang = () -> {
+    static
+    {
+        compareEntliehenBis = (Movie m1, Movie m2) -> m1.getEntliehenBis().compareTo(m2.getEntliehenBis());
+        compareVorbestellungen = (Movie m1, Movie m2) -> m1.getVorbestellungen() - m2.getVorbestellungen();
+        compareZugang = (Movie m1, Movie m2) -> {
             if(m1.getZugang() == null && m2.getZugang() == null)
             {
                 return EQUAL;
@@ -53,7 +46,8 @@ public class MovieComparator implements Comparator<Movie>
 
             return m1.getZugang().compareTo(m2.getZugang()) * -1;
         };
-        Callable<Integer> compareTitel = () -> {
+
+        compareTitel = (Movie m1, Movie m2) -> {
             if(m1.getTitel() == null && m2.getTitel() == null)
             {
                 return EQUAL;
@@ -72,6 +66,31 @@ public class MovieComparator implements Comparator<Movie>
             return m1.getTitel().compareTo(m2.getTitel());
         };
 
+        thisLater = (Movie m1, Movie m2) -> THIS_LATER;
+        thisEarlier = (Movie m1, Movie m2) -> THIS_EARLIER;
+    }
+
+    @Override
+    public int compare(Movie m1, Movie m2)
+    {
+        if(m1.getStatus() == null && m2.getStatus() == null)
+        {
+            Logger.getGlobal().severe(m2.getTitel() + " and " + m1.getTitel() + ": status is null");
+            return EQUAL;
+        }
+
+        if(m1.getStatus() == null)
+        {
+            Logger.getGlobal().severe(m1.getTitel() + ": status is null");
+            return THIS_LATER;
+        }
+
+        if(m2.getStatus() == null)
+        {
+            Logger.getGlobal().severe(m2.getTitel() + ": status is null");
+            return THIS_EARLIER;
+        }
+
         switch (m1.getStatus())
         {
             case VERFUEGBAR:
@@ -79,7 +98,8 @@ public class MovieComparator implements Comparator<Movie>
                 {
                     try
                     {
-                        return this.compareTo(/* Last */ compareTitel,
+                        return this.compareTo(m1, m2,
+                                /* Last */ compareTitel,
                                 /* First checked */ compareZugang);
                     } catch (Exception e)
                     {
@@ -95,10 +115,12 @@ public class MovieComparator implements Comparator<Movie>
                     case VERFUEGBAR:
                         return THIS_LATER;
                     case ENTLIEHEN:
-                        return this.compareTo(/* Last */ compareTitel,
+                        return this.compareTo(m1, m2,
+                                /* Last */ compareTitel,
                                 /* First checked */ compareVorbestellungen, compareEntliehenBis, compareZugang);
                     case VORBESTELLT:
-                        return this.compareTo(/* Last */ () -> THIS_EARLIER,
+                        return this.compareTo(m1, m2,
+                                /* Last */ thisEarlier,
                                 /* First checked */ compareVorbestellungen);
                     case IN_BEARBEITUNG:
                         return THIS_EARLIER;
@@ -110,10 +132,12 @@ public class MovieComparator implements Comparator<Movie>
                     case VERFUEGBAR:
                         return THIS_LATER;
                     case ENTLIEHEN:
-                        return this.compareTo(/* Last */ () -> THIS_LATER,
+                        return this.compareTo(m1, m2,
+                                /* Last */ thisLater,
                                 /* First checked */ compareVorbestellungen);
                     case VORBESTELLT:
-                        return this.compareTo(/* Last */ compareTitel,
+                        return this.compareTo(m1, m2,
+                                /* Last */ compareTitel,
                                 /* First checked */ compareVorbestellungen, compareZugang);
                     case IN_BEARBEITUNG:
                         return THIS_EARLIER;
@@ -125,7 +149,8 @@ public class MovieComparator implements Comparator<Movie>
                     return THIS_LATER;
                 }
 
-                return this.compareTo(/* Last */ compareTitel,
+                return this.compareTo(m1, m2,
+                        /* Last */ compareTitel,
                         /* first checked */ compareVorbestellungen);
         }
 
@@ -133,13 +158,13 @@ public class MovieComparator implements Comparator<Movie>
         return EQUAL;
     }
 
-    private int compareTo(Callable<Integer> lastCompare, Callable<Integer> ... compares)
+    private int compareTo(Movie m1, Movie m2, MovieComparable lastCompare, MovieComparable ... compares)
     {
-        for(Callable<Integer> callable : compares)
+        for(MovieComparable callable : compares)
         {
             try
             {
-                int i = callable.call();
+                int i = callable.compareTo(m1, m2);
 
                 if(i != 0)
                 {
@@ -153,7 +178,7 @@ public class MovieComparator implements Comparator<Movie>
 
         try
         {
-            return lastCompare.call();
+            return lastCompare.compareTo(m1, m2);
         } catch (Exception e)
         {
             Logger.getGlobal().severe("Something went wrong");
