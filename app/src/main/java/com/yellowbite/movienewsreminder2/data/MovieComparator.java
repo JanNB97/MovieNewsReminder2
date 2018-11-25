@@ -99,7 +99,7 @@ public class MovieComparator implements Comparator<Movie>
                     try
                     {
                         return this.compareTo(m1, m2,
-                                /* Last */ compareTitel,
+                                /* Last */          compareTitel,
                                 /* First checked */ compareZugang);
                     } catch (Exception e)
                     {
@@ -116,11 +116,11 @@ public class MovieComparator implements Comparator<Movie>
                         return THIS_LATER;
                     case ENTLIEHEN:
                         return this.compareTo(m1, m2,
-                                /* Last */ compareTitel,
+                                /* Last */          compareTitel,
                                 /* First checked */ compareVorbestellungen, compareEntliehenBis, compareZugang);
                     case VORBESTELLT:
                         return this.compareTo(m1, m2,
-                                /* Last */ thisEarlier,
+                                /* Last */          thisEarlier,
                                 /* First checked */ compareVorbestellungen);
                     case IN_BEARBEITUNG:
                         return THIS_EARLIER;
@@ -133,11 +133,11 @@ public class MovieComparator implements Comparator<Movie>
                         return THIS_LATER;
                     case ENTLIEHEN:
                         return this.compareTo(m1, m2,
-                                /* Last */ thisLater,
+                                /* Last */          thisLater,
                                 /* First checked */ compareVorbestellungen);
                     case VORBESTELLT:
                         return this.compareTo(m1, m2,
-                                /* Last */ compareTitel,
+                                /* Last */          compareTitel,
                                 /* First checked */ compareVorbestellungen, compareZugang);
                     case IN_BEARBEITUNG:
                         return THIS_EARLIER;
@@ -150,7 +150,7 @@ public class MovieComparator implements Comparator<Movie>
                 }
 
                 return this.compareTo(m1, m2,
-                        /* Last */ compareTitel,
+                        /* Last */          compareTitel,
                         /* First checked */ compareVorbestellungen);
         }
 
