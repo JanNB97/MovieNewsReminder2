@@ -70,7 +70,7 @@ public class WishlistFragment extends ToolbarFragment implements TextDialogFragm
     @Override
     public void onDialogPositiveClicked(String movieName)
     {
-        Movie movie = new Movie(32423, "");
+        Movie movie = new Movie("");
         movie.setTitel(movieName);
         this.wishedMovieRecyclerView.addItem(movie);
     }
