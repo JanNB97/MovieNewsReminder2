@@ -51,8 +51,8 @@ public class WishlistFragment extends ToolbarFragment implements TextDialogFragm
     private void initRecyclerView()
     {
         this.wishedMovieRecyclerView = new ShowInstantlyRecyclerView(this.getActivity(),
-                R.id.wishedMoviesRecyclerView, WishedMoviesList.getInstance(this.getContext()),
-                true, R.layout.simple_movie_list_row);
+                R.id.wishedMoviesRecyclerView, true, R.layout.simple_movie_list_row,
+                WishedMoviesList.getInstance(this.getContext()));
     }
 
     private void initFloatingButton()

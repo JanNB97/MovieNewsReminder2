@@ -17,7 +17,7 @@ public class AddMovieRecyclerView extends ShowInstantlyRecyclerView
     public AddMovieRecyclerView(Activity activity, int id, MovieList selectableList,
                                 MovieList destinationList)
     {
-        super(activity, id, selectableList, false, R.layout.simple_movie_list_row);
+        super(activity, id,false, R.layout.simple_movie_list_row, selectableList);
         this.destinationList = destinationList;
         this.selectableList = selectableList;
     }

@@ -11,7 +11,7 @@ public class MyMovieRecyclerView extends MovieRecyclerView
 {
     public MyMovieRecyclerView(Activity activity, int id, MovieList movieList)
     {
-        super(activity, id, movieList, true, R.layout.movie_list_row);
+        super(activity, id, true, R.layout.movie_list_row, movieList);
     }
 
     @Override
@@ -22,7 +22,7 @@ public class MyMovieRecyclerView extends MovieRecyclerView
             return;
         }
 
-        Movie movie = super.movieList.get(position);
+        Movie movie = super.movieLists[super.currentMovieListId].get(position);
         movie.setHot(super.activity, !movie.isHot());
         this.dataSetChanged();
 

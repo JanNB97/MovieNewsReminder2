@@ -25,9 +25,10 @@ public class MovieRecyclerView extends SwipeCallback
     protected Activity activity;
     protected RecyclerView recyclerView;
 
-    protected MovieList movieList;
+    protected MovieList[] movieLists;
+    protected int currentMovieListId = 0;
 
-    protected MovieAdapter movieAdapter;
+    protected MovieAdapter[] movieAdapters;
 
     protected boolean recentlySwiped = false;
     protected final static int SWIPE_COOLDOWN = 2000;
@@ -40,20 +41,26 @@ public class MovieRecyclerView extends SwipeCallback
     private List<ScrollListener> scollListeners;
 
     // --- --- --- Initialization --- --- ---
-    public MovieRecyclerView(Activity activity, @IdRes int id, MovieList movieList,
-             boolean isSwipeable, int viewHolderLayout)
+    public MovieRecyclerView(Activity activity, @IdRes int id,
+             boolean isSwipeable, int viewHolderLayout, MovieList...movieLists)
     {
         this.activity = activity;
 
         this.recyclerView = activity.findViewById(id);
         this.recyclerView.setHasFixedSize(true);
 
-        this.movieList = movieList;
+        this.movieLists = movieLists;
 
         this.initLayout();
         this.initTouchSwipeScrollListener(isSwipeable);
 
-        this.movieAdapter = new MovieAdapter(this.activity, movieList, viewHolderLayout);
+        this.movieAdapters = new MovieAdapter[this.movieLists.length];
+        int i = 0;
+        for(MovieList movieList : movieLists)
+        {
+            this.movieAdapters[i] = new MovieAdapter(this.activity, movieList, viewHolderLayout);
+            i++;
+        }
     }
 
     private void initLayout()
@@ -114,7 +121,7 @@ public class MovieRecyclerView extends SwipeCallback
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction)
     {
         int position = viewHolder.getAdapterPosition();
-        this.lastSwipedMovie = movieList.get(position);
+        this.lastSwipedMovie = movieLists[this.currentMovieListId].get(position);
         this.removeItem(position);
 
         recentlySwiped = true;
@@ -197,18 +204,18 @@ public class MovieRecyclerView extends SwipeCallback
     // --- --- --- manage items --- --- ---
     public void showItems()
     {
-        this.recyclerView.setAdapter(movieAdapter);
+        this.recyclerView.setAdapter(movieAdapters[this.currentMovieListId]);
     }
 
     public void addItems(List<Movie> movies)
     {
-        this.movieList.addAll(movies);
+        this.movieLists[this.currentMovieListId].addAll(movies);
         this.dataSetChanged();
     }
 
     public void addItem(Movie movie)
     {
-        if(!this.movieList.add(movie))
+        if(!this.movieLists[this.currentMovieListId].add(movie))
         {
             NotificationMan.showShortToast(this.activity, movie.getTitel() + " is already in the database");
         }
@@ -220,17 +227,22 @@ public class MovieRecyclerView extends SwipeCallback
 
     public void removeItem(int position)
     {
-        this.movieList.remove(position);
+        this.movieLists[this.currentMovieListId].remove(position);
         this.notifyItemRemoved(position);
     }
 
     public void notifyItemRemoved(int position)
     {
-        this.movieAdapter.notifyItemRemoved(position);
+        this.movieAdapters[this.currentMovieListId].notifyItemRemoved(position);
     }
 
     public void dataSetChanged()
     {
-        this.movieAdapter.notifyDataSetChanged();
+        this.movieAdapters[this.currentMovieListId].notifyDataSetChanged();
+    }
+
+    public void swapAdapter(int movieListToShow)
+    {
+        this.recyclerView.swapAdapter(this.movieAdapters[movieListToShow], true);
     }
 }

@@ -6,9 +6,9 @@ import com.yellowbite.movienewsreminder2.datastructures.MovieList;
 
 public class ShowInstantlyRecyclerView extends MovieRecyclerView
 {
-    public ShowInstantlyRecyclerView(Activity activity, int id, MovieList movieList, boolean isSwipeable, int viewHolderLayout)
+    public ShowInstantlyRecyclerView(Activity activity, int id, boolean isSwipeable, int viewHolderLayout, MovieList movieList)
     {
-        super(activity, id, movieList, isSwipeable, viewHolderLayout);
+        super(activity, id, isSwipeable, viewHolderLayout, movieList);
         this.showItems();
     }
 }
