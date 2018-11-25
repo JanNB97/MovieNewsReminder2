@@ -151,7 +151,7 @@ public class MovieComparator implements Comparator<Movie>
 
                 return this.compareTo(m1, m2,
                         /* Last */ compareTitel,
-                        /* first checked */ compareVorbestellungen);
+                        /* First checked */ compareVorbestellungen);
         }
 
         Logger.getGlobal().severe("Something went wrong: Reached unreachable statement");
