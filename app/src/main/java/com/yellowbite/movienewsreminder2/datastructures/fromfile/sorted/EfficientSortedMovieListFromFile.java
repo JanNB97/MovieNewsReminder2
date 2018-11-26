@@ -57,6 +57,7 @@ public abstract class EfficientSortedMovieListFromFile extends SortedMovieListFr
             {
                 // rest is new
                 super.movieList.add(newMovie);
+                super.dirty = true;
                 difference.add(newMovie);
                 posInList++;
                 continue;
