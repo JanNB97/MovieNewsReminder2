@@ -1,6 +1,5 @@
 package com.yellowbite.movienewsreminder2.fragments;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
@@ -12,6 +11,11 @@ import java.util.Collection;
 public class FragmentMaster
 {
     private static UnremovableSparseArray<ToolbarFragment> allFragments;
+
+    public interface RequestActivity
+    {
+        void onShowFragmentRequestSent(int fragmentId);
+    }
 
     // --- --- --- Registration --- --- ---
     private static void registerFragments()
@@ -65,5 +69,17 @@ public class FragmentMaster
         }
 
         return null;
+    }
+
+    // --- --- --- Send Request --- --- ---
+    public static void sendShowFragmentRequest(RequestActivity requestActivity, Context context, int fragmentId)
+    {
+        requestActivity.onShowFragmentRequestSent(fragmentId);
+
+        Intent resultIntent = new Intent(context, MainActivity.class);
+
+        resultIntent.putExtra(MainActivity.SHOW_FRAGMENT_INTENT_NAME, fragmentId);
+
+        context.startActivity(resultIntent);
     }
 }

@@ -178,7 +178,8 @@ public class MyMoviesFragment extends ToolbarFragment implements LoadedMoviesEve
     // interactions with main components
     public void handleOnAddMovieClicked(View view)
     {
-        this.sendShowFragmentRequest(AddMovieFragment.FRAGMENT_ID);
+        FragmentMaster.sendShowFragmentRequest(this, this.getContext(),
+                AddMovieFragment.FRAGMENT_ID);
     }
 
     public void handleOnSwiped(Movie swipedMovie)
@@ -217,7 +218,8 @@ public class MyMoviesFragment extends ToolbarFragment implements LoadedMoviesEve
     {
         if(!NewMovieQueue.getInstance(super.getContext()).isEmpty())
         {
-            this.sendShowFragmentRequest(NewMoviesFragment.FRAGMENT_ID);
+            FragmentMaster.sendShowFragmentRequest(this, this.getContext(),
+                    NewMoviesFragment.FRAGMENT_ID);
         }
         else
         {
@@ -225,15 +227,14 @@ public class MyMoviesFragment extends ToolbarFragment implements LoadedMoviesEve
         }
     }
 
-    // --- --- --- Show other fragment --- --- ---
     @Override
-    protected void sendShowFragmentRequest(int fragmentId)
+    public void onShowFragmentRequestSent(int fragmentId)
     {
+        super.onShowFragmentRequestSent(fragmentId);
         if(this.showUndoButtonThread != null)
         {
             this.showUndoButtonThread.interrupt();
         }
-        super.sendShowFragmentRequest(fragmentId);
     }
 
     // --- --- --- Getter and Setter --- --- ---
