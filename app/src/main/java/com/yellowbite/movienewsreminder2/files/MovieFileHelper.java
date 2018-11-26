@@ -1,6 +1,7 @@
 package com.yellowbite.movienewsreminder2.files;
 
 import com.yellowbite.movienewsreminder2.datastructures.fromfile.sorted.SortedMyMoviesList;
+import com.yellowbite.movienewsreminder2.datastructures.fromfile.unsorted.DoneWishedMoviesList;
 import com.yellowbite.movienewsreminder2.datastructures.fromfile.unsorted.NewMovieQueue;
 import com.yellowbite.movienewsreminder2.datastructures.fromfile.sorted.SortedBookedMovieList;
 import com.yellowbite.movienewsreminder2.data.Movie;
@@ -110,6 +111,7 @@ public class MovieFileHelper
             NewMovieQueue.saveInstance();
             SortedBookedMovieList.saveInstance();
             ToDoWishedMoviesList.saveInstance();
+            DoneWishedMoviesList.saveInstance();
         }).start();
     }
 }
