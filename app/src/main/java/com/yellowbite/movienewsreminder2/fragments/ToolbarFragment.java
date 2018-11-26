@@ -88,6 +88,12 @@ public abstract class ToolbarFragment extends Fragment
         return false;
     }
 
+    // --- --- --- Change showing fragment --- --- ---
+    protected void sendShowFragmentRequest(int fragmentId)
+    {
+        FragmentMaster.sendShowFragmentRequest(super.getContext(), fragmentId);
+    }
+
     // --- --- --- Getter and Setter --- --- ---
     public int getFragmentId()
     {

@@ -217,7 +217,7 @@ public class MyMoviesFragment extends ToolbarFragment implements LoadedMoviesEve
     {
         if(!NewMovieQueue.getInstance(super.getContext()).isEmpty())
         {
-            FragmentMaster.sendShowFragmentRequest(this.getContext(), NewMoviesFragment.FRAGMENT_ID);
+            this.sendShowFragmentRequest(NewMoviesFragment.FRAGMENT_ID);
         }
         else
         {
@@ -225,18 +225,20 @@ public class MyMoviesFragment extends ToolbarFragment implements LoadedMoviesEve
         }
     }
 
-    // --- --- --- Getter and Setter --- --- ---
-    public MyMovieRecyclerView getMyMovieRecyclerView()
-    {
-        return myMovieRecyclerView;
-    }
-
+    // --- --- --- Show other fragment --- --- ---
+    @Override
     protected void sendShowFragmentRequest(int fragmentId)
     {
         if(this.showUndoButtonThread != null)
         {
             this.showUndoButtonThread.interrupt();
         }
-        FragmentMaster.sendShowFragmentRequest(this.getContext(), fragmentId);
+        super.sendShowFragmentRequest(fragmentId);
+    }
+
+    // --- --- --- Getter and Setter --- --- ---
+    public MyMovieRecyclerView getMyMovieRecyclerView()
+    {
+        return myMovieRecyclerView;
     }
 }

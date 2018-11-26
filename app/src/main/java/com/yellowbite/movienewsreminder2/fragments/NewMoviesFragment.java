@@ -94,7 +94,7 @@ public class NewMoviesFragment extends ToolbarFragment implements LoadedMovieEve
         this.nextMovieButton.setOnClickListener(this::handleClickOnNextMovie);
     }
 
-    // --- --- --- handle clicks --- --- ---
+    // --- --- --- Handle clicks --- --- ---
     public void handleClickOnAddMovie(View v)
     {
         this.setButtonsEnabled(false);
@@ -209,9 +209,10 @@ public class NewMoviesFragment extends ToolbarFragment implements LoadedMovieEve
         }
     }
 
+    // --- --- --- Show other fragment --- --- ---
     protected void sendShowFragmentRequest(int fragmentId)
     {
         NewsService.start(super.getActivity());
-        FragmentMaster.sendShowFragmentRequest(super.getContext(), fragmentId);
+        super.sendShowFragmentRequest(fragmentId);
     }
 }
