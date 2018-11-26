@@ -14,6 +14,7 @@ import com.yellowbite.movienewsreminder2.datastructures.fromfile.sorted.SortedMy
 import com.yellowbite.movienewsreminder2.datastructures.fromfile.unsorted.NewMovieQueue;
 import com.yellowbite.movienewsreminder2.datastructures.fromfile.sorted.SortedBookedMovieList;
 import com.yellowbite.movienewsreminder2.data.Movie;
+import com.yellowbite.movienewsreminder2.newsservice.NewsService;
 import com.yellowbite.movienewsreminder2.tasks.functionalinterfaces.LoadedMovieEvent;
 import com.yellowbite.movienewsreminder2.tasks.newmovies.DelLastAndAddAsyncTask;
 import com.yellowbite.movienewsreminder2.tasks.newmovies.LoadNewMoviesDescendingExecutor;
@@ -206,5 +207,11 @@ public class NewMoviesFragment extends ToolbarFragment implements LoadedMovieEve
         {
             this.showNextMovie();
         }
+    }
+
+    protected void sendShowFragmentRequest(int fragmentId)
+    {
+        NewsService.start(super.getActivity());
+        FragmentMaster.sendShowFragmentRequest(this.getContext(), fragmentId);
     }
 }
