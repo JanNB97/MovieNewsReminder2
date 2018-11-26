@@ -11,8 +11,6 @@ import java.util.Collection;
 
 public class FragmentMaster
 {
-    private static final Class MAIN_ACTIVITY = MainActivity.class;
-
     private static UnremovableSparseArray<ToolbarFragment> allFragments;
 
     // --- --- --- Registration --- --- ---
@@ -67,15 +65,5 @@ public class FragmentMaster
         }
 
         return null;
-    }
-
-    // --- --- --- Send Request --- --- ---
-    public static void sendShowFragmentRequest(Context context, int fragmentId)
-    {
-        Intent resultIntent = new Intent(context, MAIN_ACTIVITY);
-
-        resultIntent.putExtra(MainActivity.SHOW_FRAGMENT_INTENT_NAME, fragmentId);
-
-        context.startActivity(resultIntent);
     }
 }

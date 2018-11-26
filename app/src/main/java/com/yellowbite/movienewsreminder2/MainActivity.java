@@ -1,5 +1,6 @@
 package com.yellowbite.movienewsreminder2;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -144,13 +145,23 @@ public class MainActivity extends NavigationDrawerActivity
         switch (item.getItemId())
         {
             case R.id.home:
-                FragmentMaster.sendShowFragmentRequest(this, START_FRAGMENT_ID);
+                this.sendShowFragmentRequest(this, START_FRAGMENT_ID);
                 return true;
             case R.id.wished_movies:
-                FragmentMaster.sendShowFragmentRequest(this, WishlistFragment.FRAGMENT_ID);
+                this.sendShowFragmentRequest(this, WishlistFragment.FRAGMENT_ID);
                 return true;
         }
 
         return false;
+    }
+
+    // --- --- --- Send Request --- --- ---
+    protected void sendShowFragmentRequest(Context context, int fragmentId)
+    {
+        Intent resultIntent = new Intent(context, MainActivity.class);
+
+        resultIntent.putExtra(MainActivity.SHOW_FRAGMENT_INTENT_NAME, fragmentId);
+
+        context.startActivity(resultIntent);
     }
 }

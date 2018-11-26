@@ -1,5 +1,7 @@
 package com.yellowbite.movienewsreminder2.fragments;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
@@ -81,7 +83,7 @@ public abstract class ToolbarFragment extends Fragment
         switch (item.getItemId())
         {
             case R.id.action_home:
-                FragmentMaster.sendShowFragmentRequest(this.getContext(), MainActivity.START_FRAGMENT_ID);
+                this.sendShowFragmentRequest(this.getContext(), MainActivity.START_FRAGMENT_ID);
                 return true;
         }
 
@@ -91,7 +93,16 @@ public abstract class ToolbarFragment extends Fragment
     // --- --- --- Change showing fragment --- --- ---
     protected void sendShowFragmentRequest(int fragmentId)
     {
-        FragmentMaster.sendShowFragmentRequest(super.getContext(), fragmentId);
+        this.sendShowFragmentRequest(super.getContext(), fragmentId);
+    }
+
+    protected void sendShowFragmentRequest(Context context, int fragmentId)
+    {
+        Intent resultIntent = new Intent(context, MainActivity.class);
+
+        resultIntent.putExtra(MainActivity.SHOW_FRAGMENT_INTENT_NAME, fragmentId);
+
+        context.startActivity(resultIntent);
     }
 
     // --- --- --- Getter and Setter --- --- ---
