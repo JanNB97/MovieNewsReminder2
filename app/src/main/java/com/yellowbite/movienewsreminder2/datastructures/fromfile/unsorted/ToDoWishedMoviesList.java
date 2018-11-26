@@ -2,21 +2,21 @@ package com.yellowbite.movienewsreminder2.datastructures.fromfile.unsorted;
 
 import android.content.Context;
 
-public final class WishedMoviesList extends UnsortedMovieListFromFile
+public final class ToDoWishedMoviesList extends UnsortedMovieListFromFile
 {
-    private static WishedMoviesList instance;
+    private static ToDoWishedMoviesList instance;
 
-    private WishedMoviesList(Context context)
+    private ToDoWishedMoviesList(Context context)
     {
-        super(context, "wishedMovieList.txt", true);
+        super(context, "todoWishedMovieList.txt", true);
     }
 
     // --- --- --- Singleton methods --- --- ---
-    public static WishedMoviesList getInstance(Context context)
+    public static ToDoWishedMoviesList getInstance(Context context)
     {
         if(instance == null)
         {
-            instance = new WishedMoviesList(context);
+            instance = new ToDoWishedMoviesList(context);
         }
         return instance;
     }

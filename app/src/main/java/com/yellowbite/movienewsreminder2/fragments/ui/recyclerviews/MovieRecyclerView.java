@@ -244,5 +244,6 @@ public class MovieRecyclerView extends SwipeCallback
     public void swapAdapter(int movieListToShow)
     {
         this.recyclerView.swapAdapter(this.movieAdapters[movieListToShow], true);
+        this.currentMovieListId = movieListToShow;
     }
 }
