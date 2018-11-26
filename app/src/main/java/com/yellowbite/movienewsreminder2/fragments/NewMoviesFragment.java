@@ -136,7 +136,7 @@ public class NewMoviesFragment extends ToolbarFragment implements LoadedMovieEve
         this.displayedMovieId--;
         if(this.displayedMovieId < 0)
         {
-            FragmentMaster.sendShowFragmentRequest(this.getContext(), MyMoviesFragment.FRAGMENT_ID);
+            this.sendShowFragmentRequest(MyMoviesFragment.FRAGMENT_ID);
             return;
         }
 
@@ -212,6 +212,6 @@ public class NewMoviesFragment extends ToolbarFragment implements LoadedMovieEve
     protected void sendShowFragmentRequest(int fragmentId)
     {
         NewsService.start(super.getActivity());
-        FragmentMaster.sendShowFragmentRequest(this.getContext(), fragmentId);
+        FragmentMaster.sendShowFragmentRequest(super.getContext(), fragmentId);
     }
 }
