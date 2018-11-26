@@ -14,7 +14,7 @@ public final class NotificationMan
 {
     public static void showNotification(Context context, WebScraperMessage message)
     {
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context, "default")
                 .setSmallIcon(message.getIcon())
                 .setContentTitle(message.getTitle())
                 .setContentText(message.getText())
