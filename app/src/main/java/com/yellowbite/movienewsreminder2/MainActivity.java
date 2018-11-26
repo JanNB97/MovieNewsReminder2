@@ -14,7 +14,7 @@ import com.yellowbite.movienewsreminder2.fragments.ToolbarFragment;
 import com.yellowbite.movienewsreminder2.fragments.WishlistFragment;
 import com.yellowbite.movienewsreminder2.fragments.ui.toolbar.NavigationDrawerActivity;
 
-public class MainActivity extends NavigationDrawerActivity implements FragmentMaster.RequestActivity
+public class MainActivity extends NavigationDrawerActivity
 {
     public static final String SHOW_FRAGMENT_INTENT_NAME = "Show fragment";
 
@@ -99,9 +99,6 @@ public class MainActivity extends NavigationDrawerActivity implements FragmentMa
 
         transaction.setCustomAnimations(enterAnim, exitAnim);
     }
-
-    @Override
-    public void onShowFragmentRequestSent(int fragmentId) {}
 
     // --- --- --- Toolbar --- --- ---
     @Override

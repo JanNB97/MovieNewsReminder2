@@ -8,8 +8,9 @@ import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 
 import com.yellowbite.movienewsreminder2.R;
+import com.yellowbite.movienewsreminder2.fragments.FragmentMaster;
 
-public abstract class NavigationDrawerActivity extends ToolbarActivity
+public abstract class NavigationDrawerActivity extends ToolbarActivity implements FragmentMaster.RequestActivity
 {
     public static final int NO_ID = -1;
 
@@ -65,4 +66,7 @@ public abstract class NavigationDrawerActivity extends ToolbarActivity
 
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void onShowFragmentRequestSent(int fragmentId) {}
 }
