@@ -15,9 +15,9 @@ public class MedZenOpeningHours
 
     private Document doc;
 
-    public MedZenOpeningHours(String url) throws IOException
+    public MedZenOpeningHours() throws IOException
     {
-        this.doc = WebscrapingHelper.getDoc(url);
+        this.doc = WebscrapingHelper.getDoc(OPENING_HOURS_URL);
     }
 
     public OpeningHours getOpeningHours()

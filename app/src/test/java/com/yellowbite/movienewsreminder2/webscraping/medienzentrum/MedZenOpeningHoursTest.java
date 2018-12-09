@@ -15,7 +15,7 @@ public class MedZenOpeningHoursTest
         OpeningHours openingHours = null;
         try
         {
-            medZenOpeningHours = new MedZenOpeningHours(MedZenOpeningHours.OPENING_HOURS_URL);
+            medZenOpeningHours = new MedZenOpeningHours();
             openingHours = medZenOpeningHours.getOpeningHours();
 
         } catch (IOException e)
