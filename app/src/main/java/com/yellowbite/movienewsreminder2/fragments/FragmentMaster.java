@@ -27,6 +27,7 @@ public class FragmentMaster
         registerFragment(new AddMovieFragment());
         registerFragment(new NewMoviesFragment());
         registerFragment(new WishlistFragment());
+        registerFragment(new OpeningHoursFragment());
     }
 
     private static void registerFragment(ToolbarFragment toolbarFragment)

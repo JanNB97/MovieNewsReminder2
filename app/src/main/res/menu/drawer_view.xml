@@ -10,5 +10,11 @@
             android:id="@+id/wished_movies"
             android:icon="@drawable/ic_lightbulb"
             android:title="Wunschliste" />
+
+        <item
+            android:id="@+id/opening_hours"
+            android:icon="@drawable/ic_time"
+            android:title="Öffnungszeiten"
+            />
     </group>
 </menu>

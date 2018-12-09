@@ -10,6 +10,7 @@ import android.view.MenuItem;
 
 import com.yellowbite.movienewsreminder2.fragments.FragmentMaster;
 import com.yellowbite.movienewsreminder2.fragments.MyMoviesFragment;
+import com.yellowbite.movienewsreminder2.fragments.OpeningHoursFragment;
 import com.yellowbite.movienewsreminder2.fragments.ToolbarFragment;
 import com.yellowbite.movienewsreminder2.fragments.WishlistFragment;
 import com.yellowbite.movienewsreminder2.fragments.ui.toolbar.NavigationDrawerActivity;
@@ -150,6 +151,10 @@ public class MainActivity extends NavigationDrawerActivity
             case R.id.wished_movies:
                 FragmentMaster.sendShowFragmentRequest(this, this,
                         WishlistFragment.FRAGMENT_ID);
+                return true;
+            case R.id.opening_hours:
+                FragmentMaster.sendShowFragmentRequest(this, this,
+                        OpeningHoursFragment.FRAGMENT_ID);
                 return true;
         }
 
