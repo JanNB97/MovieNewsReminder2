@@ -80,6 +80,6 @@ public class MovieTest
         return new Movie(100000, "url",
                 status, vorbestellungen, entliehenBisDate,
                 "standort", DateHelper.toDate(zugang),
-                titel);
+                titel, false, false);
     }
 }

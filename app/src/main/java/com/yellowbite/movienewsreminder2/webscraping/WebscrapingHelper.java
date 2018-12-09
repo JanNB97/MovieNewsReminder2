@@ -10,6 +10,7 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Logger;
 
 public class WebscrapingHelper
@@ -90,6 +91,23 @@ public class WebscrapingHelper
         }
 
         return elements.get(index).text();
+    }
+
+    public static List<String> getAllTexts(Element element, String cssQuery)
+    {
+        if(element == null)
+        {
+            return null;
+        }
+
+        Elements elements = element.select(cssQuery);
+
+        if(elements.isEmpty())
+        {
+            return null;
+        }
+
+        return elements.eachText();
     }
 
     public static int getInt(Element element, String cssQuery)

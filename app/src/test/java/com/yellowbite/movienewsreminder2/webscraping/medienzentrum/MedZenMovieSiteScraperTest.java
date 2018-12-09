@@ -20,20 +20,20 @@ public class MedZenMovieSiteScraperTest
             80802980, SEVEN_WORKOUTS_URL,
             Movie.Status.VERFUEGBAR, 0, null,
             "Sport", DateHelper.toDate("18.07.2013"),
-            "7 Workouts");
+            "7 Workouts", false, false);
 
     private static final Movie DANCE_WITH_ME_EXPECTED = new Movie(
             80710247, DANCE_WITH_ME_URL,
             Movie.Status.VERFUEGBAR, 0, null,
             "Sport", DateHelper.toDate("05.07.2011"),
-            "Dance with me!"
+            "Dance with me!", false, false
     );
 
     private static final Movie DIE_EISKOENINGIN_EXPECTED = new Movie(
             80891534, DIE_EISKOENINGIN_URL,
             Movie.Status.ENTLIEHEN, 0, DateHelper.toDate("20.08.2018"),
             "Walt Disney", DateHelper.toDate("06.05.2014"),
-            "Die Eiskönigin - Völlig Unverfroren"
+            "Die Eiskönigin - Völlig Unverfroren", false, false
     );
 
     @Test
