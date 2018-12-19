@@ -55,22 +55,18 @@ public abstract class LoadMoviesRetryExecutor
     {
         try
         {
-            getMovieRunnable.run(movie);
+            this.getMovieRunnable.run(movie);
 
             if(movie.getStatus() == null && numOfRetries < MAX_RETRIES_PER_MOVIE)
             {
-                this.retryToLoadMovie(movie, numOfMovies, numOfRetries, id);
-                return;
+                numOfRetries++;
+                this.executeMovie(movie, numOfMovies, numOfRetries, id);
+            }
+            else
+            {
+                this.onMovieLoaded(numOfMovies, id);
             }
         } catch (IOException ignored) {}
-
-        this.onMovieLoaded(numOfMovies, id);
-    }
-
-    private void retryToLoadMovie(Movie movie, int numOfMovies, int numOfRetries, int id)
-    {
-        int finalNumOfRetries = numOfRetries + 1;
-        this.executor.execute(() -> this.executeMovie(movie, numOfMovies, finalNumOfRetries, id));
     }
 
     protected abstract void onMovieLoaded(int numOfMovies, int id);
